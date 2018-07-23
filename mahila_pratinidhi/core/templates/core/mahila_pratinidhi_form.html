@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="container">
+
+
+        <h2>महिला प्रतिनिधि फारम</h2>
+        <div class="col-md-12">
+            <div class="dash-right">
+                <div class="row">
+
+                    <form class="form-horizontal" action="" method="post">{% csrf_token %}
+                        <div class="form-group">
+
+
+                            {{ form.as_p }}
+                        </div>
+                        <input type="submit">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
