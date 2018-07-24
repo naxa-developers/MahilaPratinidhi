@@ -11,6 +11,7 @@ class MahilaPratinidhiFormForm(forms.ModelForm):
 
 	def __init__(self, *args, **kwargs):
 		super(MahilaPratinidhiFormForm, self).__init__(*args, **kwargs)
+		self.fields['district'].empty_label = None
 		self.fields['district'].widget.attrs.update({'class': 'form-control'})
 		self.fields['name'].widget.attrs.update({'style': 'font-family: preeti', 'class': 'form-control'})
 		self.fields['age'].widget.attrs.update({'style': 'font-family: preeti', 'class': 'form-control'})
