@@ -1,23 +1,59 @@
-{% extends 'base.html' %}
+{% extends '_base.html' %}
 {% block content %}
-    <div class="container">
+    <div id="main-container" class="minified">
 
-नाम: <span style="font-family: Preeti">{{ object.name }}</span><br>
-उमेर: <span style="font-family: Preeti">{{ object.age }}</span><br>
-बैवाहिक स्थिथि: <span style="font-family: Preeti">{{ object.marital_status }}</span><br>
-शैछिक योग्यता: <span style="font-family: Preeti">{{ object.educational_qualification }}</span><br>
-जातियता: <span style="font-family: Preeti">{{ object.caste }}</span><br>
-ठेगाना: <span style="font-family: Preeti">{{ object.address }}</span><br>
-सम्पर्क न.: <span style="font-family: Preeti">{{ object.contact_number }}</span><br>
-इ-मेल: {{ object.email }}<br>
-निर्वाचित पद: <span style="font-family: Preeti">{{ object.nirwachit_padh }}</span><br>
-निर्वाचित गा.बि.स वा नगरपालिकाको नाम: <span style="font-family: Preeti">{{ object.nirwachit_vdc_or_municipality_name }}</span><br>
-पार्टीको नाम: <span style="font-family: Preeti">{{ object.party_name }}</span><br>
-पार्टीमा संलग्न भएको मिति: <span style="font-family: Preeti">{{ object.party_joined_date }}</span><br>
-संलग्न संग सस्था समूह: <span style="font-family: Preeti">{{ object.samlagna_sang_sastha_samuha }}</span><br>
-निर्वाचित क्षेत्र प्रतिको प्रतिबध्धता: <span style="font-family: Preeti">{{ object.nirwachit_chetra_pratiko_pratibadhata }}</span><br>
-        <a href="{% url 'core:mahila_pratinidhi_update' object.pk%}">Edit</a>
-        <a href="{% url 'core:mahila_pratinidhi_delete' object.pk%}">Delete</a>
+        <!--[if lt IE 8]>
+            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+        <?php include 'header.php'; ?>
 
-</div>
+        <div class="row no-gutters">
+            <div class="col-md-12">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{% url 'core:dashboard' %}">गृह पृष्‍ठ</a></li>
+                        <li class="breadcrumb-item active" aria-current="page"> <span style="font-family: Preeti">{{ form.name }}</span></li>
+                    </ol>
+                </nav>
+            </div>
+            <div class="col-md-12">
+                <div class="dash-right">
+                    <div class="row">
+
+                        <div class="col-md-12">
+                            <div class="widget-info margin-top-large">
+
+                                नाम: <span style="font-family: Preeti">{{ object.name }}</span><br>
+                                उमेर: <span style="font-family: Preeti">{{ object.age }}</span><br>
+                                बैवाहिक स्थिथि: <span style="font-family: Preeti">{{ object.marital_status }}</span><br>
+                                शैछिक योग्यता: <span
+                                    style="font-family: Preeti">{{ object.educational_qualification }}</span><br>
+                                जातियता: <span style="font-family: Preeti">{{ object.caste }}</span><br>
+                                ठेगाना: <span style="font-family: Preeti">{{ object.address }}</span><br>
+                                सम्पर्क न.: <span style="font-family: Preeti">{{ object.contact_number }}</span><br>
+                                इ-मेल: {{ object.email }}<br>
+                                निर्वाचित पद: <span style="font-family: Preeti">{{ object.nirwachit_padh }}</span><br>
+                                निर्वाचित गा.बि.स वा नगरपालिकाको नाम: <span
+                                    style="font-family: Preeti">{{ object.nirwachit_vdc_or_municipality_name }}</span><br>
+                                पार्टीको नाम: <span style="font-family: Preeti">{{ object.party_name }}</span><br>
+                                पार्टीमा संलग्न भएको मिति: <span
+                                    style="font-family: Preeti">{{ object.party_joined_date }}</span><br>
+                                संलग्न संग सस्था समूह: <span
+                                    style="font-family: Preeti">{{ object.samlagna_sang_sastha_samuha }}</span><br>
+                                निर्वाचित क्षेत्र प्रतिको प्रतिबध्धता: <span
+                                    style="font-family: Preeti">{{ object.nirwachit_chetra_pratiko_pratibadhata }}</span><br>
+                                {#        <a href="{% url 'core:mahila_pratinidhi_update' object.pk%}">Edit</a>#}
+                                {#        <a href="{% url 'core:mahila_pratinidhi_delete' object.pk%}">Delete</a>#}
+
+                            </div>
+                             <a href="{% url 'core:mahila_pratinidhi_update' form.pk %}" title=""
+                                   class="btn btn-sm btn-xs btn-primary"><i class="la la-edit"></i>Edit &nbsp</a>
+                            <a href="{% url 'core:mahila_pratinidhi_delete' form.pk %}" title=""
+                                   class="btn btn-sm btn-xs btn-primary"><i class="la la-edit"></i>Delete &nbsp</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock content %}
