@@ -4,7 +4,7 @@ from django.urls import reverse_lazy
 
 from django.views.generic import CreateView, UpdateView, DetailView, DeleteView, TemplateView
 
-from .models import MahilaPratinidhiForm, District
+from .models import MahilaPratinidhiForm, District, BOOL_CHOICES
 from .forms import MahilaPratinidhiFormForm
 
 
@@ -75,6 +75,10 @@ class MahilaPratinidhiDashboardView(LoginRequiredMixin, TemplateView):
 	template_name = 'core/mahila_pratinidhi_dashboard.html'
 
 	def get(self, request, *args, **kwargs):
-		district_id = self.kwargs.get('district_id')
 		forms = MahilaPratinidhiForm.objects.filter(district_id=self.kwargs.get('district_id'))
-		return render(request, self.template_name, {'forms': forms, 'district_id': district_id})
+		status = self.request.GET.get('status')
+		district_id = self.kwargs.get('district_id')
+		status_choices = BOOL_CHOICES
+		if status:
+			forms = MahilaPratinidhiForm.objects.filter(district_id=self.kwargs.get('district_id'), status=status)
+		return render(request, self.template_name, {'forms': forms, 'district_id': district_id, 'status_choices': status_choices})
