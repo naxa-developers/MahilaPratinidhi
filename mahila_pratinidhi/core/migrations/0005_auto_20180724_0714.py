@@ -14,7 +14,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='mahilapratinidhiform',
             name='address',
-            field=models.CharField(blank=True, max_length=300, null=True, verbose_name='ठेगाना'),
+            field=models.CharField(blank=True, max_length=300, verbose_name='ठेगाना'),
         ),
         migrations.AlterField(
             model_name='mahilapratinidhiform',
@@ -24,12 +24,12 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='mahilapratinidhiform',
             name='caste',
-            field=models.CharField(blank=True, max_length=300, null=True, verbose_name='जातियता'),
+            field=models.CharField(blank=True, max_length=300, verbose_name='जातियता'),
         ),
         migrations.AlterField(
             model_name='mahilapratinidhiform',
             name='contact_number',
-            field=models.CharField(blank=True, max_length=300, null=True, verbose_name='सम्पर्क न.'),
+            field=models.CharField(blank=True, max_length=300, verbose_name='सम्पर्क न.'),
         ),
         migrations.AlterField(
             model_name='mahilapratinidhiform',
@@ -39,46 +39,46 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='mahilapratinidhiform',
             name='educational_qualification',
-            field=models.CharField(blank=True, max_length=300, null=True, verbose_name='शैछिक योग्यता'),
+            field=models.CharField(blank=True, max_length=300, verbose_name='शैछिक योग्यता'),
         ),
         migrations.AlterField(
             model_name='mahilapratinidhiform',
             name='email',
-            field=models.EmailField(blank=True, max_length=254, null=True, verbose_name='इ-मेल'),
+            field=models.EmailField(blank=True, max_length=254, verbose_name='इ-मेल'),
         ),
         migrations.AlterField(
             model_name='mahilapratinidhiform',
             name='marital_status',
-            field=models.CharField(blank=True, max_length=300, null=True, verbose_name='बैवाहिक स्थिथि'),
+            field=models.CharField(blank=True, max_length=300, verbose_name='बैवाहिक स्थिथि'),
         ),
         migrations.AlterField(
             model_name='mahilapratinidhiform',
             name='nirwachit_chetra_pratiko_pratibadhata',
-            field=models.TextField(blank=True, null=True, verbose_name='निर्वाचित क्षेत्र प्रतिको प्रतिबध्धता'),
+            field=models.TextField(blank=True, verbose_name='निर्वाचित क्षेत्र प्रतिको प्रतिबध्धता'),
         ),
         migrations.AlterField(
             model_name='mahilapratinidhiform',
             name='nirwachit_padh',
-            field=models.CharField(blank=True, max_length=300, null=True, verbose_name='निर्वाचित पद'),
+            field=models.CharField(blank=True, max_length=300, verbose_name='निर्वाचित पद'),
         ),
         migrations.AlterField(
             model_name='mahilapratinidhiform',
             name='nirwachit_vdc_or_municipality_name',
-            field=models.CharField(blank=True, max_length=300, null=True, verbose_name='निर्वाचित गा.बि.स वा नगरपालिकाको नाम'),
+            field=models.CharField(blank=True, max_length=300, verbose_name='निर्वाचित गा.बि.स वा नगरपालिकाको नाम'),
         ),
         migrations.AlterField(
             model_name='mahilapratinidhiform',
             name='party_joined_date',
-            field=models.CharField(blank=True, max_length=300, null=True, verbose_name='पार्टीमा संलग्न भएको मिति'),
+            field=models.CharField(blank=True, max_length=300, verbose_name='पार्टीमा संलग्न भएको मिति'),
         ),
         migrations.AlterField(
             model_name='mahilapratinidhiform',
             name='party_name',
-            field=models.CharField(blank=True, max_length=300, null=True, verbose_name='पार्टीको नाम'),
+            field=models.CharField(blank=True, max_length=300, verbose_name='पार्टीको नाम'),
         ),
         migrations.AlterField(
             model_name='mahilapratinidhiform',
             name='samlagna_sang_sastha_samuha',
-            field=models.CharField(blank=True, max_length=300, null=True, verbose_name='संलग्न संग सस्था समूह'),
+            field=models.CharField(blank=True, max_length=300, verbose_name='संलग्न संग सस्था समूह'),
         ),
     ]
