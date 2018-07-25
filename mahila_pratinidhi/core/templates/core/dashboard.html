@@ -1,7 +1,7 @@
 {% extends '_base.html' %}
 
 {% block content %}
-<div id="main-container" class="minified">
+    <div id="main-container" class="minified">
 
         <!--[if lt IE 8]>
             <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
@@ -20,43 +20,58 @@
                                 <div class="widget-body">
                                     <div class="data-filter-wrap">
                                         <form action="" method="get">
-                                        <div class="row">
-                                            <div class="form-group col-md-4">
-                                                <label for="inputDistrict"><strong>जिल्ला छान्नुहोस्</strong></label>
+                                            <div class="row">
+                                                <div class="form-group col-md-4">
+                                                    <label for="inputDistrict"><strong>जिल्ला
+                                                        छान्नुहोस्</strong></label>
 
-                                                <select class="form-control" id="inputDistrict" name="dist">
-                                                    {% for district in districts %}
-                                                    <option value="{{ district.name }}" {% if request.GET.dist == district.name %}selected{%endif%}>{{ district.name }}</option>
-                                                    {% endfor %}
+                                                    <select class="form-control" id="inputDistrict" name="dist">
+                                                        {% for district in districts %}
+                                                            <option value="{{ district.name }}"
+                                                                    {% if request.GET.dist == district.name %}selected{% endif %}>{{ district.name }}</option>
+                                                        {% endfor %}
 
-                                                </select>
+                                                    </select>
+                                                </div>
+
+                                                <div class="col-md-4">
+                                                    <button type="submit" class="btn btn-default margin-top-large"><i
+                                                            class="la la-filter"></i> फिल्टर
+                                                    </button>
+                                                </div>
+
+
                                             </div>
-
-                                            <div class="col-md-4">
-                                                <button type="submit" class="btn btn-default margin-top-large"><i class="la la-filter"></i> फिल्टर</button>
-                                            </div>
-
-                                            <div class="col-4" >
-                                                <a href="{% url 'core:mahila_pratinidhi_form' %}"><button type="button" class="btn btn-default margin-top-large">प्रतिनिधि थप्नुहोस</button></a>
-
-</div>
-                                        </div>
                                         </form>
 
 
                                     </div>
 
                                     <ul class="row">
-                                        {% for form in forms %}
+                                        {% if district %}
+                                            {% for district in district %}
 
-                                            <li class="col-sm-6 col-md-4 col-lg-3">
-                                                <a href="{% url 'core:mahila_pratinidhi_detail' form.pk %}" class="org-item-wrap">
-                                                    <h5 style="font-family: Preeti">{{ form.name }}</h5>
-                                                    <span style="font-family: Preeti">{{ form.address }}</span>
-                                                </a>
-                                            </li>
+                                                <li class="col-sm-6 col-md-4 col-lg-3">
+                                                    <a href="{% url 'core:mahila_pratinidhi_form_dashboard' district.pk %}"
+                                                       class="org-item-wrap">
+                                                        <h5>{{ district.name }}</h5>
+                                                    </a>
+                                                </li>
 
-                                         {% endfor %}
+                                            {% endfor %}
+                                        {% else %}
+
+                                            {% for district in districts %}
+
+                                                <li class="col-sm-6 col-md-4 col-lg-3">
+                                                    <a href="{% url 'core:mahila_pratinidhi_form_dashboard' district.pk %}"
+                                                       class="org-item-wrap">
+                                                        <h5>{{ district.name }}</h5>
+                                                    </a>
+                                                </li>
+
+                                            {% endfor %}
+                                        {% endif %}
 
                                     </ul>
                                 </div>
@@ -66,6 +81,6 @@
                 </div>
             </div>
         </div>
-</div>
+    </div>
 
 {% endblock content %}

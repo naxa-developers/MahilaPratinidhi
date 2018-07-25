@@ -7,12 +7,11 @@ class MahilaPratinidhiFormForm(forms.ModelForm):
 
 	class Meta:
 		model = MahilaPratinidhiForm
-		fields = '__all__'
+		exclude = ('district',)
 
 	def __init__(self, *args, **kwargs):
 		super(MahilaPratinidhiFormForm, self).__init__(*args, **kwargs)
-		self.fields['district'].empty_label = None
-		self.fields['district'].widget.attrs.update({'class': 'form-control'})
+
 		self.fields['name'].widget.attrs.update({'style': 'font-family: preeti', 'class': 'form-control'})
 		self.fields['age'].widget.attrs.update({'style': 'font-family: preeti', 'class': 'form-control'})
 		self.fields['marital_status'].widget.attrs.update({'style': 'font-family: preeti', 'class': 'form-control'})
