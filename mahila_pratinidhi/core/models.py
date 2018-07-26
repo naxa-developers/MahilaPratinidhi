@@ -1,7 +1,7 @@
 from django.db import models
 
 BOOL_CHOICES = (
-	(True, 'पूरा'),
+	(True, 'पूर्ण'),
 	(False, 'अपूर्ण')
 	)
 
@@ -15,7 +15,7 @@ class District(models.Model):
 
 class MahilaPratinidhiForm(models.Model):
 	district = models.ForeignKey(District, on_delete=models.CASCADE, related_name='district', verbose_name="जिल्ला")
-	name = models.CharField(max_length=300, verbose_name="नाम", blank=True)
+	name = models.CharField(max_length=300, verbose_name="नाम")
 	age = models.CharField(max_length=300, verbose_name="उमेर", blank=True)
 	marital_status = models.CharField(max_length=300, verbose_name="बैवाहिक स्थिथि", blank=True)
 	educational_qualification = models.CharField(max_length=300, verbose_name="शैछिक योग्यता", blank=True)
@@ -29,7 +29,8 @@ class MahilaPratinidhiForm(models.Model):
 	party_joined_date = models.CharField(max_length=300, verbose_name="पार्टीमा संलग्न भएको मिति", blank=True)
 	samlagna_sang_sastha_samuha = models.CharField(max_length=300, verbose_name="संलग्न संग सस्था समूह", blank=True)
 	nirwachit_chetra_pratiko_pratibadhata = models.TextField(verbose_name="निर्वाचित क्षेत्र प्रतिको प्रतिबध्धता", blank=True)
-	status = models.BooleanField(choices=BOOL_CHOICES, default=False)
+	status = models.BooleanField(choices=BOOL_CHOICES, default=False, verbose_name="स्थिति")
+	image = models.ImageField(blank=True, upload_to='profile/')
 
 	def __str__(self):
 		return "{} फारम".format(self.district.name)

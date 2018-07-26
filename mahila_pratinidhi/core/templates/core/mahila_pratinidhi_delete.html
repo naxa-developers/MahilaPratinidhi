@@ -13,8 +13,7 @@
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="{% url 'core:dashboard' %}">गृह पृष्‍ठ</a></li>
-                        <li class="breadcrumb-item active" aria-current="page"><span
-                                style="font-family: Preeti">{{ form.name }}</span></li>
+                        <li class="breadcrumb-item active" aria-current="page">{{ district }}</li>
                     </ol>
                 </nav>
             </div>
@@ -25,7 +24,7 @@
                         <div class="col-md-12">
                             <div class="widget-info margin-top-large">
                                 <form action="" method="post">{% csrf_token %}
-                                    <p>Are you sure you want to delete {{ object }} ?</p>
+                                    <p>Are you sure you want to delete <span style="font-family: Preeti; font-size: 14px;">{{ form.name }} </span> ?</p>
                                     <input type="submit">
 
                                 </form>

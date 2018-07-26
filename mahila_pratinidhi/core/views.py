@@ -22,6 +22,11 @@ class MahilaPratinidhiFormCreateView(LoginRequiredMixin, CreateView):
 		success_url = reverse_lazy('core:mahila_pratinidhi_form_dashboard', args=(self.kwargs.get('district_id'),))
 		return success_url
 
+	def get_context_data(self, **kwargs):
+		context = super(MahilaPratinidhiFormCreateView, self).get_context_data(**kwargs)
+		context['district'] = District.objects.get(id=self.kwargs['district_id'])
+		return context
+
 
 class Dashboard(LoginRequiredMixin, TemplateView):
 
@@ -41,6 +46,11 @@ class MahilaPratinidhiFormDetailView(LoginRequiredMixin, DetailView):
 	template_name = "core/mahila_pratinidhi_detail.html"
 	context_object_name = 'form'
 
+	def get_context_data(self, **kwargs):
+		context = super().get_context_data(**kwargs)
+		context['district'] = self.object.district
+		return context
+
 
 class MahilaPratinidhiFormUpdateView(LoginRequiredMixin, UpdateView):
 
@@ -53,15 +63,27 @@ class MahilaPratinidhiFormUpdateView(LoginRequiredMixin, UpdateView):
 		success_url = reverse_lazy('core:mahila_pratinidhi_form_dashboard', args=(self.object.district.pk,))
 		return success_url
 
+	def get_context_data(self, **kwargs):
+		context = super(MahilaPratinidhiFormUpdateView, self).get_context_data(**kwargs)
+		context['district'] = MahilaPratinidhiForm.objects.get(id=self.kwargs['pk']).district
+		context['is_update_form'] = True
+		return context
+
 
 class MahilaPratinidhiFormDeleteView(LoginRequiredMixin, DeleteView):
 
 	model = MahilaPratinidhiForm
 	template_name = "core/mahila_pratinidhi_delete.html"
+	context_object_name = 'form'
 
 	def get_success_url(self):
 		success_url = reverse_lazy('core:mahila_pratinidhi_form_dashboard', args=(self.object.district.pk,))
 		return success_url
+
+	def get_context_data(self, **kwargs):
+		context = super(MahilaPratinidhiFormDeleteView, self).get_context_data(**kwargs)
+		context['district'] = self.object.district
+		return context
 
 
 def file_upload(request):
@@ -78,7 +100,8 @@ class MahilaPratinidhiDashboardView(LoginRequiredMixin, TemplateView):
 		forms = MahilaPratinidhiForm.objects.filter(district_id=self.kwargs.get('district_id'))
 		status = self.request.GET.get('status')
 		district_id = self.kwargs.get('district_id')
+		district = District.objects.get(id=district_id)
 		status_choices = BOOL_CHOICES
 		if status:
 			forms = MahilaPratinidhiForm.objects.filter(district_id=self.kwargs.get('district_id'), status=status)
-		return render(request, self.template_name, {'forms': forms, 'district_id': district_id, 'status_choices': status_choices})
+		return render(request, self.template_name, {'forms': forms, 'district_id': district_id, 'status_choices': status_choices, 'district': district})

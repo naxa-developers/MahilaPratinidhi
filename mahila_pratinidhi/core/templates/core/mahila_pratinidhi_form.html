@@ -12,7 +12,13 @@
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="{% url 'core:dashboard' %}">गृह पृष्‍ठ</a></li>
-                        <li class="breadcrumb-item active" aria-current="page"> <span style="font-family: Preeti">फारम भर्नुहोस्</span></li>
+                        <li class="breadcrumb-item"><a href="{% url 'core:mahila_pratinidhi_form_dashboard' district.id %}">{{ district.name }}</a></li>
+                        {% if is_update_form %}
+                            <li class="breadcrumb-item active" aria-current="page"> <span style="font-family: Preeti; font-size: 14px">{{ object.name }}</span></li>
+
+                        {% else %}
+                            <li class="breadcrumb-item active" aria-current="page"> <span style="font-family: Preeti">फारम भर्नुहोस्</span></li>
+                        {% endif %}
                     </ol>
                 </nav>
             </div>
@@ -22,7 +28,7 @@
 
                         <div class="col-md-12">
                             <div class="widget-info margin-top-large">
-                                <form class="form-horizontal" action="" method="post">{% csrf_token %}
+                                <form class="form-horizontal" action="" enctype="multipart/form-data" method="post">{% csrf_token %}
                                     <div class="form-group">
 
 

@@ -12,8 +12,8 @@
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="{% url 'core:dashboard' %}">गृह पृष्‍ठ</a></li>
-                        <li class="breadcrumb-item active" aria-current="page"><span
-                                style="font-family: Preeti">{{ form.name }}</span></li>
+                        <li class="breadcrumb-item active" aria-current="page">{{ district }}</li>
+
                     </ol>
                 </nav>
             </div>
@@ -34,10 +34,13 @@
                                                     <label for="inputStatus"><strong>
                                                         छान्नुहोस्</strong></label>
 
-                                                        <select class="form-control" name="status" id="id_status">
+                                                    <select class="form-control" name="status" id="id_status">
 
-                                                                <option value="True" {% if request.GET.status == True %}selected{% endif %}>पूरा</option>
-                                                                <option value="False">अपूर्ण</option>
+                                                        <option value="True"
+                                                                {% if request.GET.status == True %}selected{% endif %}>
+                                                            पूर्ण
+                                                        </option>
+                                                        <option value="False">अपूर्ण</option>
 
 
                                                     </select>
@@ -47,14 +50,14 @@
                                                             class="la la-filter"></i> फिल्टर
                                                     </button>
                                                 </div>
-                                                <div class="col-4">
-                                                    <a href="{% url 'core:mahila_pratinidhi_form' district_id %}">
-                                                        <button type="button" class="btn btn-default margin-top-large">
-                                                            प्रतिनिधि थप्नुहोस
-                                                        </button>
-                                                    </a>
+                                                <div class="col-4" style="margin-top: 30px">
+                                                    <a href="{% url 'core:mahila_pratinidhi_form' district_id %}"
+                                                       title=""
+                                                       class="btn btn-sm btn-xs btn-primary"><i class="la la-plus"></i>
+                                                        प्रतिनिधि थप्नुहोस</a>
 
                                                 </div>
+
                                             </div>
                                         </form>
 
@@ -68,7 +71,16 @@
                                                 <a href="{% url 'core:mahila_pratinidhi_detail' form.pk %}"
                                                    class="org-item-wrap">
                                                     <h5 style="font-family: Preeti">{{ form.name }}</h5>
-                                                    <span style="font-family: Preeti">{{ form.address }}</span>
+                                                    <span style="font-family: Preeti">{{ form.address }}</span><br>
+
+                                                    <span style="font-family: Preeti; font-size: 12px">स्थिति </span>:
+                                                    {% if form.status is False %}
+                                                        <span style="font-family: Preeti; font-size: 13px; color: red"> {{ form.get_status_display }}</span>
+                                                    {% else %}
+                                                        <span style="font-family: Preeti; font-size: 13px; color: green"> {{ form.get_status_display }}</span>
+
+                                                    {% endif %}
+
                                                 </a>
                                             </li>
 
