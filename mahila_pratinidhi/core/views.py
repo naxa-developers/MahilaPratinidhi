@@ -108,3 +108,12 @@ class MahilaPratinidhiDashboardView(LoginRequiredMixin, TemplateView):
 			forms = MahilaPratinidhiForm.objects.filter(district_id=self.kwargs.get('district_id'), status=status)
 		return render(request, self.template_name, {'forms': forms, 'district_id': district_id, 'status_choices': status_choices, 'district': district})
 
+
+class UserProfileView(LoginRequiredMixin, TemplateView):
+	template_name = 'core/user_profile.html'
+
+	def get_context_data(self, **kwargs):
+		context = super(UserProfileView, self).get_context_data(**kwargs)
+		context['user_profile'] = User.objects.get(id=self.request.user.id)
+		return context
+
