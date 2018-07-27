@@ -150,7 +150,6 @@ coverage.xml
 
 # Django stuff:
 *.log
-survey/local_settings.py
 
 
 # Flask stuff:

@@ -13,4 +13,5 @@ urlpatterns = [
 	path('mahila-pratinidhi-delete/<int:pk>/', views.MahilaPratinidhiFormDeleteView.as_view(), name="mahila_pratinidhi_delete"),
 	path('file-upload/', views.file_upload, name="file_upload"),
 
+
 ]
