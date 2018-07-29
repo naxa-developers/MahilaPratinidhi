@@ -13,7 +13,7 @@ urlpatterns = [
 	path('mahila-pratinidhi-delete/<int:pk>/', views.MahilaPratinidhiFormDeleteView.as_view(), name="mahila_pratinidhi_delete"),
 	path('accounts/user-profile/<int:pk>', views.UserProfileView.as_view(), name='user_profile'),
 	path('accounts/user-profile-update/<int:pk>', views.UserProfileUpdateView.as_view(), name='user_profile_update'),
+	path('upload/', views.UloadView.as_view(), name="upload"),
 	path('file-upload/', views.file_upload, name="file_upload"),
-
 
 ]

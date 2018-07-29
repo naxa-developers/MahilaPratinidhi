@@ -1,8 +1,9 @@
+from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
-from django.contrib.auth.views import password_change
+from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
-from django.urls import reverse_lazy, reverse
+from django.urls import reverse_lazy
 
 from django.views.generic import CreateView, UpdateView, DetailView, DeleteView, TemplateView
 
@@ -88,11 +89,38 @@ class MahilaPratinidhiFormDeleteView(LoginRequiredMixin, DeleteView):
 		return context
 
 
+class UloadView(TemplateView):
+	template_name = 'core/upload.html'
+
+
 def file_upload(request):
 	import pandas as pd
-	df = pd.read_excel(request.FILES['sentFile'])
-	# paramFile = request.FILES['sentFile'].read()
-	print(df.columns)
+
+	request_files = request.FILES.getlist('file')
+	files = [pd.read_excel(filename) for filename in request_files]
+	messages.success(request, 'Successfully loaded data from files')
+
+	for df in files:
+		total = df['qm=;+'].count()
+		for row in range(0, total):
+			MahilaPratinidhiForm.objects.create(
+				district=District.objects.get(name='Terhathum'),
+				name=df['gfd'][row],
+				age=df['pd]/'][row],
+				marital_status=df['j}jflxs l:lYft'][row],
+				educational_qualification=df['z}lIfs of]Uotf'][row],
+				caste=df['hfltotf'][row],
+				address=df['7]ufgf'][row],
+				contact_number=df[';Dks{ g '][row],
+				email=df['Od]n 7]ufgf'][row],
+				nirwachit_padh=df['lgjf{lrt kb'][row],
+				nirwachit_vdc_or_municipality_name=df['lgjf{lrt uf lj ; tyf gu/kflnsfsf]] gfd '][row],
+				party_name=df['kf6L{sf] gfd '][row],
+				party_joined_date=df['kf6L{df ;++++nUg ePsf] ldtL'][row],
+				samlagna_sang_sastha_samuha=df[' ;++++nUg ;++3 ;F:yf ;d"x  '][row],
+				nirwachit_chetra_pratiko_pratibadhata=df['lgjf{lrt Ifq k||ltsf] k|ltaM4tf '][row]
+			)
+	return HttpResponseRedirect('/upload')
 
 
 class MahilaPratinidhiDashboardView(LoginRequiredMixin, TemplateView):
@@ -124,6 +152,4 @@ class UserProfileUpdateView(LoginRequiredMixin, UpdateView):
 	def get_success_url(self):
 		success_url = reverse_lazy('core:user_profile', args=(self.object.pk,))
 		return success_url
-
-
 
