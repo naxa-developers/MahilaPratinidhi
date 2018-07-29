@@ -22,16 +22,22 @@
 
                         <div class="col-md-12">
                             <div class="widget-info margin-top-large">
-                                <h5>Username: {{ user_profile }}</h5>
-                                {% if user_profile.first_name %}
-                                    <h5>First Name: {{ user_profile.first_name }}</h5>
+                                <h5>Username: {{ user }}</h5>
+                                {% if user.first_name %}
+                                    <h5>First Name: {{ user.first_name }}</h5>
                                 {% endif %}
-                                {% if user_profile.last_name %}
-                                    <h5>First Name: {{ user_profile.last_name }}</h5>
+                                {% if user.last_name %}
+                                    <h5>First Name: {{ user.last_name }}</h5>
                                 {% endif %}
-                                {% if user_profile.email %}
-                                    <h5>Email: {{ user_profile.email }}</h5>
+                                {% if user.email %}
+                                    <h5>Email: {{ user.email }}</h5>
                                 {% endif %}
+
+                                <a href="{% url 'core:user_profile_update' user.pk %}"
+                                   title=""
+                                   class="btn btn-sm btn-xs btn-primary">
+                                    Update
+                                </a>
 
 
                             </div>

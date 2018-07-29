@@ -109,11 +109,21 @@ class MahilaPratinidhiDashboardView(LoginRequiredMixin, TemplateView):
 		return render(request, self.template_name, {'forms': forms, 'district_id': district_id, 'status_choices': status_choices, 'district': district})
 
 
-class UserProfileView(LoginRequiredMixin, TemplateView):
+class UserProfileView(LoginRequiredMixin, DetailView):
+	model = User
+	context_object_name = 'user'
 	template_name = 'core/user_profile.html'
 
-	def get_context_data(self, **kwargs):
-		context = super(UserProfileView, self).get_context_data(**kwargs)
-		context['user_profile'] = User.objects.get(id=self.request.user.id)
-		return context
+
+class UserProfileUpdateView(LoginRequiredMixin, UpdateView):
+	model = User
+	fields = ('first_name', 'last_name', 'email')
+	context_object_name = 'user'
+	template_name = 'core/user_profile_update.html'
+
+	def get_success_url(self):
+		success_url = reverse_lazy('core:user_profile', args=(self.object.pk,))
+		return success_url
+
+
 
