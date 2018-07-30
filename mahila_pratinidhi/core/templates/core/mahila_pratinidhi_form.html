@@ -1,6 +1,6 @@
 {% extends '_base.html' %}
 {% block content %}
-      <div id="main-container" class="minified">
+    <div id="main-container" class="minified">
 
         <!--[if lt IE 8]>
             <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
@@ -12,12 +12,16 @@
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="{% url 'core:dashboard' %}">गृह पृष्‍ठ</a></li>
-                        <li class="breadcrumb-item"><a href="{% url 'core:mahila_pratinidhi_form_dashboard' district.id %}">{{ district.name }}</a></li>
+                        <li class="breadcrumb-item"><a
+                                href="{% url 'core:mahila_pratinidhi_form_dashboard' district.id %}">{{ district.name }}</a>
+                        </li>
                         {% if is_update_form %}
-                            <li class="breadcrumb-item active" aria-current="page"> <span style="font-family: Preeti; font-size: 14px">{{ object.name }}</span></li>
+                            <li class="breadcrumb-item active" aria-current="page"><span
+                                    style="font-family: Preeti; font-size: 14px">{{ object.name }}</span></li>
 
                         {% else %}
-                            <li class="breadcrumb-item active" aria-current="page"> <span style="font-family: Preeti">फारम भर्नुहोस्</span></li>
+                            <li class="breadcrumb-item active" aria-current="page"><span style="font-family: Preeti">फारम भर्नुहोस्</span>
+                            </li>
                         {% endif %}
                     </ol>
                 </nav>
@@ -28,11 +32,32 @@
 
                         <div class="col-md-12">
                             <div class="widget-info margin-top-large">
-                                <form class="form-horizontal" action="" enctype="multipart/form-data" method="post">{% csrf_token %}
+                                <form class="form-horizontal" action="" enctype="multipart/form-data"
+                                      method="post">{% csrf_token %}
                                     <div class="form-group">
 
 
-                                        {{ form.as_p }}
+                                     {{ form.name.label_tag }} {{ form.name }}
+                                     {{ form.age.label_tag }} {{ form.age }}
+                                     {{ form.marital_status.label_tag }} {{ form.marital_status }}
+                                     {{ form.educational_qualification.label_tag }} {{ form.educational_qualification }}
+                                     {{ form.caste.label_tag }} {{ form.caste }}
+                                     {{ form.address.label_tag }} {{ form.address }}
+                                     {{ form.contact_number.label_tag }} {{ form.contact_number }}
+                                     {{ form.email.label_tag }} {{ form.email }}
+                                     {{ form.nirwachit_padh.label_tag }} {{ form.nirwachit_padh }}
+
+                                     {{ form.nirwachit_vdc_or_municipality_name.label_tag }} {{ form.nirwachit_vdc_or_municipality_name }}
+                                     {{ form.party_name.label_tag }} {{ form.party_name }}
+                                     {{ form.party_joined_date.label_tag }} {{ form.party_joined_date }}
+                                     {{ form.samlagna_sang_sastha_samuha.label_tag }} {{ form.samlagna_sang_sastha_samuha }}
+                                     {{ form.nirwachit_chetra_pratiko_pratibadhata.label_tag }} {{ form.nirwachit_chetra_pratiko_pratibadhata }}
+                                     {% if request.user.is_superuser %}
+                                        {{ form.status.label_tag }} {{ form.status }}
+                                     {% endif %}
+                                     {{ form.image.label_tag }} {{ form.image }}
+
+
                                     </div>
                                     <input type="submit">
                                 </form>

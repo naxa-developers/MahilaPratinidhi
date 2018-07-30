@@ -56,7 +56,6 @@
                                                        class="org-item-wrap">
                                                         <h5>{{ district.name }}</h5>
                                                         <span style="font-family: Preeti; font-size: 14px" {% status district.pk %}></span>
-                                                        <span style="font-family: Preeti; font-size: 12px">स्थिति </span>:
                                                         {% status district.pk as status %}
                                                         {% if status is False %}
                                                             <span style="font-family: Preeti; font-size: 13px; color: red">अपूर्ण</span>
@@ -84,7 +83,6 @@
                                                     <a href="{% url 'core:mahila_pratinidhi_form_dashboard' district.pk %}"
                                                        class="org-item-wrap">
                                                         <h5>{{ district.name }}</h5>
-                                                        <span style="font-family: Preeti; font-size: 12px">स्थिति </span>:
                                                         {% status district.pk as status %}
                                                         {% if status is False %}
                                                             <span style="font-family: Preeti; font-size: 13px; color: red">अपूर्ण</span>

@@ -97,7 +97,7 @@ def file_upload(request):
 	import pandas as pd
 
 	request_files = request.FILES.getlist('file')
-	files = [pd.read_excel(filename) for filename in request_files]
+	files = [pd.read_excel(filename).fillna(value='') for filename in request_files]
 	messages.success(request, 'Successfully loaded data from files')
 
 	for df in files:
