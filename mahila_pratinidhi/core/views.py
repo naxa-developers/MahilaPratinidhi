@@ -4,7 +4,6 @@ from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse_lazy
-
 from django.views.generic import CreateView, UpdateView, DetailView, DeleteView, TemplateView
 
 from .models import MahilaPratinidhiForm, District, BOOL_CHOICES
@@ -96,31 +95,37 @@ class UloadView(TemplateView):
 def file_upload(request):
 	import pandas as pd
 
-	request_files = request.FILES.getlist('file')
-	files = [pd.read_excel(filename).fillna(value='') for filename in request_files]
-	messages.success(request, 'Successfully loaded data from files')
+	try:
 
-	for df in files:
-		total = df['qm=;+'].count()
-		for row in range(0, total):
-			MahilaPratinidhiForm.objects.create(
-				district=District.objects.get(name='Terhathum'),
-				name=df['gfd'][row],
-				age=df['pd]/'][row],
-				marital_status=df['j}jflxs l:lYft'][row],
-				educational_qualification=df['z}lIfs of]Uotf'][row],
-				caste=df['hfltotf'][row],
-				address=df['7]ufgf'][row],
-				contact_number=df[';Dks{ g '][row],
-				email=df['Od]n 7]ufgf'][row],
-				nirwachit_padh=df['lgjf{lrt kb'][row],
-				nirwachit_vdc_or_municipality_name=df['lgjf{lrt uf lj ; tyf gu/kflnsfsf]] gfd '][row],
-				party_name=df['kf6L{sf] gfd '][row],
-				party_joined_date=df['kf6L{df ;++++nUg ePsf] ldtL'][row],
-				samlagna_sang_sastha_samuha=df[' ;++++nUg ;++3 ;F:yf ;d"x  '][row],
-				nirwachit_chetra_pratiko_pratibadhata=df['lgjf{lrt Ifq k||ltsf] k|ltaM4tf '][row]
-			)
-	return HttpResponseRedirect('/upload')
+		request_files = request.FILES.getlist('file')
+		files = [pd.read_excel(filename).fillna(value='') for filename in request_files]
+
+		for df in files:
+			total = df['qm=;+'].count()
+
+			for row in range(0, total):
+				MahilaPratinidhiForm.objects.create(
+					district=District.objects.get(name='Terhathum'),
+					name=df['gfd'][row],
+					age=df['pd]/'][row],
+					marital_status=df['j}jflxs l:lYft'][row],
+					educational_qualification=df['z}lIfs of]Uotf'][row],
+					caste=df['hfltotf'][row],
+					address=df['7]ufgf'][row],
+					contact_number=df[';Dks{ g '][row],
+					email=df['Od]n 7]ufgf'][row],
+					nirwachit_padh=df['lgjf{lrt kb'][row],
+					nirwachit_vdc_or_municipality_name=df['lgjf{lrt uf lj ; tyf gu/kflnsfsf]] gfd '][row],
+					party_name=df['kf6L{sf] gfd '][row],
+					party_joined_date=df['kf6L{df ;++++nUg ePsf] ldtL'][row],
+					samlagna_sang_sastha_samuha=df[' ;++++nUg ;++3 ;F:yf ;d"x  '][row],
+					nirwachit_chetra_pratiko_pratibadhata=df['lgjf{lrt Ifq k||ltsf] k|ltaM4tf '][row]
+				)
+		messages.success(request, 'Successfully loaded data from files')
+		return HttpResponseRedirect('/upload')
+	except:
+		messages.error(request, "File Format not supported")
+		return HttpResponseRedirect('/upload')
 
 
 class MahilaPratinidhiDashboardView(LoginRequiredMixin, TemplateView):
