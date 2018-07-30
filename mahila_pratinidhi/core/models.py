@@ -30,7 +30,7 @@ class MahilaPratinidhiForm(models.Model):
 	samlagna_sang_sastha_samuha = models.CharField(max_length=300, verbose_name="संलग्न संग सस्था समूह", blank=True)
 	nirwachit_chetra_pratiko_pratibadhata = models.TextField(verbose_name="निर्वाचित क्षेत्र प्रतिको प्रतिबध्धता", blank=True)
 	status = models.BooleanField(choices=BOOL_CHOICES, default=False, verbose_name="स्थिति")
-	image = models.ImageField(blank=True, upload_to='profile/')
+	image = models.ImageField(blank=True, upload_to='profile/', verbose_name="फोटो")
 
 	def __str__(self):
 		return "{} फारम".format(self.district.name)
