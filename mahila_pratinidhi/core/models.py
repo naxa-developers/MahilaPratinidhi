@@ -5,6 +5,34 @@ BOOL_CHOICES = (
 	(False, 'अपूर्ण')
 	)
 
+MARITAL_CHOICES = (
+	('cljjflxt', 'अविवाहित'),
+	('ljjflxt', 'विवाहित'),
+	('Psn', 'एकल'),
+	('cGo', 'अन्य')
+	)
+
+EDUCATIONAL_QUALIFICATION_CHOICES = (
+										('lg/If/', 'निरक्षर'),
+										(';fIf/', 'साक्षर'),
+										('P;=Pn=;L= ', 'एस.एल.सी.'),
+										('!) @ jf ;f] ;/x', '१० + २ वा सो सरह'),
+										(':gfts', 'स्नातक'),
+										(':gfsf]]t/', 'स्नाकोतर'),
+										('lk=Pr=8L=', 'पि.एच.डी')
+
+									)
+
+CASTE_CHOICES = (
+					('blnt', 'दलित'),
+					('cflbaf;L÷hghftL', 'आदिबासी / जनजाती'),
+					('v; cfo{', 'खस आर्य'),
+					('dw];L ', 'मधेसी'),
+					('yf?', 'थारु'),
+					('d"l:nd', 'मुस्लिम'),
+					('cGo', 'अन्य')
+				)
+
 
 class District(models.Model):
 	name = models.CharField(max_length=300)
@@ -18,8 +46,11 @@ class MahilaPratinidhiForm(models.Model):
 	name = models.CharField(max_length=300, verbose_name="नाम")
 	age = models.CharField(max_length=300, verbose_name="उमेर", blank=True)
 	marital_status = models.CharField(max_length=300, verbose_name="बैवाहिक स्थिथि", blank=True)
+	updated_marital_status = models.CharField(choices=MARITAL_CHOICES, blank=True, max_length=300, verbose_name="बैवाहिक स्थिथि")
 	educational_qualification = models.CharField(max_length=300, verbose_name="शैछिक योग्यता", blank=True)
+	updated_educational_qualification = models.CharField(choices=EDUCATIONAL_QUALIFICATION_CHOICES, blank=True, max_length=300, verbose_name="शैछिक योग्यता")
 	caste = models.CharField(max_length=300, verbose_name="जातियता", blank=True)
+	updated_caste = models.CharField(choices=CASTE_CHOICES, blank=True, max_length=300, verbose_name="जातियता")
 	address = models.CharField(max_length=300, verbose_name="ठेगाना", blank=True)
 	contact_number = models.CharField(max_length=300, verbose_name="सम्पर्क न.", blank=True)
 	email = models.EmailField(verbose_name="इ-मेल", blank=True)

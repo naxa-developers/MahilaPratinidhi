@@ -18,7 +18,7 @@ class Command(BaseCommand):
         df = pd.read_excel(sys.argv[3]).fillna(value='')
         data = [
             MahilaPratinidhiForm(
-				district = District.objects.get(id=154),
+				district = District.objects.get(id=76),
                 name=df['gfd'][row],
 				age=df['pd]/'][row],
 				marital_status=df['j}jflxs l:lYft'][row],

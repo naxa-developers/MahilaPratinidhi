@@ -45,12 +45,35 @@
 
                                     नाम: <span style="font-family: Preeti; font-size: 17px">{{ object.name }}</span><br>
                                     उमेर: <span style="font-family: Preeti; font-size: 17px">{{ object.age }}</span><br>
-                                    बैवाहिक स्थिति: <span
-                                        style="font-family: Preeti; font-size: 17px">{{ object.marital_status }}</span><br>
-                                    शैछिक योग्यता: <span
-                                        style="font-family: Preeti; font-size: 17px">{{ object.educational_qualification }}</span><br>
-                                    जातियता: <span
-                                        style="font-family: Preeti; font-size: 17px">{{ object.caste }}</span><br>
+                                    बैवाहिक स्थिति:
+                                    {% if object.updated_marital_status %}
+
+                                        <span
+                                            style="font-family: Preeti; font-size: 17px">{{ object.updated_marital_status }}</span><br>
+                                        {% else %}
+                                            <span
+                                            style="font-family: Preeti; font-size: 17px">{{ object.marital_status }}</span><br>
+                                    {% endif %}
+                                    शैछिक योग्यता:
+                                    {% if object.updated_educational_qualification %}
+
+                                        <span
+                                            style="font-family: Preeti; font-size: 17px">{{ object.updated_educational_qualification }}</span><br>
+                                        {% else %}
+                                         <span
+                                            style="font-family: Preeti; font-size: 17px">{{ object.educational_qualification }}</span><br>
+                                    {% endif %}
+                                    जातियता:
+                                    {% if object.updated_caste %}
+
+                                        <span
+                                            style="font-family: Preeti; font-size: 17px">{{ object.updated_caste }}</span><br>
+                                        {%  else %}
+
+                                        <span
+                                            style="font-family: Preeti; font-size: 17px">{{ object.caste }}</span><br>
+                                    {% endif %}
+
                                     ठेगाना: <span
                                         style="font-family: Preeti; font-size: 17px">{{ object.address }}</span><br>
                                     सम्पर्क न.: <span

@@ -39,9 +39,25 @@
 
                                      {{ form.name.label_tag }} {{ form.name }}
                                      {{ form.age.label_tag }} {{ form.age }}
-                                     {{ form.marital_status.label_tag }} {{ form.marital_status }}
-                                     {{ form.educational_qualification.label_tag }} {{ form.educational_qualification }}
-                                     {{ form.caste.label_tag }} {{ form.caste }}
+                                    {% if object %}
+                                     {{ form.marital_status.label_tag }} <span style="font-family: preeti; font-size: 18px; ">{{ form.marital_status }}</span>
+                                        {{ form.updated_marital_status }}<br>
+                                        {% else %}
+                                       {{ form.updated_marital_status.label_tag }}  {{ form.updated_marital_status }}<br>
+                                  {% endif %}
+                                    {% if object %}
+                                     {{ form.educational_qualification.label_tag }} <span style="font-family: preeti; font-size: 18px">{{ form.educational_qualification }}</span>
+                                         {{ form.updated_educational_qualification }}<br>
+                                        {% else %}
+                                        {{ form.updated_educational_qualification.label_tag }} {{ form.updated_educational_qualification }}<br>
+                                    {% endif %}
+                                    {% if object %}
+
+                                        {{ form.caste.label_tag }}<span style="font-family: preeti; font-size: 18px"> {{ form.caste }}</span>
+                                        {{ form.updated_caste }}<br>
+                                        {% else %}
+                                       {{ form.updated_caste.label_tag }}  {{ form.updated_caste }}<br>
+                                    {% endif %}
                                      {{ form.address.label_tag }} {{ form.address }}
                                      {{ form.contact_number.label_tag }} {{ form.contact_number }}
                                      {{ form.email.label_tag }} {{ form.email }}

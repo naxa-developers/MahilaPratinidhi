@@ -135,7 +135,8 @@ class MahilaPratinidhiDashboardView(LoginRequiredMixin, TemplateView):
 		forms = MahilaPratinidhiForm.objects.filter(district_id=self.kwargs.get('district_id'))
 		status = self.request.GET.get('status')
 		district_id = self.kwargs.get('district_id')
-		district = District.objects.get(id=district_id)
+		# district = District.objects.get(id=district_id)
+		district = get_object_or_404(District, id=district_id)
 		status_choices = BOOL_CHOICES
 		if status:
 			forms = MahilaPratinidhiForm.objects.filter(district_id=self.kwargs.get('district_id'), status=status)
