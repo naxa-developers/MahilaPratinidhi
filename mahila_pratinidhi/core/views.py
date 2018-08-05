@@ -91,6 +91,11 @@ class MahilaPratinidhiFormDeleteView(LoginRequiredMixin, DeleteView):
 class UloadView(TemplateView):
 	template_name = 'core/upload.html'
 
+	def get_context_data(self, **kwargs):
+		context = super(UloadView, self).get_context_data(**kwargs)
+		context['districts'] = District.objects.all()
+		return context
+
 
 def file_upload(request):
 	import pandas as pd
@@ -104,8 +109,10 @@ def file_upload(request):
 			total = df['qm=;+'].count()
 
 			for row in range(0, total):
+				print(request.POST.get('dist'))
+
 				MahilaPratinidhiForm.objects.create(
-					district=District.objects.get(name='Terhathum'),
+					district=District.objects.get(name=request.POST.get('dist')),
 					name=df['gfd'][row],
 					age=df['pd]/'][row],
 					marital_status=df['j}jflxs l:lYft'][row],

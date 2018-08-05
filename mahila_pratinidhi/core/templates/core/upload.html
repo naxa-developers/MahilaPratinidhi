@@ -27,6 +27,13 @@
 
 
                        <form action="{% url 'core:file_upload' %}" method="post" enctype="multipart/form-data" >{% csrf_token %}
+                            <select id="inputDistrict" name="dist">
+                                {% for district in districts %}
+                                    <option value="{{ district.name }}"
+                                            {% if request.GET.dist == district.name %}selected{% endif %}>{{ district.name }}</option>
+                                {% endfor %}
+
+                            </select>
                            <input type="file" name="file" multiple>
                            <p style="margin-top: 10px">
                            <input type="submit" class="btn-primary">
