@@ -36,6 +36,7 @@ CASTE_CHOICES = (
 
 class District(models.Model):
 	name = models.CharField(max_length=300)
+	elected_women = models.IntegerField(default=0)
 
 	def __str__(self):
 		return self.name

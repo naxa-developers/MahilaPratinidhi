@@ -186,3 +186,4 @@ virtualenvs/
 media/
 
 mahila_pratinidhi/local_settings.py
+mahila_pratinidhi/.idea/
