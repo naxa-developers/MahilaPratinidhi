@@ -27,7 +27,7 @@ def status_complete_count(district_id, force_update=False):
 
 
 @register.simple_tag
-def status_total_count(district_id, force_update=False):
+def available_elected_women(district_id, force_update=False):
     district = District.objects.get(id=district_id)
     total = MahilaPratinidhiForm.objects.filter(district=district).count()
 
