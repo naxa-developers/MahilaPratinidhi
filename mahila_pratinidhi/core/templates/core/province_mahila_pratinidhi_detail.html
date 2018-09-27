@@ -1,0 +1,112 @@
+{% extends '_base.html' %}
+{% load staticfiles %}
+{% block content %}
+    <div id="main-container" class="minified">
+
+        <!--[if lt IE 8]>
+            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+        <?php include 'header.php'; ?>
+
+        <div class="row no-gutters">
+            <div class="col-md-8">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{% url 'core:dashboard' %}">गृह पृष्‍ठ</a></li>
+                        <li class="breadcrumb-item"><a
+                                href="{% url 'core:mahila_pratinidhi_form_dashboard' province.id %}">{{ province }}</a>
+                        </li>
+                        <li class="breadcrumb-item active" aria-current="page"><span
+                                style="font-family: Preeti; font-size: 14px;">{{ form.name }}</span></li>
+                    </ol>
+                </nav>
+            </div>
+            <div class="col-md-12">
+                <div class="dash-right">
+                    <div class="row">
+
+                        <div class="col-md-12">
+                            <div class="container-fluid">
+
+                                <div class="widget-info margin-top-large">
+                                    {% if object.image %}
+                                        <div class="login-header">
+
+                                            <img src="{{ MEDIA_URL }} {{ object.image.url }}" alt="" width="100"></div>
+
+                                    {% else %}
+                                        <div class="login-header">
+
+                                            <img src="{% static 'assets/img/logo.png' %}" alt="" width="90">
+                                        </div>
+
+                                    {% endif %}
+                                <p>
+
+                                    नाम: <span style="font-family: Preeti; font-size: 17px">{{ object.name }}</span><br>
+                                    उमेर: <span style="font-family: Preeti; font-size: 17px">{{ object.age }}</span><br>
+                                    बैवाहिक स्थिति:
+                                    {% if object.updated_marital_status %}
+
+                                        <span
+                                            style="font-family: Preeti; font-size: 17px">{{ object.updated_marital_status }}</span><br>
+                                        {% else %}
+                                            <span
+                                            style="font-family: Preeti; font-size: 17px">{{ object.marital_status }}</span><br>
+                                    {% endif %}
+                                    शैछिक योग्यता:
+                                    {% if object.updated_educational_qualification %}
+
+                                        <span
+                                            style="font-family: Preeti; font-size: 17px">{{ object.updated_educational_qualification }}</span><br>
+                                        {% else %}
+                                         <span
+                                            style="font-family: Preeti; font-size: 17px">{{ object.educational_qualification }}</span><br>
+                                    {% endif %}
+                                    जातियता:
+                                    {% if object.updated_caste %}
+
+                                        <span
+                                            style="font-family: Preeti; font-size: 17px">{{ object.updated_caste }}</span><br>
+                                        {%  else %}
+
+                                        <span
+                                            style="font-family: Preeti; font-size: 17px">{{ object.caste }}</span><br>
+                                    {% endif %}
+
+                                    ठेगाना: <span
+                                        style="font-family: Preeti; font-size: 17px">{{ object.address }}</span><br>
+                                    सम्पर्क न.: <span
+                                        style="font-family: Preeti; font-size: 17px">{{ object.contact_number }}</span><br>
+                                    इ-मेल: {{ object.email }}<br>
+                                    निर्वाचित पद: <span
+                                        style="font-family: Preeti; font-size: 17px">{{ object.nirwachit_padh }}</span><br>
+                                    निर्वाचित गा.बि.स वा नगरपालिकाको नाम: <span
+                                        style="font-family: Preeti; font-size: 17px">{{ object.nirwachit_vdc_or_municipality_name }}</span><br>
+                                    पार्टीको नाम: <span
+                                        style="font-family: Preeti; font-size: 17px">{{ object.party_name }}</span><br>
+                                    पार्टीमा संलग्न भएको मिति: <span
+                                        style="font-family: Preeti; font-size: 17px">{{ object.party_joined_date }}</span><br>
+                                    संलग्न संग सस्था समूह: <span
+                                        style="font-family: Preeti; font-size: 17px">{{ object.samlagna_sang_sastha_samuha }}</span><br>
+                                    निर्वाचित क्षेत्र प्रतिको प्रतिबध्धता: <span
+                                        style="font-family: Preeti; font-size: 17px">{{ object.nirwachit_chetra_pratiko_pratibadhata }}</span><br>
+                                    </p>
+                                    {#        <a href="{% url 'core:mahila_pratinidhi_update' object.pk%}">Edit</a>#}
+                                    {#        <a href="{% url 'core:mahila_pratinidhi_delete' object.pk%}">Delete</a>#}
+
+                                </div>
+                                <a href="#" title=""
+                                   class="btn btn-sm btn-xs btn-primary"><i class="la la-edit"></i>Edit &nbsp</a>
+                                <a href="#" title=""
+                                   class="btn btn-sm btn-xs btn-primary"><i class="la la-edit"></i>Delete &nbsp</a>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

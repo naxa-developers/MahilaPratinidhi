@@ -1,6 +1,6 @@
 from django import forms
 
-from .models import MahilaPratinidhiForm
+from .models import MahilaPratinidhiForm, ProvinceMahilaPratinidhiForm
 
 
 class MahilaPratinidhiFormForm(forms.ModelForm):
@@ -26,3 +26,9 @@ class MahilaPratinidhiFormForm(forms.ModelForm):
 		self.fields['samlagna_sang_sastha_samuha'].widget.attrs.update({'style': 'font-family: preeti; font-size:18px', 'class': 'form-control'})
 		self.fields['nirwachit_chetra_pratiko_pratibadhata'].widget.attrs.update({'style': 'font-family: preeti; font-size:18px', 'class': 'form-control'})
 
+
+class ProvinceMahilaPratinidhiFormForm(forms.ModelForm):
+
+	class Meta:
+		model = ProvinceMahilaPratinidhiForm
+		exclude = ('province', )

@@ -15,5 +15,12 @@ urlpatterns = [
 	path('accounts/user-profile-update/<int:pk>', views.UserProfileUpdateView.as_view(), name='user_profile_update'),
 	path('upload/', views.UloadView.as_view(), name="upload"),
 	path('file-upload/', views.file_upload, name="file_upload"),
+	path('province-mahila-pratinidhi-form/<province_id>', views.ProvinceMahilaPratinidhiFormCreateView.as_view(), name="province_mahila_pratinidhi_form"),
+	path('province-mahila-pratinidhi-forms-list/<province_id>', views.ProvinceMahilaPratinidhiDashboardView.as_view(),
+		 name="province_mahila_pratinidhi_form_dashboard"),
+	path('province-mahila-pratinidhi-detail/<int:pk>/', views.ProvinceMahilaPratinidhiFormDetailView.as_view(),
+		 name="province_mahila_pratinidhi_detail"),
 
+	path('province-upload/', views.ProvinceUloadView.as_view(), name="province_upload"),
+	path('province-file-upload/', views.province_file_upload, name="province_file_upload"),
 ]
