@@ -44,7 +44,9 @@
                                 <p>
 
                                     नाम: <span style="font-family: Preeti; font-size: 17px">{{ object.name }}</span><br>
-                                    उमेर: <span style="font-family: Preeti; font-size: 17px">{{ object.age }}</span><br>
+                                    English Name: {{ object.english_name }}<br>
+                                    आमाको नाम: <span style="font-family: Preeti; font-size: 17px">{{ object.mothers_name }}</span><br>
+                                    बाबुको नाम: <span style="font-family: Preeti; font-size: 17px">{{ object.fathers_name }}</span><br>
                                     बैवाहिक स्थिति:
                                     {% if object.updated_marital_status %}
 
@@ -54,15 +56,7 @@
                                             <span
                                             style="font-family: Preeti; font-size: 17px">{{ object.marital_status }}</span><br>
                                     {% endif %}
-                                    शैछिक योग्यता:
-                                    {% if object.updated_educational_qualification %}
-
-                                        <span
-                                            style="font-family: Preeti; font-size: 17px">{{ object.updated_educational_qualification }}</span><br>
-                                        {% else %}
-                                         <span
-                                            style="font-family: Preeti; font-size: 17px">{{ object.educational_qualification }}</span><br>
-                                    {% endif %}
+                                    श्रीमानको नाम: <span style="font-family: Preeti; font-size: 17px">{{ object.husbands_name }}</span><br>
                                     जातियता:
                                     {% if object.updated_caste %}
 
@@ -73,32 +67,65 @@
                                         <span
                                             style="font-family: Preeti; font-size: 17px">{{ object.caste }}</span><br>
                                     {% endif %}
+                                    मातृभाषा: <span style="font-family: Preeti; font-size: 17px">{{ object.mother_tongue }}</span><br>
+                                    शऔपचारिक शैक्षिक योग्यता:
+                                    {% if object.updated_educational_qualification %}
 
-                                    ठेगाना: <span
-                                        style="font-family: Preeti; font-size: 17px">{{ object.address }}</span><br>
-                                    सम्पर्क न.: <span
-                                        style="font-family: Preeti; font-size: 17px">{{ object.contact_number }}</span><br>
+                                        <span
+                                            style="font-family: Preeti; font-size: 17px">{{ object.updated_educational_qualification }}</span><br>
+                                        {% else %}
+                                         <span
+                                            style="font-family: Preeti; font-size: 17px">{{ object.educational_qualification }}</span><br>
+                                    {% endif %}
+                                    बिषय: <span
+                                        style="font-family: Preeti; font-size: 17px">{{ object.subject }}</span><br>
+                                    ठेगाना(स्थायी): जिल्ला: <span
+                                        style="font-family: Preeti; font-size: 17px">{{ object.permanent_address }}</span><br>
+                                    गाउँपालिका/नगरपालिका/उप-महानगरपालिका/महानगरपालिका: <span
+                                        style="font-family: Preeti; font-size: 17px">{{ object.permanent_gapa_napa }}</span><br>
+                                    वडा नं: {{ object.permanent_ward_no }}<br>
+                                    टोल: <span
+                                        style="font-family: Preeti; font-size: 17px">{{ object.permanent_tole }}</span><br>
+                                    ठेगाना(अस्थायी): जिल्ला: <span
+                                        style="font-family: Preeti; font-size: 17px">{{ object.temporary_address }}</span><br>
+                                    गाउँपालिका/नगरपालिका/उप-महानगरपालिका/महानगरपालिका: <span
+                                        style="font-family: Preeti; font-size: 17px">{{ object.temporary_gapa_napa }}</span><br>
+                                    वडा नं: {{ object.temporary_ward_no }}<br>
+                                    टोल: <span
+                                        style="font-family: Preeti; font-size: 17px">{{ object.temporary_tole }}</span><br>
+                                    मोवाइल: <span>{{ object.mobile }}</span><br>
+                                    सम्पर्क न.: <span>{{ object.contact_number }}</span><br>
                                     इ-मेल: {{ object.email }}<br>
+                                    सामाजिक सन्जालका माध्यम(छ भने):: <span>{{ object.social_networking_medium }}</span><br>
+                                    निर्वाचित प्रक्रिया: <span
+                                        style="font-family: Preeti; font-size: 17px">{{ object.nirwachit_prakriya }}</span><br>
                                     निर्वाचित पद: <span
                                         style="font-family: Preeti; font-size: 17px">{{ object.nirwachit_padh }}</span><br>
-                                    निर्वाचित गा.बि.स वा नगरपालिकाको नाम: <span
-                                        style="font-family: Preeti; font-size: 17px">{{ object.nirwachit_vdc_or_municipality_name }}</span><br>
+                                    पिछडिएको क्षेत्र हो कि होइन: <span
+                                        style="font-family: Preeti; font-size: 17px">{{ object.pichidiyeko_chhetra_ho_hoina }}</span><br>
+                                    निर्वाचित क्षेत्रको विवरण: <span
+                                        style="font-family: Preeti; font-size: 17px">{{ object.nirwachit_chhetrako_bibaran }}</span><br>
+                                    निर्वाचित भएको क्षेत्र आफ्नो अस्थायी/ स्थायी ठेगाना भन्दा फरक: <span
+                                        style="font-family: Preeti; font-size: 17px">{{ object.nirwachit_vayeko_chhetra_aafno_thegana }}</span><br>
                                     पार्टीको नाम: <span
                                         style="font-family: Preeti; font-size: 17px">{{ object.party_name }}</span><br>
-                                    पार्टीमा संलग्न भएको मिति: <span
-                                        style="font-family: Preeti; font-size: 17px">{{ object.party_joined_date }}</span><br>
-                                    संलग्न संग सस्था समूह: <span
-                                        style="font-family: Preeti; font-size: 17px">{{ object.samlagna_sang_sastha_samuha }}</span><br>
+                                    पार्टीमा संलग्न भएको मिति: <span>{{ object.party_joined_date }}</span><br>
+                                    प्रमुख जिम्मेवारी: <span
+                                        style="font-family: Preeti; font-size: 17px">{{ object.pramukh_jimmewari }}</span><br>
                                     निर्वाचित क्षेत्र प्रतिको प्रतिबध्धता: <span
                                         style="font-family: Preeti; font-size: 17px">{{ object.nirwachit_chetra_pratiko_pratibadhata }}</span><br>
+                                    आज भन्दा अघि चुनाब लड्नुभएको छ?: <span
+                                        style="font-family: Preeti; font-size: 17px">{{ object.aaja_vanda_agadi_chunab_ladnu_vayeko_chha }}</span><br>
+                                    प्राप्त मत संख्या: <span
+                                        style="font-family: Preeti; font-size: 17px">{{ object.prapta_maat_sankhya }}</span><br>
+                                    सलग्न संघ, सस्था , समूह: <span
+                                        style="font-family: Preeti; font-size: 17px">{{ object.samlagna_sang_sastha_samuha }}</span><br>
                                     </p>
-                                    {#        <a href="{% url 'core:mahila_pratinidhi_update' object.pk%}">Edit</a>#}
-                                    {#        <a href="{% url 'core:mahila_pratinidhi_delete' object.pk%}">Delete</a>#}
 
                                 </div>
-                                <a href="#" title=""
+                                <a href="{% url 'core:province_mahila_pratinidhi_update' object.pk %}" title=""
                                    class="btn btn-sm btn-xs btn-primary"><i class="la la-edit"></i>Edit &nbsp</a>
-                                <a href="#" title=""
+                                <a href="{% url 'core:province_mahila_pratinidhi_delete' object.pk %}" title=""
                                    class="btn btn-sm btn-xs btn-primary"><i class="la la-edit"></i>Delete &nbsp</a>
                             </div>
                         </div>

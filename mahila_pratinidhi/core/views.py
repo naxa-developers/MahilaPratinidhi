@@ -66,6 +66,39 @@ class ProvinceMahilaPratinidhiFormDetailView(LoginRequiredMixin, DetailView):
 		return context
 
 
+class ProvinceMahilaPratinidhiFormUpdateView(LoginRequiredMixin, UpdateView):
+
+	model = ProvinceMahilaPratinidhiForm
+	form_class = ProvinceMahilaPratinidhiFormForm
+	template_name = "core/province_mahila_pratinidhi_form.html"
+
+	def get_success_url(self):
+		success_url = reverse_lazy('core:province_mahila_pratinidhi_form_dashboard', args=(self.object.province.pk,))
+		return success_url
+
+	def get_context_data(self, **kwargs):
+		context = super(ProvinceMahilaPratinidhiFormUpdateView, self).get_context_data(**kwargs)
+		context['province'] = ProvinceMahilaPratinidhiForm.objects.get(id=self.kwargs['pk']).province
+		context['is_update_form'] = True
+		return context
+
+
+class ProvinceMahilaPratinidhiFormDeleteView(LoginRequiredMixin, DeleteView):
+
+	model = ProvinceMahilaPratinidhiForm
+	template_name = "core/province_mahila_pratinidhi_delete.html"
+	context_object_name = 'form'
+
+	def get_success_url(self):
+		success_url = reverse_lazy('core:province_mahila_pratinidhi_form_dashboard', args=(self.object.province.pk,))
+		return success_url
+
+	def get_context_data(self, **kwargs):
+		context = super(ProvinceMahilaPratinidhiFormDeleteView, self).get_context_data(**kwargs)
+		context['province'] = self.object.province
+		return context
+
+
 class MahilaPratinidhiFormUpdateView(LoginRequiredMixin, UpdateView):
 
 	model = MahilaPratinidhiForm
@@ -212,7 +245,6 @@ def province_file_upload(request):
 
 	try:
 		request_files = request.FILES.getlist('file')
-		print(Province.objects.get(name=request.POST.get('prov')))
 		files = [pd.read_excel(filename, sheet_name="province3").fillna(value='') for filename in request_files]
 
 		for df in files:
@@ -220,7 +252,7 @@ def province_file_upload(request):
 			for row in range(0, total):
 
 				ProvinceMahilaPratinidhiForm.objects.get_or_create(
-					province=Province.objects.get(name=request.POST.get('prov')),
+					province=Province.objects.get(name=Province.objects.get(name=df['Province'][0])),
 					name=df['नाम'][row],
 					english_name=df['English Name'][row],
 					date_of_birth=df['जन्ममिती'][row],

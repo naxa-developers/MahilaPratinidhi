@@ -33,6 +33,43 @@ CASTE_CHOICES = (
 					('cGo', 'अन्य')
 				)
 
+MOTHER_TONGUE_CHOICES = [
+							('नेपाली', 'नेपाली'),
+							('मगर खामस्तानाकोतरराजनीति शास्त्र','मगर खामस्तानाकोतरराजनीति शास्त्र'),
+							('नेवारी', 'नेवारी'),
+							('नेपाल भाषा', 'नेपाल भाषा'),
+							('तामाङ', 'तामाङ'),
+						]
+
+
+NIRWACHIT_PRAKRIYA_CHOICES = [
+								('समानुपातिक', 'समानुपातिक'),
+								('प्रतक्ष्य', 'प्रतक्ष्य'),
+							]
+
+
+NIRWACHIT_PADH_CHOICES = [
+							('सांसद - प्रदेशसभा', 'सांसद - प्रदेशसभा'),
+						]
+
+
+PICHIDIYEKO_CHHETRA_CHOICES = [
+								('हो', 'हो'),
+								('होइन', 'होइन'),
+							]
+
+
+NIRWACHIT_VAYEKO_CHHETRA_AAFNO_THEGANA_VANDA_FARAK_CHOICES = [
+													('हो', 'हो'),
+													('होइन', 'होइन'),
+												]
+
+CHUNAB_LADNU_VAYEKO_CHOICES = [
+								('समानुपातिक', 'समानुपातिक'),
+								('छैन', 'छैन'),
+								('छ', 'छ'),
+							]
+
 
 class District(models.Model):
 	name = models.CharField(max_length=300)
@@ -82,10 +119,11 @@ class ProvinceMahilaPratinidhiForm(models.Model):
 	date_of_birth = models.CharField(max_length=300, verbose_name="जन्ममिती")
 	mothers_name = models.CharField(max_length=300, verbose_name="आमाको नाम")
 	fathers_name = models.CharField(max_length=300, verbose_name="बाबुको नाम")
-	marital_status = models.CharField(max_length=300, verbose_name="बैवाहिक स्थिथि", blank=True)
-	updated_marital_status = models.CharField(choices=MARITAL_CHOICES, blank=True, max_length=300, verbose_name="बैवाहिक स्थिथि")
+	marital_status = models.CharField(max_length=300, verbose_name="बैवाहिक स्थिथि", blank=True, null=True)
+	updated_marital_status = models.CharField(choices=MARITAL_CHOICES, max_length=300, verbose_name="बैवाहिक स्थिथि", blank=True, null=True)
 	husbands_name = models.CharField(max_length=300, verbose_name="श्रीमानको नाम")
-	caste = models.CharField(choices=CASTE_CHOICES, blank=True, max_length=300, verbose_name="जातियता")
+	caste = models.CharField(max_length=300, verbose_name="जातियता")
+	updated_caste = models.CharField(choices=CASTE_CHOICES, blank=True, max_length=300, verbose_name="जातियता")
 	mother_tongue = models.CharField(max_length=300, verbose_name="मातृभाषा", blank=True)
 	educational_qualification = models.CharField(max_length=300, verbose_name="औपचारिक शैक्षिक योग्यता", blank=True)
 	updated_educational_qualification = models.CharField(choices=EDUCATIONAL_QUALIFICATION_CHOICES, blank=True, max_length=300, verbose_name="शैछिक योग्यता")
@@ -103,22 +141,27 @@ class ProvinceMahilaPratinidhiForm(models.Model):
 	email = models.EmailField(verbose_name="इ-मेल", blank=True)
 	social_networking_medium = models.CharField(max_length=300, verbose_name="सामाजिक सन्जालका माध्यम(छ भने):", blank=True)
 	nirwachit_prakriya = models.CharField(max_length=300, verbose_name="निर्वाचित प्रक्रिया", blank=True)
+	updated_nirwachit_prakriya = models.CharField(choices=NIRWACHIT_PRAKRIYA_CHOICES, max_length=300, verbose_name="निर्वाचित प्रक्रिया", blank=True)
 	nirwachit_padh = models.CharField(max_length=300, verbose_name="निर्वाचित पद", blank=True)
+	updated_nirwachit_padh = models.CharField(max_length=300, choices=NIRWACHIT_PADH_CHOICES, verbose_name="निर्वाचित पद", blank=True)
 	pichidiyeko_chhetra_ho_hoina = models.CharField(max_length=300, verbose_name="पिछडिएको क्षेत्र हो कि होइन", blank=True)
+	updated_pichidiyeko_chhetra_ho_hoina = models.CharField(choices=PICHIDIYEKO_CHHETRA_CHOICES, max_length=300, verbose_name="पिछडिएको क्षेत्र हो कि होइन", blank=True)
 	nirwachit_chhetrako_bibaran = models.CharField(max_length=300, verbose_name="निर्वाचित क्षेत्रको विवरण", blank=True)
-	nirwachit_vayeko_chhetra_aafno_thegana = models.CharField(max_length=300, verbose_name="निर्वाचित भएको क्षेत्र आफ्नो अस्थायी/ स्थायी ठेगाना भन्दा फरक", blank=True)
+	nirwachit_vayeko_chhetra_aafno_thegana = models.CharField(max_length=300, verbose_name="निर्वाचित भएको क्षेत्र आफ्नो अस्थायी/ स्थायी ठेगाना भन्दा फरक", blank=True, null=True)
+	updated_nirwachit_vayeko_chhetra_aafno_thegana = models.CharField(choices=NIRWACHIT_VAYEKO_CHHETRA_AAFNO_THEGANA_VANDA_FARAK_CHOICES, max_length=300, verbose_name="निर्वाचित भएको क्षेत्र आफ्नो अस्थायी/ स्थायी ठेगाना भन्दा फरक", blank=True, null=True)
 	party_name = models.CharField(max_length=300, verbose_name="पार्टीको विवरण: पार्टीको नाम", blank=True)
 	party_joined_date = models.CharField(max_length=300, verbose_name="पार्टीमा संलग्न भएको मिति", blank=True)
 	pramukh_jimmewari = models.CharField(max_length=300, verbose_name="प्रमुख जिम्मेवारी ", blank=True)
 	nirwachit_chetra_pratiko_pratibadhata = models.TextField(verbose_name="निर्वाचित क्षेत्र प्रतिको प्रतिबध्धता", blank=True)
 	aaja_vanda_agadi_chunab_ladnu_vayeko_chha = models.CharField(max_length=300, verbose_name="आज भन्दा अघि चुनाब लड्नुभएको छ?")
+	updated_aaja_vanda_agadi_chunab_ladnu_vayeko_chha = models.CharField(choices=CHUNAB_LADNU_VAYEKO_CHOICES, max_length=300, verbose_name="आज भन्दा अघि चुनाब लड्नुभएको छ?", null=True, blank=True)
 	prapta_maat_sankhya = models.CharField(max_length=300, verbose_name="प्राप्त मत संख्या", blank=True)
 	samlagna_sang_sastha_samuha = models.CharField(max_length=300, verbose_name="सलग्न संघ, सस्था , समूह", blank=True)
 	status = models.BooleanField(choices=BOOL_CHOICES, default=False, verbose_name="स्थिति")
 	image = models.ImageField(blank=True, null=True, upload_to='provinceProfile/', verbose_name="फोटो")
 
 	def __str__(self):
-		return "{}-{} फारम".format(self.province.name,self.name)
+		return "{}-{} फारम".format(self.province.name, self.name)
 
 
 

@@ -20,6 +20,10 @@ urlpatterns = [
 		 name="province_mahila_pratinidhi_form_dashboard"),
 	path('province-mahila-pratinidhi-detail/<int:pk>/', views.ProvinceMahilaPratinidhiFormDetailView.as_view(),
 		 name="province_mahila_pratinidhi_detail"),
+	path('province-mahila-pratinidhi-update/<int:pk>/', views.ProvinceMahilaPratinidhiFormUpdateView.as_view(),
+		 name="province_mahila_pratinidhi_update"),
+	path('province-mahila-pratinidhi-delete/<int:pk>/', views.ProvinceMahilaPratinidhiFormDeleteView.as_view(),
+		 name="province_mahila_pratinidhi_delete"),
 
 	path('province-upload/', views.ProvinceUloadView.as_view(), name="province_upload"),
 	path('province-file-upload/', views.province_file_upload, name="province_file_upload"),
