@@ -1,0 +1,100 @@
+{% extends '_base.html' %}
+
+{% load filters %}
+{% block content %}
+    <div id="main-container" class="minified">
+
+        <!--[if lt IE 8]>
+            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+        <?php include 'header.php'; ?>
+
+        <div class="row no-gutters">
+            <div class="col-md-12">
+                <div class="dash-right">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="widget-info margin-top-large">
+                                <div class="widget-head">
+                                    <h3><a href="#" title="">महिला प्रतिनिधि फारमहरू</a></h3>
+                                </div>
+                                <div class="widget-body">
+                                    <div class="data-filter-wrap">
+                                        <form action="" method="get">
+                                            <div class="row">
+                                                <div class="form-group col-md-4">
+                                                    <label for="inputProvince"><strong>जिल्ला
+                                                        छान्नुहोस्</strong></label>
+
+                                                    <select class="form-control" id="inputProvince" name="prov">
+                                                        {% for province in provinces %}
+                                                            <option value="{{ province.name }}"
+                                                                    {% if request.GET.prov == province.name %}selected{% endif %}>{{ province.name }}</option>
+                                                        {% endfor %}
+
+                                                    </select>
+                                                </div>
+
+                                                <div class="col-md-4">
+                                                    <button type="submit" class="btn btn-default margin-top-large"><i
+                                                            class="la la-filter"></i> फिल्टर
+                                                    </button>
+                                                </div>
+
+
+                                            </div>
+                                        </form>
+
+                                    </div>
+
+                                    <ul class="row">
+                                        {% if province %}
+                                            {% for province in provinces %}
+
+                                                <li class="col-sm-6 col-md-4 col-lg-3">
+                                                    <a href="{% url 'core:province_mahila_pratinidhi_form_dashboard' province.pk %}"
+                                                       class="org-item-wrap">
+                                                        <h5>{{ province.name }}</h5>
+                                                        <span style="font-family: Preeti; font-size: 14px" {% status province.pk %}></span>
+
+                                                            <progress value="{% available_elected_women province.pk %}"
+                                                                      max="{{ province.elected_women }}">
+                                                            </progress> {% available_elected_women province.pk %}/{{ province.elected_women }}
+
+
+                                                    </a>
+                                                </li>
+
+                                            {% endfor %}
+                                        {% else %}
+
+                                            {% for province in provinces %}
+
+                                                <li class="col-sm-6 col-md-4 col-lg-3">
+                                                    <a href="{% url 'core:province_mahila_pratinidhi_form_dashboard' province.pk %}"
+                                                       class="org-item-wrap">
+                                                        <h5>{{ province.name }}</h5>
+                                                        {% status province.pk as status %}
+                                                            <progress value="{% available_elected_women province.pk %}"
+                                                                      max="{{ province.elected_women }}">
+                                                            </progress> {% available_elected_women province.pk %}/{{ province.elected_women }}
+
+
+
+                                                    </a>
+                                                </li>
+
+                                            {% endfor %}
+                                        {% endif %}
+
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock content %}

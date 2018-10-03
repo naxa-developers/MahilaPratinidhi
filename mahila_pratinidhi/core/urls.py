@@ -6,6 +6,7 @@ app_name = 'core'
 
 urlpatterns = [
 	path('', views.Dashboard.as_view(), name="dashboard"),
+	path('', views.ProvinceDashboard.as_view(), name="province_dashboard"),
 	path('mahila-pratinidhi-forms-list/<district_id>', views.MahilaPratinidhiDashboardView.as_view(), name="mahila_pratinidhi_form_dashboard"),
 	path('mahila-pratinidhi-form/<district_id>', views.MahilaPratinidhiFormCreateView.as_view(), name="mahila_pratinidhi_form"),
 	path('mahila-pratinidhi-detail/<int:pk>/', views.MahilaPratinidhiFormDetailView.as_view(), name="mahila_pratinidhi_detail"),

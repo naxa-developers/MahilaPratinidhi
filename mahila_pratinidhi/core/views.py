@@ -41,6 +41,17 @@ class Dashboard(LoginRequiredMixin, TemplateView):
 
 		return render(request, self.template_name, {'districts': districts, 'district': district})
 
+class ProvinceDashboard(LoginRequiredMixin, TemplateView):
+
+	template_name = "core/province_dashboard.html"
+
+	def get(self, request, *args, **kwargs):
+		provinces = Province.objects.all()
+		province = request.GET.get('prov')
+		province = Province.objects.filter(name=province)
+
+		return render(request, self.template_name, {'provinces': provinces, 'province': province})
+
 
 class MahilaPratinidhiFormDetailView(LoginRequiredMixin, DetailView):
 
