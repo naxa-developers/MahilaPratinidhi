@@ -67,7 +67,15 @@
                                         <span
                                             style="font-family: Preeti; font-size: 17px">{{ object.caste }}</span><br>
                                     {% endif %}
-                                    मातृभाषा: <span style="font-family: Preeti; font-size: 17px">{{ object.mother_tongue }}</span><br>
+                                    मातृभाषा:
+                                    {% if object.updated_mother_tongue %}
+
+                                        <span
+                                            style="font-family: Preeti; font-size: 17px">{{ object.updated_mother_tongue }}</span><br>
+                                        {% else %}
+                                            <span
+                                            style="font-family: Preeti; font-size: 17px">{{ object.mother_tongue }}</span><br>
+                                    {% endif %}
                                     शऔपचारिक शैक्षिक योग्यता:
                                     {% if object.updated_educational_qualification %}
 
@@ -97,16 +105,44 @@
                                     सम्पर्क न.: <span>{{ object.contact_number }}</span><br>
                                     इ-मेल: {{ object.email }}<br>
                                     सामाजिक सन्जालका माध्यम(छ भने):: <span>{{ object.social_networking_medium }}</span><br>
-                                    निर्वाचित प्रक्रिया: <span
-                                        style="font-family: Preeti; font-size: 17px">{{ object.nirwachit_prakriya }}</span><br>
-                                    निर्वाचित पद: <span
-                                        style="font-family: Preeti; font-size: 17px">{{ object.nirwachit_padh }}</span><br>
-                                    पिछडिएको क्षेत्र हो कि होइन: <span
-                                        style="font-family: Preeti; font-size: 17px">{{ object.pichidiyeko_chhetra_ho_hoina }}</span><br>
+                                    निर्वाचित प्रक्रिया:
+                                    {% if object.updated_nirwachit_prakriya %}
+
+                                        <span
+                                            style="font-family: Preeti; font-size: 17px">{{ object.updated_nirwachit_prakriya }}</span><br>
+                                        {% else %}
+                                            <span
+                                            style="font-family: Preeti; font-size: 17px">{{ object.nirwachit_prakriya }}</span><br>
+                                    {% endif %}
+                                    निर्वाचित पद:
+                                    {% if object.updated_nirwachit_padh %}
+
+                                        <span
+                                            style="font-family: Preeti; font-size: 17px">{{ object.updated_nirwachit_padh }}</span><br>
+                                        {% else %}
+                                            <span
+                                            style="font-family: Preeti; font-size: 17px">{{ object.nirwachit_padh }}</span><br>
+                                    {% endif %}
+                                    पिछडिएको क्षेत्र हो कि होइन:
+                                    {% if object.updated_pichidiyeko_chhetra_ho_hoina %}
+
+                                        <span
+                                            style="font-family: Preeti; font-size: 17px">{{ object.updated_pichidiyeko_chhetra_ho_hoina }}</span><br>
+                                        {% else %}
+                                            <span
+                                            style="font-family: Preeti; font-size: 17px">{{ object.pichidiyeko_chhetra_ho_hoina }}</span><br>
+                                    {% endif %}
                                     निर्वाचित क्षेत्रको विवरण: <span
                                         style="font-family: Preeti; font-size: 17px">{{ object.nirwachit_chhetrako_bibaran }}</span><br>
-                                    निर्वाचित भएको क्षेत्र आफ्नो अस्थायी/ स्थायी ठेगाना भन्दा फरक: <span
-                                        style="font-family: Preeti; font-size: 17px">{{ object.nirwachit_vayeko_chhetra_aafno_thegana }}</span><br>
+                                    निर्वाचित भएको क्षेत्र आफ्नो अस्थायी/ स्थायी ठेगाना भन्दा फरक:
+                                    {% if object.updated_nirwachit_vayeko_chhetra_aafno_thegana %}
+
+                                        <span
+                                            style="font-family: Preeti; font-size: 17px">{{ object.updated_nirwachit_vayeko_chhetra_aafno_thegana }}</span><br>
+                                        {% else %}
+                                            <span
+                                            style="font-family: Preeti; font-size: 17px">{{ object.nirwachit_vayeko_chhetra_aafno_thegana }}</span><br>
+                                    {% endif %}
                                     पार्टीको नाम: <span
                                         style="font-family: Preeti; font-size: 17px">{{ object.party_name }}</span><br>
                                     पार्टीमा संलग्न भएको मिति: <span>{{ object.party_joined_date }}</span><br>
@@ -114,8 +150,15 @@
                                         style="font-family: Preeti; font-size: 17px">{{ object.pramukh_jimmewari }}</span><br>
                                     निर्वाचित क्षेत्र प्रतिको प्रतिबध्धता: <span
                                         style="font-family: Preeti; font-size: 17px">{{ object.nirwachit_chetra_pratiko_pratibadhata }}</span><br>
-                                    आज भन्दा अघि चुनाब लड्नुभएको छ?: <span
-                                        style="font-family: Preeti; font-size: 17px">{{ object.aaja_vanda_agadi_chunab_ladnu_vayeko_chha }}</span><br>
+                                    आज भन्दा अघि चुनाब लड्नुभएको छ?:
+                                    {% if object.updated_aaja_vanda_agadi_chunab_ladnu_vayeko_chha %}
+
+                                        <span
+                                            style="font-family: Preeti; font-size: 17px">{{ object.updated_aaja_vanda_agadi_chunab_ladnu_vayeko_chha }}</span><br>
+                                        {% else %}
+                                            <span
+                                            style="font-family: Preeti; font-size: 17px">{{ object.aaja_vanda_agadi_chunab_ladnu_vayeko_chha }}</span><br>
+                                    {% endif %}
                                     प्राप्त मत संख्या: <span
                                         style="font-family: Preeti; font-size: 17px">{{ object.prapta_maat_sankhya }}</span><br>
                                     सलग्न संघ, सस्था , समूह: <span

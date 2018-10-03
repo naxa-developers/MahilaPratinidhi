@@ -27,13 +27,13 @@
 
 
                        <form action="{% url 'core:province_file_upload' %}" method="post" enctype="multipart/form-data" >{% csrf_token %}
-                            <select id="inputProvince" name="prov">
+                           <!-- <select id="inputProvince" name="prov">
                                 {% for province in provinces %}
                                     <option value="{{ province.name }}"
                                             {% if request.GET.prov == province.name %}selected{% endif %}>{{ province.name }}</option>
                                 {% endfor %}
 
-                            </select>
+                            </select> -->
                            <input type="file" name="file" multiple>
                            <p style="margin-top: 10px">
                            <input type="submit" class="btn-primary">
