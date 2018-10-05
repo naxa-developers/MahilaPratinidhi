@@ -1,6 +1,6 @@
 from django import forms
 
-from .models import MahilaPratinidhiForm, ProvinceMahilaPratinidhiForm
+from .models import MahilaPratinidhiForm, ProvinceMahilaPratinidhiForm, RastriyaShava, PratinidhiShava
 
 
 class MahilaPratinidhiFormForm(forms.ModelForm):
@@ -32,3 +32,15 @@ class ProvinceMahilaPratinidhiFormForm(forms.ModelForm):
 	class Meta:
 		model = ProvinceMahilaPratinidhiForm
 		exclude = ('province', )
+
+class RastriyaShavaFormForm(forms.ModelForm):
+
+	class Meta:
+		model = RastriyaShava
+		exclude = ()
+
+class PratinidhiShavaFormForm(forms.ModelForm):
+
+	class Meta:
+		model = PratinidhiShava
+		exclude = ()

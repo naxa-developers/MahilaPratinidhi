@@ -70,50 +70,7 @@ CHUNAB_LADNU_VAYEKO_CHOICES = [
 								('छ', 'छ'),
 							]
 
-
-class District(models.Model):
-	name = models.CharField(max_length=300)
-	elected_women = models.IntegerField(default=0)
-
-	def __str__(self):
-		return self.name
-
-
-class MahilaPratinidhiForm(models.Model):
-	district = models.ForeignKey(District, on_delete=models.CASCADE, related_name='district', verbose_name="जिल्ला")
-	name = models.CharField(max_length=300, verbose_name="नाम")
-	age = models.CharField(max_length=300, verbose_name="उमेर", blank=True)
-	marital_status = models.CharField(max_length=300, verbose_name="बैवाहिक स्थिथि", blank=True)
-	updated_marital_status = models.CharField(choices=MARITAL_CHOICES, blank=True, max_length=300, verbose_name="बैवाहिक स्थिथि")
-	educational_qualification = models.CharField(max_length=300, verbose_name="शैछिक योग्यता", blank=True)
-	updated_educational_qualification = models.CharField(choices=EDUCATIONAL_QUALIFICATION_CHOICES, blank=True, max_length=300, verbose_name="शैछिक योग्यता")
-	caste = models.CharField(max_length=300, verbose_name="जातियता", blank=True)
-	updated_caste = models.CharField(choices=CASTE_CHOICES, blank=True, max_length=300, verbose_name="जातियता")
-	address = models.CharField(max_length=300, verbose_name="ठेगाना", blank=True)
-	contact_number = models.CharField(max_length=300, verbose_name="सम्पर्क न.", blank=True)
-	email = models.EmailField(verbose_name="इ-मेल", blank=True)
-	nirwachit_padh = models.CharField(max_length=300, verbose_name="निर्वाचित पद", blank=True)
-	nirwachit_vdc_or_municipality_name = models.CharField(max_length=300, verbose_name="निर्वाचित गा.बि.स वा नगरपालिकाको नाम", blank=True)
-	party_name = models.CharField(max_length=300, verbose_name="पार्टीको नाम", blank=True)
-	party_joined_date = models.CharField(max_length=300, verbose_name="पार्टीमा संलग्न भएको मिति", blank=True)
-	samlagna_sang_sastha_samuha = models.CharField(max_length=300, verbose_name="संलग्न संग सस्था समूह", blank=True)
-	nirwachit_chetra_pratiko_pratibadhata = models.TextField(verbose_name="निर्वाचित क्षेत्र प्रतिको प्रतिबध्धता", blank=True)
-	status = models.BooleanField(choices=BOOL_CHOICES, default=False, verbose_name="स्थिति")
-	image = models.ImageField(blank=True, upload_to='profile/', verbose_name="फोटो")
-
-	def __str__(self):
-		return "{} फारम".format(self.district.name)
-
-
-class Province(models.Model):
-	name = models.CharField(max_length=300)
-
-	def __str__(self):
-		return self.name
-
-
-class ProvinceMahilaPratinidhiForm(models.Model):
-	province = models.ForeignKey(Province, on_delete=models.CASCADE, related_name='province_mahila_pratinidhi_form', verbose_name="प्रदेश")
+class CommonShavaFields(models.Model):
 	name = models.CharField(max_length=300, verbose_name="नाम")
 	english_name = models.CharField(max_length=300, verbose_name="English Name")
 	date_of_birth = models.CharField(max_length=300, verbose_name="जन्ममिती")
@@ -161,10 +118,66 @@ class ProvinceMahilaPratinidhiForm(models.Model):
 	status = models.BooleanField(choices=BOOL_CHOICES, default=False, verbose_name="स्थिति")
 	image = models.ImageField(blank=True, null=True, upload_to='provinceProfile/', verbose_name="फोटो")
 
+	class Meta:
+		abstract = True
+
+
+class District(models.Model):
+	name = models.CharField(max_length=300)
+	elected_women = models.IntegerField(default=0)
+
+	def __str__(self):
+		return self.name
+
+
+class MahilaPratinidhiForm(models.Model):
+	district = models.ForeignKey(District, on_delete=models.CASCADE, related_name='district', verbose_name="जिल्ला")
+	name = models.CharField(max_length=300, verbose_name="नाम")
+	age = models.CharField(max_length=300, verbose_name="उमेर", blank=True)
+	marital_status = models.CharField(max_length=300, verbose_name="बैवाहिक स्थिथि", blank=True)
+	updated_marital_status = models.CharField(choices=MARITAL_CHOICES, blank=True, max_length=300, verbose_name="बैवाहिक स्थिथि")
+	educational_qualification = models.CharField(max_length=300, verbose_name="शैछिक योग्यता", blank=True)
+	updated_educational_qualification = models.CharField(choices=EDUCATIONAL_QUALIFICATION_CHOICES, blank=True, max_length=300, verbose_name="शैछिक योग्यता")
+	caste = models.CharField(max_length=300, verbose_name="जातियता", blank=True)
+	updated_caste = models.CharField(choices=CASTE_CHOICES, blank=True, max_length=300, verbose_name="जातियता")
+	address = models.CharField(max_length=300, verbose_name="ठेगाना", blank=True)
+	contact_number = models.CharField(max_length=300, verbose_name="सम्पर्क न.", blank=True)
+	email = models.EmailField(verbose_name="इ-मेल", blank=True)
+	nirwachit_padh = models.CharField(max_length=300, verbose_name="निर्वाचित पद", blank=True)
+	nirwachit_vdc_or_municipality_name = models.CharField(max_length=300, verbose_name="निर्वाचित गा.बि.स वा नगरपालिकाको नाम", blank=True)
+	party_name = models.CharField(max_length=300, verbose_name="पार्टीको नाम", blank=True)
+	party_joined_date = models.CharField(max_length=300, verbose_name="पार्टीमा संलग्न भएको मिति", blank=True)
+	samlagna_sang_sastha_samuha = models.CharField(max_length=300, verbose_name="संलग्न संग सस्था समूह", blank=True)
+	nirwachit_chetra_pratiko_pratibadhata = models.TextField(verbose_name="निर्वाचित क्षेत्र प्रतिको प्रतिबध्धता", blank=True)
+	status = models.BooleanField(choices=BOOL_CHOICES, default=False, verbose_name="स्थिति")
+	image = models.ImageField(blank=True, upload_to='profile/', verbose_name="फोटो")
+
+	def __str__(self):
+		return "{} फारम".format(self.district.name)
+
+
+class Province(models.Model):
+	name = models.CharField(max_length=300)
+
+	def __str__(self):
+		return self.name
+
+
+class ProvinceMahilaPratinidhiForm(CommonShavaFields):
+	province = models.ForeignKey(Province, on_delete=models.CASCADE, related_name='province_mahila_pratinidhi_form', verbose_name="प्रदेश")
+
 	def __str__(self):
 		return "{}-{} फारम".format(self.province.name, self.name)
 
+class RastriyaShava(CommonShavaFields):
 
+	def __str__(self):
+		return "{}-{} फारम".format(self.name, self.name)
+
+class PratinidhiShava(CommonShavaFields):
+
+	def __str__(self):
+		return "{}-{} फारम".format(self.name, self.name)
 
 
 

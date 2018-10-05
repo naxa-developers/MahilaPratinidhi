@@ -1,0 +1,147 @@
+{% extends '_base.html' %}
+
+{% block content %}
+    <div id="main-container" class="minified">
+
+        <!--[if lt IE 8]>
+            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+        <?php include 'header.php'; ?>
+
+        <!--<div class="row no-gutters">
+            <div class="col-md-12">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{% url 'core:province_dashboard' %}">गृह पृष्‍ठ</a></li>
+                        <li class="breadcrumb-item"><a
+                                href="{% url 'core:province_mahila_pratinidhi_form_dashboard' province.id %}">{{ province.name }}</a>
+                        </li>
+                        {% if is_update_form %}
+                            <li class="breadcrumb-item active" aria-current="page"><span
+                                    style="font-family: Preeti; font-size: 14px">{{ object.name }}</span></li>
+
+                        {% else %}
+                            <li class="breadcrumb-item active" aria-current="page"><span style="font-family: Preeti">फारम भर्नुहोस्</span>
+                            </li>
+                        {% endif %}
+                    </ol>
+                </nav>
+            </div> -->
+            <div class="col-md-12">
+                <div class="dash-right">
+                    <div class="row">
+
+                        <div class="col-md-12">
+                            <div class="widget-info margin-top-large">
+                                <form class="form-horizontal" action="" enctype="multipart/form-data"
+                                      method="post">{% csrf_token %}
+                                    <div class="form-group">
+
+                                        {{ form.name.label_tag }} {{ form.name }}<br>
+                                        {{ form.english_name.label_tag }} {{ form.english_name }}<br>
+                                        {{ form.date_of_birth.label_tag }} {{ form.date_of_birth }}<br>
+                                        {{ form.mothers_name.label_tag }} {{ form.mothers_name }}<br>
+                                        {{ form.fathers_name.label_tag }} {{ form.fathers_name }}<br>
+                                        {% if object %}
+                                            {{ form.marital_status.label_tag }}
+                                            <span style="font-family: preeti; font-size: 18px; ">{{ form.marital_status }}</span>
+                                            {{ form.updated_marital_status }}<br>
+                                        {% else %}
+                                            {{ form.updated_marital_status.label_tag }}  {{ form.updated_marital_status }}<br>
+                                        {% endif %}
+
+                                        {{ form.husbands_name.label_tag }} {{ form.husbands_name }}<br>
+                                        {% if object %}
+                                            {{ form.caste.label_tag }}<span style="font-family: preeti; font-size: 18px"> {{ form.caste }}</span>
+                                            {{ form.updated_caste }}<br>
+                                        {% else %}
+                                            {{ form.updated_caste.label_tag }}  {{ form.updated_caste }}<br>
+                                        {% endif %}
+                                        {% if object %}
+                                            {{ form.mother_tongue.label_tag }}
+                                            <span style="font-family: preeti; font-size: 18px"> {{ form.mother_tongue }}</span>
+                                            {{ form.updated_mother_tongue }}<br>
+                                        {% else %}
+                                            {{ form.updated_mother_tongue.label_tag }}  {{ form.updated_mother_tongue }}<br>
+                                        {% endif %}
+                                        {% if object %}
+                                            {{ form.educational_qualification.label_tag }}
+                                            <span style="font-family: preeti; font-size: 18px">{{ form.educational_qualification }}</span>
+                                            {{ form.updated_educational_qualification }}<br>
+                                        {% else %}
+                                            {{ form.updated_educational_qualification.label_tag }} {{ form.updated_educational_qualification }}<br>
+                                        {% endif %}
+                                        {{ form.subject.label_tag }} {{ form.subject }}<br>
+
+                                        {{ form.permanent_address.label_tag }} {{ form.permanent_address }}<br>
+                                        {{ form.permanent_gapa_napa.label_tag }} {{ form.permanent_gapa_napa }}<br>
+                                        {{ form.permanent_ward_no.label_tag }} {{ form.permanent_ward_no }}<br>
+                                        {{ form.permanent_tole.label_tag }} {{ form.permanent_tole }}<br>
+                                        {{ form.temporary_address.label_tag }} {{ form.temporary_address }}<br>
+                                        {{ form.temporary_gapa_napa.label_tag }} {{ form.temporary_gapa_napa }}<br>
+                                        {{ form.temporary_ward_no.label_tag }} {{ form.temporary_ward_no }}<br>
+                                        {{ form.temporary_tole.label_tag }} {{ form.temporary_tole }}<br>
+                                        {{ form.mobile.label_tag }} {{ form.mobile }}<br>
+                                        {{ form.contact_number.label_tag }} {{ form.contact_number }}<br>
+                                        {{ form.email.label_tag }} {{ form.email }}<br>
+                                        {{ form.social_networking_medium.label_tag }} {{ form.social_networking_medium }}<br>
+                                        {% if object %}
+                                            {{ form.nirwachit_prakriya.label_tag }}
+                                            <span style="font-family: preeti; font-size: 18px">{{ form.nirwachit_prakriya }}</span>
+                                            {{ form.updated_nirwachit_prakriya }}<br>
+                                        {% else %}
+                                            {{ form.updated_nirwachit_prakriya.label_tag }} {{ form.updated_nirwachit_prakriya }}<br>
+                                        {% endif %}
+                                        {% if object %}
+                                            {{ form.nirwachit_padh.label_tag }}
+                                            <span style="font-family: preeti; font-size: 18px">{{ form.nirwachit_padh }}</span>
+                                            {{ form.updated_nirwachit_padh }}<br>
+                                        {% else %}
+                                            {{ form.updated_nirwachit_padh.label_tag }} {{ form.updated_nirwachit_padh }}<br>
+                                        {% endif %}
+                                        {% if object %}
+                                            {{ form.pichidiyeko_chhetra_ho_hoina.label_tag }}
+                                            <span style="font-family: preeti; font-size: 18px">{{ form.pichidiyeko_chhetra_ho_hoina }}</span>
+                                            {{ form.updated_pichidiyeko_chhetra_ho_hoina }}<br>
+                                        {% else %}
+                                            {{ form.updated_pichidiyeko_chhetra_ho_hoina.label_tag }} {{ form.updated_pichidiyeko_chhetra_ho_hoina }}
+                                            <br>
+                                        {% endif %}
+                                        {{ form.nirwachit_chhetrako_bibaran.label_tag }} {{ form.nirwachit_chhetrako_bibaran }}<br>
+                                        {% if object %}
+                                            {{ form.nirwachit_vayeko_chhetra_aafno_thegana.label_tag }}
+                                            <span style="font-family: preeti; font-size: 18px">{{ form.nirwachit_vayeko_chhetra_aafno_thegana }}</span>
+                                            {{ form.updated_nirwachit_vayeko_chhetra_aafno_thegana }}<br>
+                                        {% else %}
+                                            {{ form.updated_nirwachit_vayeko_chhetra_aafno_thegana.label_tag }}
+                                            {{ form.updated_nirwachit_vayeko_chhetra_aafno_thegana }}<br>
+                                        {% endif %}
+                                        {{ form.party_name.label_tag }} {{ form.party_name }}<br>
+                                        {{ form.party_joined_date.label_tag }} {{ form.party_joined_date }}<br>
+                                        {{ form.pramukh_jimmewari.label_tag }} {{ form.pramukh_jimmewari }}<br>
+                                        {{ form.nirwachit_chetra_pratiko_pratibadhata.label_tag }} {{ form.nirwachit_chetra_pratiko_pratibadhata }}<br>
+                                        {% if object %}
+                                            {{ form.aaja_vanda_agadi_chunab_ladnu_vayeko_chha.label_tag }}
+                                            <span style="font-family: preeti; font-size: 18px">{{ form.aaja_vanda_agadi_chunab_ladnu_vayeko_chha }}</span>
+                                            {{ form.updated_aaja_vanda_agadi_chunab_ladnu_vayeko_chha }}<br>
+                                        {% else %}
+                                            {{ form.updated_aaja_vanda_agadi_chunab_ladnu_vayeko_chha.label_tag }}
+                                            {{ form.updated_aaja_vanda_agadi_chunab_ladnu_vayeko_chha }}<br>
+                                        {% endif %}
+                                        {{ form.prapta_maat_sankhya.label_tag }} {{ form.prapta_maat_sankhya }}<br>
+                                        {{ form.samlagna_sang_sastha_samuha.label_tag }} {{ form.samlagna_sang_sastha_samuha }}<br>
+                                        {{ form.status.label_tag }} {{ form.status }}<br>
+                                        {{ form.image.label_tag }} {{ form.image }}<br>
+
+
+                                    </div>
+                                    <input type="submit">
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

@@ -1,0 +1,94 @@
+{% extends '_base.html' %}
+
+{% block content %}
+    <div id="main-container" class="minified">
+
+        <!--[if lt IE 8]>
+            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+        <?php include 'header.php'; ?>
+
+        <div class="row no-gutters">
+            <div class="col-md-12">
+                <div class="dash-right">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="widget-info margin-top-large">
+                                <div class="widget-head">
+                                    <h3><a href="#" title="">HOME PAGE</a></h3>
+                                </div>
+                                <div class="widget-body">
+                                    <div class="data-filter-wrap">
+                                        <form action="" method="get"></form>
+
+                                    </div>
+                                    <ul class="row">
+                                         <li class="col-sm-6 col-md-4 col-lg-3">
+                                                    <a href="{% url 'core:rastriya_shava_form_dashboard' %}"
+                                                       class="org-item-wrap">
+                                                        <h5>राष्ट्रिय सभा</h5>
+                                                        <span style="font-family: Preeti; font-size: 14px"></span>
+
+                                                            <progress value=""
+                                                                      max="">
+                                                            </progress>
+
+
+                                                    </a>
+                                                </li>
+                                    </ul>
+                                    <ul class="row">
+                                         <li class="col-sm-6 col-md-4 col-lg-3">
+                                                    <a href="{% url 'core:province_dashboard' %}"
+                                                       class="org-item-wrap">
+                                                        <h5>प्रदेश सभा</h5>
+                                                        <span style="font-family: Preeti; font-size: 14px"></span>
+
+                                                            <progress value=""
+                                                                      max="">
+                                                            </progress>
+
+
+                                                    </a>
+                                                </li>
+                                    </ul>
+                                    <ul class="row">
+                                         <li class="col-sm-6 col-md-4 col-lg-3">
+                                                    <a href=""
+                                                       class="org-item-wrap">
+                                                        <h5>प्रतिनिधि सभा</h5>
+                                                        <span style="font-family: Preeti; font-size: 14px"></span>
+
+                                                            <progress value=""
+                                                                      max="">
+                                                            </progress>
+
+
+                                                    </a>
+                                                </li>
+                                    </ul>
+                                    <ul class="row">
+                                         <li class="col-sm-6 col-md-4 col-lg-3">
+                                                    <a href="{% url 'core:dashboard' %}"
+                                                       class="org-item-wrap">
+                                                        <h5>स्थानीय सभा</h5>
+                                                        <span style="font-family: Preeti; font-size: 14px"></span>
+
+                                                            <progress value=""
+                                                                      max="">
+                                                            </progress>
+
+
+                                                    </a>
+                                                </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock content %}

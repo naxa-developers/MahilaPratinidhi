@@ -1,6 +1,5 @@
 {% extends '_base.html' %}
 
-{% load filters %}
 {% block content %}
     <div id="main-container" class="minified">
 
@@ -23,10 +22,10 @@
                                         <form action="" method="get">
                                             <div class="row">
                                                 <div class="form-group col-md-4">
-                                                    <label for="inputProvince"><strong>जिल्ला
+                                                    <label for="inputProvince"><strong>प्रदेश
                                                         छान्नुहोस्</strong></label>
 
-                                                    <select class="form-control" id="inputProvince" name="prov">
+                                                   <!-- <select class="form-control" id="inputProvince" name="prov">
                                                         {% for province in provinces %}
                                                             <option value="{{ province.name }}"
                                                                     {% if request.GET.prov == province.name %}selected{% endif %}>{{ province.name }}</option>
@@ -39,7 +38,7 @@
                                                     <button type="submit" class="btn btn-default margin-top-large"><i
                                                             class="la la-filter"></i> फिल्टर
                                                     </button>
-                                                </div>
+                                                </div> -->
 
 
                                             </div>
@@ -55,11 +54,11 @@
                                                     <a href="{% url 'core:province_mahila_pratinidhi_form_dashboard' province.pk %}"
                                                        class="org-item-wrap">
                                                         <h5>{{ province.name }}</h5>
-                                                        <span style="font-family: Preeti; font-size: 14px" {% status province.pk %}></span>
+                                                        <span style="font-family: Preeti; font-size: 14px"></span>
 
-                                                            <progress value="{% available_elected_women province.pk %}"
-                                                                      max="{{ province.elected_women }}">
-                                                            </progress> {% available_elected_women province.pk %}/{{ province.elected_women }}
+                                                            <progress value=""
+                                                                      max="">
+                                                            </progress>
 
 
                                                     </a>
@@ -74,10 +73,9 @@
                                                     <a href="{% url 'core:province_mahila_pratinidhi_form_dashboard' province.pk %}"
                                                        class="org-item-wrap">
                                                         <h5>{{ province.name }}</h5>
-                                                        {% status province.pk as status %}
-                                                            <progress value="{% available_elected_women province.pk %}"
+                                                            <progress value=""
                                                                       max="{{ province.elected_women }}">
-                                                            </progress> {% available_elected_women province.pk %}/{{ province.elected_women }}
+                                                            </progress>
 
 
 

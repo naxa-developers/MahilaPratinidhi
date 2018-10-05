@@ -6,9 +6,88 @@ from django.shortcuts import render, get_object_or_404
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, UpdateView, DetailView, DeleteView, TemplateView
 
-from .models import MahilaPratinidhiForm, District, BOOL_CHOICES, ProvinceMahilaPratinidhiForm, Province
-from .forms import MahilaPratinidhiFormForm, ProvinceMahilaPratinidhiFormForm
+from .models import MahilaPratinidhiForm, District, BOOL_CHOICES, ProvinceMahilaPratinidhiForm, Province, RastriyaShava, PratinidhiShava
+from .forms import MahilaPratinidhiFormForm, ProvinceMahilaPratinidhiFormForm, RastriyaShavaFormForm, PratinidhiShavaFormForm
 
+
+class MainDashboard(LoginRequiredMixin, TemplateView):
+
+	template_name = "core/main_dashboard.html"
+
+class RastriyaShavaDashboardView(LoginRequiredMixin, TemplateView):
+	template_name = 'core/rastriya_shava_mahila_pratinidhi_form_dashboard.html'
+
+	def get(self, request, *args, **kwargs):
+		rastriya_shava_data = RastriyaShava.objects.all()
+		return render(request, self.template_name, {'rastriya_shava_datas':rastriya_shava_data})
+
+class RastriyaShavaCreateView(LoginRequiredMixin, CreateView):
+
+	model = RastriyaShava
+	form_class = RastriyaShavaFormForm
+	template_name = "core/rastriya_shava_mahila_pratinidhi_form.html"
+
+	def get_success_url(self):
+		success_url = reverse_lazy('core:rastriya_shava_form_dashboard')
+		return success_url
+
+	def get_context_data(self, **kwargs):
+		context = super(RastriyaShavaCreateView, self).get_context_data(**kwargs)
+		context['rastriya_shava'] = RastriyaShava.objects.all
+		return context
+
+class RastriyaShavaDetailView(LoginRequiredMixin, DetailView):
+
+	model = RastriyaShava
+	template_name = "core/rastriya_shava_mahila_pratinidhi_detail.html"
+	context_object_name = 'form'
+
+
+class RastriyaShavaUpdateView(LoginRequiredMixin, UpdateView):
+
+	model = RastriyaShava
+	form_class = RastriyaShavaFormForm
+	template_name = "core/rastriya_shava_mahila_pratinidhi_form.html"
+
+	def get_success_url(self):
+		success_url = reverse_lazy('core:rastriya_shava_form_dashboard')
+		return success_url
+
+
+class RastriyaShavaDeleteView(LoginRequiredMixin, DeleteView):
+
+	model = RastriyaShava
+	template_name = "core/rastriya_shava_mahila_pratinidhi_delete.html"
+	context_object_name = 'form'
+
+	def get_success_url(self):
+		success_url = reverse_lazy('core:rastriya_shava_form_dashboard')
+		return success_url
+
+class Dashboard(LoginRequiredMixin, TemplateView):
+
+	template_name = "core/dashboard.html"
+
+	def get(self, request, *args, **kwargs):
+		districts = District.objects.all()
+		district = request.GET.get('dist')
+		district = District.objects.filter(name=district)
+
+		return render(request, self.template_name, {'districts': districts, 'district': district})
+
+class MahilaPratinidhiDashboardView(LoginRequiredMixin, TemplateView):
+	template_name = 'core/mahila_pratinidhi_dashboard.html'
+
+	def get(self, request, *args, **kwargs):
+		forms = MahilaPratinidhiForm.objects.filter(district_id=self.kwargs.get('district_id'))
+		status = self.request.GET.get('status')
+		district_id = self.kwargs.get('district_id')
+		# district = District.objects.get(id=district_id)
+		district = get_object_or_404(District, id=district_id)
+		status_choices = BOOL_CHOICES
+		if status:
+			forms = MahilaPratinidhiForm.objects.filter(district_id=self.kwargs.get('district_id'), status=status)
+		return render(request, self.template_name, {'forms': forms, 'district_id': district_id, 'status_choices': status_choices, 'district': district})
 
 class MahilaPratinidhiFormCreateView(LoginRequiredMixin, CreateView):
 
@@ -30,29 +109,6 @@ class MahilaPratinidhiFormCreateView(LoginRequiredMixin, CreateView):
 		return context
 
 
-class Dashboard(LoginRequiredMixin, TemplateView):
-
-	template_name = "core/dashboard.html"
-
-	def get(self, request, *args, **kwargs):
-		districts = District.objects.all()
-		district = request.GET.get('dist')
-		district = District.objects.filter(name=district)
-
-		return render(request, self.template_name, {'districts': districts, 'district': district})
-
-class ProvinceDashboard(LoginRequiredMixin, TemplateView):
-
-	template_name = "core/province_dashboard.html"
-
-	def get(self, request, *args, **kwargs):
-		provinces = Province.objects.all()
-		province = request.GET.get('prov')
-		province = Province.objects.filter(name=province)
-
-		return render(request, self.template_name, {'provinces': provinces, 'province': province})
-
-
 class MahilaPratinidhiFormDetailView(LoginRequiredMixin, DetailView):
 
 	model = MahilaPratinidhiForm
@@ -63,52 +119,6 @@ class MahilaPratinidhiFormDetailView(LoginRequiredMixin, DetailView):
 		context = super().get_context_data(**kwargs)
 		context['district'] = self.object.district
 		return context
-
-
-class ProvinceMahilaPratinidhiFormDetailView(LoginRequiredMixin, DetailView):
-
-	model = ProvinceMahilaPratinidhiForm
-	template_name = "core/province_mahila_pratinidhi_detail.html"
-	context_object_name = 'form'
-
-	def get_context_data(self, **kwargs):
-		context = super().get_context_data(**kwargs)
-		context['province'] = self.object.province
-		return context
-
-
-class ProvinceMahilaPratinidhiFormUpdateView(LoginRequiredMixin, UpdateView):
-
-	model = ProvinceMahilaPratinidhiForm
-	form_class = ProvinceMahilaPratinidhiFormForm
-	template_name = "core/province_mahila_pratinidhi_form.html"
-
-	def get_success_url(self):
-		success_url = reverse_lazy('core:province_mahila_pratinidhi_form_dashboard', args=(self.object.province.pk,))
-		return success_url
-
-	def get_context_data(self, **kwargs):
-		context = super(ProvinceMahilaPratinidhiFormUpdateView, self).get_context_data(**kwargs)
-		context['province'] = ProvinceMahilaPratinidhiForm.objects.get(id=self.kwargs['pk']).province
-		context['is_update_form'] = True
-		return context
-
-
-class ProvinceMahilaPratinidhiFormDeleteView(LoginRequiredMixin, DeleteView):
-
-	model = ProvinceMahilaPratinidhiForm
-	template_name = "core/province_mahila_pratinidhi_delete.html"
-	context_object_name = 'form'
-
-	def get_success_url(self):
-		success_url = reverse_lazy('core:province_mahila_pratinidhi_form_dashboard', args=(self.object.province.pk,))
-		return success_url
-
-	def get_context_data(self, **kwargs):
-		context = super(ProvinceMahilaPratinidhiFormDeleteView, self).get_context_data(**kwargs)
-		context['province'] = self.object.province
-		return context
-
 
 class MahilaPratinidhiFormUpdateView(LoginRequiredMixin, UpdateView):
 
@@ -190,21 +200,16 @@ def file_upload(request):
 		messages.error(request, "File Format not supported")
 		return HttpResponseRedirect('/upload')
 
+class ProvinceDashboard(LoginRequiredMixin, TemplateView):
 
-class MahilaPratinidhiDashboardView(LoginRequiredMixin, TemplateView):
-	template_name = 'core/mahila_pratinidhi_dashboard.html'
+	template_name = "core/province_dashboard.html"
 
 	def get(self, request, *args, **kwargs):
-		forms = MahilaPratinidhiForm.objects.filter(district_id=self.kwargs.get('district_id'))
-		status = self.request.GET.get('status')
-		district_id = self.kwargs.get('district_id')
-		# district = District.objects.get(id=district_id)
-		district = get_object_or_404(District, id=district_id)
-		status_choices = BOOL_CHOICES
-		if status:
-			forms = MahilaPratinidhiForm.objects.filter(district_id=self.kwargs.get('district_id'), status=status)
-		return render(request, self.template_name, {'forms': forms, 'district_id': district_id, 'status_choices': status_choices, 'district': district})
+		provinces = Province.objects.all()
+		province = request.GET.get('prov')
+		province = Province.objects.filter(name=province)
 
+		return render(request, self.template_name, {'provinces': provinces, 'province': province})
 
 class ProvinceMahilaPratinidhiDashboardView(LoginRequiredMixin, TemplateView):
 	template_name = 'core/province_mahila_pratinidhi_dashboard.html'
@@ -239,6 +244,50 @@ class ProvinceMahilaPratinidhiFormCreateView(LoginRequiredMixin, CreateView):
 	def get_context_data(self, **kwargs):
 		context = super(ProvinceMahilaPratinidhiFormCreateView, self).get_context_data(**kwargs)
 		context['province'] = Province.objects.get(id=self.kwargs['province_id'])
+		return context
+
+class ProvinceMahilaPratinidhiFormDetailView(LoginRequiredMixin, DetailView):
+
+	model = ProvinceMahilaPratinidhiForm
+	template_name = "core/province_mahila_pratinidhi_detail.html"
+	context_object_name = 'form'
+
+	def get_context_data(self, **kwargs):
+		context = super().get_context_data(**kwargs)
+		context['province'] = self.object.province
+		return context
+
+
+class ProvinceMahilaPratinidhiFormUpdateView(LoginRequiredMixin, UpdateView):
+
+	model = ProvinceMahilaPratinidhiForm
+	form_class = ProvinceMahilaPratinidhiFormForm
+	template_name = "core/province_mahila_pratinidhi_form.html"
+
+	def get_success_url(self):
+		success_url = reverse_lazy('core:province_mahila_pratinidhi_form_dashboard', args=(self.object.province.pk,))
+		return success_url
+
+	def get_context_data(self, **kwargs):
+		context = super(ProvinceMahilaPratinidhiFormUpdateView, self).get_context_data(**kwargs)
+		context['province'] = ProvinceMahilaPratinidhiForm.objects.get(id=self.kwargs['pk']).province
+		context['is_update_form'] = True
+		return context
+
+
+class ProvinceMahilaPratinidhiFormDeleteView(LoginRequiredMixin, DeleteView):
+
+	model = ProvinceMahilaPratinidhiForm
+	template_name = "core/province_mahila_pratinidhi_delete.html"
+	context_object_name = 'form'
+
+	def get_success_url(self):
+		success_url = reverse_lazy('core:province_mahila_pratinidhi_form_dashboard', args=(self.object.province.pk,))
+		return success_url
+
+	def get_context_data(self, **kwargs):
+		context = super(ProvinceMahilaPratinidhiFormDeleteView, self).get_context_data(**kwargs)
+		context['province'] = self.object.province
 		return context
 
 
