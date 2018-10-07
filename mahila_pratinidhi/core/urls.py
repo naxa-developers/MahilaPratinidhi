@@ -12,8 +12,16 @@ urlpatterns = [
 	path('rastriya-shava-detail/<int:pk>/', views.RastriyaShavaDetailView.as_view(), name="rastriya_shava_detail"),
 	path('rastriya-shava-update/<int:pk>/', views.RastriyaShavaUpdateView.as_view(), name="rastriya_shava_update"),
 	path('rastriya-shava-delete/<int:pk>/', views.RastriyaShavaDeleteView.as_view(), name="rastriya_shava_delete"),
-	path('rastriya-shava-upload/', views.UloadView.as_view(), name="rastriya_shava_upload"),
-	path('rastriya-shava-file-upload/', views.file_upload, name="rastriya_shava_file_upload"),
+	path('rastriya-shava-upload/', views.RastriyaShavaUloadView.as_view(), name="rastriya_shava_upload"),
+	path('rastriya-shava-file-upload/', views.rastriya_shava_file_upload, name="rastriya_shava_file_upload"),
+
+	path('pratinidhi-shava-forms-list/', views.PratinidhiShavaDashboardView.as_view(), name="pratinidhi_shava_form_dashboard"),
+	path('pratinidhi-shava-form/', views.PratinidhiShavaCreateView.as_view(), name="pratinidhi_shava_form"),
+	path('pratinidhi-shava-detail/<int:pk>/', views.PratinidhiShavaDetailView.as_view(), name="pratinidhi_shava_detail"),
+	path('pratinidhi-shava-update/<int:pk>/', views.PratinidhiShavaUpdateView.as_view(), name="pratinidhi_shava_update"),
+	path('pratinidhi-shava-delete/<int:pk>/', views.PratinidhiShavaDeleteView.as_view(), name="pratinidhi_shava_delete"),
+	path('pratinidhi-shava-upload/', views.PratinidhiShavaUloadView.as_view(), name="pratinidhi_shava_upload"),
+	path('pratinidhi-shava-file-upload/', views.pratinidhi_shava_file_upload, name="pratinidhi_shava_file_upload"),
 
 	path('district-dashboard/', views.Dashboard.as_view(), name="dashboard"),
 	path('mahila-pratinidhi-forms-list/<district_id>', views.MahilaPratinidhiDashboardView.as_view(), name="mahila_pratinidhi_form_dashboard"),

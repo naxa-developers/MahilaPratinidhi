@@ -50,7 +50,7 @@
                                                     </button>
                                                 </div>
                                                 <div class="col-4" style="margin-top: 30px">
-                                                    <a href="{% url 'core:rastriya_shava_form' %}"
+                                                    <a href="{% url 'core:pratinidhi_shava_form' %}"
                                                        title=""
                                                        class="btn btn-sm btn-xs btn-primary"><i class="la la-plus"></i>
                                                         प्रदेश प्रतिनिधि थप्नुहोस</a>
@@ -64,10 +64,10 @@
                                     </div>
 
                                     <ul class="row">
-                                        {% for form in rastriya_shava_datas %}
+                                        {% for form in pratinidhi_shava_datas %}
 
                                             <li class="col-sm-6 col-md-4 col-lg-3">
-                                                <a href="{% url 'core:rastriya_shava_detail' form.pk %}"
+                                                <a href="{% url 'core:pratinidhi_shava_detail' form.pk %}"
                                                    class="org-item-wrap">
                                                     <h5 style="font-family: Preeti; font-size: 20px; font-weight: normal">{{ form.name }}</h5><br>
                                                     <span style="font-family: Preeti; font-size: 16px; font-weight: normal">{{ form.temporary_tole }}</span><br>

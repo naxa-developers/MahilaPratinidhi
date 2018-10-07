@@ -1,0 +1,59 @@
+{% extends '_base.html' %}
+
+{% block content %}
+    <div id="main-container" class="minified">
+
+        <!--[if lt IE 8]>
+            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+        <?php include 'header.php'; ?>
+
+        <div class="row no-gutters">
+            <div class="col-md-8">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{% url 'core:dashboard' %}">गृह पृष्‍ठ</a></li>
+
+
+                    </ol>
+                </nav>
+            </div>
+            <div class="col-md-12">
+                <div class="dash-right">
+                    <div class="row">
+
+                        <div class="col-md-12" style="margin-top: 60px">
+                            <h3>Upload excel files</h3>
+
+
+                       <form action="{% url 'core:pratinidhi_shava_file_upload' %}" method="post" enctype="multipart/form-data" >{% csrf_token %}
+                           <!-- <select id="inputProvince" name="prov">
+                                {% for province in provinces %}
+                                    <option value="{{ province.name }}"
+                                            {% if request.GET.prov == province.name %}selected{% endif %}>{{ province.name }}</option>
+                                {% endfor %}
+
+                            </select> -->
+                           <input type="file" name="file" multiple>
+                           <p style="margin-top: 10px">
+                           <input type="submit" class="btn-primary">
+                           </p>
+                       </form>
+
+                            {% if messages %}
+                                <div>
+                                    {% for message in messages %}
+                                        <div>{{ message }}</div>
+                                    {% endfor %}
+                                </div>
+{% endif %}
+
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
