@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22.705 18.698">
+  <defs>
+    <style>
+      .cls-1 {
+        opacity: 0.67;
+      }
+
+      .cls-2 {
+        fill: #fff;
+      }
+    </style>
+  </defs>
+  <g id="baseline-view_list-24px" class="cls-1" transform="translate(-5.342 -6.678)">
+    <path id="Path_26" data-name="Path 26" class="cls-2" d="M4,17.02H9.342V11.678H4ZM4,23.7H9.342V18.356H4ZM4,10.342H9.342V5H4Zm6.678,6.678H26.7V11.678H10.678Zm0,6.678H26.7V18.356H10.678Zm0-18.7v5.342H26.7V5Z" transform="translate(1.342 1.678)"/>
+  </g>
+</svg>

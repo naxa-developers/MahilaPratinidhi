@@ -1,0 +1,171 @@
+{% extends 'public/public_base.html' %}
+{% load staticfiles %}
+{% block upper_content %}
+<body>
+    <header>
+        <div class="navigation innerPage">
+            <div class="container-fluid">
+{% endblock %}
+{% block lower_content %}
+            </div>
+        </div>
+    </header>
+
+    <section class="darkBg">
+
+        <div class="container">
+            <div class="selectHolder">
+                <div class="leader searchP">
+                    <div class="leaderWrp ">
+                        <input type="text" placeholder="CHECK YOUR LEADER AROUND" class="leaderSearch">
+                    </div>
+                </div>
+            </div>
+            <p class="searchText ste"> Lorem ipsum, dolor sit amet consectetur adipisicing elit. Laboriosam a tenetur itaque, nobis ut fuga qui iusto
+                facilis expedita in quos aut dolor magni ratione rerum libero ex assumenda minima neque eius. Quas incidunt
+                sunt atque impedit nostrum ullam eveniet similique. Labore reprehenderit necessitatibus quos laborum dolor
+                in quae consequatur. </p>
+            <div class="clearfix"></div>
+
+            <div id="exTab3" class="container">
+                <ul class="nav nav-pills row">
+                    <li class=" col-md-3">
+                        <a href="#1b" data-toggle="tab" class="active">
+                            <div class="limgHolder">
+                                <img src="{% static 'public/image/city-hall1.svg' %}" alt="">
+
+
+                            </div>
+                            <div class="text-center tabtext">
+                                NATIONAL
+                                <br/> ASSEMBLY
+                            </div>
+
+                        </a>
+                    </li>
+                    <li class="active col-md-3">
+                        <a href="#2b" data-toggle="tab" id="first">
+                            <div class="limgHolder">
+                                <img src="{% static 'public/image/elementary-school1.svg' %}" alt="">
+
+
+                            </div>
+                            <div class="text-center tabtext">
+                                FEDERAL
+                                <br/> PARLIAMENT
+                            </div>
+
+                        </a>
+                    </li>
+                    <li class="active col-md-3">
+                        <a href="#3b" data-toggle="tab">
+                            <div class="limgHolder">
+                                <img src="{% static 'public/image/parliament1.svg' %}" alt="">
+
+
+                            </div>
+                            <div class="text-center tabtext">
+
+                                PROVINCIAL
+                                <br/> ASSEMBLY
+                            </div>
+
+                        </a>
+                    </li>
+                    <li class="active col-md-3">
+                        <a href="#4b" data-toggle="tab">
+                            <div class="limgHolder">
+                                <img src="{% static 'public/image/government1.svg' %}" alt="">
+
+
+                            </div>
+                            <div class="text-center tabtext">
+                                LOCAL LEVEL
+                                <br/> GOVERNMENT
+                            </div>
+
+                        </a>
+                    </li>
+
+                </ul>
+
+                <div class="tab-content clearfix">
+                    <div class="tab-pane active" id="1b">
+                        <div class="linkItem row">
+                            {% for item in rastriyas %}
+                            <a href="{% url 'public:mahila_detail' item.pk %}"></a>
+                            <div class="item1 col">
+                                <p class="provienceHeading">
+                                    {{rastriyas.name}}
+                                </p>
+                            </div>
+                        </a>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="2b">
+                        <div class="linkItem row">
+                            {% for item in pratinidhis %}
+                            <a href="{% url 'public:mahila_detail' item.pk %}">
+                            <div class="item1 col">
+                                <p class="provienceHeading">
+                                    {{ item.name }}
+                                </p>
+                            </div>
+                            </a>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="3b">
+                        <div class="linkItem row">
+                            {% for item in provinces %}
+                            <a href="{% url 'public:explore_province' item.pk %}">
+                            <div class="item1 col">
+                                <p class="provienceHeading">
+                                    {{ item.name }}
+                                </p>
+                            </div>
+                            </a>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="4b">
+                        <div class="linkItem row">
+                            
+                            {% for district in districts %}
+                            <a href="{% url 'public:explore_district' district.pk %}">
+                            <div class="item1 col">
+                                <p class="provienceHeading">
+                                    {{ district.name|upper }}
+                                </p>
+                            </div>
+                        
+                        </a>
+
+                            {% endfor %}
+                      </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    {% endblock %}
+
+    {% block scripts %}
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+
+    <script src="{% static '/public/js/bootstrap.min.js' %}"></script>
+
+    <script>
+        $(document).ready(function () {
+            $("#button").click(function () {
+                $('html, body').animate({
+                    scrollTop: $("#myDiv").offset().top
+                }, 2000);
+            });
+        });
+
+
+    </script>
+    {% endblock %}

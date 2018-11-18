@@ -1,0 +1,34 @@
+<svg id="government" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 70.938 70.938">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #fff;
+      }
+    </style>
+  </defs>
+  <g id="Group_20" data-name="Group 20">
+    <g id="Group_19" data-name="Group 19">
+      <path id="Path_17" data-name="Path 17" class="cls-1" d="M70.938,43.459V39.3H59.716V31.035H56.554A21.352,21.352,0,0,0,41.981,13.72V5.311H37.547V0H33.391V5.311H28.957V13.72A21.352,21.352,0,0,0,14.385,31.035H11.223V39.3H0v4.157H3.36V66.782H0v4.157H70.938V66.782h-3.36V43.459ZM33.114,9.468h4.711v3.364a21.251,21.251,0,0,0-4.711,0Zm2.355,7.389A17.162,17.162,0,0,1,52.347,31.035H43.459V26.6H39.3v4.434H31.636V26.6H27.479v4.434H18.591A17.162,17.162,0,0,1,35.469,16.857ZM15.379,35.192h40.18V39.3H15.379Zm27.352,31.59H28.207V54.7l7.262-3.609L42.731,54.7V66.782Zm20.69,0H46.888V52.124L35.469,46.449,24.05,52.124V66.782H7.516V43.459H63.422Z"/>
+    </g>
+  </g>
+  <g id="Group_22" data-name="Group 22" transform="translate(12.701 47.062)">
+    <g id="Group_21" data-name="Group 21">
+      <rect id="Rectangle_20" data-name="Rectangle 20" class="cls-1" width="4.157" height="5.912"/>
+    </g>
+  </g>
+  <g id="Group_24" data-name="Group 24" transform="translate(12.701 57.267)">
+    <g id="Group_23" data-name="Group 23">
+      <rect id="Rectangle_21" data-name="Rectangle 21" class="cls-1" width="4.157" height="5.912"/>
+    </g>
+  </g>
+  <g id="Group_26" data-name="Group 26" transform="translate(54.081 57.267)">
+    <g id="Group_25" data-name="Group 25">
+      <rect id="Rectangle_22" data-name="Rectangle 22" class="cls-1" width="4.157" height="5.912"/>
+    </g>
+  </g>
+  <g id="Group_28" data-name="Group 28" transform="translate(54.081 47.062)">
+    <g id="Group_27" data-name="Group 27">
+      <rect id="Rectangle_23" data-name="Rectangle 23" class="cls-1" width="4.157" height="5.912"/>
+    </g>
+  </g>
+</svg>

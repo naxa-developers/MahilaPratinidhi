@@ -179,6 +179,16 @@ class PratinidhiShava(CommonShavaFields):
 	def __str__(self):
 		return "{}-{} फारम".format(self.name, self.name)
 
+class News(models.Model):
+	date = models.DateField(blank=False)
+	title = models.CharField(max_length=300, blank=False)
+	content = models.TextField(blank=False)
+	newsOf = models.ForeignKey(MahilaPratinidhiForm, on_delete=models.CASCADE, blank=True, null=True)
+
+	def __str__(self):
+		return "{}-{} news".format(self.date, self.title)
 
 
+class BackgroundImage(models.Model):
+	image = models.ImageField(blank=True, upload_to="background/")
 

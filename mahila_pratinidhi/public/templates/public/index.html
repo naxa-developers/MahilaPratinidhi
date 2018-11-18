@@ -1,0 +1,287 @@
+{% extends "public/public_base.html" %}
+{% load staticfiles %}
+{% block upper_content %}
+<body>
+    <section class="topHeroImg">
+        <div class="heroOverlay"></div>
+        <header>
+                <div class="navigation">
+                    <div class="container-fluid">
+{% endblock %}
+{% block lower_content %}
+</div>
+                </div>
+            </header>
+        
+        <div class="herotext ">
+            <div class="container">
+                <h1 class="reveal">HAMRO MAHILA PRATINIDHI
+                </h1>
+                <p class="heroPara reveal"> Nepal's first digital profile of elected female representatives</p>
+                <a href="{% url 'public:explore' %}">
+                <button class="btn btnRound btn-primary reveal"> 
+                    <span>EXPLORE</span>
+                    <i class="fa fa-arrow-right arow"></i>
+                </button>
+                </a>
+            </div>
+
+
+        </div>
+
+    </section>
+    <div class="panelSearch ">
+        <div class="centeredSearch">
+            <p class="searchHeader ">
+                REACH YOUR REPRESENTATIVE HERE!
+            </p>
+            <div class="selectHolder ">
+                <div class="leader">
+                    <div class="leaderWrp">
+                        <input type="text" placeHolder="CHECK YOUR LEADER AROUND" class="leaderSearch">
+                    </div>
+                </div>
+                <div class="province">
+                    <select name="" id="">
+                        <option value="national">NATIONAL</option>
+                        <option value="federal">FEDERAL</option>
+                        <option value="provincial">PROVINCIAL</option>
+                        <option value="local">LOCAL</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+
+
+    <section>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="mapTab">
+                    <div class="tabs">
+                        <ul class="tabHolder">
+                            <li class="active">
+                                <img src="{% static 'public/image/city-hall.svg' %}" alt="">
+                                <div class="text">NATIONAL ASSEMBLY
+                                </div>
+                            </li>
+                            <li>
+                                <img src="{% static 'public/image/elementary-school.svg' %}" alt="">
+                                <div class="text">FEDERAL PARLIAMENT
+                                </div>
+                            </li>
+                            <li>
+                                <img src="{% static 'public/image/parliament.svg' %}" alt="">
+                                <div class="text">PROVINCIAL ASSEMBLY
+                                </div>
+                            </li>
+                            <li>
+                                <img src="{% static 'public/image/government.svg' %}" alt="">
+                                <div class="text">LOCAL LEVEL GOVERNMENT
+                                </div>
+                            </li>
+                        </ul>
+                        <div class="text-center">
+                            <button class="btn btn-round revbtn tbtn mtb50"> MAP VISUALIZATION
+                                <i class="fa fa-arrow-right arow"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="mapHolder grow redbg">
+                        <div>map goes here</div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </section>
+    <section class="pratinidhi sectionPadding">
+        <div class="container topC">
+
+            <p class="sTitle header mb80 reveal">FEATURED MAHILA PRATINIDHI 2018</p>
+
+            <div class="slider reveal">
+                {% for data in featured_data %}
+                <div>
+                    <div class="row align-items-md-center">
+                        <div class="col-md-4">
+                            <div class="imageHolder">
+                                {% if data.image %}
+                                <img src="{{ MEDIA_URL }} {{ data.image.url }}" alt=""></div>
+                                {% else %}
+                                <img src="{% static 'public/image/mahilalogo.png' %}" alt="">
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="info slidefont">
+                                <div class="Name">
+                                    {{data.name_en}}
+                                </div>
+                                <div class="position">
+                                    {{data.nirwachit_padh_en}}
+                                </div>
+                                <div>
+                                    <span class="first"> Education:</span>
+                                    <span class="value"> {{data.educational_qualification_en}}</span>
+
+                                </div>
+                                <div>
+                                    <span class="first"> Age:</span>
+                                    <span class="value"> {{data.age_en}} Years</span>
+
+                                </div>
+                                <div>
+                                    <span class="first"> Political Party:</span>
+                                    <span class="value"> {{ data.party_name_en }}</span>
+
+                                </div>
+                                <div>
+                                    <span class="first"> Political Involvement:</span>
+                                    <span class="value"> Since {{ data.party_joined_date }} Bs</span>
+
+                                </div>
+                                <div>
+                                    <span class="first"> Address:</span>
+                                    <span class="value"> {{ data.address }}</span>
+
+                                </div>
+
+
+
+                            </div>
+                        </div>
+                        <div class="col-md-4 flexHolder">
+                            <div class="buttons">
+                                <div class="socialIcons">
+                                    <i class="fa fa-facebook-f"></i>
+                                    <i class="fa fa-twitter"></i>
+                                    <i class="fa fa-phone"></i>
+                                    <i class="fa fa-envelope"></i>
+                                </div>
+                            </div>
+                            <div class="fullBtn centeredvh">
+                                <button class="btn btn-round revbtn mtb50"> MAP VISUALIZATION
+                                    <i class="fa fa-arrow-right arow"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+    </section>
+
+    <section class="dataSection sectionPadding">
+        <div class="container reveal">
+            <div class="row">
+                <div class="col-md-6">
+                    <p class="sTitle header mb80 reveal">HAMRO MAHILA PRATINIDHI IN DATA</p>
+                    <p class="dataDetail reveal">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                        Consequat ac felis donec et odio. Natoque penatibus et magnis dis parturient montes nascetur ridiculus.
+                        Eget felis eget nunc lobortis mattis aliquam faucibus. Tortor at risus
+
+                    </p>
+                    <a href="{% url 'public:data_visualize' %}">
+                        <button class="btn btn-round revbtn mtb50 reveal"> DATA VISUALIZATION
+                        <i class="fa fa-arrow-right arow"></i>
+                    </button>
+                    </a>a
+                </div>
+                <div class="col-md-6 d-none d-md-block reveal">
+                    <img src="{% static 'public/image/click.svg' %}" alt="VISUALIZATION">
+                </div>
+            </div>
+
+
+        </div>
+    </section>
+
+
+
+    <section class="persons sectionPadding">
+        <div class="container ">
+            <p class="sTitle header mb80 reveal">MAHILA PRATINIDHI ON MEDIA</p>
+            <div class="row lists ">
+                {% for data in news %}
+                <div class="col-xl-3 col-lg-4 col-md-6 reveal">
+                    <div class="pImageholder prelative">
+                        {% if data.newsOf.image %}
+                        <img src="{{ MEDIA_URL }} {{ data.newsOf.image.url }}">
+                        {% else %} 
+                        <img src="{% static 'public/image/mahilalogo.png' %}" alt="user">
+                        {% endif %}
+                        <div class="holderOverlay"></div>
+                        <div class="content">
+                            {% if data.newsOf %}
+                            <div class="tags"> {{data.newsOf.name_en}} in News</div>
+                            {% else %}
+                            <div class="tags"> General News</div>
+                            {% endif %}
+                            <div class="pTitle">{{ data.title }}</div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+
+            </div>
+        </div>
+
+
+    </section>
+    {% endblock %}
+    
+    {% block scripts %}
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+
+    <script src="{% static 'public/js/bootstrap.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'public/js/slick.min.js' %}"></script>
+    <script src="{% static 'public/js/all.js' %}"></script>
+    <script src="https://unpkg.com/scrollreveal/dist/scrollreveal.min.js"></script>
+    <script>
+
+        $(document).ready(function () {
+            $('.slider').slick({
+                autoplay: false,
+                dots: true,
+                arrows: false
+
+
+            });
+            ScrollReveal().reveal('.reveal');
+
+            ScrollReveal().reveal('.reveal', {
+                delay: 50,
+                duration: 400,
+                viewFactor: 0.5,
+                reset: false
+            });
+
+
+        });
+    </script>
+
+    <script type="text/javascript">
+        //Array of images which you want to show: Use path you want.
+        var images="{{ image_list }}";
+        var nextimage=0;
+        doSlideshow();
+
+        function doSlideshow(){
+                if(nextimage>=images.length){nextimage=0;}
+                $('.global-header')
+                .css('background-image','url("'+images[nextimage++]+'")')
+                .fadeIn(500,function(){
+                    setTimeout(doSlideshow,1000);
+                });
+        }
+    </script>
+{% endblock %}
