@@ -1,3 +1,4 @@
+import os
 from django.db import models
 
 BOOL_CHOICES = (
@@ -191,4 +192,7 @@ class News(models.Model):
 
 class BackgroundImage(models.Model):
 	image = models.ImageField(blank=True, upload_to="background/")
+
+	def get_absolute_image_url(self):
+		return os.path.join('/media/', self.image.url)
 

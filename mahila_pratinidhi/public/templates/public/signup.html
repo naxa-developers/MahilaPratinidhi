@@ -38,7 +38,14 @@
                     <div class="form-group">
                     <label for="{{ field.label_id }}"> <strong>{{ field.label_tag }}</strong></label>&nbsp;
                       {{ field }}
-                    </div>
+                      {% if field.help_text %}
+                        <small style="display: none">{{ field.help_text }}</small>
+                      {% endif %}
+                      {% for error in field.errors %}
+                        <p style="color: red">{{ error }}</p>
+                      {% endfor %}
+                      </div>
+                    
                       {% endfor %}
                       <button class="btn btn-round revbtn tbtn mtb50">Sign up</button>
                       <a href="{% url 'login' %}">Already Registered?</a>
@@ -112,4 +119,3 @@
                 
   </body>
 </html>
-

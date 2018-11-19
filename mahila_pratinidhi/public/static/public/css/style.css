@@ -6,21 +6,25 @@ p.header{font-size: 40px;color:#fff;}
 nav{position: absolute;width: 100%;z-index: 4;}
 .topHeroImg {
     background-size: cover;
+    background: url(../image/heroimg.png);
     min-height: calc( 100vh - 215px);
     width: 100%;
     position: relative;
-}
-.heroOverlay{
-    background-image: url(/media/background/class.jpg);
-    position: absolute;
-    top:0;
-    left: 0;
-    bottom: 0;
-    right: 0; 
-    background:rgba(190, 19, 232, 0.53);
-    z-index: 2;
+    transition: background-position linear;
     
 }
+@keyframes slide {
+    20% {
+        left: 0;
+    }
+    40%, 60% {
+        left: -100%;
+    }
+    80%, 100% {
+        left: -100%;
+    }
+}
+.heroOverlay{position: absolute;top:0;left: 0;bottom: 0;right: 0; background:rgba(190, 19, 232, 0.53);z-index: 2;}
 .navbar-expand-lg .navbar-toggler {
     display: block;
 }
@@ -289,10 +293,10 @@ section.pratinidhi:after{
         #exTab3 .nav-pills li a.active .limgHolder{background:rgba(255,255,255,0.24);}
         .linkItem a{min-width: 20%;max-width: 20%;}
         .linkItem >a{margin:15px;}
-        .linkItem a div{min-width: 100%;max-width: 100%;}
+        .linkItem a div{min-width: 20%;max-width: 95%;}
         .linkItem a >div{margin:15px;}
-        .item1{    width: 280px;
-            height: 350px;background:url(../image/maskimg.jpg) no-repeat;background-size: cover;
+        .item1{    width: 400px;
+            height: 350px;background-size: cover;
         border-bottom:4px solid #E2CCFF;
         display: flex;
     align-items: flex-end;

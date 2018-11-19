@@ -50,7 +50,10 @@
 
                 <div class="leader searchP">
                     <div class="leaderWrp ">
-                        <input type="text" placeholder="CHECK YOUR LEADER AROUND" class="leaderSearch">
+                        <form type="get" action=".">
+                                <input id="search_box" type="text" placeholder="CHECK YOUR LEADER AROUND" class="leaderSearch">
+                                <span><button id="search_submit" type="submit" class="moreBtn">Search</button></span>
+                        </form>
                     </div>
                 </div>
                 <div class="closeBtn">
@@ -77,8 +80,6 @@
                             <img src="{% static 'public/image/switch.svg' %}" alt="">
                         </div>
                     </a>
-
-
 
                 </li>
                 <li class="mla">
@@ -143,7 +144,7 @@
                     {% for form in forms %}
                     <div class="gitem">
                         <div class="imgwrpinner">
-                            <img src="{% static 'public/image/listimg.png' %}" class="cropImg" alt="">
+                            <img src="{% static 'public/image/mahilalogo.png' %}" class="cropImg" alt="">
                         </div>
                         <div class="info">
                             <div class="dname">{{ form.name|upper }}</div>

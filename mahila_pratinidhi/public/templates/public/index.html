@@ -2,6 +2,19 @@
 {% load staticfiles %}
 {% block upper_content %}
 <body>
+        <style>
+                /* Always set the map height explicitly to define the size of the div
+                 * element that contains the map. */
+                #map {
+                  height: 100%;
+                }
+                /* Optional: Makes the sample page fill the window. */
+                html, body {
+                  height: 100%;
+                  margin: 0;
+                  padding: 0;
+                }
+        </style>
     <section class="topHeroImg">
         <div class="heroOverlay"></div>
         <header>
@@ -91,7 +104,7 @@
                         </div>
                     </div>
                     <div class="mapHolder grow redbg">
-                        <div>map goes here</div>
+                            <div id="map"></div>
 
                     </div>
                 </div>
@@ -114,7 +127,7 @@
                                 {% if data.image %}
                                 <img src="{{ MEDIA_URL }} {{ data.image.url }}" alt=""></div>
                                 {% else %}
-                                <img src="{% static 'public/image/mahilalogo.png' %}" alt="">
+                                <img src="{% static 'public/image/mahilalogo.png' %}" alt="" style="width:350px;height:250px;" >
                                 {% endif %}
                             </div>
                         </div>
@@ -196,7 +209,7 @@
                     </a>a
                 </div>
                 <div class="col-md-6 d-none d-md-block reveal">
-                    <img src="{% static 'public/image/click.svg' %}" alt="VISUALIZATION">
+                    <img src="{% static 'public/image/click.svg' %}" alt="VISUALIZATION" >
                 </div>
             </div>
 
@@ -214,9 +227,9 @@
                 <div class="col-xl-3 col-lg-4 col-md-6 reveal">
                     <div class="pImageholder prelative">
                         {% if data.newsOf.image %}
-                        <img src="{{ MEDIA_URL }} {{ data.newsOf.image.url }}">
+                        <img src="{{ MEDIA_URL }} {{ data.newsOf.image.url }}" >
                         {% else %} 
-                        <img src="{% static 'public/image/mahilalogo.png' %}" alt="user">
+                        <img src="{% static 'public/image/mahilalogo.png' %}" alt="user" style="width:345px;height:250px;" >
                         {% endif %}
                         <div class="holderOverlay"></div>
                         <div class="content">
@@ -270,18 +283,67 @@
     </script>
 
     <script type="text/javascript">
-        //Array of images which you want to show: Use path you want.
-        var images="{{ image_list }}";
+        var image_list = JSON.parse('{{ image_list|safe }}');
+        var images = new Array();
+        for(i = 0; i <= image_list.length; i++){
+            images[i] = image_list[i];
+        }
         var nextimage=0;
         doSlideshow();
 
         function doSlideshow(){
                 if(nextimage>=images.length){nextimage=0;}
-                $('.global-header')
-                .css('background-image','url("'+images[nextimage++]+'")')
-                .fadeIn(500,function(){
-                    setTimeout(doSlideshow,1000);
-                });
+                $('.topHeroImg').css('background','url("'+images[nextimage++]+'")')
+                {
+                    setTimeout(doSlideshow,3000);
+                };
         }
     </script>
+
+    <!-- for geolocation of user -->
+    <script>
+            // Note: This example requires that you consent to location sharing when
+            // prompted by your browser. If you see the error "The Geolocation service
+            // failed.", it means you probably did not give permission for the browser to
+            // locate you.
+            var map, infoWindow;
+            function initMap() {
+              map = new google.maps.Map(document.getElementById('map'), {
+                center: {lat: -34.397, lng: 150.644},
+                zoom: 6
+              });
+              infoWindow = new google.maps.InfoWindow;
+      
+              // Try HTML5 geolocation.
+              if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function(position) {
+                  var pos = {
+                    lat: position.coords.latitude,
+                    lng: position.coords.longitude
+                  };
+      
+                  infoWindow.setPosition(pos);
+                  infoWindow.setContent('Location found.');
+                  infoWindow.open(map);
+                  map.setCenter(pos);
+                }, function() {
+                  handleLocationError(true, infoWindow, map.getCenter());
+                });
+              } else {
+                // Browser doesn't support Geolocation
+                handleLocationError(false, infoWindow, map.getCenter());
+              }
+            }
+      
+            function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+              infoWindow.setPosition(pos);
+              infoWindow.setContent(browserHasGeolocation ?
+                                    'Error: The Geolocation service failed.' :
+                                    'Error: Your browser doesn\'t support geolocation.');
+              infoWindow.open(map);
+            }
+          </script>
+          <script async defer
+          src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap">
+          </script>
 {% endblock %}

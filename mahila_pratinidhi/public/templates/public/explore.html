@@ -30,7 +30,7 @@
             <div id="exTab3" class="container">
                 <ul class="nav nav-pills row">
                     <li class=" col-md-3">
-                        <a href="#1b" data-toggle="tab" class="active">
+                        <a href="#1b" data-toggle="tab" class="active" id="national">
                             <div class="limgHolder">
                                 <img src="{% static 'public/image/city-hall1.svg' %}" alt="">
 
@@ -44,7 +44,7 @@
                         </a>
                     </li>
                     <li class="active col-md-3">
-                        <a href="#2b" data-toggle="tab" id="first">
+                        <a href="#2b" data-toggle="tab" id="federal">
                             <div class="limgHolder">
                                 <img src="{% static 'public/image/elementary-school1.svg' %}" alt="">
 
@@ -58,7 +58,7 @@
                         </a>
                     </li>
                     <li class="active col-md-3">
-                        <a href="#3b" data-toggle="tab">
+                        <a href="#3b" data-toggle="tab" id="provincial">
                             <div class="limgHolder">
                                 <img src="{% static 'public/image/parliament1.svg' %}" alt="">
 
@@ -73,7 +73,7 @@
                         </a>
                     </li>
                     <li class="active col-md-3">
-                        <a href="#4b" data-toggle="tab">
+                        <a href="#4b" data-toggle="tab" id="local">
                             <div class="limgHolder">
                                 <img src="{% static 'public/image/government1.svg' %}" alt="">
 
@@ -94,7 +94,11 @@
                         <div class="linkItem row">
                             {% for item in rastriyas %}
                             <a href="{% url 'public:mahila_detail' item.pk %}"></a>
-                            <div class="item1 col">
+                            {% if item.image %}
+                            <div class="item1 col" style="background-image:url({{ item.image.url }}) no-repeat;"></div>
+                            {% else %}
+                            <div class="item1 col" style="background:url(/static/public/image/mahilalogo.png) no-repeat;">
+                                {% endif %}
                                 <p class="provienceHeading">
                                     {{rastriyas.name}}
                                 </p>
@@ -107,7 +111,11 @@
                         <div class="linkItem row">
                             {% for item in pratinidhis %}
                             <a href="{% url 'public:mahila_detail' item.pk %}">
-                            <div class="item1 col">
+                                    {% if item.image %}
+                                    <div class="item1 col" style="background-image:url({{ item.image.url }}) no-repeat;"></div>
+                                    {% else %}
+                                    <div class="item1 col" style="background:url(/static/public/image/mahilalogo.png) no-repeat;">
+                                        {% endif %}
                                 <p class="provienceHeading">
                                     {{ item.name }}
                                 </p>
@@ -120,7 +128,7 @@
                         <div class="linkItem row">
                             {% for item in provinces %}
                             <a href="{% url 'public:explore_province' item.pk %}">
-                            <div class="item1 col">
+                            <div class="item1 col" style="background:url(/static/public/image/maskimg.jpg) no-repeat;">
                                 <p class="provienceHeading">
                                     {{ item.name }}
                                 </p>
@@ -134,7 +142,7 @@
                             
                             {% for district in districts %}
                             <a href="{% url 'public:explore_district' district.pk %}">
-                            <div class="item1 col">
+                            <div class="item1 col" style="background:url(/static/public/image/maskimg.jpg) no-repeat;">
                                 <p class="provienceHeading">
                                     {{ district.name|upper }}
                                 </p>
