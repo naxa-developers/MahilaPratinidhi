@@ -110,6 +110,7 @@ def rastriya_shava_file_upload(request):
 					name=df['नाम'][row],
 					english_name=df['English Name'][row],
 					date_of_birth=df['जन्ममिती'][row],
+					age=df['उमेर'][row],
 					mothers_name=df['आमाको नाम'][row],
 					fathers_name=df['बाबुको नाम'][row],
 					marital_status=df['बैवाहिक स्थिति'][row],
@@ -142,6 +143,8 @@ def rastriya_shava_file_upload(request):
 					aaja_vanda_agadi_chunab_ladnu_vayeko_chha=df['आज भन्दा अघि चुनाब लड्नुभएको छ?'][row],
 					prapta_maat_sankhya=df['प्राप्त मत संख्या'][row],
 					samlagna_sang_sastha_samuha=df['सलग्न संघ, सस्था , समूह'][row],
+					samitima_vumika=df['समितिमा पद'][row],
+					samlagna_samsadiya_samiti=df['संलग्न समिति'][row],
 				)
 		messages.success(request, 'Successfully loaded data from files')
 		return HttpResponseRedirect('/rastriya-shava-upload')
@@ -267,6 +270,8 @@ def pratinidhi_shava_file_upload(request):
 					aaja_vanda_agadi_chunab_ladnu_vayeko_chha=df['आज भन्दा अघि चुनाब लड्नुभएको छ?'][row],
 					prapta_maat_sankhya=df['प्राप्त मत संख्या'][row],
 					samlagna_sang_sastha_samuha=df['सलग्न संघ, सस्था , समूह'][row],
+					samitima_vumika=df['समितिमा भूमिका'][row],
+					samlagna_samsadiya_samiti=df['संलग्न संसदीय समिति'][row],
 				)
 		messages.success(request, 'Successfully loaded data from files')
 		return HttpResponseRedirect('/pratinidhi-shava-upload')
@@ -572,6 +577,7 @@ def province_file_upload(request):
 					name=df['नाम'][row],
 					english_name=df['English Name'][row],
 					date_of_birth=df['जन्ममिती'][row],
+					age=df['उमेर'][row],
 					mothers_name=df['आमाको नाम'][row],
 					fathers_name=df['बाबुको नाम'][row],
 					marital_status=df['बैवाहिक स्थिति'][row],
