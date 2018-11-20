@@ -1,5 +1,5 @@
 from django.contrib import messages
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
@@ -10,22 +10,35 @@ from .models import MahilaPratinidhiForm, District, BOOL_CHOICES, ProvinceMahila
 from .forms import MahilaPratinidhiFormForm, ProvinceMahilaPratinidhiFormForm, RastriyaShavaFormForm, PratinidhiShavaFormForm
 
 
-class MainDashboard(LoginRequiredMixin, TemplateView):
+class MainDashboard(LoginRequiredMixin, UserPassesTestMixin, TemplateView):
 
 	template_name = "core/main_dashboard.html"
 
-class RastriyaShavaDashboardView(LoginRequiredMixin, TemplateView):
+
+	def test_func(self):
+		return self.request.user.is_superuser
+
+
+class RastriyaShavaDashboardView(LoginRequiredMixin, UserPassesTestMixin, TemplateView):
+
 	template_name = 'core/rastriya_shava_mahila_pratinidhi_form_dashboard.html'
+
+	def test_func(self):
+		return self.request.user.is_superuser
 
 	def get(self, request, *args, **kwargs):
 		rastriya_shava_data = RastriyaShava.objects.all()
 		return render(request, self.template_name, {'rastriya_shava_datas':rastriya_shava_data})
 
-class RastriyaShavaCreateView(LoginRequiredMixin, CreateView):
+
+class RastriyaShavaCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
 
 	model = RastriyaShava
 	form_class = RastriyaShavaFormForm
 	template_name = "core/rastriya_shava_mahila_pratinidhi_form.html"
+	
+	def test_func(self):
+		return self.request.user.is_superuser
 
 	def get_success_url(self):
 		success_url = reverse_lazy('core:rastriya_shava_form_dashboard')
@@ -36,36 +49,49 @@ class RastriyaShavaCreateView(LoginRequiredMixin, CreateView):
 		context['rastriya_shava'] = RastriyaShava.objects.all
 		return context
 
-class RastriyaShavaDetailView(LoginRequiredMixin, DetailView):
+class RastriyaShavaDetailView(LoginRequiredMixin, UserPassesTestMixin, DetailView):
 
 	model = RastriyaShava
 	template_name = "core/rastriya_shava_mahila_pratinidhi_detail.html"
 	context_object_name = 'form'
 
+	def test_func(self):
+		return self.request.user.is_superuser
 
-class RastriyaShavaUpdateView(LoginRequiredMixin, UpdateView):
+
+class RastriyaShavaUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 
 	model = RastriyaShava
 	form_class = RastriyaShavaFormForm
 	template_name = "core/rastriya_shava_mahila_pratinidhi_form.html"
 
+	def test_func(self):
+		return self.request.user.is_superuser
+
 	def get_success_url(self):
 		success_url = reverse_lazy('core:rastriya_shava_form_dashboard')
 		return success_url
 
 
-class RastriyaShavaDeleteView(LoginRequiredMixin, DeleteView):
+class RastriyaShavaDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 
 	model = RastriyaShava
 	template_name = "core/rastriya_shava_mahila_pratinidhi_delete.html"
 	context_object_name = 'form'
 
+	def test_func(self):
+		return self.request.user.is_superuser
+
 	def get_success_url(self):
 		success_url = reverse_lazy('core:rastriya_shava_form_dashboard')
 		return success_url
 
-class RastriyaShavaUloadView(TemplateView):
+class RastriyaShavaUloadView(UserPassesTestMixin, TemplateView):
+
 	template_name = 'core/rastriya_shava_upload.html'
+
+	def test_func(self):
+		return self.request.user.is_superuser
 
 
 def rastriya_shava_file_upload(request):
@@ -125,18 +151,25 @@ def rastriya_shava_file_upload(request):
 		messages.error(request, "File Format not supported")
 		return HttpResponseRedirect('/rastriya-shava-upload')
 
-class PratinidhiShavaDashboardView(LoginRequiredMixin, TemplateView):
+class PratinidhiShavaDashboardView(LoginRequiredMixin, UserPassesTestMixin, TemplateView):
 	template_name = 'core/pratinidhi_shava_mahila_pratinidhi_form_dashboard.html'
+
+	def test_func(self):
+		return self.request.user.is_superuser
 
 	def get(self, request, *args, **kwargs):
 		pratinidhi_shava_data = PratinidhiShava.objects.all()
 		return render(request, self.template_name, {'pratinidhi_shava_datas':pratinidhi_shava_data})
 
-class PratinidhiShavaCreateView(LoginRequiredMixin, CreateView):
+
+class PratinidhiShavaCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
 
 	model = PratinidhiShava
 	form_class = PratinidhiShavaFormForm
 	template_name = "core/pratinidhi_shava_mahila_pratinidhi_form.html"
+
+	def test_func(self):
+		return self.request.user.is_superuser
 
 	def get_success_url(self):
 		success_url = reverse_lazy('core:pratinidhi_shava_form_dashboard')
@@ -154,29 +187,38 @@ class PratinidhiShavaDetailView(LoginRequiredMixin, DetailView):
 	context_object_name = 'form'
 
 
-class PratinidhiShavaUpdateView(LoginRequiredMixin, UpdateView):
+class PratinidhiShavaUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 
 	model = PratinidhiShava
 	form_class = PratinidhiShavaFormForm
 	template_name = "core/pratinidhi_shava_mahila_pratinidhi_form.html"
 
+	def test_func(self):
+		return self.request.user.is_superuser
+
 	def get_success_url(self):
 		success_url = reverse_lazy('core:pratinidhi_shava_form_dashboard')
 		return success_url
 
 
-class PratinidhiShavaDeleteView(LoginRequiredMixin, DeleteView):
+class PratinidhiShavaDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 
 	model = PratinidhiShava
 	template_name = "core/pratinidhi_shava_mahila_pratinidhi_delete.html"
 	context_object_name = 'form'
 
+	def test_func(self):
+		return self.request.user.is_superuser
+
 	def get_success_url(self):
 		success_url = reverse_lazy('core:pratinidhi_shava_form_dashboard')
 		return success_url
 
-class PratinidhiShavaUloadView(TemplateView):
+class PratinidhiShavaUloadView(UserPassesTestMixin, TemplateView):
 	template_name = 'core/pratinidhi_shava_upload.html'
+
+	def test_func(self):
+		return self.request.user.is_superuser
 
 
 def pratinidhi_shava_file_upload(request):
@@ -238,9 +280,12 @@ def pratinidhi_shava_file_upload(request):
 
 
 
-class Dashboard(LoginRequiredMixin, TemplateView):
+class Dashboard(LoginRequiredMixin, UserPassesTestMixin, TemplateView):
 
 	template_name = "core/dashboard.html"
+	
+	def test_func(self):
+		return self.request.user.is_superuser
 
 	def get(self, request, *args, **kwargs):
 		districts = District.objects.all()
@@ -249,8 +294,11 @@ class Dashboard(LoginRequiredMixin, TemplateView):
 
 		return render(request, self.template_name, {'districts': districts, 'district': district})
 
-class MahilaPratinidhiDashboardView(LoginRequiredMixin, TemplateView):
+class MahilaPratinidhiDashboardView(LoginRequiredMixin, UserPassesTestMixin, TemplateView):
 	template_name = 'core/mahila_pratinidhi_dashboard.html'
+
+	def test_func(self):
+		return self.request.user.is_superuser
 
 	def get(self, request, *args, **kwargs):
 		forms = MahilaPratinidhiForm.objects.filter(district_id=self.kwargs.get('district_id'))
@@ -263,11 +311,14 @@ class MahilaPratinidhiDashboardView(LoginRequiredMixin, TemplateView):
 			forms = MahilaPratinidhiForm.objects.filter(district_id=self.kwargs.get('district_id'), status=status)
 		return render(request, self.template_name, {'forms': forms, 'district_id': district_id, 'status_choices': status_choices, 'district': district})
 
-class MahilaPratinidhiFormCreateView(LoginRequiredMixin, CreateView):
+class MahilaPratinidhiFormCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
 
 	model = MahilaPratinidhiForm
 	form_class = MahilaPratinidhiFormForm
 	template_name = "core/mahila_pratinidhi_form.html"
+
+	def test_func(self):
+		return self.request.user.is_superuser
 
 	def form_valid(self, form):
 		form.instance.district = get_object_or_404(District, pk=self.kwargs['district_id'])
@@ -283,23 +334,29 @@ class MahilaPratinidhiFormCreateView(LoginRequiredMixin, CreateView):
 		return context
 
 
-class MahilaPratinidhiFormDetailView(LoginRequiredMixin, DetailView):
+class MahilaPratinidhiFormDetailView(LoginRequiredMixin, UserPassesTestMixin, DetailView):
 
 	model = MahilaPratinidhiForm
 	template_name = "core/mahila_pratinidhi_detail.html"
 	context_object_name = 'form'
+
+	def test_func(self):
+		return self.request.user.is_superuser
 
 	def get_context_data(self, **kwargs):
 		context = super().get_context_data(**kwargs)
 		context['district'] = self.object.district
 		return context
 
-class MahilaPratinidhiFormUpdateView(LoginRequiredMixin, UpdateView):
+class MahilaPratinidhiFormUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 
 	model = MahilaPratinidhiForm
 	form_class = MahilaPratinidhiFormForm
 	success_url = reverse_lazy('core:dashboard')
 	template_name = "core/mahila_pratinidhi_form.html"
+
+	def test_func(self):
+		return self.request.user.is_superuser
 
 	def get_success_url(self):
 		success_url = reverse_lazy('core:mahila_pratinidhi_form_dashboard', args=(self.object.district.pk,))
@@ -312,11 +369,14 @@ class MahilaPratinidhiFormUpdateView(LoginRequiredMixin, UpdateView):
 		return context
 
 
-class MahilaPratinidhiFormDeleteView(LoginRequiredMixin, DeleteView):
+class MahilaPratinidhiFormDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 
 	model = MahilaPratinidhiForm
 	template_name = "core/mahila_pratinidhi_delete.html"
 	context_object_name = 'form'
+
+	def test_func(self):
+		return self.request.user.is_superuser
 
 	def get_success_url(self):
 		success_url = reverse_lazy('core:mahila_pratinidhi_form_dashboard', args=(self.object.district.pk,))
@@ -328,8 +388,11 @@ class MahilaPratinidhiFormDeleteView(LoginRequiredMixin, DeleteView):
 		return context
 
 
-class UloadView(TemplateView):
+class UloadView(UserPassesTestMixin, TemplateView):
 	template_name = 'core/upload.html'
+
+	def test_func(self):
+		return self.request.user.is_superuser
 
 	def get_context_data(self, **kwargs):
 		context = super(UloadView, self).get_context_data(**kwargs)
@@ -344,7 +407,6 @@ def file_upload(request):
 
 		request_files = request.FILES.getlist('file')
 		files = [pd.read_excel(filename).fillna(value='') for filename in request_files]
-
 		for df in files:
 			total = df['qm=;+'].count()
 
@@ -370,13 +432,17 @@ def file_upload(request):
 				)
 		messages.success(request, 'Successfully loaded data from files')
 		return HttpResponseRedirect('/upload')
-	except:
+	except KeyError as e:
+		print(e)
 		messages.error(request, "File Format not supported")
 		return HttpResponseRedirect('/upload')
 
-class ProvinceDashboard(LoginRequiredMixin, TemplateView):
+class ProvinceDashboard(LoginRequiredMixin, UserPassesTestMixin, TemplateView):
 
 	template_name = "core/province_dashboard.html"
+
+	def test_func(self):
+		return self.request.user.is_superuser
 
 	def get(self, request, *args, **kwargs):
 		provinces = Province.objects.all()
@@ -385,8 +451,11 @@ class ProvinceDashboard(LoginRequiredMixin, TemplateView):
 
 		return render(request, self.template_name, {'provinces': provinces, 'province': province})
 
-class ProvinceMahilaPratinidhiDashboardView(LoginRequiredMixin, TemplateView):
+class ProvinceMahilaPratinidhiDashboardView(LoginRequiredMixin, UserPassesTestMixin, TemplateView):
 	template_name = 'core/province_mahila_pratinidhi_dashboard.html'
+
+	def test_func(self):
+		return self.request.user.is_superuser
 
 	def get(self, request, *args, **kwargs):
 		forms = ProvinceMahilaPratinidhiForm.objects.filter(province_id=self.kwargs.get('province_id'))
@@ -401,11 +470,14 @@ class ProvinceMahilaPratinidhiDashboardView(LoginRequiredMixin, TemplateView):
 
 
 
-class ProvinceMahilaPratinidhiFormCreateView(LoginRequiredMixin, CreateView):
+class ProvinceMahilaPratinidhiFormCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
 
 	model = ProvinceMahilaPratinidhiForm
 	form_class = ProvinceMahilaPratinidhiFormForm
 	template_name = "core/province_mahila_pratinidhi_form.html"
+
+	def test_func(self):
+		return self.request.user.is_superuser
 
 	def form_valid(self, form):
 		form.instance.province = get_object_or_404(Province, pk=self.kwargs['province_id'])
@@ -420,11 +492,14 @@ class ProvinceMahilaPratinidhiFormCreateView(LoginRequiredMixin, CreateView):
 		context['province'] = Province.objects.get(id=self.kwargs['province_id'])
 		return context
 
-class ProvinceMahilaPratinidhiFormDetailView(LoginRequiredMixin, DetailView):
+class ProvinceMahilaPratinidhiFormDetailView(LoginRequiredMixin, UserPassesTestMixin, DetailView):
 
 	model = ProvinceMahilaPratinidhiForm
 	template_name = "core/province_mahila_pratinidhi_detail.html"
 	context_object_name = 'form'
+
+	def test_func(self):
+		return self.request.user.is_superuser
 
 	def get_context_data(self, **kwargs):
 		context = super().get_context_data(**kwargs)
@@ -432,11 +507,14 @@ class ProvinceMahilaPratinidhiFormDetailView(LoginRequiredMixin, DetailView):
 		return context
 
 
-class ProvinceMahilaPratinidhiFormUpdateView(LoginRequiredMixin, UpdateView):
+class ProvinceMahilaPratinidhiFormUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 
 	model = ProvinceMahilaPratinidhiForm
 	form_class = ProvinceMahilaPratinidhiFormForm
 	template_name = "core/province_mahila_pratinidhi_form.html"
+
+	def test_func(self):
+		return self.request.user.is_superuser
 
 	def get_success_url(self):
 		success_url = reverse_lazy('core:province_mahila_pratinidhi_form_dashboard', args=(self.object.province.pk,))
@@ -449,11 +527,14 @@ class ProvinceMahilaPratinidhiFormUpdateView(LoginRequiredMixin, UpdateView):
 		return context
 
 
-class ProvinceMahilaPratinidhiFormDeleteView(LoginRequiredMixin, DeleteView):
+class ProvinceMahilaPratinidhiFormDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 
 	model = ProvinceMahilaPratinidhiForm
 	template_name = "core/province_mahila_pratinidhi_delete.html"
 	context_object_name = 'form'
+
+	def test_func(self):
+		return self.request.user.is_superuser
 
 	def get_success_url(self):
 		success_url = reverse_lazy('core:province_mahila_pratinidhi_form_dashboard', args=(self.object.province.pk,))
@@ -465,8 +546,11 @@ class ProvinceMahilaPratinidhiFormDeleteView(LoginRequiredMixin, DeleteView):
 		return context
 
 
-class ProvinceUloadView(TemplateView):
+class ProvinceUloadView(UserPassesTestMixin, TemplateView):
 	template_name = 'core/province_upload.html'
+
+	def test_func(self):
+		return self.request.user.is_superuser
 
 	def get_context_data(self, **kwargs):
 		context = super(ProvinceUloadView, self).get_context_data(**kwargs)
@@ -531,17 +615,23 @@ def province_file_upload(request):
 		return HttpResponseRedirect('/province-upload')
 
 
-class UserProfileView(LoginRequiredMixin, DetailView):
+class UserProfileView(LoginRequiredMixin, UserPassesTestMixin, DetailView):
 	model = User
 	context_object_name = 'user'
 	template_name = 'core/user_profile.html'
 
+	def test_func(self):
+		return self.request.user.is_superuser
 
-class UserProfileUpdateView(LoginRequiredMixin, UpdateView):
+
+class UserProfileUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 	model = User
 	fields = ('first_name', 'last_name', 'email')
 	context_object_name = 'user'
 	template_name = 'core/user_profile_update.html'
+
+	def test_func(self):
+		return self.request.user.is_superuser
 
 	def get_success_url(self):
 		success_url = reverse_lazy('core:user_profile', args=(self.object.pk,))

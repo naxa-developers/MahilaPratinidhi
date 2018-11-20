@@ -1,0 +1,207 @@
+{% extends 'public/public_base.html' %}
+{% load staticfiles %}
+{% block upper_content %}
+<body>
+        <header>
+            <div class="navigation innerPage">
+                <div class="container-fluid">
+{% endblock %}
+
+{% block lower_content%}
+</div>
+</div>
+</header>
+    <div class="sectionTop darkbgl">
+        <div class="container">
+            <div class="selectHolder list">
+
+                <div class="province ">
+                    <select name="" id="">
+                        <option value="volvo">FIRST</option>
+                        <option value="saab">SECOND</option>
+                        <option value="mercedes">THIRD</option>
+
+                    </select>
+                </div>
+                <div class="province">
+                    <select name="" id="">
+                        <option value="volvo">FIRST</option>
+                        <option value="saab">SECOND</option>
+                        <option value="mercedes">THIRD</option>
+
+                    </select>
+                </div>
+                <div class="province">
+                    <select name="" id="">
+                        <option value="volvo">FIRST</option>
+                        <option value="saab">SECOND</option>
+                        <option value="mercedes">THIRD</option>
+
+                    </select>
+                </div>
+                <div class="province">
+                    <select name="" id="">
+                        <option value="volvo">FIRST</option>
+                        <option value="saab">SECOND</option>
+                        <option value="mercedes">THIRD</option>
+
+                    </select>
+                </div>
+
+                <div class="leader searchP">
+                    <div class="leaderWrp ">
+                        <form type="get" action=".">
+                                <input id="search_box" type="text" placeholder="CHECK YOUR LEADER AROUND" class="leaderSearch">
+                                <span><button id="search_submit" type="submit" class="moreBtn">Search</button></span>
+                        </form>
+                    </div>
+                </div>
+                <div class="closeBtn">
+                    <i class="fa fa-times"></i>
+                </div>
+            </div>
+
+
+
+
+
+            <ul class="nav nav-pills clickabletabs">
+                <li class=" ">
+                    <a href="#1a" data-toggle="tab" class="active">
+                        <div class="holder active">
+                            <img src="{% static 'public/image/grid.svg' %}" alt="">
+                        </div>
+
+                    </a>
+                </li>
+                <li>
+                    <a href="#1b" data-toggle="tab">
+                        <div class="holder ">
+                            <img src="{% static 'public/image/switch.svg' %}" alt="">
+                        </div>
+                    </a>
+
+                </li>
+                <li class="mla">
+                    <button class="filterBtn"> filter</button>
+                </li>
+
+            </ul>
+            <div class="tab-content clearfix">
+                <div class="tab-pane active" id="1a">
+                    <div class="pfofileItems">
+                        {% for form in forms %}
+                        <div class="pItem reveal">
+                            <a href="{% url 'public:mahila_detail' form.pk %}">
+                            <div class="inner">
+
+                                <div class="pimageHolder">
+                                    {% if form.image %}
+                                    <img src="{{ MEDIA_URL }} {{ data.image.url }}" alt="">
+                                    {% else %}
+                                    <img src="{% static 'public/image/mahilalogo.png' %}" alt="" >
+                                    {% endif %}
+                                    <div class="img"></div>
+
+                                    <div class="poverlay">
+
+                                    </div>
+                                    <div class="aroup"></div>
+                                </div>
+                                <div class="detailHolder">
+                                    <div class="deteilbg"></div>
+                                    <div class="date">
+                                        <div class="yrcnt">
+                                            {{ form.age }}
+                                        </div>
+                                        <div class="dtl">
+                                            Years
+                                        </div>
+
+
+                                    </div>
+                                    <div class="dname">{{ form.name|upper }}</div>
+                                    <div class="dlocation">{{ form.address|title }}</div>
+                                    <div class="bottom">
+                                        <i class="fa fa-arrow-right arow"></i>
+                                    </div>
+                                </div>
+
+                            </div>
+                            </a>
+                        </div>
+                        {% endfor %}
+                        <div class="btnwrp">
+                            <button class="moreBtn"> Show More</button>
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+                <div class="tab-pane" id="1b">
+                    {% for form in forms %}
+                    <div class="gitem">
+                        <div class="imgwrpinner">
+                            <img src="{% static 'public/image/mahilalogo.png' %}" class="cropImg" alt="">
+                        </div>
+                        <div class="info">
+                            <div class="dname">{{ form.name|upper }}</div>
+                            <div class="dlocation">{{ form.address|title }}</div>
+                        </div>
+                        <div class="dateinner mla">
+                            <div class="yrcnt">
+                                {{ form.age }}
+                            </div>
+                            <div class="dtl">
+                                Years
+                            </div>
+                        </div>
+                        
+                        <a class="btn stretchBtn" href="{% url 'public:mahila_detail' form.id %}">
+                                <i class="fa  fa-arrow-right arow"></i>
+                        </a>
+                        
+                    </div>
+                    {% endfor %}
+                    <div class="btnwrp">
+                        <button class="moreBtn"> Show More</button>
+                    </div>
+
+
+
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+    {% endblock %}
+   
+    {% block scripts %}
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+
+    <script src="{% static 'public/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'public/js/all.js' %}"></script>
+
+    <script>
+        $(document).ready(function () {
+
+            $(".filterBtn").click(function () {
+
+                $(".selectHolder.list").addClass("activated")
+
+            });
+
+            $(".closeBtn").click(function () {
+
+                $(".selectHolder.list").removeClass("activated")
+
+            });
+        });
+
+
+    </script>
+{% endblock %}
