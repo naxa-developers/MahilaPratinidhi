@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import UserPassesTestMixin
@@ -147,5 +148,8 @@ class Tab(UserPassesTestMixin, TemplateView):
 
     def test_func(self):
         return not self.request.user.is_superuser
+
+class Detail(TemplateView):
+    template_name = 'public/lists.html'
 
 

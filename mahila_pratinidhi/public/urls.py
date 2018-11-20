@@ -22,7 +22,7 @@ urlpatterns = [
 
 	path('explore/<explore_province>/', views.ProvinceView.as_view(), name="explore_province"),
 	
-	# path('detail/<int:pk>/', views.Detail.as_view(), name="mahila_detail"),
+	path('detail/<int:pk>/', views.Detail.as_view(), name="mahila_detail"),
 
 	path('visualize/', views.DataVisualize.as_view(), name="data_visualize"),
 	path('tab/', views.Tab.as_view(), name="tab"),
