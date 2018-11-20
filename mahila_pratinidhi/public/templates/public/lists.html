@@ -92,7 +92,7 @@
                     <div class="pfofileItems">
                         {% for form in forms %}
                         <div class="pItem reveal">
-                            <a href="{% url 'public:mahila_detail' form.pk %}">
+                            <a href="{% url 'public:local_mahila_detail' district_id form.pk %}">
                             <div class="inner">
 
                                 <div class="pimageHolder">
@@ -159,7 +159,7 @@
                             </div>
                         </div>
                         
-                        <a class="btn stretchBtn" href="{% url 'public:mahila_detail' form.id %}">
+                        <a class="btn stretchBtn" href="{% url 'public:local_mahila_detail' district_id form.id %}">
                                 <i class="fa  fa-arrow-right arow"></i>
                         </a>
                         

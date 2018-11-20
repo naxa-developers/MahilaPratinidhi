@@ -17,8 +17,11 @@
 
 
                 <div class="profileImg">
-                    <img src="{% static 'public/image/image1.png' %}" alt="profileImage">
-
+                    {% if form.image %}
+                    <img src="{{MEDIA_URL}} {{form.image.url}}" alt="profileImage">
+                    {% else %}
+                    <img src="{% static 'public/image/mahilalogo.png' %}" style="width: 500px;height: 500px;" alt="profileImage">
+                    {% endif %}
                 </div>
                 <div class="personalDetail">
 
@@ -26,7 +29,7 @@
                     <div class="detail">
                         <div class="detailTitles">
                             <p class="pheader">
-                                <span class="Ptitle"> Dhana Maya Lama Pokharel</span>
+                                <span class="Ptitle"> {{ form.name }}</span>
                                 <span class="flag">
                                     <img src="{% static 'public/image/partyflag.png' %}" alt="">
                                 </span>
@@ -38,24 +41,34 @@
                         <div class="infocontainer">
                             <div class="info">
                                 <div>
+                                    {% if form.age %}
                                     <span class="dtitle">Age:</span>
                                     <span class="dvalue">59 Years</span>
+                                    {% endif %}
                                 </div>
                                 <div>
+                                    {% if form.mothers_name %}
                                     <span class="dtitle">Mother’s Name:</span>
-                                    <span class="dvalue">Sun Maya Lama</span>
+                                    <span class="dvalue">{{ form.mothers_name }}</span>
+                                    {% endif %}
                                 </div>
                                 <div>
+                                    {% if form.fathers_name %}
                                     <span class="dtitle">Father’s Name:</span>
                                     <span class="dvalue">Man Bahadur Lama </span>
+                                    {% endif %}
                                 </div>
                                 <div>
+                                    {% if form.marital_status %}
                                     <span class="dtitle">Maritual Status:</span>
                                     <span class="dvalue">Married</span>
+                                    {% endif %}
                                 </div>
                                 <div>
+                                    {% if form.husbands_name %}
                                     <span class="dtitle">Husband Name:</span>
                                     <span class="dvalue">Lakpa Chiring Lama</span>
+                                    {% endif %}
                                 </div>
                                 <div>
                                     <span class="dtitle">Nationality:</span>

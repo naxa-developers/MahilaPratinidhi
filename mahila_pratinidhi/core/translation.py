@@ -4,7 +4,7 @@ from .models import MahilaPratinidhiForm, CommonShavaFields
 @register(MahilaPratinidhiForm)
 class MahilaPratinidhiFormTranslationOptions(TranslationOptions):
     fields = ('name', 'age', 'marital_status', 'updated_marital_status', 'educational_qualification', 
-    'updated_educational_qualification', 'caste', 'updated_caste', 'updated_caste', 'address', 'contact_number',
+    'updated_educational_qualification', 'caste', 'updated_caste', 'address', 'contact_number',
     'email', 'nirwachit_padh', 'nirwachit_vdc_or_municipality_name', 'party_name', 'party_joined_date',
     'samlagna_sang_sastha_samuha', 'nirwachit_chetra_pratiko_pratibadhata', )
 

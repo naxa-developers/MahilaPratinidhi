@@ -99,7 +99,14 @@ class MahilaPratinidhiView(TemplateView):
 
     def get(self, request, *args, **kwargs):
         forms = MahilaPratinidhiForm.objects.filter(district_id=self.kwargs.get('district_id'))
-        return render(request, self.template_name, {'forms':forms})
+        district_id = self.kwargs.get('district_id')
+        return render(request, self.template_name, {'forms':forms, 'district_id':district_id})
+
+
+class LocalMahilaPratinidhiDetail(DetailView):
+    model = MahilaPratinidhiForm
+    template_name = 'public/detail.html'
+    context_object_name = 'form'
 
 
 class ProvinceView(ListView):
@@ -108,12 +115,6 @@ class ProvinceView(ListView):
     def get(self, request, *args, **kwargs):
         forms = ProvinceMahilaPratinidhiForm.objects.filter(province_id=self.kwargs.get('province_id'))
         return render(request, self.template_name, {'forms': form})
-
-
-class LocalMahilaPratinidhiDetail(DetailView):
-    model = MahilaPratinidhiForm
-    template_name = 'public/detail.html'
-    context_object_name = 'form'
 
 
 class DataVisualize(UserPassesTestMixin, TemplateView):
