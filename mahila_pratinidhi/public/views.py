@@ -110,7 +110,7 @@ class ProvinceView(ListView):
         return render(request, self.template_name, {'forms': form})
 
 
-class Detail(DetailView):
+class LocalMahilaPratinidhiDetail(DetailView):
     model = MahilaPratinidhiForm
     template_name = 'public/detail.html'
     context_object_name = 'form'
