@@ -171,11 +171,16 @@ class ProvinceMahilaPratinidhiForm(CommonShavaFields):
 		return "{}-{} फारम".format(self.province.name, self.name)
 
 class RastriyaShava(CommonShavaFields):
+	samitima_vumika = models.CharField(max_length=300, verbose_name="", blank=True)
+	samlagna_samsadiya_samiti = models.CharField(max_length=300, verbose_name="", blank=True)
+
 
 	def __str__(self):
 		return "{}-{} फारम".format(self.name, self.name)
 
 class PratinidhiShava(CommonShavaFields):
+	samitima_vumika = models.CharField(max_length=300, verbose_name="", blank=True)
+	samlagna_samsadiya_samiti = models.CharField(max_length=300, verbose_name="", blank=True)
 
 	def __str__(self):
 		return "{}-{} फारम".format(self.name, self.name)
