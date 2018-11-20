@@ -25,6 +25,24 @@
             <img src="{% static 'public/image/logo.png' %}" alt="logo">
         </a>
         {% if request.user.is_authenticated %}
+        <a href="{% url 'logout' %}"class="userIcon">
+        {% else %}
+        <a href="{% url 'public:signup' %}"class="userIcon">
+        {% endif %}
+            <span class="menuCircle">
+                <i class="fa fa-user-circle">
+
+                </i>
+            </span>
+        </a>
+        <a>
+            <span class="menuCircle menuIcon">
+                <i class="fa fa-bars">
+
+                </i>
+            </span>
+        </a>
+        <!-- {% if request.user.is_authenticated %}
         <a href="{% url 'login' %}">
         {% else %}
         <a href="{% url 'public:signup' %}">
@@ -33,9 +51,99 @@
         </a>
         <a>
             <img src="{% static 'public/image/menuicon.png' %}" alt="logo">
-        </a>
+        </a> -->
 
     </nav>
+</div>
+</div>
+<div class="menu">
+
+    <div class="menuheader">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="{% url 'public:index' %}">
+                <img src="{% static 'public/image/logo.png' %}" alt="logo">
+            </a>
+            <i class="fa fa-times"></i>
+        </div>
+    </div>
+    <div class="links">
+        <div class="container">
+            <div class="linkTabs">
+                <a href="{% url 'public:index' %}" class="linkitems"> Home</a>
+                <a href="" class="linkitems"> About</a>
+                <a href="{% url 'public:index' %}" class="linkitems"> News</a>
+                <a href="{% url 'public:index' %}" class="linkitems"> Media</a>
+                <a href="{% url 'public:data_visualize' %}" class="linkitems"> Datas</a>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="container">
+        <div id="exTab3" class="menutabs">
+            <ul class="nav nav-pills row">
+                <li class=" col-md-3">
+                    <a href="{% url 'public:explore' 'national' %}">
+                        <div class="limgHolder">
+                            <img src="{% static 'public/image/city-hall1.svg' %}" alt="">
+
+
+                        </div>
+                        <div class="text-center tabtext">
+                            <span> NATIONAL</span>
+
+                            <span>ASSEMBLY</span>
+                        </div>
+
+                    </a>
+                </li>
+                <li class="active col-md-3">
+                    <a href="{% url 'public:explore' 'federal' %}" id="first">
+                        <div class="limgHolder">
+                            <img src="{% static 'public/image/elementary-school1.svg' %}" alt="">
+
+
+                        </div>
+                        <div class="text-center tabtext">
+                            <span> FEDERAL</span>
+                            <span>PARLIAMENT</span>
+                        </div>
+
+                    </a>
+                </li>
+                <li class="active col-md-3">
+                    <a href="{% url 'public:explore' 'provincial' %}">
+                        <div class="limgHolder">
+                            <img src="{% static 'public/image/parliament1.svg' %}" alt="">
+
+
+                        </div>
+                        <div class="text-center tabtext">
+
+                            <span> PROVINCIAL</span>
+                            <span> ASSEMBLY</span>
+                        </div>
+
+                    </a>
+                </li>
+                <li class="active col-md-3">
+                    <a href="{% url 'public:explore' 'local' %}">
+                        <div class="limgHolder">
+                            <img src="{% static 'public/image/government1.svg' %}" alt="">
+
+
+                        </div>
+                        <div class="text-center tabtext">
+                            <span>LOCAL LEVEL</span>
+                            <span> GOVERNMENT</span>
+                        </div>
+
+                    </a>
+                </li>
+
+            </ul>
+        </div class="">
+
 {% block lower_content %}
 {% endblock %}
 
@@ -65,10 +173,10 @@
                 <div class="ftitle">
                     MEET YOUR REPRESENTATIVE
                 </div>
-                <div class="flist"><a href="{% url 'public:explore' %}" style="color:white;"> National Assembly</a></div>
-                <div class="flist"><a href="{% url 'public:explore' %}" style="color:white;"> Federal Parliament</a></div>
-                <div class="flist"><a href="{% url 'public:explore' %}" style="color:white;"> Provincial Assembly</a></div>
-                <div class="flist"><a href="{% url 'public:explore' %}" style="color:white;"> Local Level</a></div>
+                <div class="flist"><a href="{% url 'public:explore' 'national' %}" style="color:white;"> National Assembly</a></div>
+                <div class="flist"><a href="{% url 'public:explore' 'federal' %}" style="color:white;"> Federal Parliament</a></div>
+                <div class="flist"><a href="{% url 'public:explore' 'provincial' %}" style="color:white;"> Provincial Assembly</a></div>
+                <div class="flist"><a href="{% url 'public:explore' 'local' %}" style="color:white;"> Local Level</a></div>
                 <div class="ftitle fbottom">
                     MAP VISUALIZATION
                 </div>
@@ -111,8 +219,33 @@
         <p>Copyright © 2018 Youth Innovation Lab</p>
     </div>
 </section>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+crossorigin="anonymous"></script>
+
+<script src="{% static 'public/js/bootstrap.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'public/js/slick.min.js' %}"></script>
+<script src="{% static 'public/js/all.js' %}"></script>
+<script src="https://unpkg.com/scrollreveal/dist/scrollreveal.min.js"></script>
+<script>
+
+    $(document).ready(function () {
+
+        $(".menuIcon").click(function () {
+
+            $(".menu").addClass("menuOn");
+            $("body").addClass("overflowHidden");
+
+        });
+        $(".menuheader .fa.fa-times").click(function () {
+
+            $(".menu").removeClass("menuOn");
+            $("body").removeClass("overflowHidden");
+        });
+    });
+</script>
 {% block scripts %}
 {% endblock %}
+
 
 </body>
 

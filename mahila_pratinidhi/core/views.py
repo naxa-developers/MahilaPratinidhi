@@ -13,7 +13,7 @@ from .forms import MahilaPratinidhiFormForm, ProvinceMahilaPratinidhiFormForm, R
 class MainDashboard(LoginRequiredMixin, UserPassesTestMixin, TemplateView):
 
 	template_name = "core/main_dashboard.html"
-
+	
 
 	def test_func(self):
 		return self.request.user.is_superuser
@@ -234,6 +234,7 @@ def pratinidhi_shava_file_upload(request):
 					name=df['नाम'][row],
 					english_name=df['English Name'][row],
 					date_of_birth=df['जन्ममिती'][row],
+					age=df['उमेर'][row],
 					mothers_name=df['आमाको नाम'][row],
 					fathers_name=df['बाबुको नाम'][row],
 					marital_status=df['बैवाहिक स्थिति'][row],
@@ -563,6 +564,7 @@ def province_file_upload(request):
 
 		for df in files:
 			total = df['नाम'].count()
+
 			for row in range(0, total):
 
 				ProvinceMahilaPratinidhiForm.objects.get_or_create(
@@ -605,7 +607,8 @@ def province_file_upload(request):
 				)
 		messages.success(request, 'Successfully loaded data from files')
 		return HttpResponseRedirect('/province-upload')
-	except:
+	except KeyError as e:
+		print(e)
 		messages.error(request, "File Format not supported")
 		return HttpResponseRedirect('/province-upload')
 

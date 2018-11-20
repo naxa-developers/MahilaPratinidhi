@@ -1,4 +1,4 @@
-{% extends 'public/public_base.html' %}
+{% extends "public/public_base.html" %}
 {% load staticfiles %}
 {% block upper_content %}
 <body>
@@ -12,17 +12,321 @@
     </header>
 
     <section class="profileDetail">
+        <div class="container-profile container">
+            <div class="profileHolder">
+
+
+                <div class="profileImg">
+                    <img src="{% static 'public/image/image1.png' %}" alt="profileImage">
+
+                </div>
+                <div class="personalDetail">
+
+
+                    <div class="detail">
+                        <div class="detailTitles">
+                            <p class="pheader">
+                                <span class="Ptitle"> Dhana Maya Lama Pokharel</span>
+                                <span class="flag">
+                                    <img src="{% static 'public/image/partyflag.png' %}" alt="">
+                                </span>
+                            </p>
+                            <p class="personalInfoHeader">
+                                PERSONAL INFORMATION
+                            </p>
+                        </div>
+                        <div class="infocontainer">
+                            <div class="info">
+                                <div>
+                                    <span class="dtitle">Age:</span>
+                                    <span class="dvalue">59 Years</span>
+                                </div>
+                                <div>
+                                    <span class="dtitle">Mother’s Name:</span>
+                                    <span class="dvalue">Sun Maya Lama</span>
+                                </div>
+                                <div>
+                                    <span class="dtitle">Father’s Name:</span>
+                                    <span class="dvalue">Man Bahadur Lama </span>
+                                </div>
+                                <div>
+                                    <span class="dtitle">Maritual Status:</span>
+                                    <span class="dvalue">Married</span>
+                                </div>
+                                <div>
+                                    <span class="dtitle">Husband Name:</span>
+                                    <span class="dvalue">Lakpa Chiring Lama</span>
+                                </div>
+                                <div>
+                                    <span class="dtitle">Nationality:</span>
+                                    <span class="dvalue">Nepali </span>
+                                </div>
+                                <div>
+                                    <span class="dtitle">Ethinicity:</span>
+                                    <span class="dvalue">Indigenous Group</span>
+                                </div>
+                                <div>
+                                    <span class="dtitle">Education:</span>
+                                    <span class="dvalue">Masters in Arts </span>
+                                </div>
+                            </div>
+                            <div class="shareholder">
+                                <div class="shareholderInner">
+                                    <div class="shareInfo">
+                                        <i class="fa fa-phone ihs">
+
+                                        </i>
+                                        <span class="contactIfo">
+                                            Call Request
+                                        </span>
+                                    </div>
+                                    <div class="shareInfo">
+                                        <i class="fa fa-envelope ihs">
+
+                                        </i>
+                                        <span class="contactIfo">
+                                            Write Email
+                                        </span>
+                                    </div>
+                                    <div class="shareInfo">
+                                        <span class="ihs">
+                                            <i class="fa fa-facebook mr5 ">
+
+                                            </i>
+                                            <i class="fa  fa-twitter ">
+
+                                            </i>
+                                        </span>
+
+                                        <span class="contactIfo">
+                                            Find on Social Media
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="personalDetilFooter">
+                        <div class="permanentAddress flex">
+                            <div class="placelbl flex aligncenter">
+                                <div>
+                                    <i class="fa fa-map-marker">
+
+                                    </i>
+                                </div>
+                                <div class="locationDetail bold">
+                                    Permanent Address:
+                                </div>
+                            </div>
+                            <div class="placeaddress">
+                                Kaski District,
+                                <br/> Pokhara Ma. Na. Pa., Ward no. 11
+                            </div>
+                        </div>
+                        <div class="currentAddress flex">
+                            <div class="locationDetail bold">
+                                Current Address:
+                            </div>
+                            <div class="placeaddress">
+                                Kaski District,
+                                <br/> Pokhara Ma. Na. Pa., Ward no. 11
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
 
     </section>
-    {% endblock %}
+    <section class="userImageHolder">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-9">
+                    <div class="infographic">
+                        <img src="{% static 'public/image/detailimg1.png' %}" alt="">
+                    </div>
+                </div>
+                <div class="col-md-3 flex aligncenter column">
+                    <div class="workSHolder">
+                        <div class="detailTitle">
+                            Election Type
+                        </div>
+                        <div class="detailContent bold">
+                            Directly Elected
+                        </div>
 
-    {% block scripts %}
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-        crossorigin="anonymous"></script>
+                    </div>
+                    <div class="workSHolder">
+                        <div class="detailTitle">
+                            Vote Received
+                        </div>
+                        <div class="detailContent bold">
+                            35,000
+                        </div>
 
-    <script src="{% static 'public/js/bootstrap.min.js' %}"></script>
-    <script src="{% static 'public/js/all.js' %}"></script>
+                    </div>
+                    <div class="workSHolder">
+                        <div class="detailTitle">
+                            Elected Post
+                        </div>
+                        <div class="detailContent bold">
+                            Member of Parliament: Provincial Assembly
 
+                        </div>
+                    </div>
+                    <div class="workSHolder">
+                        <div class="detailTitle">
+                            Election Constituency
+                        </div>
+                        <div class="detailContent bold">
+                            Dhankuta
+                        </div>
+
+                    </div>
+                    <div class="workSHolder">
+                        <div class="detailTitle">
+                            Involvement in Party
+                        </div>
+                        <div class="detailContent bold">
+                            2048 B.S.
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+            <div class="row ptbi">
+                <div class="col-md-3 aligncenter justify-content-center titl">Political
+                    <br/>Commitments
+                </div>
+                <div class="col-md-3">
+                    <div class="we relative">
+                        <div class="overLink"></div>
+                        <div class="weInner">
+                            Women
+                            <br/> Empowerment
+                        </div>
+
+                    </div>
+
+                </div>
+                <div class="col-md-3">
+                    <div class="si relative">
+                        <div class="overLink"></div>
+                        <div class="weInner">
+                            Social
+                            <br/>Inclusion
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="col-md-3">
+                    <div class="id relative">
+                        <div class="overLink"></div>
+                        <div class="weInner">
+                            Infrastructural
+                            <br/> Development
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+            <div class="listofWorks text-center">
+                <p class="loft white bold">
+                    RECENT UNION, ORGANISATION, GROUP ASSOCIATION
+                </p>
+                <div class="litem ">
+                    <span class="square"></span>
+                    <span class="text">SWASTHA NEPAL, PRESIDENT 2071 B.S.</span>
+                </div>
+                <div class="litem">
+                    <span class="square"></span>
+                    <span class="text">SWASTHA NEPAL, PRESIDENT 2071 B.S.</span>
+                </div>
+                <div class="litem">
+                    <span class="square"></span>
+                    <span class="text">SWASTHA NEPAL, PRESIDENT 2071 B.S.</span>
+                </div>
+                <div class="litem">
+                    <span class="square"></span>
+                    <span class="text">SWASTHA NEPAL, PRESIDENT 2071 B.S.</span>
+                </div>
+            </div>
+
+
+        </div>
+
+    </section>
+
+    <section class="listDet">
+        <div class="container">
+            <p class="lispTitle white">
+                RELATED NEWS
+            </p>
+            <div class="row lists ">
+                <div class="col-xl-3 col-lg-4 col-md-6 reveal" data-sr-id="12" style="visibility: visible; opacity: 1; transition: opacity 0.4s cubic-bezier(0.5, 0, 0, 1) 0.05s;">
+                    <div class="pImageholder prelative">
+                        <img src="{% static 'public/image/p1.jpg' %}" alt="user">
+                        <div class="holderOverlay"></div>
+                        <div class="content">
+                            <div class="tags"> Chandra kala in News</div>
+                            <div class="pTitle">Chandra Kala Rai initiated women empowerment camp in Rukum</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-lg-4 col-md-6 reveal">
+                    <div class="pImageholder prelative">
+                        <img src="{% static 'public/image/p1.jpg' %}" alt="user">
+                        <div class="holderOverlay"></div>
+                        <div class="content">
+                            <div class="tags"> Chandra kala in News</div>
+                            <div class="pTitle">Chandra Kala Rai initiated women empowerment camp in Rukum</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-lg-4 col-md-6 reveal" data-sr-id="14">
+                    <div class="pImageholder prelative">
+                        <img src="{% static 'public/image/p1.jpg' %}" alt="user">
+                        <div class="holderOverlay"></div>
+                        <div class="content">
+                            <div class="tags"> Chandra kala in News</div>
+                            <div class="pTitle">Chandra Kala Rai initiated women empowerment camp in Rukum</div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div class="col-xl-3  col-lg-4 col-md-6 reveal">
+                    <div class="pImageholder prelative">
+                        <img src="{% static 'public/image/p1.jpg' %}" alt="user">
+                        <div class="holderOverlay"></div>
+                        <div class="content">
+                            <div class="tags"> Chandra kala in News</div>
+                            <div class="pTitle">Chandra Kala Rai initiated women empowerment camp in Rukum</div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+
+            </div>
+        </div>
+
+
+    </section>
+{% endblock %}
+{% block scripts %}
     <script>
         $(document).ready(function () {
 
