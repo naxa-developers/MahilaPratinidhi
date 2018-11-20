@@ -74,6 +74,7 @@ class CommonShavaFields(models.Model):
 	name = models.CharField(max_length=300, verbose_name="नाम")
 	english_name = models.CharField(max_length=300, verbose_name="English Name")
 	date_of_birth = models.CharField(max_length=300, verbose_name="जन्ममिती")
+	age = models.CharField(max_length=300, verbose_name="उमेर", blank=True)
 	mothers_name = models.CharField(max_length=300, verbose_name="आमाको नाम")
 	fathers_name = models.CharField(max_length=300, verbose_name="बाबुको नाम")
 	marital_status = models.CharField(max_length=300, verbose_name="बैवाहिक स्थिथि", blank=True, null=True)
@@ -170,11 +171,16 @@ class ProvinceMahilaPratinidhiForm(CommonShavaFields):
 		return "{}-{} फारम".format(self.province.name, self.name)
 
 class RastriyaShava(CommonShavaFields):
+	samitima_vumika = models.CharField(max_length=300, verbose_name="", blank=True)
+	samlagna_samsadiya_samiti = models.CharField(max_length=300, verbose_name="", blank=True)
+
 
 	def __str__(self):
 		return "{}-{} फारम".format(self.name, self.name)
 
 class PratinidhiShava(CommonShavaFields):
+	samitima_vumika = models.CharField(max_length=300, verbose_name="", blank=True)
+	samlagna_samsadiya_samiti = models.CharField(max_length=300, verbose_name="", blank=True)
 
 	def __str__(self):
 		return "{}-{} फारम".format(self.name, self.name)
