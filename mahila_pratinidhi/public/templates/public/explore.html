@@ -160,10 +160,6 @@
     {% endblock %}
 
     {% block scripts %}
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-        crossorigin="anonymous"></script>
-
-    <script src="{% static '/public/js/bootstrap.min.js' %}"></script>
 
     <script>
         $(document).ready(function () {
@@ -174,6 +170,40 @@
             });
         });
 
+        var clicked = "{{ clicked }}";
+
+        if(clicked == "national" || clicked == "general"){
+            $("#nation").click();
+            $("#nation").addClass("active");
+        }
+
+        else if(clicked == 'federal'){
+            var elems = document.querySelectorAll(".active");
+            [].forEach.call(elems, function(el) {
+                el.classList.remove("active");
+            });
+            $("#federal").click();
+            $("#federal").addClass("active");
+        }
+
+        else if(clicked == "provincial"){
+            var elems = document.querySelectorAll(".active");
+            [].forEach.call(elems, function(el) {
+                el.classList.remove("active");
+            });
+            $("#provincial").click();
+            $("#provincial").addClass("active");
+            
+        }
+
+        else if(clicked == "local"){
+            var elems = document.querySelectorAll(".active");
+            [].forEach.call(elems, function(el) {
+                el.classList.remove("active");
+            });
+            $("#local").click();
+            $("#local").addClass("active");   
+        }
 
     </script>
     {% endblock %}

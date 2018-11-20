@@ -127,7 +127,7 @@ MEDIA_URL = '/media/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-LOGIN_REDIRECT_URL = '/home'
+LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/accounts/login'
 
 LOCALE_PATHS = (
@@ -137,8 +137,8 @@ LOCALE_PATHS = (
 #Email settings
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'youremail@gmail.com'
-EMAIL_HOST_PASSWORD = 'yourpassword'
+EMAIL_HOST_USER = 'saneprijal@gmail.com'
+EMAIL_HOST_PASSWORD = '9843440022'
 EMAIL_PORT = 587
 
 # Static files (CSS, JavaScript, Images)

@@ -17,7 +17,6 @@ import json
 
 
 class Index(TemplateView):
-    template_name="/"
 
     def get(self, request, *args, **kwargs):
         featured_data = MahilaPratinidhiForm.objects.all()[:9]
@@ -31,11 +30,8 @@ class Index(TemplateView):
         
         json_list = json.dumps(image_list)
 
-        if self.request.user.is_superuser:
-            return render(request, self.template_name)
-        else:
-            return render(request, 'public/index.html', {'featured_data': featured_data, 'news':news, 
-            'image_list':json_list})
+        return render(request, 'public/index.html', {'featured_data': featured_data, 'news':news, 
+        'image_list':json_list})
 
 
 def signup(request):
@@ -93,8 +89,9 @@ class ExploreView(TemplateView):
         rastriyas = RastriyaShava.objects.all()
         pratinidhis = PratinidhiShava.objects.all()
         provinces = Province.objects.all()
+        clicked = self.kwargs.get('clicked')
         return render(request, self.template_name, {'districts':district, 'rastriyas':rastriyas,
-        'pratinidhis':pratinidhis, 'provinces':provinces})
+        'pratinidhis':pratinidhis, 'provinces':provinces, 'clicked':clicked})
 
 
 class MahilaPratinidhiView(TemplateView):

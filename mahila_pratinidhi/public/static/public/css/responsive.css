@@ -3,7 +3,17 @@
     .pTitle{font-size: 18px;}
     .aroup{top:195px;}
     .pItem{width:25%;min-width: 25%;}
-
+    #exTab3 .nav-pills li a.active {
+        transform: scale(1);
+        transform-origin: center bottom;
+        min-height: 350px;
+    }
+    #exTab3.menutabs .nav-pills li a.active {
+        transform: scale(1);
+        transform-origin: center bottom;
+        height: 350px;
+    }
+    #exTab3 .nav-pills li.menutabs{height:390px;}
 
 .nav-pills li a.active {
     transform: scale(1);
@@ -14,6 +24,37 @@
 .topbg>.container{max-width: 100%;padding:0 15px;}
 .imgeye{width:100%;}
 .imgeye{max-width: 230px;}
+.personalDetail {
+    padding-top: 15px;
+    padding-bottom: 40px;
+}
+.detailTitles {
+    padding: 0 15px;
+}
+
+.pheader img{width:45px;}
+.Ptitle {
+    font-size: 38px;
+    margin-bottom: 0;
+}
+.personalInfoHeader {
+    margin-top: 0px;
+    margin-bottom: 15px;
+}
+.info {
+    padding: 0px 15px;
+}
+.infocontainer {
+    padding-bottom: 15px;
+    padding-right: 15px;
+}
+.infocontainer .dtitle,.infocontainer .dvalue{font-size: 14px;}
+.personalDetilFooter {
+    padding: 10px 15px;
+    font-size: 15px
+}
+.profileImg img{max-width:100%;position: static;}
+.shareholderInner{padding: 15px;}
 
 }
 @media screen and (max-width:1366px){
@@ -36,6 +77,14 @@
    .tabHolder.centered {
     padding: 30px 0;
 }
+.permanentAddress {
+    padding-right: 15px;
+}
+.profileHolder{padding:30px 0;}
+.userImageHolder {
+    padding: 30px 0;
+}
+.workSHolder{margin-bottom: 15px;}
 }
 @media screen and (max-width:1230px){
     .readOnline{font-size: 18px;}
@@ -43,6 +92,7 @@
    .counts{flex-direction: column;
     align-items: flex-start;} 
     .hdn{display:none;}
+    #exTab3 .nav-pills li a {width: 90%;}
 }
 @media screen and (max-width:992px){
     .topbg{padding:30px 0;}
@@ -79,6 +129,9 @@
   
 }
 @media screen and (max-width:768px){
+    .menuCircle{height: 50px;width: 50px;}
+    .menuCircle i.fa{font-size: 24px;}
+    .userIcon .menuCircle i.fa{font-size: 28px}
     .selectHolder.list{
         top: 70px;
         z-index: 10;
@@ -99,6 +152,7 @@
         padding: 0 30px;
     }
     .info{padding:0 28px;}
+    .infocontainer .info{padding:0 15px;}
     .imgwrpinner{display:none;}
     .imgwrpinner img{width: 100%;height:auto;}
     .aroup {
@@ -168,7 +222,87 @@
         margin-bottom: 15px;
         font-weight: lighter;
     }
+    .column {
+        flex-direction: row;
+        flex-wrap: wrap;
+        padding-top: 15px;
+        justify-content: center;
     }
+    .column >div{margin-right:15px;
+    margin-top:15px;}
+    .profileHolder{flex-direction: column;}
+
+    .profileImg img{max-width: 200px}
+    .infocontainer {
+        flex-direction: column;
+        align-items: flex-start;
+    
+    }
+    .shareholder{width: 100%;}
+    .infocontainer{padding-right:0;padding-bottom: 0;}
+    .personalDetilFooter{flex-direction:column;}
+    .locationDetail {
+        width: 130px;
+    }
+    .currentAddress{margin-top: 15px;padding-top:15px;border-top: 1px solid rgba(255,255,255,0.03)}
+    .personalDetail{padding-bottom: 0;}
+    .ptbi >div:not(:last-of-type){margin-bottom:15px;}
+    .ptbi {
+        padding-top: 20px;
+        padding-bottom: 20px;
+    }
+    .listofWorks{padding-bottom:0;}
+    .lispTitle {
+        font-size: 24px;
+        margin-bottom: 15px;
+    }
+    .listDet {
+        padding-top: 15px;
+        padding-bottom: 15px;}
+    #exTab3 .nav.nav-pills.row{flex-direction: column}
+    #exTab3 .nav-pills li a,#exTab3 .nav-pills li a.active{min-height:initial}
+    #exTab3 .nav-pills li {
+        height: 230px;
+        position: relative;
+    }
+
+   
+#exTab3 .nav-pills li {
+    height: initial;
+    position: relative;
+    width:100%;
+    left: 0;
+}
+#exTab3 .nav-pills li a{position: relative;width:100%;border-bottom:2px solid #E2CCFF;}
+#exTab3 li a .tabtext span{display: inline-block;}
+div.tabtext{flex-grow: 1;
+text-align: left;
+padding-left: 15px;}
+#exTab3 .nav-pills li a{flex-direction: row;display: flex;align-items: center;
+    padding-left: 10px;
+} 
+#exTab3 .nav-pills li a div:nth-of-type(2){flex-grow:1;
+    text-align: left!important;
+    padding-left: 30px;
+} 
+#exTab3 .nav-pills a.active:after {
+    top: 49px;
+    left: calc(100% - 30px);
+    border-width: 15px;
+    margin-left: -15px;
+    transform: rotate(-90deg);
+}
+.recentList{width:100%;float:none;}
+h3.newsHeader{font-size: 38px;}
+.quote, .detail{padding-top:40px;}
+.linkTabs {
+    padding-top: 15px;
+
+    padding-bottom: 0px;
+
+
+
+}
 @media screen and (max-width: 576px) { 
     .pItem{width:100%;min-width: 50%;}
     .btn.revbtn.mtb50{margin-bottom:15px;}
@@ -211,5 +345,15 @@
         font-size: 30px;
     }
     .dcontent{column-count: 1;}
+    #exTab3 .nav-pills a.active:after {
+        top: 28px;
+        border-width: 10px;
+        margin-left: -10px;
+    
+    }
 
 }
+
+
+
+

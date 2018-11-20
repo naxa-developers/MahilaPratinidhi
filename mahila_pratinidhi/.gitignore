@@ -179,6 +179,7 @@ celerybeat-schedule
 
 #vs code
 .vscode/
+.idea/
 
 # virtualenv
 venv/

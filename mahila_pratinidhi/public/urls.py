@@ -14,7 +14,7 @@ urlpatterns = [
 	path('activate/<uidb64>/<token>', views.activate, name='activate'),
 	
 	
-	path('explore/', views.ExploreView.as_view(), name="explore"),
+	path('explore/<slug:clicked>', views.ExploreView.as_view(), name="explore"),
 	path('explore/<district_id>/', views.MahilaPratinidhiView.as_view(), name="explore_district"),
 	path('explore/<explore_province>/', views.ProvinceView.as_view(), name="explore_province"),
 	
