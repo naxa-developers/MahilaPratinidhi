@@ -74,6 +74,7 @@ class CommonShavaFields(models.Model):
 	name = models.CharField(max_length=300, verbose_name="नाम")
 	english_name = models.CharField(max_length=300, verbose_name="English Name")
 	date_of_birth = models.CharField(max_length=300, verbose_name="जन्ममिती")
+	age = models.CharField(max_length=300, verbose_name="उमेर", blank=True)
 	mothers_name = models.CharField(max_length=300, verbose_name="आमाको नाम")
 	fathers_name = models.CharField(max_length=300, verbose_name="बाबुको नाम")
 	marital_status = models.CharField(max_length=300, verbose_name="बैवाहिक स्थिथि", blank=True, null=True)
