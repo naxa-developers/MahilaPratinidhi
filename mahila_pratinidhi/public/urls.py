@@ -18,7 +18,7 @@ urlpatterns = [
 	path('explore/<district_id>/', views.MahilaPratinidhiView.as_view(), name="explore_district"),
 	path('explore/<district_id>/<int:pk>/', views.LocalMahilaPratinidhiDetail.as_view(), 
 	name="local_mahila_detail"),
-
+	path('read/', views.read_view, name="read"),
 
 	path('explore/<explore_province>/', views.ProvinceView.as_view(), name="explore_province"),
 	
