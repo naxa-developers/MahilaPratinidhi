@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.shortcuts import render
-from django.http import HttpResponseRedirect
+from django.http import HttpResponse
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import UserPassesTestMixin
 from django.views.generic import CreateView, UpdateView, DetailView, DeleteView, TemplateView, ListView
@@ -149,7 +149,18 @@ class Tab(UserPassesTestMixin, TemplateView):
     def test_func(self):
         return not self.request.user.is_superuser
 
+
+def read_view(request, ):
+    with open('C:/gitnaxa/work/Mahila-Pratinidhi/CV_Akshya_Kumar_Shrestha.pdf', 'rb') as pdf:
+        response = HttpResponse(pdf.read(), content_type='application/pdf')
+        response['Content-Disposition'] = 'filename=some_file.pdf'
+    return response
+
+
+
 class Detail(TemplateView):
     template_name = 'public/lists.html'
+
+
 
 
