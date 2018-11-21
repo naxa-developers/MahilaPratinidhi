@@ -23,9 +23,10 @@
                     <img src="{% static 'public/image/mahilalogo.png' %}" style="width: 500px;height: 500px;" alt="profileImage">
                     {% endif %}
                 </div>
+                {% if form.district_id %}
                 <div class="personalDetail">
 
-
+                    
                     <div class="detail">
                         <div class="detailTitles">
                             <p class="pheader">
@@ -43,7 +44,7 @@
                                 <div>
                                     {% if form.age %}
                                     <span class="dtitle">Age:</span>
-                                    <span class="dvalue">59 Years</span>
+                                    <span class="dvalue">{{form.age}} Years</span>
                                     {% endif %}
                                 </div>
                                 <div>
@@ -61,7 +62,7 @@
                                 <div>
                                     {% if form.marital_status %}
                                     <span class="dtitle">Maritual Status:</span>
-                                    <span class="dvalue">Married</span>
+                                    <span class="dvalue">{{form.marital_status}}</span>
                                     {% endif %}
                                 </div>
                                 <div>
@@ -71,16 +72,18 @@
                                     {% endif %}
                                 </div>
                                 <div>
+                                    {% if form.nationality %}
                                     <span class="dtitle">Nationality:</span>
-                                    <span class="dvalue">Nepali </span>
+                                    <span class="dvalue">{{form.nationality}}</span>
+                                    {% endif %}
                                 </div>
                                 <div>
-                                    <span class="dtitle">Ethinicity:</span>
-                                    <span class="dvalue">Indigenous Group</span>
+                                    <span class="dtitle">Caste:</span>
+                                    <span class="dvalue">{{ form.caste|title }}</span>
                                 </div>
                                 <div>
                                     <span class="dtitle">Education:</span>
-                                    <span class="dvalue">Masters in Arts </span>
+                                    <span class="dvalue">{{form.educational_qualification|title}} </span>
                                 </div>
                             </div>
                             <div class="shareholder">
@@ -119,6 +122,7 @@
                             </div>
                         </div>
 
+
                     </div>
                     <div class="personalDetilFooter">
                         <div class="permanentAddress flex">
@@ -129,29 +133,149 @@
                                     </i>
                                 </div>
                                 <div class="locationDetail bold">
-                                    Permanent Address:
+                                    Address:
                                 </div>
                             </div>
                             <div class="placeaddress">
-                                Kaski District,
-                                <br/> Pokhara Ma. Na. Pa., Ward no. 11
-                            </div>
-                        </div>
-                        <div class="currentAddress flex">
-                            <div class="locationDetail bold">
-                                Current Address:
-                            </div>
-                            <div class="placeaddress">
-                                Kaski District,
-                                <br/> Pokhara Ma. Na. Pa., Ward no. 11
+                                {{form.address|title}}
+                                <br/>
                             </div>
                         </div>
                     </div>
                 </div>
+                {% else %}
+                <div class="personalDetail">
+
+                    
+                        <div class="detail">
+                            <div class="detailTitles">
+                                <p class="pheader">
+                                    <span class="Ptitle"> {{ form.name }}</span>
+                                    <span class="flag">
+                                        <img src="{% static 'public/image/partyflag.png' %}" alt="">
+                                    </span>
+                                </p>
+                                <p class="personalInfoHeader">
+                                    PERSONAL INFORMATION
+                                </p>
+                            </div>
+                            <div class="infocontainer">
+                                <div class="info">
+                                    <div>
+                                        {% if form.age %}
+                                        <span class="dtitle">Age:</span>
+                                        <span class="dvalue">{{form.age}} Years</span>
+                                        {% endif %}
+                                    </div>
+                                    <div>
+                                        {% if form.mothers_name %}
+                                        <span class="dtitle">Mother’s Name:</span>
+                                        <span class="dvalue">{{ form.mothers_name }}</span>
+                                        {% endif %}
+                                    </div>
+                                    <div>
+                                        {% if form.fathers_name %}
+                                        <span class="dtitle">Father’s Name:</span>
+                                        <span class="dvalue">Man Bahadur Lama </span>
+                                        {% endif %}
+                                    </div>
+                                    <div>
+                                        {% if form.marital_status %}
+                                        <span class="dtitle">Maritual Status:</span>
+                                        <span class="dvalue">{{form.marital_status}}</span>
+                                        {% endif %}
+                                    </div>
+                                    <div>
+                                        {% if form.husbands_name %}
+                                        <span class="dtitle">Husband Name:</span>
+                                        <span class="dvalue">Lakpa Chiring Lama</span>
+                                        {% endif %}
+                                    </div>
+                                    <div>
+                                        {% if form.nationality %}
+                                        <span class="dtitle">Nationality:</span>
+                                        <span class="dvalue">{{form.nationality}}</span>
+                                        {% endif %}
+                                    </div>
+                                    <div>
+                                        <span class="dtitle">Ethinicity:</span>
+                                        <span class="dvalue">Indigenous Group</span>
+                                    </div>
+                                    <div>
+                                        <span class="dtitle">Education:</span>
+                                        <span class="dvalue">{{form.educational_qualification|title}} </span>
+                                    </div>
+                                </div>
+                                <div class="shareholder">
+                                    <div class="shareholderInner">
+                                        <div class="shareInfo">
+                                            <i class="fa fa-phone ihs">
+    
+                                            </i>
+                                            <span class="contactIfo">
+                                                Call Request
+                                            </span>
+                                        </div>
+                                        <div class="shareInfo">
+                                            <i class="fa fa-envelope ihs">
+    
+                                            </i>
+                                            <span class="contactIfo">
+                                                Write Email
+                                            </span>
+                                        </div>
+                                        <div class="shareInfo">
+                                            <span class="ihs">
+                                                <i class="fa fa-facebook mr5 ">
+    
+                                                </i>
+                                                <i class="fa  fa-twitter ">
+    
+                                                </i>
+                                            </span>
+    
+                                            <span class="contactIfo">
+                                                Find on Social Media
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+    
+    
+                        </div>
+                        <div class="personalDetilFooter">
+                            <div class="permanentAddress flex">
+                                <div class="placelbl flex aligncenter">
+                                    <div>
+                                        <i class="fa fa-map-marker">
+    
+                                        </i>
+                                    </div>
+                                    <div class="locationDetail bold">
+                                        Permanent Address:
+                                    </div>
+                                </div>
+                                <div class="placeaddress">
+                                    Kaski District,
+                                    <br/> Pokhara Ma. Na. Pa., Ward no. 11
+                                </div>
+                            </div>
+                            <div class="currentAddress flex">
+                                <div class="locationDetail bold">
+                                    Current Address:
+                                </div>
+                                <div class="placeaddress">
+                                    Kaski District,
+                                    <br/> Pokhara Ma. Na. Pa., Ward no. 11
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+
             </div>
         </div>
-
-
 
 
     </section>
@@ -252,27 +376,17 @@
 
                 </div>
             </div>
+            {% if form.samlagna_sang_sastha_samuha %}
             <div class="listofWorks text-center">
                 <p class="loft white bold">
                     RECENT UNION, ORGANISATION, GROUP ASSOCIATION
                 </p>
                 <div class="litem ">
                     <span class="square"></span>
-                    <span class="text">SWASTHA NEPAL, PRESIDENT 2071 B.S.</span>
-                </div>
-                <div class="litem">
-                    <span class="square"></span>
-                    <span class="text">SWASTHA NEPAL, PRESIDENT 2071 B.S.</span>
-                </div>
-                <div class="litem">
-                    <span class="square"></span>
-                    <span class="text">SWASTHA NEPAL, PRESIDENT 2071 B.S.</span>
-                </div>
-                <div class="litem">
-                    <span class="square"></span>
-                    <span class="text">SWASTHA NEPAL, PRESIDENT 2071 B.S.</span>
+                    <span class="text">{{ form.samlagna_sang_sastha_samuha }}</span>
                 </div>
             </div>
+            {% endif %}
 
 
         </div>
@@ -285,53 +399,18 @@
                 RELATED NEWS
             </p>
             <div class="row lists ">
+                {% for news in news %}
                 <div class="col-xl-3 col-lg-4 col-md-6 reveal" data-sr-id="12" style="visibility: visible; opacity: 1; transition: opacity 0.4s cubic-bezier(0.5, 0, 0, 1) 0.05s;">
                     <div class="pImageholder prelative">
                         <img src="{% static 'public/image/p1.jpg' %}" alt="user">
                         <div class="holderOverlay"></div>
                         <div class="content">
-                            <div class="tags"> Chandra kala in News</div>
-                            <div class="pTitle">Chandra Kala Rai initiated women empowerment camp in Rukum</div>
+                            <div class="tags"> {{ form.name }} in News</div>
+                            <div class="pTitle">{{ news.title }}</div>
                         </div>
                     </div>
                 </div>
-                <div class="col-xl-3 col-lg-4 col-md-6 reveal">
-                    <div class="pImageholder prelative">
-                        <img src="{% static 'public/image/p1.jpg' %}" alt="user">
-                        <div class="holderOverlay"></div>
-                        <div class="content">
-                            <div class="tags"> Chandra kala in News</div>
-                            <div class="pTitle">Chandra Kala Rai initiated women empowerment camp in Rukum</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xl-3 col-lg-4 col-md-6 reveal" data-sr-id="14">
-                    <div class="pImageholder prelative">
-                        <img src="{% static 'public/image/p1.jpg' %}" alt="user">
-                        <div class="holderOverlay"></div>
-                        <div class="content">
-                            <div class="tags"> Chandra kala in News</div>
-                            <div class="pTitle">Chandra Kala Rai initiated women empowerment camp in Rukum</div>
-                        </div>
-                    </div>
-                </div>
-
-
-
-                <div class="col-xl-3  col-lg-4 col-md-6 reveal">
-                    <div class="pImageholder prelative">
-                        <img src="{% static 'public/image/p1.jpg' %}" alt="user">
-                        <div class="holderOverlay"></div>
-                        <div class="content">
-                            <div class="tags"> Chandra kala in News</div>
-                            <div class="pTitle">Chandra Kala Rai initiated women empowerment camp in Rukum</div>
-                        </div>
-                    </div>
-                </div>
-
-
-
-
+                {% endfor %}
 
             </div>
         </div>

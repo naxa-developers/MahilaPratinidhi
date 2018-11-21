@@ -109,13 +109,48 @@ class LocalMahilaPratinidhiDetail(DetailView):
     template_name = 'public/detail.html'
     context_object_name = 'form'
 
+    def get_context_data(self, **kwargs):
+        form = super(LocalMahilaPratinidhiDetail, self).get_context_data(**kwargs)
+        form['news'] = News.objects.filter(newsOf=self.kwargs.get('pk'))
+
 
 class ProvinceView(ListView):
     template_name = "public/lists.html"
     
     def get(self, request, *args, **kwargs):
         forms = ProvinceMahilaPratinidhiForm.objects.filter(province_id=self.kwargs.get('province_id'))
-        return render(request, self.template_name, {'forms': form})
+        province_id = self.kwargs.get('province_id')
+        return render(request, self.template_name, {'forms': forms, 'province_id':province_id})
+
+
+class ProvincialMahilaPratinidhiDetail(DetailView):
+    model = ProvinceMahilaPratinidhiForm
+    template_name = 'public/detail.html'
+    context_object_name = 'form'
+
+    def get_context_data(self, **kwargs):
+        form = super(ProvincialMahilaPratinidhiDetail, self).get_context_data(**kwargs)
+        form['news'] = News.objects.filter(newsOf=self.kwargs.get('pk'))
+
+
+class RastriyaMahilaDetail(DetailView):
+    model = RastriyaShava
+    template_name = 'public/detail.html'
+    context_object_name = 'form'
+
+    def get_context_data(self, **kwargs):
+        form = super(RastriyaMahilaDetail, self).get_context_data(**kwargs)
+        form['news'] = News.objects.filter(newsOf=self.kwargs.get('pk'))
+
+
+class PratinidhiMahilaDetail(DetailView):
+    model = PratinidhiShava
+    template_name = 'public/detail.html'
+    context_object_name = 'form'
+
+    def get_context_data(self, **kwargs):
+        form = super(PratinidhiMahilaDetail, self).get_context_data(**kwargs)
+        form['news'] = News.objects.filter(newsOf=self.kwargs.get('pk'))
 
 
 class DataVisualize(UserPassesTestMixin, TemplateView):
@@ -132,7 +167,7 @@ class DataVisualize(UserPassesTestMixin, TemplateView):
         married = MahilaPratinidhiForm.objects.filter(marital_status='ljjflxt').count
         graduate = MahilaPratinidhiForm.objects.filter(educational_qualification__contains=':gfts').count
         return render(request, self.template_name, {'total':total, 'married':married, 'graduate':graduate})
-    
+
 
 class List(UserPassesTestMixin, TemplateView):
     template_name = 'public/lists.html'
@@ -142,14 +177,6 @@ class List(UserPassesTestMixin, TemplateView):
         return not self.request.user.is_superuser
     
 
-class Tab(UserPassesTestMixin, TemplateView):
-    template_name = 'public/tab.html'
 
-
-    def test_func(self):
-        return not self.request.user.is_superuser
-
-class Detail(TemplateView):
-    template_name = 'public/lists.html'
 
 

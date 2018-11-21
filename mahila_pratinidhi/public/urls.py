@@ -9,21 +9,20 @@ app_name = 'public'
 urlpatterns = [
 	path('', views.Index.as_view(), name="index"),
 	path('signup/', views.signup, name="signup"),
-	# re_path(r'^activate/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
-    #     views.activate, name='activate'),
 	path('activate/<uidb64>/<token>', views.activate, name='activate'),
 	
 	
 	path('explore/<slug:clicked>', views.ExploreView.as_view(), name="explore"),
-	path('explore/<district_id>/', views.MahilaPratinidhiView.as_view(), name="explore_district"),
-	path('explore/<district_id>/<int:pk>/', views.LocalMahilaPratinidhiDetail.as_view(), 
+	path('explore/district/<district_id>/', views.MahilaPratinidhiView.as_view(), name="explore_district"),
+	path('explore/district/<district_id>/<int:pk>/', views.LocalMahilaPratinidhiDetail.as_view(), 
 	name="local_mahila_detail"),
 
-
-	path('explore/<explore_province>/', views.ProvinceView.as_view(), name="explore_province"),
+	path('explore/province/<province_id>/', views.ProvinceView.as_view(), name="explore_province"),
+	path('explore/province/<province_id>/<int:pk>/', views.ProvincialMahilaPratinidhiDetail.as_view(),
+	name="provincial_mahila_detail"),
 	
-	path('detail/<int:pk>/', views.Detail.as_view(), name="mahila_detail"),
+	path('detail/national/<int:pk>/', views.RastriyaMahilaDetail.as_view(), name="national_detail"),
+	path('detail/pratinidhi/<int:pk>', views.PratinidhiMahilaDetail.as_view(), name="pratinidhi_detail"),
 
 	path('visualize/', views.DataVisualize.as_view(), name="data_visualize"),
-	path('tab/', views.Tab.as_view(), name="tab"),
 ]
