@@ -232,14 +232,14 @@
                         <img src="{% static 'public/image/mahilalogo.png' %}" alt="user" style="width:345px;height:250px;" >
                         {% endif %}
                         <div class="holderOverlay"></div>
-                        <div class="content">
+                        <a class="content" href="{% url 'public:news' %}">
                             {% if data.newsOf %}
                             <div class="tags"> {{data.newsOf.name_en}} in News</div>
                             {% else %}
                             <div class="tags"> General News</div>
                             {% endif %}
                             <div class="pTitle">{{ data.title }}</div>
-                        </div>
+                        </a>
                     </div>
                 </div>
                 {% endfor %}

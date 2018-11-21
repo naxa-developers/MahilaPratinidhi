@@ -25,4 +25,5 @@ urlpatterns = [
 	path('detail/pratinidhi/<int:pk>', views.PratinidhiMahilaDetail.as_view(), name="pratinidhi_detail"),
 
 	path('visualize/', views.DataVisualize.as_view(), name="data_visualize"),
+	path('news/', views.NewsView.as_view(), name="news"),
 ]
