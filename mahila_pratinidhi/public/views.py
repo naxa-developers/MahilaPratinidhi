@@ -20,7 +20,11 @@ import json
 class Index(TemplateView):
 
     def get(self, request, *args, **kwargs):
-        featured_data = MahilaPratinidhiForm.objects.all()[:9]
+        local_featured = MahilaPratinidhiForm.objects.filter(featured='True')[:1]
+        national_featured = RastriyaShava.objects.filter(featured='True')[:1]
+        pratinidhi_featured = PratinidhiShava.objects.filter(featured='True')[:1]
+        provincial_featured = ProvinceMahilaPratinidhiForm.objects.filter(featured='True')[:1]
+        featured_data = [local_featured, national_featured, pratinidhi_featured, provincial_featured]
         news = News.objects.all()
         images = BackgroundImage.objects.all()
         image_list = []
@@ -149,20 +153,59 @@ class PratinidhiMahilaDetail(DetailView):
         return render(request, self.template_name, {'form':form})
 
 
-class DataVisualize(UserPassesTestMixin, TemplateView):
+class DataVisualize(TemplateView):
     template_name = 'public/data.html'
 
 
-    def test_func(self):
-        return not self.request.user.is_superuser
-
-
     def get(self, request, *args, **kwargs):
-        form = MahilaPratinidhiForm.objects.all()
-        total = form.count
-        married = MahilaPratinidhiForm.objects.filter(marital_status='ljjflxt').count
-        graduate = MahilaPratinidhiForm.objects.filter(educational_qualification__contains=':gfts').count
-        return render(request, self.template_name, {'total':total, 'married':married, 'graduate':graduate})
+        local = MahilaPratinidhiForm.objects.all()
+        national = RastriyaShava.objects.all()
+        pratinidhi = PratinidhiShava.objects.all()
+        provincial = ProvinceMahilaPratinidhiForm.objects.all()
+        total = local.count() + national.count() + pratinidhi.count() + provincial.count()
+
+        married = 0
+        graduate = 0
+        direct = 0
+
+        for mahila in local:
+            if mahila.marital_status == 'ljjflxt':
+                married = married + 1
+            
+            if ':gfts' in mahila.educational_qualification:
+                graduate = graduate + 1
+            
+        for mahila in national:
+            if mahila.marital_status == 'विवाहित':
+                married = married + 1
+            
+            if 'स्नात' in mahila.educational_qualification:
+                graduate = graduate + 1
+            
+            if 'प्रत्यक्ष' in mahila.nirwachit_prakriya:
+                direct = direct + 1
+            
+        for mahila in pratinidhi:
+            if mahila.marital_status == 'विवाहित':
+                married = married + 1
+            
+            if 'स्नात' in mahila.educational_qualification:
+                graduate = graduate + 1
+            
+            if 'प्रत्यक्ष' in mahila.nirwachit_prakriya:
+                direct = direct + 1
+        
+        for mahila in provincial:
+            if mahila.marital_status == 'विवाहित':
+                married = married + 1
+            
+            if 'स्नात' in mahila.educational_qualification:
+                graduate = graduate + 1
+            
+            if 'प्रत्यक्ष' in mahila.nirwachit_prakriya:
+                direct = direct + 1
+
+        return render(request, self.template_name, {'total':total, 'married':married, 'graduate':graduate, 'direct':direct})
     
 
 class NewsView(TemplateView):

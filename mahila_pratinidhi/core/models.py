@@ -119,7 +119,7 @@ class CommonShavaFields(models.Model):
 	samlagna_sang_sastha_samuha = models.CharField(max_length=300, verbose_name="सलग्न संघ, सस्था , समूह", blank=True)
 	status = models.BooleanField(choices=BOOL_CHOICES, default=False, verbose_name="स्थिति")
 	image = models.ImageField(blank=True, null=True, upload_to='provinceProfile/', verbose_name="फोटो")
-
+	featured = models.BooleanField(default=False)
 	class Meta:
 		abstract = True
 
@@ -153,6 +153,7 @@ class MahilaPratinidhiForm(models.Model):
 	nirwachit_chetra_pratiko_pratibadhata = models.TextField(verbose_name="निर्वाचित क्षेत्र प्रतिको प्रतिबध्धता", blank=True)
 	status = models.BooleanField(choices=BOOL_CHOICES, default=False, verbose_name="स्थिति")
 	image = models.ImageField(blank=True, upload_to='profile/', verbose_name="फोटो")
+	featured = models.BooleanField(default=False)
 
 	def __str__(self):
 		return "{} फारम".format(self.district.name)
