@@ -10,8 +10,8 @@ from django.core.serializers import serialize
 from rest_framework.decorators import api_view
 from rest_framework.viewsets import ModelViewSet, ReadOnlyModelViewSet
 from rest_framework.views import APIView
-
-
+from .serializers import RastriyaShavaSerializer, ProvinceSerializer, LocalMahilaSerializer, PratinidhiShavaSerializer
+from core.models import RastriyaShava, PratinidhiShava
 
 @api_view(['GET'])
 def country_geojson(request):
@@ -48,5 +48,11 @@ def gapanapa_geojson(request, district):
     except:
         return Response(data, status=status.HTTP_404_NOT_FOUND)
     return Response(data)
+
+
+class RastriyaViewSet(ReadOnlyModelViewSet):
+    queryset = RastriyaShava.objects.all()
+    serializer_class = RastriyaShavaSerializer
+
 
 

@@ -34,9 +34,28 @@
                 }
 
                 .leaflet-marker-icon{
-                  border-radius: 50%;
+                  border-radius: 20%;
+                  font-size: 15px;
+                  padding:10px;
+
 
                 }
+
+    .info {
+    padding: 5px;
+    margin-top: 30px;
+
+    font: 20px Arial, Helvetica, sans-serif;
+    line-height: 31px;
+    background: #a3bfed;
+    box-shadow: 0 0 15px rgba(0,0,0,0.2);
+    border: solid;
+    border-radius: 5px;
+}
+.info h4 {
+    margin: 0 0 5px;
+    color: #777;
+}
 
 
         </style>
@@ -325,7 +344,11 @@
     <script>
 
 var baseMaps;
-var map = L.map('map',{zoomControl: true}).setView([27.63, 84.4171], 8);
+var map = L.map('map',
+{zoomControl: false,
+  minZoom: 7,
+  maxZoom: 8}
+).setView([27.63, 84.4171], 7);
 
 function add_tile(){
 
@@ -362,7 +385,7 @@ add_tile();
 
 //if above was added, popups didnt work
 
-L.control.layers(baseMaps).addTo(map);
+//L.control.layers(baseMaps).addTo(map);
 
 province_data=[];
 
@@ -382,9 +405,26 @@ province_geojson= { "type": "FeatureCollection", "features": [ { "type":
 } } ] }
 
 
+var basic_data ={
+  'national': '25' ,
+  'federal':'21' ,
+  'province':'220' ,
+  'local': '350',
+}
 
-L.geoJson.ajax('http://localhost:8000/api/geojson/country')
-.addTo(map);
+
+var basic_data0 ={
+  'national': '23' ,
+  'federal':'100' ,
+  'province':'1000' ,
+  'local': '1400',
+}
+
+function calculate_center(layer){
+  console.log("layer",layer);
+  return layer.getBounds().getCenter();
+}
+
 
 var person= L.geoJSON(province_geojson).addTo(map);
 var center_person= person.getBounds().getCenter();
@@ -392,55 +432,136 @@ L.marker(center_person, {icon: mahila_marker});
 
 
   function getColor(d) {
-      return d > 25 ? '#800026' :
-             d > 20  ? '#BD0026' :
-             d > 15  ? '#E31A1C' :
-             d > 10  ? '#FC4E2A' :
-             d > 5   ? '#FD8D3C' :
-             d > 2   ? '#FEB24C' :
-             d > 0   ? '#FED976' :
-                        '#FFEDA0';
+      return d > 30 ? '#1e43eb' :
+             d > 25 ? '#5f7af1' :
+             d > 20  ? '#8096f4' :
+             d > 15  ? '#98a9f6' :
+             d > 10  ? '#c2ccfa' :
+             d > 5   ? '#e8ebfd' :
+             d > 2   ? '#e8ebfd' :
+             d > 0   ? '#e8ebfd' :
+                        '#e8ebfd';
                         }
 
   function style(color) {
       return {
               fillColor: color,
-              weight: 0,
-              opacity: 0,
-              color: color,
+              weight: 1,
+              opacity: 1,
+              color: 'blue',
               //dashArray: '3',
               fillOpacity: 0.7
                     };
           }
 
+function highlightFeature(e){
+
+    var layer = e.target;
+
+    layer.setStyle({
+        weight: 5,
+        color: '#666',
+        dashArray: '',
+        fillOpacity: 0.7
+    });
+
+    info.update(basic_data);
+}
+
+function resetHighlight(e){
+
+  var layer = e.target;
+  layer.setStyle(style(getColor(frequency_array[layer.feature.properties.Province-1])));
+  info.update(basic_data0);
+
+}
+function zoomToFeature(e) {
+              map.fitBounds(e.target.getBounds());
+          }
+
+function onEachFeature(feature, layer) {
+
+              layer.setStyle(style(getColor(frequency_array[feature.properties.Province-1])));
+              var num =feature.properties.Province-1;
+              layer.on({
+                  mouseover: highlightFeature,
+                  mouseout: resetHighlight,
+                  click: zoomToFeature
+              });
+          }
+
+
+  frequency_array=[10,23,31,5,12,2,15]
+
+  var country =L.geoJson.ajax('http://localhost:8000/api/geojson/country',
+            {onEachFeature:onEachFeature})
+          .addTo(map);
 
 function Choropleth(province,frequency){
 
   var color= getColor(frequency);
 
-L.geoJson.ajax('http://vca.naxa.com.np/api/geojson/province/'+province+'/',{style:style(color)})
-.addTo(map);
+var province =L.geoJson.ajax('http://vca.naxa.com.np/api/geojson/province/'+province+'/',
+{style:style(color),
+ //onEachFeature: onEachFeature
+})
+//.addTo(map);
+
+return province.toGeoJSON() ;
 
 }
 
-frequency_array=[10,23,15,5,12,2,7]
+center_for_markers = [
+[27.244862521497282,87.2314453125],
+[26.941659545381516,85.67138671875],
+[27.751607687549384,85.352783203125],
+[28.294707428421205,84.166259765625],
+[28,83],
+[29.,82.5],
+[29.49698759653577,80.980224609375]
+]
+
+
+
 
 for (i=0; i<frequency_array.length; i++){
-    Choropleth(i+1,frequency_array[i]);
+    province = Choropleth(i+1,frequency_array[i]);
+    //var center =calculate_center(province);
+    circular_marker(center_for_markers[i],frequency_array[i]);
+
 
 }
 
+function circular_marker(center,number){
+
+  var myIcon = L.divIcon({
+      iconSize: new L.Point(40, 40),
+      html: number
+  });
+  // you can set .my-div-icon styles in CSS
+  L.marker(center, {icon: myIcon}).addTo(map);
+      //.bindPopup('divIcon CSS3 popup. <br> Supposed to be easily stylable.');
+}
+
+var info = L.control({position: 'topright'});
+
+info.onAdd = function(map){
+  this._div= L.DomUtil.create('div','info');
+  this.update(basic_data0);
+  return this._div;
+}
+
+info.update = function(props) {
+
+  this._div.innerHTML = "<div><span style='margin-right:10px;color:purple'>National: "+ props['national'] + "</span><span style='margin-right:10px;color:red'> Federal: "+ props['federal']
+    + "</span><span style='margin-right:10px;color:green'>Province: "+
+    props['province']+"</span><span style='margin-right:10px'>Local: "+props['local']+"</span><div>";
+};
+
+info.addTo(map);
 
 
 
-var myIcon = L.divIcon({
-    iconSize: new L.Point(70, 70),
-    html: 'foo bar'
-});
-// you can set .my-div-icon styles in CSS
-
-L.marker([27.5, 85], {icon: myIcon}).addTo(map)
-    //.bindPopup('divIcon CSS3 popup. <br> Supposed to be easily stylable.');
 
             // Note: This example requires that you consent to location sharing when
             // prompted by your browser. If you see the error "The Geolocation service
