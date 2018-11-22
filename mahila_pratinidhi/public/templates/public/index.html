@@ -1,5 +1,6 @@
 {% extends "public/public_base.html" %}
 {% load staticfiles %}
+{% load filters %}
 {% block upper_content %}
 <body>
         <style>
@@ -236,7 +237,9 @@
                         <div class="holderOverlay"></div>
                         <a class="content" href="{% url 'public:news' %}">
                             {% if data.object_id %}
-                            <div class="tags"> {{ data.object_id.english_name }} in News</div>
+                            {% with data|content_type as mahila_data %}
+                            <div class="tags"> {{ mahila_data.name }} in News</div>
+                            {% endwith %}
                             {% else %}
                             <div class="tags"> General News</div>
                             {% endif %}

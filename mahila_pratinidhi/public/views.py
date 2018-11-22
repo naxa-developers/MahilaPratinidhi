@@ -21,12 +21,12 @@ class Index(TemplateView):
 
     def get(self, request, *args, **kwargs):
         local_featured = MahilaPratinidhiForm.objects.filter(featured='True')[:1]
-        print(local_featured)
         national_featured = RastriyaShava.objects.filter(featured='True')[:1]
         pratinidhi_featured = PratinidhiShava.objects.filter(featured='True')[:1]
         provincial_featured = ProvinceMahilaPratinidhiForm.objects.filter(featured='True')[:1]
         featured_data = [local_featured, national_featured, pratinidhi_featured, provincial_featured]
         news = News.objects.all()
+
         images = BackgroundImage.objects.all()
         image_list = []
 
@@ -114,7 +114,6 @@ class LocalMahilaPratinidhiDetail(DetailView):
 
     def get(self, request, *args, **kwargs):
         form = MahilaPratinidhiForm.objects.get(id=self.kwargs.get('pk'))
-        # news = News.objects.filter(newsOf=RastriyaShava.objects.get(id=self.kwargs.get('pk')))
         return render(request, self.template_name, {'form':form})
 
 
@@ -132,7 +131,6 @@ class ProvincialMahilaPratinidhiDetail(DetailView):
 
     def get(self, request, *args, **kwargs):
         form = ProvinceMahilaPratinidhiForm.objects.get(id=self.kwargs.get('pk'))
-        # news = News.objects.filter(newsOf=RastriyaShava.objects.get(id=self.kwargs.get('pk')))
         return render(request, self.template_name, {'form':form})
 
 
@@ -141,7 +139,6 @@ class RastriyaMahilaDetail(TemplateView):
 
     def get(self, request, *args, **kwargs):
         form = RastriyaShava.objects.get(id=self.kwargs.get('pk'))
-        # news = News.objects.filter(newsOf=RastriyaShava.objects.get(id=self.kwargs.get('pk')))
         return render(request, self.template_name, {'form':form})
 
 
@@ -150,7 +147,6 @@ class PratinidhiMahilaDetail(DetailView):
 
     def get(self, request, *args, **kwargs):
         form = PratinidhiShava.objects.get(id=self.kwargs.get('pk'))
-        # news = News.objects.filter(newsOf=RastriyaShava.objects.get(id=self.kwargs.get('pk')))
         return render(request, self.template_name, {'form':form})
 
 
