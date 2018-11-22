@@ -18,9 +18,11 @@ urlpatterns = [
 	name="local_mahila_detail"),
 	path('read/', views.read_view, name="read"),
 	path('explore/<explore_province>/', views.ProvinceView.as_view(), name="explore_province"),
+
 	path('explore/province/<province_id>/', views.ProvinceView.as_view(), name="explore_province"),
 	path('explore/province/<province_id>/<int:pk>/', views.ProvincialMahilaPratinidhiDetail.as_view(),
-	name="provincial_mahila_detail"),	
+	name="provincial_mahila_detail"),
+
 	path('detail/national/<int:pk>/', views.RastriyaMahilaDetail.as_view(), name="national_detail"),
 	path('detail/pratinidhi/<int:pk>', views.PratinidhiMahilaDetail.as_view(), name="pratinidhi_detail"),
 
