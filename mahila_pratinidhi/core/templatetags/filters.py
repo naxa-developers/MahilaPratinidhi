@@ -1,6 +1,8 @@
 from django import template
 
 from core.models import District, MahilaPratinidhiForm, BOOL_CHOICES
+from django.contrib.contenttypes.models import ContentType
+
 
 register = template.Library()
 
@@ -40,3 +42,10 @@ def split(value, key):
         Returns the value turned into a list.
     """
     return value.split(key)
+
+
+@register.filter
+def content_type(obj):
+    if not obj:
+        return False
+    return ContentType.objects.get_for_model(obj)
