@@ -23,6 +23,7 @@ urlpatterns = [
     path('accounts/', include('django.contrib.auth.urls')),
     path('cms/', include('core.urls', namespace="core")),
     path('', include('public.urls', namespace="public")),
+    path('api/', include('public.api.urls')),
 
 ]
 

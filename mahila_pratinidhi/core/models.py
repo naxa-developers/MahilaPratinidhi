@@ -1,5 +1,9 @@
 import os
 from django.db import models
+from django.contrib.contenttypes.fields import GenericForeignKey
+from django.contrib.contenttypes.models import ContentType
+from django.contrib.contenttypes.fields import GenericRelation
+
 
 BOOL_CHOICES = (
 	(True, 'पूर्ण'),
@@ -132,6 +136,19 @@ class District(models.Model):
 		return self.name
 
 
+class News(models.Model):
+	date = models.DateField(blank=False)
+	title = models.CharField(max_length=300, blank=False)
+	content = models.TextField(blank=False)
+
+	content_type =   models.ForeignKey(ContentType, on_delete=models.CASCADE, null=True)
+	object_id = models.PositiveIntegerField(null=True)
+	content_object=GenericForeignKey('content_type', 'object_id')
+
+	def __str__(self):
+		return "{}-{} news".format(self.date, self.title)
+
+
 class MahilaPratinidhiForm(models.Model):
 	district = models.ForeignKey(District, on_delete=models.CASCADE, related_name='district', verbose_name="जिल्ला")
 	name = models.CharField(max_length=300, verbose_name="नाम")
@@ -154,6 +171,7 @@ class MahilaPratinidhiForm(models.Model):
 	status = models.BooleanField(choices=BOOL_CHOICES, default=False, verbose_name="स्थिति")
 	image = models.ImageField(blank=True, upload_to='profile/', verbose_name="फोटो")
 	featured = models.BooleanField(default=False)
+	news = GenericRelation(News)
 
 	def __str__(self):
 		return "{} फारम".format(self.district.name)
@@ -168,6 +186,7 @@ class Province(models.Model):
 
 class ProvinceMahilaPratinidhiForm(CommonShavaFields):
 	province = models.ForeignKey(Province, on_delete=models.CASCADE, related_name='province_mahila_pratinidhi_form', verbose_name="प्रदेश")
+	news = GenericRelation(News)
 
 	def __str__(self):
 		return "{}-{} फारम".format(self.province.name, self.name)
@@ -175,7 +194,7 @@ class ProvinceMahilaPratinidhiForm(CommonShavaFields):
 class RastriyaShava(CommonShavaFields):
 	samitima_vumika = models.CharField(max_length=300, verbose_name="समितिमा पद", blank=True)
 	samlagna_samsadiya_samiti = models.CharField(max_length=300, verbose_name="संलग्न समिति", blank=True)
-
+	news = GenericRelation(News)
 
 	def __str__(self):
 		return "{}-{} फारम".format(self.name, self.name)
@@ -183,18 +202,10 @@ class RastriyaShava(CommonShavaFields):
 class PratinidhiShava(CommonShavaFields):
 	samitima_vumika = models.CharField(max_length=300, verbose_name="समितिमा भूमिका", blank=True)
 	samlagna_samsadiya_samiti = models.CharField(max_length=300, verbose_name="संलग्न संसदीय समिति", blank=True)
+	news = GenericRelation(News)
 
 	def __str__(self):
 		return "{}-{} फारम".format(self.name, self.name)
-
-class News(models.Model):
-	date = models.DateField(blank=False)
-	title = models.CharField(max_length=300, blank=False)
-	content = models.TextField(blank=False)
-	newsOf = models.ForeignKey(MahilaPratinidhiForm, on_delete=models.CASCADE, blank=True, null=True)
-
-	def __str__(self):
-		return "{}-{} news".format(self.date, self.title)
 
 
 class BackgroundImage(models.Model):

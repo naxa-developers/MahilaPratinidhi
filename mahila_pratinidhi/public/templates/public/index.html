@@ -120,6 +120,7 @@
 
             <div class="slider reveal">
                 {% for datas in featured_data %}
+                {% for data in datas %}
                 <div>
                     <div class="row align-items-md-center">
                         <div class="col-md-4">
@@ -134,24 +135,24 @@
                         <div class="col-md-4">
                             <div class="info slidefont">
                                 <div class="Name">
-                                    {{data.name_en}}
+                                    {{data.name}}
                                 </div>
                                 <div class="position">
-                                    {{data.nirwachit_padh_en}}
+                                    {{data.nirwachit_padh}}
                                 </div>
                                 <div>
                                     <span class="first"> Education:</span>
-                                    <span class="value"> {{data.educational_qualification_en}}</span>
+                                    <span class="value"> {{data.educational_qualification}}</span>
 
                                 </div>
                                 <div>
                                     <span class="first"> Age:</span>
-                                    <span class="value"> {{data.age_en}} Years</span>
+                                    <span class="value"> {{data.age}} Years</span>
 
                                 </div>
                                 <div>
                                     <span class="first"> Political Party:</span>
-                                    <span class="value"> {{ data.party_name_en }}</span>
+                                    <span class="value"> {{ data.party_name }}</span>
 
                                 </div>
                                 <div>
@@ -186,6 +187,7 @@
                         </div>
                     </div>
                 </div>
+                {% endfor %}
                 {% endfor %}
             </div>
 
@@ -233,8 +235,8 @@
                         {% endif %}
                         <div class="holderOverlay"></div>
                         <a class="content" href="{% url 'public:news' %}">
-                            {% if data.newsOf %}
-                            <div class="tags"> {{data.newsOf.name_en}} in News</div>
+                            {% if data.object_id %}
+                            <div class="tags"> {{ data.object_id.english_name }} in News</div>
                             {% else %}
                             <div class="tags"> General News</div>
                             {% endif %}
