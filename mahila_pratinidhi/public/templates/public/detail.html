@@ -1,6 +1,7 @@
 {% extends "public/public_base.html" %}
 {% load staticfiles %}
 {% block upper_content %}
+{% load filters %}
 <body>
     <header>
         <div class="navigation innerPage">
@@ -23,99 +24,114 @@
                     <img src="{% static 'public/image/mahilalogo.png' %}" style="width: 500px;height: 500px;" alt="profileImage">
                     {% endif %}
                 </div>
+
+
                 <div class="personalDetail">
 
                     
-                        <div class="detail">
-                            <div class="detailTitles">
-                                <p class="pheader">
-                                    <span class="Ptitle"> {{ form.name|title }}</span>
-                                    <span class="flag">
-                                        <img src="{% static 'public/image/partyflag.png' %}" alt="">
-                                    </span>
-                                </p>
-                                <p class="personalInfoHeader">
-                                    PERSONAL INFORMATION
-                                </p>
-                            </div>
-                            <div class="infocontainer">
-                                <div class="info">
-                                    <div>
-                                        {% if form.age %}
-                                        <span class="dtitle">Age:</span>
-                                        <span class="dvalue">{{form.age}} Years</span>
-                                        {% endif %}
-                                    </div>
-                                    <div>
-                                        {% if form.mothers_name %}
-                                        <span class="dtitle">Mother’s Name:</span>
-                                        <span class="dvalue">{{ form.mothers_name }}</span>
-                                        {% endif %}
-                                    </div>
-                                    <div>
-                                        {% if form.fathers_name %}
-                                        <span class="dtitle">Father’s Name:</span>
-                                        <span class="dvalue">Man Bahadur Lama </span>
-                                        {% endif %}
-                                    </div>
-                                    <div>
-                                        {% if form.marital_status %}
-                                        <span class="dtitle">Maritual Status:</span>
-                                        <span class="dvalue">{{form.marital_status}}</span>
-                                        {% endif %}
-                                    </div>
-                                    <div>
-                                        {% if form.husbands_name %}
-                                        <span class="dtitle">Husband Name:</span>
-                                        <span class="dvalue">Lakpa Chiring Lama</span>
-                                        {% endif %}
-                                    </div>
-                                    <div>
-                                        {% if form.educational_qualification %}
-                                        <span class="dtitle">Education:</span>
-                                        <span class="dvalue">{{form.educational_qualification|title}} </span>
-                                        {% endif %}
-                                    </div>
-                                </div>
-                                <div class="shareholder">
-                                    <div class="shareholderInner">
-                                        <div class="shareInfo">
-                                            <i class="fa fa-phone ihs">
-    
-                                            </i>
-                                            <span class="contactIfo">
-                                                Call Request
-                                            </span>
-                                        </div>
-                                        <div class="shareInfo">
-                                            <i class="fa fa-envelope ihs">
-    
-                                            </i>
-                                            <span class="contactIfo">
-                                                Write Email
-                                            </span>
-                                        </div>
-                                        <div class="shareInfo">
-                                            <span class="ihs">
-                                                <i class="fa fa-facebook mr5 ">
-    
-                                                </i>
-                                                <i class="fa  fa-twitter ">
-    
-                                                </i>
-                                            </span>
-    
-                                            <span class="contactIfo">
-                                                Find on Social Media
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-    
-    
+                    <div class="detail">
+                        <div class="detailTitles">
+                            <p class="pheader">
+                                <span class="Ptitle"> {{ form.english_name|title }}</span>
+                                <span class="flag">
+                                    <img src="{% static 'public/image/partyflag.png' %}" alt="">
+                                </span>
+                            </p>
+                            <p class="personalInfoHeader">
+                                PERSONAL INFORMATION
+                            </p>
                         </div>
-                        <div class="personalDetilFooter">
+                        <div class="infocontainer">
+                            <div class="info">
+                                <div>
+                                    {% if form.age %}
+                                    
+                                    <span class="dtitle">Age:</span>
+                                    <span class="dvalue">{{ form.age }} Years</span>
+                                    {% endif %}
+                                </div>
+                                <div>
+                                    {% if form.mothers_name %}
+                                    <span class="dtitle">Mother’s Name:</span>
+                                    <span class="dvalue">{{ form.mothers_name }}</span>
+                                    {% endif %}
+                                </div>
+                                <div>
+                                    {% if form.fathers_name %}
+                                    <span class="dtitle">Father’s Name:</span>
+                                    <span class="dvalue">{{ form.fathers_name|title }} </span>
+                                    {% endif %}
+                                </div>
+                                <div>
+                                    {% if form.marital_status %}
+                                    <span class="dtitle">Maritual Status:</span>
+                                    <span class="dvalue">{{form.marital_status|title}}</span>
+                                    {% endif %}
+                                </div>
+                                <div>
+                                    {% if form.husbands_name %}
+                                    <span class="dtitle">Husband Name:</span>
+                                    <span class="dvalue">{{ form.husbands_name|title }}</span>
+                                    {% endif %}
+                                </div>
+                                <div>
+                                    {% if form.nationality %}
+                                    <span class="dtitle">Nationality:</span>
+                                    <span class="dvalue">{{form.nationality|title}}</span>
+                                    {% endif %}
+                                </div>
+                                <div>
+                                    {% if form.caste %}
+                                    <span class="dtitle">Caste:</span>
+                                    <span class="dvalue">{{ form.caste|title }}</span>
+                                    {% endif %}
+                                </div>
+                                <div>
+                                    {% if form.educational_qualification %}
+                                    <span class="dtitle">Education:</span>
+                                    <span class="dvalue">{{form.educational_qualification|title}} </span>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="shareholder">
+                                <div class="shareholderInner">
+                                    <div class="shareInfo">
+                                        <i class="fa fa-phone ihs">
+
+                                        </i>
+                                        <span class="contactIfo">
+                                            Call Request
+                                        </span>
+                                    </div>
+                                    <div class="shareInfo">
+                                        <i class="fa fa-envelope ihs">
+
+                                        </i>
+                                        <span class="contactIfo">
+                                            Write Email
+                                        </span>
+                                    </div>
+                                    <div class="shareInfo">
+                                        <span class="ihs">
+                                            <i class="fa fa-facebook mr5 ">
+
+                                            </i>
+                                            <i class="fa  fa-twitter ">
+
+                                            </i>
+                                        </span>
+
+                                        <span class="contactIfo">
+                                            Find on Social Media
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                    <div class="personalDetilFooter">
                             <div class="permanentAddress flex">
                                 <div class="placelbl flex aligncenter">
                                     <div>
@@ -128,22 +144,28 @@
                                     </div>
                                 </div>
                                 <div class="placeaddress">
-                                    Kaski District,
-                                    <br/> Pokhara Ma. Na. Pa., Ward no. 11
+                                    {% if form.address %}
+                                    {{ form.address }}
+                                    {% else %}
+                                    {{ form.permanent_address }},
+                                    <br/> {{ form.permanent_gapa_napa }} Ma. Na. Pa., Ward no. {{ form.permanent_ward_no }}
+                                    {% endif %}
                                 </div>
                             </div>
+                            {% if form.temporary_address %}
                             <div class="currentAddress flex">
                                 <div class="locationDetail bold">
                                     Current Address:
                                 </div>
                                 <div class="placeaddress">
-                                    Kaski District,
-                                    <br/> Pokhara Ma. Na. Pa., Ward no. 11
-                                </div>
+                                    {{ form.temporary_address }}
+                                    <br/> {{ form.temporary_gapa_napa }} Ma. Na. Pa., Ward no. {{ form.temporary_ward_no }}
                             </div>
+                            {% endif %}
                         </div>
                     </div>
 
+                </div>
             </div>
         </div>
 
@@ -158,51 +180,60 @@
                     </div>
                 </div>
                 <div class="col-md-3 flex aligncenter column">
+                    {% if form.nirwachit_prakriya %}
                     <div class="workSHolder">
                         <div class="detailTitle">
                             Election Type
                         </div>
                         <div class="detailContent bold">
-                            Directly Elected
+                            {{ form.nirwachit_prakriya }}
                         </div>
 
                     </div>
+                    {% endif %}
+                    {% if form.prapta_maat_sankhya %}
                     <div class="workSHolder">
                         <div class="detailTitle">
                             Vote Received
                         </div>
                         <div class="detailContent bold">
-                            35,000
+                            {{ form.prapta_maat_sankhya }}
                         </div>
-
                     </div>
+                    {% endif %}
+                    {% if form.nirwachit_padh %}
                     <div class="workSHolder">
                         <div class="detailTitle">
                             Elected Post
                         </div>
                         <div class="detailContent bold">
-                            Member of Parliament: Provincial Assembly
+                            {{ form.nirwachit_padh }}
 
                         </div>
                     </div>
+                    {% endif %}
+                    {% if form.nirwachit_chhetrako_bibaran %}
                     <div class="workSHolder">
                         <div class="detailTitle">
                             Election Constituency
                         </div>
                         <div class="detailContent bold">
-                            Dhankuta
+                            {{ form.nirwachit_chhetrako_bibaran }}
                         </div>
 
                     </div>
+                    {% endif %}
+                    {% if form.party_joined_date %}
                     <div class="workSHolder">
                         <div class="detailTitle">
                             Involvement in Party
                         </div>
                         <div class="detailContent bold">
-                            2048 B.S.
+                            {{ form.party_joined_date|slice:":4" }} B.S.
                         </div>
 
                     </div>
+                    {% endif %}
 
                 </div>
             </div>
@@ -210,42 +241,22 @@
                 <div class="col-md-3 aligncenter justify-content-center titl">Political
                     <br/>Commitments
                 </div>
-                <div class="col-md-3">
-                    <div class="we relative">
-                        <div class="overLink"></div>
-                        <div class="weInner">
-                            Women
-                            <br/> Empowerment
+                {% with form.nirwachit_chetra_pratiko_pratibadhata|split:"," as jimmewaris %}
+                    {% for jimmewari in jimmewaris %}
+                    <div class="col-md-3">
+                        <div class="we relative">
+                            <div class="overLink"></div>
+                            <div class="weInner">
+                                {{ jimmewari }}
+                            </div>
                         </div>
-
+        
                     </div>
-
-                </div>
-                <div class="col-md-3">
-                    <div class="si relative">
-                        <div class="overLink"></div>
-                        <div class="weInner">
-                            Social
-                            <br/>Inclusion
-                        </div>
-
-                    </div>
-
+                    {% endfor %}
+                {% endwith %}
                 </div>
 
 
-                <div class="col-md-3">
-                    <div class="id relative">
-                        <div class="overLink"></div>
-                        <div class="weInner">
-                            Infrastructural
-                            <br/> Development
-                        </div>
-
-                    </div>
-
-                </div>
-            </div>
             {% if form.samlagna_sang_sastha_samuha %}
             <div class="listofWorks text-center">
                 <p class="loft white bold">
@@ -269,7 +280,7 @@
                 RELATED NEWS
             </p>
             <div class="row lists ">
-                {% for news in news %}
+                <!-- {% for news in news %}
                 <div class="col-xl-3 col-lg-4 col-md-6 reveal" data-sr-id="12" style="visibility: visible; opacity: 1; transition: opacity 0.4s cubic-bezier(0.5, 0, 0, 1) 0.05s;">
                     <div class="pImageholder prelative">
                         <img src="{% static 'public/image/p1.jpg' %}" alt="user">
@@ -280,7 +291,7 @@
                         </div>
                     </div>
                 </div>
-                {% endfor %}
+                {% endfor %} -->
 
             </div>
         </div>

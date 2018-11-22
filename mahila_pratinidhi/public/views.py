@@ -105,13 +105,12 @@ class MahilaPratinidhiView(TemplateView):
 
 
 class LocalMahilaPratinidhiDetail(DetailView):
-    model = MahilaPratinidhiForm
     template_name = 'public/detail.html'
-    context_object_name = 'form'
 
-    def get_context_data(self, **kwargs):
-        form = super(LocalMahilaPratinidhiDetail, self).get_context_data(**kwargs)
-        form['news'] = News.objects.filter(newsOf=self.kwargs.get('pk'))
+    def get(self, request, *args, **kwargs):
+        form = MahilaPratinidhiForm.objects.get(id=self.kwargs.get('pk'))
+        # news = News.objects.filter(newsOf=RastriyaShava.objects.get(id=self.kwargs.get('pk')))
+        return render(request, self.template_name, {'form':form})
 
 
 class ProvinceView(ListView):
@@ -124,33 +123,30 @@ class ProvinceView(ListView):
 
 
 class ProvincialMahilaPratinidhiDetail(DetailView):
-    model = ProvinceMahilaPratinidhiForm
     template_name = 'public/detail.html'
-    context_object_name = 'form'
 
-    def get_context_data(self, **kwargs):
-        form = super(ProvincialMahilaPratinidhiDetail, self).get_context_data(**kwargs)
-        form['news'] = News.objects.filter(newsOf=self.kwargs.get('pk'))
+    def get(self, request, *args, **kwargs):
+        form = ProvinceMahilaPratinidhiForm.objects.get(id=self.kwargs.get('pk'))
+        # news = News.objects.filter(newsOf=RastriyaShava.objects.get(id=self.kwargs.get('pk')))
+        return render(request, self.template_name, {'form':form})
 
 
-class RastriyaMahilaDetail(DetailView):
-    model = RastriyaShava
+class RastriyaMahilaDetail(TemplateView):
     template_name = 'public/detail.html'
-    context_object_name = 'form'
 
-    def get_context_data(self, **kwargs):
-        form = super(RastriyaMahilaDetail, self).get_context_data(**kwargs)
-        form['news'] = News.objects.filter(newsOf=self.kwargs.get('pk'))
+    def get(self, request, *args, **kwargs):
+        form = RastriyaShava.objects.get(id=self.kwargs.get('pk'))
+        # news = News.objects.filter(newsOf=RastriyaShava.objects.get(id=self.kwargs.get('pk')))
+        return render(request, self.template_name, {'form':form})
 
 
 class PratinidhiMahilaDetail(DetailView):
-    model = PratinidhiShava
     template_name = 'public/detail.html'
-    context_object_name = 'form'
 
-    def get_context_data(self, **kwargs):
-        form = super(PratinidhiMahilaDetail, self).get_context_data(**kwargs)
-        form['news'] = News.objects.filter(newsOf=self.kwargs.get('pk'))
+    def get(self, request, *args, **kwargs):
+        form = PratinidhiShava.objects.get(id=self.kwargs.get('pk'))
+        # news = News.objects.filter(newsOf=RastriyaShava.objects.get(id=self.kwargs.get('pk')))
+        return render(request, self.template_name, {'form':form})
 
 
 class DataVisualize(UserPassesTestMixin, TemplateView):
@@ -167,17 +163,10 @@ class DataVisualize(UserPassesTestMixin, TemplateView):
         married = MahilaPratinidhiForm.objects.filter(marital_status='ljjflxt').count
         graduate = MahilaPratinidhiForm.objects.filter(educational_qualification__contains=':gfts').count
         return render(request, self.template_name, {'total':total, 'married':married, 'graduate':graduate})
-
-
-class List(UserPassesTestMixin, TemplateView):
-    template_name = 'public/lists.html'
-
-
-    def test_func(self):
-        return not self.request.user.is_superuser
     
 
-
+class NewsView(TemplateView):
+    template_name = 'public/news-detail.html'
 
 
     def test_func(self):
@@ -185,17 +174,17 @@ class List(UserPassesTestMixin, TemplateView):
 
 
 def read_view(request, ):
-    with open('C:/gitnaxa/work/Mahila-Pratinidhi/CV_Akshya_Kumar_Shrestha.pdf', 'rb') as pdf:
-        response = HttpResponse(pdf.read(), content_type='application/pdf')
-        response['Content-Disposition'] = 'filename=some_file.pdf'
-    return response
-
+    try:
+        with open('C:/gitnaxa/work/Mahila-Pratinidhi/CV_Akshya_Kumar_Shrestha.pdf', 'rb') as pdf:
+            response = HttpResponse(pdf.read(), content_type='application/pdf')
+            response['Content-Disposition'] = 'filename=some_file.pdf'
+        
+        return response
+    except:
+        msg = "There is no file"
+        return HttpResponse(msg)
 
 
 class Detail(TemplateView):
     template_name = 'public/lists.html'
-
-
-
-
 
