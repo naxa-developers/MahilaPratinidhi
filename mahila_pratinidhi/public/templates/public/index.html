@@ -382,6 +382,10 @@ province_geojson= { "type": "FeatureCollection", "features": [ { "type":
 } } ] }
 
 
+
+L.geoJson.ajax('http://localhost:8000/api/geojson/country')
+.addTo(map);
+
 var person= L.geoJSON(province_geojson).addTo(map);
 var center_person= person.getBounds().getCenter();
 L.marker(center_person, {icon: mahila_marker});
@@ -401,10 +405,10 @@ L.marker(center_person, {icon: mahila_marker});
   function style(color) {
       return {
               fillColor: color,
-              weight: 2,
-              opacity: 1,
-              color: 'white',
-              dashArray: '3',
+              weight: 0,
+              opacity: 0,
+              color: color,
+              //dashArray: '3',
               fillOpacity: 0.7
                     };
           }
@@ -425,6 +429,18 @@ for (i=0; i<frequency_array.length; i++){
     Choropleth(i+1,frequency_array[i]);
 
 }
+
+
+
+
+var myIcon = L.divIcon({
+    iconSize: new L.Point(70, 70),
+    html: 'foo bar'
+});
+// you can set .my-div-icon styles in CSS
+
+L.marker([27.5, 85], {icon: myIcon}).addTo(map)
+    //.bindPopup('divIcon CSS3 popup. <br> Supposed to be easily stylable.');
 
             // Note: This example requires that you consent to location sharing when
             // prompted by your browser. If you see the error "The Geolocation service
