@@ -261,8 +261,8 @@
                         {% endif %}
                         <div class="holderOverlay"></div>
                         <a class="content" href="{% url 'public:news' %}">
-                            {% if data.newsOf %}
-                            <div class="tags"> {{data.newsOf.name_en}} in News</div>
+                            {% if data.object_id %}
+                            <div class="tags"> {{ data.object_id.english_name }} in News</div>
                             {% else %}
                             <div class="tags"> General News</div>
                             {% endif %}
