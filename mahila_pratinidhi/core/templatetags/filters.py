@@ -32,3 +32,11 @@ def available_elected_women(district_id, force_update=False):
     total = MahilaPratinidhiForm.objects.filter(district=district).count()
 
     return total
+
+
+@register.filter(name='split')
+def split(value, key):
+    """
+        Returns the value turned into a list.
+    """
+    return value.split(key)

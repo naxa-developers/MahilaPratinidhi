@@ -92,12 +92,16 @@
                     <div class="pfofileItems">
                         {% for form in forms %}
                         <div class="pItem reveal">
+                            {% if district_id %}
                             <a href="{% url 'public:local_mahila_detail' district_id form.pk %}">
+                            {% else %}
+                            <a href="{% url 'public:provincial_mahila_detail' province_id form.pk %}">
+                            {% endif %}
                             <div class="inner">
 
                                 <div class="pimageHolder">
                                     {% if form.image %}
-                                    <img src="{{ MEDIA_URL }} {{ data.image.url }}" alt="">
+                                    <img src="{{ MEDIA_URL }} {{ form.image.url }}" alt="">
                                     {% else %}
                                     <img src="{% static 'public/image/mahilalogo.png' %}" alt="" >
                                     {% endif %}
@@ -158,8 +162,11 @@
                                 Years
                             </div>
                         </div>
-                        
+                        {% if district_id %}
                         <a class="btn stretchBtn" href="{% url 'public:local_mahila_detail' district_id form.id %}">
+                        {% else %}
+                        <a class="btn stretchBtn" href="{% url 'public:provincial_mahila_detail' province_id form.id %}">
+                        {% endif %}       
                                 <i class="fa  fa-arrow-right arow"></i>
                         </a>
                         

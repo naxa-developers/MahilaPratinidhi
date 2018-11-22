@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     'public',
     # 'modeltranslation',
     'core',
+    'rest_framework',
+    
 ]
 
 MIDDLEWARE = [

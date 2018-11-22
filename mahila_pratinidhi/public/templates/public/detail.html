@@ -1,6 +1,7 @@
 {% extends "public/public_base.html" %}
 {% load staticfiles %}
 {% block upper_content %}
+{% load filters %}
 <body>
     <header>
         <div class="navigation innerPage">
@@ -23,13 +24,14 @@
                     <img src="{% static 'public/image/mahilalogo.png' %}" style="width: 500px;height: 500px;" alt="profileImage">
                     {% endif %}
                 </div>
+                
                 <div class="personalDetail">
 
-
+                    
                     <div class="detail">
                         <div class="detailTitles">
                             <p class="pheader">
-                                <span class="Ptitle"> {{ form.name }}</span>
+                                <span class="Ptitle"> {{ form.english_name|title }}</span>
                                 <span class="flag">
                                     <img src="{% static 'public/image/partyflag.png' %}" alt="">
                                 </span>
@@ -42,8 +44,9 @@
                             <div class="info">
                                 <div>
                                     {% if form.age %}
+                                    
                                     <span class="dtitle">Age:</span>
-                                    <span class="dvalue">59 Years</span>
+                                    <span class="dvalue">{{ form.age }} Years</span>
                                     {% endif %}
                                 </div>
                                 <div>
@@ -55,32 +58,38 @@
                                 <div>
                                     {% if form.fathers_name %}
                                     <span class="dtitle">Father’s Name:</span>
-                                    <span class="dvalue">Man Bahadur Lama </span>
+                                    <span class="dvalue">{{ form.fathers_name|title }} </span>
                                     {% endif %}
                                 </div>
                                 <div>
                                     {% if form.marital_status %}
                                     <span class="dtitle">Maritual Status:</span>
-                                    <span class="dvalue">Married</span>
+                                    <span class="dvalue">{{form.marital_status|title}}</span>
                                     {% endif %}
                                 </div>
                                 <div>
                                     {% if form.husbands_name %}
                                     <span class="dtitle">Husband Name:</span>
-                                    <span class="dvalue">Lakpa Chiring Lama</span>
+                                    <span class="dvalue">{{ form.husbands_name|title }}</span>
                                     {% endif %}
                                 </div>
                                 <div>
+                                    {% if form.nationality %}
                                     <span class="dtitle">Nationality:</span>
-                                    <span class="dvalue">Nepali </span>
+                                    <span class="dvalue">{{form.nationality|title}}</span>
+                                    {% endif %}
                                 </div>
                                 <div>
-                                    <span class="dtitle">Ethinicity:</span>
-                                    <span class="dvalue">Indigenous Group</span>
+                                    {% if form.caste %}
+                                    <span class="dtitle">Caste:</span>
+                                    <span class="dvalue">{{ form.caste|title }}</span>
+                                    {% endif %}
                                 </div>
                                 <div>
+                                    {% if form.educational_qualification %}
                                     <span class="dtitle">Education:</span>
-                                    <span class="dvalue">Masters in Arts </span>
+                                    <span class="dvalue">{{form.educational_qualification|title}} </span>
+                                    {% endif %}
                                 </div>
                             </div>
                             <div class="shareholder">
@@ -119,39 +128,44 @@
                             </div>
                         </div>
 
+
                     </div>
                     <div class="personalDetilFooter">
-                        <div class="permanentAddress flex">
-                            <div class="placelbl flex aligncenter">
-                                <div>
-                                    <i class="fa fa-map-marker">
-
-                                    </i>
+                            <div class="permanentAddress flex">
+                                <div class="placelbl flex aligncenter">
+                                    <div>
+                                        <i class="fa fa-map-marker">
+    
+                                        </i>
+                                    </div>
+                                    <div class="locationDetail bold">
+                                        Permanent Address:
+                                    </div>
                                 </div>
+                                <div class="placeaddress">
+                                    {% if form.address %}
+                                    {{ form.address }}
+                                    {% else %}
+                                    {{ form.permanent_address }},
+                                    <br/> {{ form.permanent_gapa_napa }} Ma. Na. Pa., Ward no. {{ form.permanent_ward_no }}
+                                    {% endif %}
+                                </div>
+                            </div>
+                            {% if form.temporary_address %}
+                            <div class="currentAddress flex">
                                 <div class="locationDetail bold">
-                                    Permanent Address:
+                                    Current Address:
                                 </div>
+                                <div class="placeaddress">
+                                    {{ form.temporary_address }}
+                                    <br/> {{ form.temporary_gapa_napa }} Ma. Na. Pa., Ward no. {{ form.temporary_ward_no }}
                             </div>
-                            <div class="placeaddress">
-                                Kaski District,
-                                <br/> Pokhara Ma. Na. Pa., Ward no. 11
-                            </div>
-                        </div>
-                        <div class="currentAddress flex">
-                            <div class="locationDetail bold">
-                                Current Address:
-                            </div>
-                            <div class="placeaddress">
-                                Kaski District,
-                                <br/> Pokhara Ma. Na. Pa., Ward no. 11
-                            </div>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
-
 
 
     </section>
@@ -164,51 +178,60 @@
                     </div>
                 </div>
                 <div class="col-md-3 flex aligncenter column">
+                    {% if form.nirwachit_prakriya %}
                     <div class="workSHolder">
                         <div class="detailTitle">
                             Election Type
                         </div>
                         <div class="detailContent bold">
-                            Directly Elected
+                            {{ form.nirwachit_prakriya }}
                         </div>
 
                     </div>
+                    {% endif %}
+                    {% if form.prapta_maat_sankhya %}
                     <div class="workSHolder">
                         <div class="detailTitle">
                             Vote Received
                         </div>
                         <div class="detailContent bold">
-                            35,000
+                            {{ form.prapta_maat_sankhya }}
                         </div>
-
                     </div>
+                    {% endif %}
+                    {% if form.nirwachit_padh %}
                     <div class="workSHolder">
                         <div class="detailTitle">
                             Elected Post
                         </div>
                         <div class="detailContent bold">
-                            Member of Parliament: Provincial Assembly
+                            {{ form.nirwachit_padh }}
 
                         </div>
                     </div>
+                    {% endif %}
+                    {% if form.nirwachit_chhetrako_bibaran %}
                     <div class="workSHolder">
                         <div class="detailTitle">
                             Election Constituency
                         </div>
                         <div class="detailContent bold">
-                            Dhankuta
+                            {{ form.nirwachit_chhetrako_bibaran }}
                         </div>
 
                     </div>
+                    {% endif %}
+                    {% if form.party_joined_date %}
                     <div class="workSHolder">
                         <div class="detailTitle">
                             Involvement in Party
                         </div>
                         <div class="detailContent bold">
-                            2048 B.S.
+                            {{ form.party_joined_date|slice:":4" }} B.S.
                         </div>
 
                     </div>
+                    {% endif %}
 
                 </div>
             </div>
@@ -216,63 +239,33 @@
                 <div class="col-md-3 aligncenter justify-content-center titl">Political
                     <br/>Commitments
                 </div>
-                <div class="col-md-3">
-                    <div class="we relative">
-                        <div class="overLink"></div>
-                        <div class="weInner">
-                            Women
-                            <br/> Empowerment
+                {% with form.nirwachit_chetra_pratiko_pratibadhata|split:"," as jimmewaris %}
+                    {% for jimmewari in jimmewaris %}
+                    <div class="col-md-3">
+                        <div class="we relative">
+                            <div class="overLink"></div>
+                            <div class="weInner">
+                                {{ jimmewari }}
+                            </div>
                         </div>
-
+        
                     </div>
-
-                </div>
-                <div class="col-md-3">
-                    <div class="si relative">
-                        <div class="overLink"></div>
-                        <div class="weInner">
-                            Social
-                            <br/>Inclusion
-                        </div>
-
-                    </div>
-
+                    {% endfor %}
+                {% endwith %}
                 </div>
 
 
-                <div class="col-md-3">
-                    <div class="id relative">
-                        <div class="overLink"></div>
-                        <div class="weInner">
-                            Infrastructural
-                            <br/> Development
-                        </div>
-
-                    </div>
-
-                </div>
-            </div>
+            {% if form.samlagna_sang_sastha_samuha %}
             <div class="listofWorks text-center">
                 <p class="loft white bold">
                     RECENT UNION, ORGANISATION, GROUP ASSOCIATION
                 </p>
                 <div class="litem ">
                     <span class="square"></span>
-                    <span class="text">SWASTHA NEPAL, PRESIDENT 2071 B.S.</span>
-                </div>
-                <div class="litem">
-                    <span class="square"></span>
-                    <span class="text">SWASTHA NEPAL, PRESIDENT 2071 B.S.</span>
-                </div>
-                <div class="litem">
-                    <span class="square"></span>
-                    <span class="text">SWASTHA NEPAL, PRESIDENT 2071 B.S.</span>
-                </div>
-                <div class="litem">
-                    <span class="square"></span>
-                    <span class="text">SWASTHA NEPAL, PRESIDENT 2071 B.S.</span>
+                    <span class="text">{{ form.samlagna_sang_sastha_samuha }}</span>
                 </div>
             </div>
+            {% endif %}
 
 
         </div>
@@ -285,53 +278,18 @@
                 RELATED NEWS
             </p>
             <div class="row lists ">
+                <!-- {% for news in news %}
                 <div class="col-xl-3 col-lg-4 col-md-6 reveal" data-sr-id="12" style="visibility: visible; opacity: 1; transition: opacity 0.4s cubic-bezier(0.5, 0, 0, 1) 0.05s;">
                     <div class="pImageholder prelative">
                         <img src="{% static 'public/image/p1.jpg' %}" alt="user">
                         <div class="holderOverlay"></div>
                         <div class="content">
-                            <div class="tags"> Chandra kala in News</div>
-                            <div class="pTitle">Chandra Kala Rai initiated women empowerment camp in Rukum</div>
+                            <div class="tags"> {{ form.name }} in News</div>
+                            <div class="pTitle">{{ news.title }}</div>
                         </div>
                     </div>
                 </div>
-                <div class="col-xl-3 col-lg-4 col-md-6 reveal">
-                    <div class="pImageholder prelative">
-                        <img src="{% static 'public/image/p1.jpg' %}" alt="user">
-                        <div class="holderOverlay"></div>
-                        <div class="content">
-                            <div class="tags"> Chandra kala in News</div>
-                            <div class="pTitle">Chandra Kala Rai initiated women empowerment camp in Rukum</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xl-3 col-lg-4 col-md-6 reveal" data-sr-id="14">
-                    <div class="pImageholder prelative">
-                        <img src="{% static 'public/image/p1.jpg' %}" alt="user">
-                        <div class="holderOverlay"></div>
-                        <div class="content">
-                            <div class="tags"> Chandra kala in News</div>
-                            <div class="pTitle">Chandra Kala Rai initiated women empowerment camp in Rukum</div>
-                        </div>
-                    </div>
-                </div>
-
-
-
-                <div class="col-xl-3  col-lg-4 col-md-6 reveal">
-                    <div class="pImageholder prelative">
-                        <img src="{% static 'public/image/p1.jpg' %}" alt="user">
-                        <div class="holderOverlay"></div>
-                        <div class="content">
-                            <div class="tags"> Chandra kala in News</div>
-                            <div class="pTitle">Chandra Kala Rai initiated women empowerment camp in Rukum</div>
-                        </div>
-                    </div>
-                </div>
-
-
-
-
+                {% endfor %} -->
 
             </div>
         </div>

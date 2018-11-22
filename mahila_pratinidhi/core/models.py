@@ -111,7 +111,7 @@ class CommonShavaFields(models.Model):
 	updated_nirwachit_vayeko_chhetra_aafno_thegana = models.CharField(choices=NIRWACHIT_VAYEKO_CHHETRA_AAFNO_THEGANA_VANDA_FARAK_CHOICES, max_length=300, verbose_name="निर्वाचित भएको क्षेत्र आफ्नो अस्थायी/ स्थायी ठेगाना भन्दा फरक", blank=True, null=True)
 	party_name = models.CharField(max_length=300, verbose_name="पार्टीको विवरण: पार्टीको नाम", blank=True)
 	party_joined_date = models.CharField(max_length=300, verbose_name="पार्टीमा संलग्न भएको मिति", blank=True, null=True)
-	pramukh_jimmewari = models.CharField(max_length=300, verbose_name="प्रमुख जिम्मेवारी ", blank=True)
+	pramukh_jimmewari = models.CharField(max_length=500, verbose_name="प्रमुख जिम्मेवारी ", blank=True)
 	nirwachit_chetra_pratiko_pratibadhata = models.TextField(verbose_name="निर्वाचित क्षेत्र प्रतिको प्रतिबध्धता", blank=True, null=True)
 	aaja_vanda_agadi_chunab_ladnu_vayeko_chha = models.CharField(max_length=300, verbose_name="आज भन्दा अघि चुनाब लड्नुभएको छ?", blank=True, null=True)
 	updated_aaja_vanda_agadi_chunab_ladnu_vayeko_chha = models.CharField(choices=CHUNAB_LADNU_VAYEKO_CHOICES, max_length=300, verbose_name="आज भन्दा अघि चुनाब लड्नुभएको छ?", null=True, blank=True)
@@ -119,7 +119,7 @@ class CommonShavaFields(models.Model):
 	samlagna_sang_sastha_samuha = models.CharField(max_length=300, verbose_name="सलग्न संघ, सस्था , समूह", blank=True)
 	status = models.BooleanField(choices=BOOL_CHOICES, default=False, verbose_name="स्थिति")
 	image = models.ImageField(blank=True, null=True, upload_to='provinceProfile/', verbose_name="फोटो")
-
+	featured = models.BooleanField(default=False)
 	class Meta:
 		abstract = True
 
@@ -153,6 +153,7 @@ class MahilaPratinidhiForm(models.Model):
 	nirwachit_chetra_pratiko_pratibadhata = models.TextField(verbose_name="निर्वाचित क्षेत्र प्रतिको प्रतिबध्धता", blank=True)
 	status = models.BooleanField(choices=BOOL_CHOICES, default=False, verbose_name="स्थिति")
 	image = models.ImageField(blank=True, upload_to='profile/', verbose_name="फोटो")
+	featured = models.BooleanField(default=False)
 
 	def __str__(self):
 		return "{} फारम".format(self.district.name)
