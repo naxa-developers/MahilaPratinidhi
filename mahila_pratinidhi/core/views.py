@@ -234,50 +234,52 @@ def pratinidhi_shava_file_upload(request):
 			total = df['नाम'].count()
 			for row in range(0, total):
 
-				PratinidhiShava.objects.get_or_create(
+				obj, created=PratinidhiShava.objects.get_or_create(
 					#province=Province.objects.get(name=Province.objects.get(name=df['Province'][0])),
 					name=df['नाम'][row],
 					english_name=df['English Name'][row],
-					date_of_birth=df['जन्ममिती'][row],
-					age=df['उमेर'][row],
-					mothers_name=df['आमाको नाम'][row],
-					fathers_name=df['बाबुको नाम'][row],
-					marital_status=df['बैवाहिक स्थिति'][row],
-					husbands_name=df['श्रीमानको नाम'][row],
-					caste=df['जातियता'][row],
-					mother_tongue=df['मातृभाषा'][row],
-					educational_qualification=df['औपचारिक शैक्षिक योग्यता'][row],
-					subject=df['बिषय'][row],
-					permanent_address=df['ठेगाना (स्थायी) :  जिल्ला'][row],
-					permanent_gapa_napa=df['गाउँपालिका/नगरपालिका/उप-महानगरपालिका/महानगरपालिका'][row],
-					permanent_ward_no=df['वडा नं'][row],
-					permanent_tole=df['टोल'][row],
-					temporary_address=df['ठेगाना (अस्थायी) जिल्ला'][row],
-					temporary_gapa_napa=df['गाउँपालिका/नगरपालिका/उप-महानगरपालिका/महानगरपालिका '][row],
-					temporary_ward_no=df['वडा नं'][row],
-					temporary_tole=df['टोल'][row],
-					mobile=df['मोवाइल'][row],
-					contact_number=df['सम्पर्क नं'][row],
-					email=df['इमेल'][row],
-					social_networking_medium=df['सामाजिक सन्जालका माध्यम (छ भने):'][row],
-					nirwachit_prakriya=df['निर्वाचित प्रक्रिया'][row],
-					nirwachit_padh=df['निर्वाचित पद'][row],
-					pichidiyeko_chhetra_ho_hoina=df['पिछडिएको क्षेत्र हो कि होइन'][row],
-					nirwachit_chhetrako_bibaran=df['निर्वाचित क्षेत्रको विवरण'][row],
-					nirwachit_vayeko_chhetra_aafno_thegana=df['निर्वाचित भएको क्षेत्र आफ्नो अस्थायी/ स्थायी ठेगाना भन्दा फरक'][row],
-					party_name=df['पार्टीको विवरण: पार्टीको नाम'][row],
-					party_joined_date=df['पाटींमा संलग्न भएको मिति'][row],
-					pramukh_jimmewari=df['प्रमुख जिम्मेवारी'][row],
-					nirwachit_chetra_pratiko_pratibadhata=df['निर्वाचित क्षेत्र प्रतिको प्रतिबद्धता'][row],
-					aaja_vanda_agadi_chunab_ladnu_vayeko_chha=df['आज भन्दा अघि चुनाब लड्नुभएको छ?'][row],
-					prapta_maat_sankhya=df['प्राप्त मत संख्या'][row],
-					samlagna_sang_sastha_samuha=df['सलग्न संघ, सस्था , समूह'][row],
-					samitima_vumika=df['समितिमा भूमिका'][row],
-					samlagna_samsadiya_samiti=df['संलग्न संसदीय समिति'][row],
-				)
+					date_of_birth=df['जन्ममिती'][row])
+
+				obj.age=df['उमेर'][row]
+				obj.mothers_name=df['आमाको नाम'][row]
+				obj.fathers_name=df['बाबुको नाम'][row]
+				obj.marital_status=df['बैवाहिक स्थिति'][row]
+				obj.husbands_name=df['श्रीमानको नाम'][row]
+				obj.caste=df['जातियता'][row]
+				obj.mother_tongue=df['मातृभाषा'][row]
+				obj.educational_qualification=df['औपचारिक शैक्षिक योग्यता'][row]
+				obj.subject=df['बिषय'][row]
+				obj.permanent_address=df['ठेगाना (स्थायी) :  जिल्ला'][row]
+				obj.permanent_gapa_napa=df['गाउँपालिका/नगरपालिका/उप-महानगरपालिका/महानगरपालिका'][row]
+				obj.permanent_ward_no=df['वडा नं'][row]
+				obj.permanent_tole=df['टोल'][row]
+				obj.temporary_address=df['ठेगाना (अस्थायी) जिल्ला'][row]
+				obj.temporary_gapa_napa=df['गाउँपालिका/नगरपालिका/उप-महानगरपालिका/महानगरपालिका '][row]
+				obj.emporary_ward_no=df['वडा नं'][row]
+				obj.temporary_tole=df['टोल'][row]
+				obj.mobile=df['मोवाइल'][row]
+				obj.contact_number=df['सम्पर्क नं'][row]
+				obj.email=df['इमेल'][row]
+				obj.social_networking_medium=df['सामाजिक सन्जालका माध्यम (छ भने):'][row]
+				obj.nirwachit_prakriya=df['निर्वाचित प्रक्रिया'][row]
+				obj.nirwachit_padh=df['निर्वाचित पद'][row]
+				obj.pichidiyeko_chhetra_ho_hoina=df['पिछडिएको क्षेत्र हो कि होइन'][row]
+				obj.nirwachit_chhetrako_bibaran=df['निर्वाचित क्षेत्रको विवरण'][row]
+				obj.nirwachit_vayeko_chhetra_aafno_thegana=df['निर्वाचित भएको क्षेत्र आफ्नो अस्थायी/ स्थायी ठेगाना भन्दा फरक'][row]
+				obj.party_name=df['पार्टीको विवरण: पार्टीको नाम'][row]
+				obj.party_joined_date=df['पाटींमा संलग्न भएको मिति'][row]
+				obj.pramukh_jimmewari=df['प्रमुख जिम्मेवारी'][row]
+				obj.nirwachit_chetra_pratiko_pratibadhata=df['निर्वाचित क्षेत्र प्रतिको प्रतिबद्धता'][row]
+				obj.aaja_vanda_agadi_chunab_ladnu_vayeko_chha=df['आज भन्दा अघि चुनाब लड्नुभएको छ?'][row]
+				obj.prapta_maat_sankhya=df['प्राप्त मत संख्या'][row]
+				obj.samlagna_sang_sastha_samuha=df['सलग्न संघ, सस्था , समूह'][row]
+				obj.samitima_vumika=df['समितिमा भूमिका'][row]
+				obj.samlagna_samsadiya_samiti=df['संलग्न संसदीय समिति'][row]
+				obj.save()
 		messages.success(request, 'Successfully loaded data from files')
 		return HttpResponseRedirect('/cms/pratinidhi-shava-upload')
-	except:
+	except Exception as e:
+		print(e)
 		messages.error(request, "File Format not supported")
 		return HttpResponseRedirect('/cms/pratinidhi-shava-upload')
 
@@ -417,23 +419,24 @@ def file_upload(request):
 			for row in range(0, total):
 				print(request.POST.get('dist'))
 
-				MahilaPratinidhiForm.objects.create(
+				obj, created = MahilaPratinidhiForm.objects.create(
 					district=District.objects.get(name=request.POST.get('dist')),
 					name=df['gfd'][row],
-					age=df['pd]/'][row],
-					marital_status=df['j}jflxs l:lYft'][row],
-					educational_qualification=df['z}lIfs of]Uotf'][row],
-					caste=df['hfltotf'][row],
-					address=df['7]ufgf'][row],
-					contact_number=df[';Dks{ g '][row],
-					email=df['Od]n 7]ufgf'][row],
-					nirwachit_padh=df['lgjf{lrt kb'][row],
-					nirwachit_vdc_or_municipality_name=df['lgjf{lrt uf lj ; tyf gu/kflnsfsf]] gfd '][row],
-					party_name=df['kf6L{sf] gfd '][row],
-					party_joined_date=df['kf6L{df ;++++nUg ePsf] ldtL'][row],
-					samlagna_sang_sastha_samuha=df[' ;++++nUg ;++3 ;F:yf ;d"x  '][row],
-					nirwachit_chetra_pratiko_pratibadhata=df['lgjf{lrt Ifq k||ltsf] k|ltaM4tf '][row]
-				)
+					age=df['pd]/'][row])
+
+				obj.marital_status=df['j}jflxs l:lYft'][row]
+				obj.educational_qualification=df['z}lIfs of]Uotf'][row]
+				obj.caste=df['hfltotf'][row]
+				obj.address=df['7]ufgf'][row]
+				obj.contact_number=df[';Dks{ g '][row]
+				obj.email=df['Od]n 7]ufgf'][row]
+				obj.nirwachit_padh=df['lgjf{lrt kb'][row]
+				obj.nirwachit_vdc_or_municipality_name=df['lgjf{lrt uf lj ; tyf gu/kflnsfsf]] gfd '][row]
+				obj.party_name=df['kf6L{sf] gfd '][row]
+				obj.party_joined_date=df['kf6L{df ;++++nUg ePsf] ldtL'][row]
+				obj.samlagna_sang_sastha_samuha=df[' ;++++nUg ;++3 ;F:yf ;d"x  '][row]
+				obj.nirwachit_chetra_pratiko_pratibadhata=df['lgjf{lrt Ifq k||ltsf] k|ltaM4tf '][row]
+				obj.save()
 		messages.success(request, 'Successfully loaded data from files')
 		return HttpResponseRedirect('/cms/upload')
 	except KeyError as e:
@@ -574,45 +577,46 @@ def province_file_upload(request):
 
 			for row in range(0, total):
 
-				ProvinceMahilaPratinidhiForm.objects.get_or_create(
+				obj, created = ProvinceMahilaPratinidhiForm.objects.get_or_create(
 					province=Province.objects.get(name=Province.objects.get(name=df['Province'][0])),
 					name=df['नाम'][row],
 					english_name=df['English Name'][row],
-					date_of_birth=df['जन्ममिती'][row],
-					age=df['उमेर'][row],
-					mothers_name=df['आमाको नाम'][row],
-					fathers_name=df['बाबुको नाम'][row],
-					marital_status=df['बैवाहिक स्थिति'][row],
-					husbands_name=df['श्रीमानको नाम'][row],
-					caste=df['जातियता'][row],
-					mother_tongue=df['मातृभाषा'][row],
-					educational_qualification=df['औपचारिक शैक्षिक योग्यता'][row],
-					subject=df['बिषय'][row],
-					permanent_address=df['ठेगाना (स्थायी) :  जिल्ला'][row],
-					permanent_gapa_napa=df['गाउँपालिका/नगरपालिका/उप-महानगरपालिका/महानगरपालिका'][row],
-					permanent_ward_no=df['वडा नं'][row],
-					permanent_tole=df['टोल'][row],
-					temporary_address=df['ठेगाना (अस्थायी) जिल्ला'][row],
-					temporary_gapa_napa=df['गाउँपालिका/नगरपालिका/उप-महानगरपालिका/महानगरपालिका '][row],
-					temporary_ward_no=df['वडा नं'][row],
-					temporary_tole=df['टोल'][row],
-					mobile=df['मोवाइल'][row],
-					contact_number=df['सम्पर्क नं'][row],
-					email=df['इमेल'][row],
-					social_networking_medium=df['सामाजिक सन्जालका माध्यम (छ भने):'][row],
-					nirwachit_prakriya=df['निर्वाचित प्रक्रिया'][row],
-					nirwachit_padh=df['निर्वाचित पद'][row],
-					pichidiyeko_chhetra_ho_hoina=df['पिछडिएको क्षेत्र हो कि होइन'][row],
-					nirwachit_chhetrako_bibaran=df['निर्वाचित क्षेत्रको विवरण'][row],
-					nirwachit_vayeko_chhetra_aafno_thegana=df['निर्वाचित भएको क्षेत्र आफ्नो अस्थायी/ स्थायी ठेगाना भन्दा फरक'][row],
-					party_name=df['पार्टीको विवरण: पार्टीको नाम'][row],
-					party_joined_date=df['पाटींमा संलग्न भएको मिति'][row],
-					pramukh_jimmewari=df['प्रमुख जिम्मेवारी'][row],
-					nirwachit_chetra_pratiko_pratibadhata=df['निर्वाचित क्षेत्र प्रतिको प्रतिबद्धता'][row],
-					aaja_vanda_agadi_chunab_ladnu_vayeko_chha=df['आज भन्दा अघि चुनाब लड्नुभएको छ?'][row],
-					prapta_maat_sankhya=df['प्राप्त मत संख्या'][row],
-					samlagna_sang_sastha_samuha=df['सलग्न संघ, सस्था , समूह'][row],
-				)
+					date_of_birth=df['जन्ममिती'][row])
+
+				obj.age=df['उमेर'][row]
+				obj.mothers_name=df['आमाको नाम'][row]
+				obj.fathers_name=df['बाबुको नाम'][row]
+				obj.marital_status=df['बैवाहिक स्थिति'][row]
+				obj.husbands_name=df['श्रीमानको नाम'][row]
+				obj.caste=df['जातियता'][row]
+				obj.mother_tongue=df['मातृभाषा'][row]
+				obj.educational_qualification=df['औपचारिक शैक्षिक योग्यता'][row]
+				obj.subject=df['बिषय'][row]
+				obj.permanent_address=df['ठेगाना (स्थायी) :  जिल्ला'][row]
+				obj.permanent_gapa_napa=df['गाउँपालिका/नगरपालिका/उप-महानगरपालिका/महानगरपालिका'][row]
+				obj.permanent_ward_no=df['वडा नं'][row]
+				obj.permanent_tole=df['टोल'][row]
+				obj.temporary_address=df['ठेगाना (अस्थायी) जिल्ला'][row]
+				obj.temporary_gapa_napa=df['गाउँपालिका/नगरपालिका/उप-महानगरपालिका/महानगरपालिका '][row]
+				obj.temporary_ward_no=df['वडा नं'][row]
+				obj.temporary_tole=df['टोल'][row]
+				obj.mobile=df['मोवाइल'][row]
+				obj.contact_number=df['सम्पर्क नं'][row]
+				obj.email=df['इमेल'][row]
+				obj.social_networking_medium=df['सामाजिक सन्जालका माध्यम (छ भने):'][row]
+				obj.nirwachit_prakriya=df['निर्वाचित प्रक्रिया'][row]
+				obj.nirwachit_padh=df['निर्वाचित पद'][row]
+				obj.pichidiyeko_chhetra_ho_hoina=df['पिछडिएको क्षेत्र हो कि होइन'][row]
+				obj.nirwachit_chhetrako_bibaran=df['निर्वाचित क्षेत्रको विवरण'][row]
+				obj.nirwachit_vayeko_chhetra_aafno_thegana=df['निर्वाचित भएको क्षेत्र आफ्नो अस्थायी/ स्थायी ठेगाना भन्दा फरक'][row]
+				obj.party_name=df['पार्टीको विवरण: पार्टीको नाम'][row]
+				obj.party_joined_date=df['पाटींमा संलग्न भएको मिति'][row]
+				obj.pramukh_jimmewari=df['प्रमुख जिम्मेवारी'][row]
+				obj.nirwachit_chetra_pratiko_pratibadhata=df['निर्वाचित क्षेत्र प्रतिको प्रतिबद्धता'][row]
+				obj.aaja_vanda_agadi_chunab_ladnu_vayeko_chha=df['आज भन्दा अघि चुनाब लड्नुभएको छ?'][row]
+				obj.prapta_maat_sankhya=df['प्राप्त मत संख्या'][row]
+				obj.samlagna_sang_sastha_samuha=df['सलग्न संघ, सस्था , समूह'][row]
+				obj.save()
 		messages.success(request, 'Successfully loaded data from files')
 		return HttpResponseRedirect('/cms/province-upload')
 	except KeyError as e:

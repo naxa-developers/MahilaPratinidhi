@@ -226,4 +226,5 @@ def read_view(request, ):
 
 
 class Detail(TemplateView):
-    template_name = 'public/lists.html' 
+    template_name = 'public/lists.html'
+
