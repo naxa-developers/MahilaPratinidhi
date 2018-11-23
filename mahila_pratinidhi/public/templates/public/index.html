@@ -271,6 +271,7 @@
             <p class="sTitle header mb80 reveal">MAHILA PRATINIDHI ON MEDIA</p>
             <div class="row lists ">
                 {% for data in news %}
+                <a href="{% url 'public:news' data.pk %}">
                 <div class="col-xl-3 col-lg-4 col-md-6 reveal">
                     <div class="pImageholder prelative">
                         {% if data.newsOf.image %}
@@ -279,15 +280,16 @@
                         <img src="{% static 'public/image/mahilalogo.png' %}" alt="user" style="width:345px;height:250px;" >
                         {% endif %}
                         <div class="holderOverlay"></div>
-                        <a class="content" href="{% url 'public:news' data.pk %}">
+                        <a class="content">
                             {% if data.object_id %}
                             <div class="tags"> {{ data.object_id.english_name }} in News</div>
                             {% else %}
                             <div class="tags"> General News</div>
                             {% endif %}
                             <div class="pTitle">{{ data.title }}</div>
-                        </a>
+                        
                     </div>
+                </a>
                 </div>
                 {% endfor %}
 
