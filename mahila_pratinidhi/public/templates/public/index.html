@@ -1,7 +1,24 @@
 {% extends "public/public_base.html" %}
 {% load staticfiles %}
-{% load filters %}
+
+
+
+
+
 {% block upper_content %}
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.4/dist/leaflet.css"
+      integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
+      crossorigin=""/>
+<script src="https://unpkg.com/leaflet@1.3.4/dist/leaflet.js"
+      integrity="sha512-nMMmRyTVoLYqjP9hrbed9S+FzjZHW5gY1TWCHA5ckwXZBadntCNs8kEqAWdrb9O7rxbCaA4lKTIWjDXZxflOcA=="
+      crossorigin=""></script>
+
+<script src="{% static 'public/js/leaflet.ajax.min.js' %}"></script>
+
+
+
+
 <body>
         <style>
                 /* Always set the map height explicitly to define the size of the div
@@ -15,6 +32,32 @@
                   margin: 0;
                   padding: 0;
                 }
+
+                .leaflet-marker-icon{
+                  border-radius: 20%;
+                  font-size: 15px;
+                  padding:10px;
+
+
+                }
+
+    .info {
+    padding: 5px;
+    margin-top: 30px;
+
+    font: 20px Arial, Helvetica, sans-serif;
+    line-height: 31px;
+    background: #a3bfed;
+    box-shadow: 0 0 15px rgba(0,0,0,0.2);
+    border: solid;
+    border-radius: 5px;
+}
+.info h4 {
+    margin: 0 0 5px;
+    color: #777;
+}
+
+
         </style>
     <section class="topHeroImg">
         <div class="heroOverlay"></div>
@@ -26,14 +69,14 @@
 </div>
                 </div>
             </header>
-        
+
         <div class="herotext ">
             <div class="container">
                 <h1 class="reveal">HAMRO MAHILA PRATINIDHI
                 </h1>
                 <p class="heroPara reveal"> Nepal's first digital profile of elected female representatives</p>
                 <a href="{% url 'public:explore' 'general' %}">
-                <button class="btn btnRound btn-primary reveal"> 
+                <button class="btn btnRound btn-primary reveal">
                     <span>EXPLORE</span>
                     <i class="fa fa-arrow-right arow"></i>
                 </button>
@@ -104,7 +147,8 @@
                             </button>
                         </div>
                     </div>
-                    <div class="mapHolder grow redbg">
+                    <!-- mapHolder -->
+                    <div class="grow redbg">
                             <div id="map"></div>
 
                     </div>
@@ -231,15 +275,13 @@
                     <div class="pImageholder prelative">
                         {% if data.newsOf.image %}
                         <img src="{{ MEDIA_URL }} {{ data.newsOf.image.url }}" >
-                        {% else %} 
+                        {% else %}
                         <img src="{% static 'public/image/mahilalogo.png' %}" alt="user" style="width:345px;height:250px;" >
                         {% endif %}
                         <div class="holderOverlay"></div>
                         <a class="content" href="{% url 'public:news' data.pk %}">
                             {% if data.object_id %}
-                            {% with data|content_type as mahila_data %}
-                            <div class="tags"> {{ mahila_data.name }} in News</div>
-                            {% endwith %}
+                            <div class="tags"> {{ data.object_id.english_name }} in News</div>
                             {% else %}
                             <div class="tags"> General News</div>
                             {% endif %}
@@ -255,9 +297,9 @@
 
     </section>
     {% endblock %}
-    
+
     {% block scripts %}
-   
+
     <script>
 
         $(document).ready(function () {
@@ -279,6 +321,7 @@
         });
     </script>
 
+
     <script type="text/javascript">
         var image_list = JSON.parse('{{ image_list|safe }}');
         var images = new Array();
@@ -299,48 +342,269 @@
 
     <!-- for geolocation of user -->
     <script>
+
+var baseMaps;
+var map = L.map('map',
+{zoomControl: false,
+  minZoom: 7,
+  maxZoom: 8}
+).setView([27.63, 84.4171], 7);
+
+function add_tile(){
+
+  var osm = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
+  });
+
+  var googleStreets = L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}',{
+    maxZoom: 20,
+    subdomains:['mt0','mt1','mt2','mt3']
+  }).addTo(map);
+  var googleHybrid = L.tileLayer('http://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}',{
+    maxZoom: 20,
+    subdomains:['mt0','mt1','mt2','mt3']
+  });
+
+
+
+
+baseMaps = {
+    //"Street View": street_view,
+    "Google Streets": googleStreets,
+    "Google Hybrid": googleHybrid,
+};
+
+
+}
+add_tile();
+
+/* Esri_WorldImagery.on('load',function(){
+						$('#loading').hide();
+
+					}); */
+
+//if above was added, popups didnt work
+
+//L.control.layers(baseMaps).addTo(map);
+
+province_data=[];
+
+var mahila_marker = L.icon({
+  iconUrl: "https://www.unilad.co.uk/wp-content/uploads/2015/12/person-of-the-year-2.jpg",
+  iconSize: [60, 60],
+
+});
+
+
+
+province_geojson= { "type": "FeatureCollection", "features": [ { "type":
+"Feature", "properties": {}, "geometry": { "type": "Polygon", "coordinates": [ [
+[ 81.727294921875, 29.57345707301757 ], [ 81.7767333984375, 29.317536019588104
+], [ 82.1942138671875, 29.398926652739164 ], [ 82.08984375, 29.76437737516313 ],
+[ 81.650390625, 29.695210649161083 ], [ 81.727294921875, 29.57345707301757 ] ] ]
+} } ] }
+
+
+var basic_data ={
+  'national': '25' ,
+  'federal':'21' ,
+  'province':'220' ,
+  'local': '350',
+}
+
+
+var basic_data0 ={
+  'national': '23' ,
+  'federal':'100' ,
+  'province':'1000' ,
+  'local': '1400',
+}
+
+function calculate_center(layer){
+  console.log("layer",layer);
+  return layer.getBounds().getCenter();
+}
+
+
+var person= L.geoJSON(province_geojson).addTo(map);
+var center_person= person.getBounds().getCenter();
+L.marker(center_person, {icon: mahila_marker});
+
+
+  function getColor(d) {
+      return d > 30 ? '#1e43eb' :
+             d > 25 ? '#5f7af1' :
+             d > 20  ? '#8096f4' :
+             d > 15  ? '#98a9f6' :
+             d > 10  ? '#c2ccfa' :
+             d > 5   ? '#e8ebfd' :
+             d > 2   ? '#e8ebfd' :
+             d > 0   ? '#e8ebfd' :
+                        '#e8ebfd';
+                        }
+
+  function style(color) {
+      return {
+              fillColor: color,
+              weight: 1,
+              opacity: 1,
+              color: 'blue',
+              //dashArray: '3',
+              fillOpacity: 0.7
+                    };
+          }
+
+function highlightFeature(e){
+
+    var layer = e.target;
+
+    layer.setStyle({
+        weight: 5,
+        color: '#666',
+        dashArray: '',
+        fillOpacity: 0.7
+    });
+
+    info.update(basic_data);
+}
+
+function resetHighlight(e){
+
+  var layer = e.target;
+  layer.setStyle(style(getColor(frequency_array[layer.feature.properties.Province-1])));
+  info.update(basic_data0);
+
+}
+function zoomToFeature(e) {
+              map.fitBounds(e.target.getBounds());
+          }
+
+function onEachFeature(feature, layer) {
+
+              layer.setStyle(style(getColor(frequency_array[feature.properties.Province-1])));
+              var num =feature.properties.Province-1;
+              layer.on({
+                  mouseover: highlightFeature,
+                  mouseout: resetHighlight,
+                  click: zoomToFeature
+              });
+          }
+
+
+  frequency_array=[10,23,31,5,12,2,15]
+
+  var country =L.geoJson.ajax('http://localhost:8000/api/geojson/country',
+            {onEachFeature:onEachFeature})
+          .addTo(map);
+
+function Choropleth(province,frequency){
+
+  var color= getColor(frequency);
+
+var province =L.geoJson.ajax('http://vca.naxa.com.np/api/geojson/province/'+province+'/',
+{style:style(color),
+ //onEachFeature: onEachFeature
+})
+//.addTo(map);
+
+return province.toGeoJSON() ;
+
+}
+
+center_for_markers = [
+[27.244862521497282,87.2314453125],
+[26.941659545381516,85.67138671875],
+[27.751607687549384,85.352783203125],
+[28.294707428421205,84.166259765625],
+[28,83],
+[29.,82.5],
+[29.49698759653577,80.980224609375]
+]
+
+
+
+
+for (i=0; i<frequency_array.length; i++){
+    province = Choropleth(i+1,frequency_array[i]);
+    //var center =calculate_center(province);
+    circular_marker(center_for_markers[i],frequency_array[i]);
+
+
+}
+
+function circular_marker(center,number){
+
+  var myIcon = L.divIcon({
+      iconSize: new L.Point(40, 40),
+      html: number
+  });
+  // you can set .my-div-icon styles in CSS
+  L.marker(center, {icon: myIcon}).addTo(map);
+      //.bindPopup('divIcon CSS3 popup. <br> Supposed to be easily stylable.');
+}
+
+var info = L.control({position: 'topright'});
+
+info.onAdd = function(map){
+  this._div= L.DomUtil.create('div','info');
+  this.update(basic_data0);
+  return this._div;
+}
+
+info.update = function(props) {
+
+  this._div.innerHTML = "<div><span style='margin-right:10px;color:purple'>National: "+ props['national'] + "</span><span style='margin-right:10px;color:red'> Federal: "+ props['federal']
+    + "</span><span style='margin-right:10px;color:green'>Province: "+
+    props['province']+"</span><span style='margin-right:10px'>Local: "+props['local']+"</span><div>";
+};
+
+info.addTo(map);
+
+
+
+
             // Note: This example requires that you consent to location sharing when
             // prompted by your browser. If you see the error "The Geolocation service
             // failed.", it means you probably did not give permission for the browser to
             // locate you.
-            var map, infoWindow;
-            function initMap() {
-              map = new google.maps.Map(document.getElementById('map'), {
-                center: {lat: -34.397, lng: 150.644},
-                zoom: 6
-              });
-              infoWindow = new google.maps.InfoWindow;
-      
-              // Try HTML5 geolocation.
-              if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(function(position) {
-                  var pos = {
-                    lat: position.coords.latitude,
-                    lng: position.coords.longitude
-                  };
-      
-                  infoWindow.setPosition(pos);
-                  infoWindow.setContent('Location found.');
-                  infoWindow.open(map);
-                  map.setCenter(pos);
-                }, function() {
-                  handleLocationError(true, infoWindow, map.getCenter());
-                });
-              } else {
-                // Browser doesn't support Geolocation
-                handleLocationError(false, infoWindow, map.getCenter());
-              }
-            }
-      
-            function handleLocationError(browserHasGeolocation, infoWindow, pos) {
-              infoWindow.setPosition(pos);
-              infoWindow.setContent(browserHasGeolocation ?
-                                    'Error: The Geolocation service failed.' :
-                                    'Error: Your browser doesn\'t support geolocation.');
-              infoWindow.open(map);
-            }
+            // var map, infoWindow;
+            // function initMap() {
+            //   map = new google.maps.Map(document.getElementById('map'), {
+            //     center: {lat: -34.397, lng: 150.644},
+            //     zoom: 6
+            //   });
+            //   infoWindow = new google.maps.InfoWindow;
+            //
+            //   // Try HTML5 geolocation.
+            //   if (navigator.geolocation) {
+            //     navigator.geolocation.getCurrentPosition(function(position) {
+            //       var pos = {
+            //         lat: position.coords.latitude,
+            //         lng: position.coords.longitude
+            //       };
+            //
+            //       infoWindow.setPosition(pos);
+            //       infoWindow.setContent('Location found.');
+            //       infoWindow.open(map);
+            //       map.setCenter(pos);
+            //     }, function() {
+            //       handleLocationError(true, infoWindow, map.getCenter());
+            //     });
+            //   } else {
+            //     // Browser doesn't support Geolocation
+            //     handleLocationError(false, infoWindow, map.getCenter());
+            //   }
+            // }
+            //
+            // function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+            //   infoWindow.setPosition(pos);
+            //   infoWindow.setContent(browserHasGeolocation ?
+            //                         'Error: The Geolocation service failed.' :
+            //                         'Error: Your browser doesn\'t support geolocation.');
+            //   infoWindow.open(map);
+            // }
           </script>
-          <script async defer
+          <!-- <script async defer
           src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap">
-          </script>
+          </script> -->
 {% endblock %}
