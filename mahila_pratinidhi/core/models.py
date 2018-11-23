@@ -140,7 +140,8 @@ class News(models.Model):
 	date = models.DateField(blank=False)
 	title = models.CharField(max_length=300, blank=False)
 	content = models.TextField(blank=False)
-
+	story_headline = models.TextField(blank=True)
+	
 	content_type =   models.ForeignKey(ContentType, on_delete=models.CASCADE, null=True)
 	object_id = models.PositiveIntegerField(null=True)
 	content_object=GenericForeignKey('content_type', 'object_id')

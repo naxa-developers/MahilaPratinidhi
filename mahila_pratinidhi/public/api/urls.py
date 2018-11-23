@@ -9,5 +9,6 @@ urlpatterns = [
 	path('geojson/province/<province_id>/', viewset.province_geojson),
 	path('geojson/municipality/<district>/', viewset.gapanapa_geojson),
 
-	path('country/', viewset.RastriyaViewSet.as_view({'get': 'list'}))
+	path('country/', viewset.RastriyaViewSet.as_view({'get': 'list'})),
+	path('age/', viewset.AgeViewSet.as_view())
 ]

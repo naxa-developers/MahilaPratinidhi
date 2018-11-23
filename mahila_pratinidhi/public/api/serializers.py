@@ -29,3 +29,10 @@ class LocalMahilaSerializer(serializers.ModelSerializer):
         model = MahilaPratinidhiForm
         fields = '__all__'
 
+class AgeSerializers(serializers.ListSerializer):
+    total_age = serializers.ListField()
+    pratinidhi_age = serializers.ListField()
+
+    
+
+

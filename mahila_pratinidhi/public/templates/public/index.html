@@ -235,7 +235,7 @@
                         <img src="{% static 'public/image/mahilalogo.png' %}" alt="user" style="width:345px;height:250px;" >
                         {% endif %}
                         <div class="holderOverlay"></div>
-                        <a class="content" href="{% url 'public:news' %}">
+                        <a class="content" href="{% url 'public:news' data.pk %}">
                             {% if data.object_id %}
                             {% with data|content_type as mahila_data %}
                             <div class="tags"> {{ mahila_data.name }} in News</div>

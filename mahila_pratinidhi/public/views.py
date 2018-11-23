@@ -208,9 +208,9 @@ class DataVisualize(TemplateView):
 class NewsView(TemplateView):
     template_name = 'public/news-detail.html'
 
-
-    def test_func(self):
-        return not self.request.user.is_superuser
+    def get(self, request, *args, **kwargs):
+        news = News.objects.get(id=self.kwargs.get('pk'))
+        return render(request, self.template_name, {'news':news})
 
 
 def read_view(request, ):
