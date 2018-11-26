@@ -150,6 +150,14 @@ class News(models.Model):
 		return "{}-{} news".format(self.date, self.title)
 
 
+
+class Province(models.Model):
+	name = models.CharField(max_length=300)
+
+	def __str__(self):
+		return self.name
+
+
 class MahilaPratinidhiForm(models.Model):
 	district = models.ForeignKey(District, on_delete=models.CASCADE, related_name='district', verbose_name="जिल्ला")
 	name = models.CharField(max_length=300, verbose_name="नाम")
@@ -173,16 +181,11 @@ class MahilaPratinidhiForm(models.Model):
 	image = models.ImageField(blank=True, upload_to='profile/', verbose_name="फोटो")
 	featured = models.BooleanField(default=False)
 	news = GenericRelation(News)
+	province = models.ForeignKey(Province, on_delete=models.CASCADE, verbose_name="प्रदेश", default=1)
+ 
 
 	def __str__(self):
 		return "{} फारम".format(self.district.name)
-
-
-class Province(models.Model):
-	name = models.CharField(max_length=300)
-
-	def __str__(self):
-		return self.name
 
 
 class ProvinceMahilaPratinidhiForm(CommonShavaFields):
@@ -193,6 +196,7 @@ class ProvinceMahilaPratinidhiForm(CommonShavaFields):
 		return "{}-{} फारम".format(self.province.name, self.name)
 
 class RastriyaShava(CommonShavaFields):
+	province = models.ForeignKey(Province, on_delete=models.CASCADE, verbose_name="प्रदेश", default=1)
 	samitima_vumika = models.CharField(max_length=300, verbose_name="समितिमा पद", blank=True)
 	samlagna_samsadiya_samiti = models.CharField(max_length=300, verbose_name="संलग्न समिति", blank=True)
 	news = GenericRelation(News)
@@ -201,6 +205,7 @@ class RastriyaShava(CommonShavaFields):
 		return "{}-{} फारम".format(self.name, self.name)
 
 class PratinidhiShava(CommonShavaFields):
+	province = models.ForeignKey(Province, on_delete=models.CASCADE, verbose_name="प्रदेश", default=1)
 	samitima_vumika = models.CharField(max_length=300, verbose_name="समितिमा भूमिका", blank=True)
 	samlagna_samsadiya_samiti = models.CharField(max_length=300, verbose_name="संलग्न संसदीय समिति", blank=True)
 	news = GenericRelation(News)

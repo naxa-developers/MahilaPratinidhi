@@ -57,6 +57,55 @@ class RastriyaViewSet(ReadOnlyModelViewSet):
     serializer_class = RastriyaShavaSerializer
 
 
+class MapViewSet(views.APIView):
+
+    def get(self, request):
+        maps = {}
+        nat = []
+        province = []
+        fed = []
+        loc = []
+        prov = {}
+
+        local = MahilaPratinidhiForm.objects.values('province_id')\
+        .annotate(Count('province_id'))\
+        .annotate(total=Count('id')).order_by('province_id')
+
+        national = RastriyaShava.objects.values('province_id')\
+        .annotate(Count('province_id'))\
+        .annotate(total=Count('id')).order_by('province_id')
+
+        provincial = ProvinceMahilaPratinidhiForm.objects.values('province_id')\
+        .annotate(Count('province_id'))\
+        .annotate(total=Count('id')).order_by('province_id')
+
+        federal = PratinidhiShava.objects.values('province_id')\
+        .annotate(Count('province_id'))\
+        .annotate(total=Count('id')).order_by('province_id')
+
+        for item in local:
+            loc.append(item['total'])
+        
+        maps['local']=loc
+
+        for item in national:
+            nat.append(item['total'])
+        
+        maps['national']=nat
+
+        for item in provincial:
+            province.append(item['total'])
+
+        maps['provincial']=province
+        
+        for item in federal:
+            fed.append(item['total'])
+
+        maps['federal']=fed
+            
+        return Response(maps)
+
+
 class AgeViewSet(views.APIView):
     def get(self, request):
         provinces_avg_age = {}
@@ -204,6 +253,35 @@ class EducationViewSet(views.APIView):
         total['total_education'] = data
         total['provincial_education'] = provincial_edu
         total['pratinidhi_education'] = pratinidhi_edu
+
+        return Response(total)
+
+
+class PoliticalEngagementViewSet(views.APIView):
+
+    def get(self, request):
+
+        total = {}
+        data =[]
+
+        rastriya_engagement = RastriyaShava.objects.values('party_joined_date')
+        federal_engagement = PratinidhiShava.objects.values('party_joined_date')
+        provincial_engagement = ProvinceMahilaPratinidhiForm.objects.values('party_joined_date')
+        # local_engagement = MahilaPratinidhiForm.objects.values('party_joined_date')
+
+        lists = list(chain(rastriya_engagement, federal_engagement, provincial_engagement))
+
+        for item in lists:
+            if item['party_joined_date'] != " ":
+                data.append(2075 - int(item['party_joined_date'].replace(".0", "")))
+        
+        provinces = ProvinceMahilaPratinidhiForm.objects.values('province_id', 'party_joined_date')\
+        .annotate(Count('province_id'))
+
+        total['total'] = data
+        total['province_political_year'] = provinces
+        total['rastriya_political_year'] = rastriya_engagement
+        total['federal_political_year'] = federal_engagement
 
         return Response(total)
 
