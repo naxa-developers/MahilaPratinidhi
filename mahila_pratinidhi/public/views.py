@@ -139,6 +139,7 @@ class RastriyaMahilaDetail(TemplateView):
 
     def get(self, request, *args, **kwargs):
         form = RastriyaShava.objects.get(id=self.kwargs.get('pk'))
+        print(form.marital_status)
         return render(request, self.template_name, {'form':form})
 
 

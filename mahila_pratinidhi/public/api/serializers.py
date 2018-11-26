@@ -31,7 +31,14 @@ class LocalMahilaSerializer(serializers.ModelSerializer):
 
 class AgeSerializers(serializers.ListSerializer):
     total_age = serializers.ListField()
-    pratinidhi_age = serializers.ListField()
+    provinces_average_age = serializers.ListField()
+    province = serializers.ListField()
+    nationale = serializers.ListField()
+    federal= serializers.ListField()
+
+class EthnicitySerializers(serializers.ListSerializer):
+    ethnicity = serializers.ListField()
+
 
     
 

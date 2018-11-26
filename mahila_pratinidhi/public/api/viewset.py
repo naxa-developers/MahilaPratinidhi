@@ -12,6 +12,7 @@ from rest_framework.viewsets import ModelViewSet, ReadOnlyModelViewSet
 from rest_framework.views import APIView
 from .serializers import RastriyaShavaSerializer, ProvinceSerializer, LocalMahilaSerializer, PratinidhiShavaSerializer, AgeSerializers
 from core.models import RastriyaShava, PratinidhiShava, ProvinceMahilaPratinidhiForm, MahilaPratinidhiForm
+from django.db.models import Avg, Count, Sum
 
 @api_view(['GET'])
 def country_geojson(request):
@@ -57,13 +58,13 @@ class RastriyaViewSet(ReadOnlyModelViewSet):
 
 class AgeViewSet(views.APIView):
     def get(self, request):
-        pra_age = []
+        provinces_avg_age = {}
         age=[]
         rastriya_age = RastriyaShava.objects.values('age')
         pratinidhi_age = PratinidhiShava.objects.values('age')
         provincial_age = ProvinceMahilaPratinidhiForm.objects.values('age')
-        local_age = MahilaPratinidhiForm.objects.values('age')
-
+        # local_age = MahilaPratinidhiForm.objects.values('age')
+        
         for ages in rastriya_age:
             if ages['age'] != "":
                 age.append(ages['age'])
@@ -75,18 +76,82 @@ class AgeViewSet(views.APIView):
         
         for ages in provincial_age:
             if ages['age'] != "":
-                pra_age.append(ages['age'])
                 age.append(ages['age'])
         
-        for ages in local_age:
-            if ages['age'] != "":
-                age.append(ages['age'])
+        # for ages in local_age:
+        #     if ages['age'] != "":
+        #         age.append(ages['age'])
         
+        provinces_avg_age = ProvinceMahilaPratinidhiForm.objects.values('province_id')\
+        .annotate(Count('province_id'))\
+        .annotate(age_avg=Avg('age'))
 
-        data = {'total_age':age, 'pratinidhi_age':pra_age}
+        province = ProvinceMahilaPratinidhiForm.objects.values('age')\
+        .aggregate(age_avg=Avg('age'))
+
+        national = RastriyaShava.objects.values('age')\
+        .aggregate(age_avg=Avg('age'))
+
+        federal = PratinidhiShava.objects.values('age')\
+        .aggregate(age_avg=Avg('age'))
+
+        data = {'total_age':age, 'provinces_average_age':provinces_avg_age, 
+        'province':province, 'national':national,
+        'federal':federal}
         return Response(data)
-        
 
+
+class EthnicityViewSet(views.APIView):
+    def get(self, request):
+        data = []
+        ethnicity={}
+        ethnicity.fromkeys({"caste"})
+        print(ethnicity)
+
+        # rastriya_caste = RastriyaShava.objects.values('caste').annotate(Count('caste'))\
+        # .annotate(total=Sum('id'))
+
+        pratinidhi_caste = PratinidhiShava.objects.values('caste').annotate(Count('caste'))\
+        .annotate(total=Count('id'))
+        print(pratinidhi_caste)
+
+        provincial_caste = ProvinceMahilaPratinidhiForm.objects.values('caste').annotate(Count('caste'))\
+        .annotate(total=Count('id'))
+        # local_caste = MahilaPratinidhiForm.objects.values('caste')
+        
+        # for castes in rastriya_caste:
+        #     if not castes['caste'] in ethnicity['caste']:
+        #         ethnicity['caste']=castes['caste']
+        #         ethnicity[castes['caste']]['total']=castes['total']
+            
+        #     else:
+        #         ethnicity[castes['caste']]['total'] += castes['total']
+            
+        
+        for castes in pratinidhi_caste:
+            ethnicity['caste'] = castes['caste']
+            ethnicity['total'] = castes['total']
+            data.append(ethnicity.copy)
+        
+        for castes in provincial_caste:
+            for count in range(len(data)):
+                if not castes['caste'] in data[count]['caste']:
+                    ethnicity['caste'] = castes['caste']
+                    ethnicity['total'] = castes['total']
+                    data.append(ethnicity.copy)
+            
+                else:
+                    data[count]['total'] += castes['total']
+        
+        # for castes in rastriya_caste:
+        #     if not castes['caste'] in ethnicity['caste']:
+            #     ethnicity['caste']=castes['caste']
+            #     ethnicity['total']=castes['total']
+            
+            # else:
+            #     ethnicity['total'] += castes['total']
+        
+        return Response(ethnicity)
 
 
 
