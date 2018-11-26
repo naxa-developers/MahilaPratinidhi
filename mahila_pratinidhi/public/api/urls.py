@@ -12,4 +12,6 @@ urlpatterns = [
 	path('country/', viewset.RastriyaViewSet.as_view({'get': 'list'})),
 	path('age/', viewset.AgeViewSet.as_view()),
 	path('ethnicity/', viewset.EthnicityViewSet.as_view()),
+	path('mother_tongue/', viewset.MotherTongueViewSet.as_view()),
+	path('education/', viewset.EducationViewSet.as_view()),
 ]

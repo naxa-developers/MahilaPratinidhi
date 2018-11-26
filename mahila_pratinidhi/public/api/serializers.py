@@ -36,8 +36,17 @@ class AgeSerializers(serializers.ListSerializer):
     nationale = serializers.ListField()
     federal= serializers.ListField()
 
+
 class EthnicitySerializers(serializers.ListSerializer):
-    ethnicity = serializers.ListField()
+    ethnicity_data = serializers.DictField()
+
+
+class MotherTongueSerializers(serializers.ListSerializer):
+    mother_tongue = serializers.DictField()
+
+class EducationSerializers(serializers.ListSerializer):
+    educational_qualification = serializers.DictField
+
 
 
     
