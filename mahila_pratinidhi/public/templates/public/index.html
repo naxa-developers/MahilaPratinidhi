@@ -1,42 +1,43 @@
-{% extends "public/public_base.html" %}
-{% load staticfiles %}
-{% load filters %}
-{% block upper_content %}
+{% extends "public/public_base.html" %} {% load staticfiles %} {% load filters %} {% block upper_content %}
+
 <body>
-        <style>
-                /* Always set the map height explicitly to define the size of the div
+    <style>
+        /* Always set the map height explicitly to define the size of the div
                  * element that contains the map. */
-                #map {
-                  height: 100%;
-                }
-                /* Optional: Makes the sample page fill the window. */
-                html, body {
-                  height: 100%;
-                  margin: 0;
-                  padding: 0;
-                }
-        </style>
+
+        #map {
+            height: 100%;
+        }
+
+        /* Optional: Makes the sample page fill the window. */
+
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+    </style>
     <section class="topHeroImg">
         <div class="heroOverlay"></div>
         <header>
-                <div class="navigation">
-                    <div class="container-fluid">
-{% endblock %}
-{% block lower_content %}
-</div>
+            <div class="navigation">
+                <div class="container-fluid">
+                    {% endblock %} {% block lower_content %}
                 </div>
-            </header>
-        
+            </div>
+        </header>
+
         <div class="herotext ">
             <div class="container">
                 <h1 class="reveal">HAMRO MAHILA PRATINIDHI
                 </h1>
                 <p class="heroPara reveal"> Nepal's first digital profile of elected female representatives</p>
                 <a href="{% url 'public:explore' 'general' %}">
-                <button class="btn btnRound btn-primary reveal"> 
-                    <span>EXPLORE</span>
-                    <i class="fa fa-arrow-right arow"></i>
-                </button>
+                    <button class="btn btnRound btn-primary reveal">
+                        <span>EXPLORE</span>
+                        <i class="fa fa-arrow-right arow"></i>
+                    </button>
                 </a>
             </div>
 
@@ -56,12 +57,52 @@
                     </div>
                 </div>
                 <div class="province">
-                    <select name="" id="">
-                        <option value="national">NATIONAL</option>
-                        <option value="federal">FEDERAL</option>
-                        <option value="provincial">PROVINCIAL</option>
-                        <option value="local">LOCAL</option>
-                    </select>
+                    <span id="selectedValue">Provience</span>
+                    <span class="circlefilter">
+                        <i class=" show arrow fa fa-angle-down"></i>
+                        <i class="close fa fa-times"></i>
+                    </span>
+
+                    <div class="selectOverlay">
+                        <div class="selectList">
+                            <div class="">
+                                <label for="" class="st">State</label>
+                                <select class="sel1" name="" id="">
+                                    <option value="national">NATIONAL</option>
+                                    <option value="federal">FEDERAL</option>
+                                    <option value="provincial">PROVINCIAL</option>
+                                    <option value="local">LOCAL</option>
+                                </select>
+                            </div>
+                            <div class="">
+                                <label for="" class="st">District</label>
+                                <select class="sel2" name="" id="">
+                                    <option value="national">NATIONAL</option>
+                                    <option value="federal">FEDERAL</option>
+                                    <option value="provincial">PROVINCIAL</option>
+                                    <option value="local">LOCAL</option>
+                                </select>
+                            </div>
+                            <div class="">
+                                <label for="" class="st">Municipality</label>
+                                <select class="sel3" name="" id="">
+                                    <option value="national">NATIONAL</option>
+                                    <option value="federal">FEDERAL</option>
+                                    <option value="provincial">PROVINCIAL</option>
+                                    <option value="local">LOCAL</option>
+                                </select>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 fullclick">
+                                <button class="popbtn btn-primary firstBtn apply"> Apply</button>
+                                <button class="popbtn btn-primary reset"> Clear</button>
+
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -105,7 +146,7 @@
                         </div>
                     </div>
                     <div class="mapHolder grow redbg">
-                            <div id="map"></div>
+                        <div id="map"></div>
 
                     </div>
                 </div>
@@ -120,77 +161,75 @@
             <p class="sTitle header mb80 reveal">FEATURED MAHILA PRATINIDHI 2018</p>
 
             <div class="slider reveal">
-                {% for datas in featured_data %}
-                {% for data in datas %}
+                {% for datas in featured_data %} {% for data in datas %}
                 <div>
                     <div class="row align-items-md-center">
                         <div class="col-md-4">
                             <div class="imageHolder">
                                 {% if data.image %}
-                                <img src="{{ MEDIA_URL }} {{ data.image.url }}" alt=""></div>
-                                {% else %}
-                                <img src="{% static 'public/image/mahilalogo.png' %}" alt="" style="width:350px;height:250px;" >
-                                {% endif %}
+                                <img src="{{ MEDIA_URL }} {{ data.image.url }}" alt="">
+                            </div>
+                            {% else %}
+                            <img src="{% static 'public/image/mahilalogo.png' %}" alt="" style="width:350px;height:250px;"> {% endif %}
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="info slidefont">
+                            <div class="Name">
+                                {{data.name}}
+                            </div>
+                            <div class="position">
+                                {{data.nirwachit_padh}}
+                            </div>
+                            <div>
+                                <span class="first"> Education:</span>
+                                <span class="value"> {{data.educational_qualification}}</span>
+
+                            </div>
+                            <div>
+                                <span class="first"> Age:</span>
+                                <span class="value"> {{data.age}} Years</span>
+
+                            </div>
+                            <div>
+                                <span class="first"> Political Party:</span>
+                                <span class="value"> {{ data.party_name }}</span>
+
+                            </div>
+                            <div>
+                                <span class="first"> Political Involvement:</span>
+                                <span class="value"> Since {{ data.party_joined_date }} Bs</span>
+
+                            </div>
+                            <div>
+                                <span class="first"> Address:</span>
+                                <span class="value"> {{ data.address }}</span>
+
+                            </div>
+
+
+
+                        </div>
+                    </div>
+                    <div class="col-md-4 flexHolder">
+                        <div class="buttons">
+                            <div class="socialIcons">
+                                <i class="fa fa-facebook-f"></i>
+                                <i class="fa fa-twitter"></i>
+                                <i class="fa fa-phone"></i>
+                                <i class="fa fa-envelope"></i>
                             </div>
                         </div>
-                        <div class="col-md-4">
-                            <div class="info slidefont">
-                                <div class="Name">
-                                    {{data.name}}
-                                </div>
-                                <div class="position">
-                                    {{data.nirwachit_padh}}
-                                </div>
-                                <div>
-                                    <span class="first"> Education:</span>
-                                    <span class="value"> {{data.educational_qualification}}</span>
-
-                                </div>
-                                <div>
-                                    <span class="first"> Age:</span>
-                                    <span class="value"> {{data.age}} Years</span>
-
-                                </div>
-                                <div>
-                                    <span class="first"> Political Party:</span>
-                                    <span class="value"> {{ data.party_name }}</span>
-
-                                </div>
-                                <div>
-                                    <span class="first"> Political Involvement:</span>
-                                    <span class="value"> Since {{ data.party_joined_date }} Bs</span>
-
-                                </div>
-                                <div>
-                                    <span class="first"> Address:</span>
-                                    <span class="value"> {{ data.address }}</span>
-
-                                </div>
-
-
-
-                            </div>
-                        </div>
-                        <div class="col-md-4 flexHolder">
-                            <div class="buttons">
-                                <div class="socialIcons">
-                                    <i class="fa fa-facebook-f"></i>
-                                    <i class="fa fa-twitter"></i>
-                                    <i class="fa fa-phone"></i>
-                                    <i class="fa fa-envelope"></i>
-                                </div>
-                            </div>
-                            <div class="fullBtn centeredvh">
-                                <button class="btn btn-round revbtn mtb50"> MAP VISUALIZATION
-                                    <i class="fa fa-arrow-right arow"></i>
-                                </button>
-                            </div>
+                        <div class="fullBtn centeredvh">
+                            <button class="btn btn-round revbtn mtb50"> MAP VISUALIZATION
+                                <i class="fa fa-arrow-right arow"></i>
+                            </button>
                         </div>
                     </div>
                 </div>
-                {% endfor %}
-                {% endfor %}
             </div>
+            {% endfor %} {% endfor %}
+        </div>
 
     </section>
 
@@ -207,12 +246,12 @@
                     </p>
                     <a href="{% url 'public:data_visualize' %}">
                         <button class="btn btn-round revbtn mtb50 reveal"> DATA VISUALIZATION
-                        <i class="fa fa-arrow-right arow"></i>
-                    </button>
+                            <i class="fa fa-arrow-right arow"></i>
+                        </button>
                     </a>
                 </div>
                 <div class="col-md-6 d-none d-md-block reveal">
-                    <img src="{% static 'public/image/click.svg' %}" alt="VISUALIZATION" >
+                    <img src="{% static 'public/image/click.svg' %}" alt="VISUALIZATION">
                 </div>
             </div>
 
@@ -230,17 +269,13 @@
                 <div class="col-xl-3 col-lg-4 col-md-6 reveal">
                     <div class="pImageholder prelative">
                         {% if data.newsOf.image %}
-                        <img src="{{ MEDIA_URL }} {{ data.newsOf.image.url }}" >
-                        {% else %} 
-                        <img src="{% static 'public/image/mahilalogo.png' %}" alt="user" style="width:345px;height:250px;" >
-                        {% endif %}
+                        <img src="{{ MEDIA_URL }} {{ data.newsOf.image.url }}"> {% else %}
+                        <img src="{% static 'public/image/mahilalogo.png' %}" alt="user" style="width:345px;height:250px;"> {% endif %}
                         <div class="holderOverlay"></div>
                         <a class="content" href="{% url 'public:news' %}">
-                            {% if data.object_id %}
-                            {% with data|content_type as mahila_data %}
+                            {% if data.object_id %} {% with data|content_type as mahila_data %}
                             <div class="tags"> {{ mahila_data.name }} in News</div>
-                            {% endwith %}
-                            {% else %}
+                            {% endwith %} {% else %}
                             <div class="tags"> General News</div>
                             {% endif %}
                             <div class="pTitle">{{ data.title }}</div>
@@ -254,13 +289,97 @@
 
 
     </section>
-    {% endblock %}
-    
-    {% block scripts %}
-   
+    {% endblock %} {% block scripts %}
+
     <script>
 
         $(document).ready(function () {
+
+
+
+
+            $("#selectedValue").click(function () {
+
+                $(".selectOverlay").addClass("active");
+                $(".circlefilter ").addClass("circleActive");
+
+            });
+            $(".circlefilter").click(function () {
+
+
+                $(".selectOverlay").toggleClass("active");
+                $(this).toggleClass("circleActive");
+
+            });
+
+            var first = "";
+            var second = "";
+            var third = "";
+            $("select.sel1").change(function () {
+
+
+
+                first = $(this).find("option:selected").text() + ",";
+                conc();
+
+            });
+            $("select.sel2").change(function () {
+                second = $(this).find("option:selected").text() + ",";
+                conc()
+            });
+            $("select.sel3").change(function () {
+                third = $(this).find("option:selected").text();
+                conc()
+            });
+            function conc() {
+
+                var firstcon = first.concat(second);
+
+                var fullstring = firstcon.concat(third);
+                $("#selectedValue").text(fullstring);
+
+
+            }
+            $(".apply").click(function () {
+                close();
+            });
+            $(".reset").click(function () {
+                reset();
+            });
+
+            function reset() {
+                $("#selectedValue").text("Select Provience");
+            }
+            function close() {
+                $(".selectOverlay").removeClass("active");
+                $(".circlefilter").removeClass("circleActive");
+            }
+
+
+            $("select.sel2").change(function () {
+
+                var sel1 = $(this).find("option:selected").text();
+
+
+            });
+            $("select.sel3").change(function () {
+                var sel1 = $(this).find("option:selected").text();
+
+
+            });
+
+
+
+
+
+
+
+            // $(".circlefilter").click(function () {
+
+            //     $(".selectOverlay").toggleClass("active");
+            // });
+
+
             $('.slider').slick({
                 autoplay: false,
                 dots: true,
@@ -276,71 +395,72 @@
                 viewFactor: 0.5,
                 reset: false
             });
+
+
+
         });
     </script>
 
     <script type="text/javascript">
         var image_list = JSON.parse('{{ image_list|safe }}');
         var images = new Array();
-        for(i = 0; i <= image_list.length; i++){
+        for (i = 0; i <= image_list.length; i++) {
             images[i] = image_list[i];
         }
-        var nextimage=0;
+        var nextimage = 0;
         doSlideshow();
 
-        function doSlideshow(){
-                if(nextimage>=images.length){nextimage=0;}
-                $('.topHeroImg').css('background','url("'+images[nextimage++]+'")')
-                {
-                    setTimeout(doSlideshow,3000);
-                };
+        function doSlideshow() {
+            if (nextimage >= images.length) { nextimage = 0; }
+            $('.topHeroImg').css('background', 'url("' + images[nextimage++] + '")')
+            {
+                setTimeout(doSlideshow, 3000);
+            };
         }
     </script>
 
     <!-- for geolocation of user -->
     <script>
-            // Note: This example requires that you consent to location sharing when
-            // prompted by your browser. If you see the error "The Geolocation service
-            // failed.", it means you probably did not give permission for the browser to
-            // locate you.
-            var map, infoWindow;
-            function initMap() {
-              map = new google.maps.Map(document.getElementById('map'), {
-                center: {lat: -34.397, lng: 150.644},
+        // Note: This example requires that you consent to location sharing when
+        // prompted by your browser. If you see the error "The Geolocation service
+        // failed.", it means you probably did not give permission for the browser to
+        // locate you.
+        var map, infoWindow;
+        function initMap() {
+            map = new google.maps.Map(document.getElementById('map'), {
+                center: { lat: -34.397, lng: 150.644 },
                 zoom: 6
-              });
-              infoWindow = new google.maps.InfoWindow;
-      
-              // Try HTML5 geolocation.
-              if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(function(position) {
-                  var pos = {
-                    lat: position.coords.latitude,
-                    lng: position.coords.longitude
-                  };
-      
-                  infoWindow.setPosition(pos);
-                  infoWindow.setContent('Location found.');
-                  infoWindow.open(map);
-                  map.setCenter(pos);
-                }, function() {
-                  handleLocationError(true, infoWindow, map.getCenter());
+            });
+            infoWindow = new google.maps.InfoWindow;
+
+            // Try HTML5 geolocation.
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function (position) {
+                    var pos = {
+                        lat: position.coords.latitude,
+                        lng: position.coords.longitude
+                    };
+
+                    infoWindow.setPosition(pos);
+                    infoWindow.setContent('Location found.');
+                    infoWindow.open(map);
+                    map.setCenter(pos);
+                }, function () {
+                    handleLocationError(true, infoWindow, map.getCenter());
                 });
-              } else {
+            } else {
                 // Browser doesn't support Geolocation
                 handleLocationError(false, infoWindow, map.getCenter());
-              }
             }
-      
-            function handleLocationError(browserHasGeolocation, infoWindow, pos) {
-              infoWindow.setPosition(pos);
-              infoWindow.setContent(browserHasGeolocation ?
-                                    'Error: The Geolocation service failed.' :
-                                    'Error: Your browser doesn\'t support geolocation.');
-              infoWindow.open(map);
-            }
-          </script>
-          <script async defer
-          src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap">
-          </script>
-{% endblock %}
+        }
+
+        function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+            infoWindow.setPosition(pos);
+            infoWindow.setContent(browserHasGeolocation ?
+                'Error: The Geolocation service failed.' :
+                'Error: Your browser doesn\'t support geolocation.');
+            infoWindow.open(map);
+        }
+    </script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap">
+    </script> {% endblock %}
