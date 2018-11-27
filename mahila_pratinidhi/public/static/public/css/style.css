@@ -36,9 +36,9 @@ nav{position: absolute;width: 100%;z-index: 4;}
 .menuCircle i.fa{    font-size: 28px;
     color: #fff;}
    
-    .menu{top:-100%;transition:all 0.3s ease-in-out; }
+    .menu{top:-180%;transition:all 0.3s ease-in-out; }
     .menu.menuOn{
-        transform: translateY(100%);}
+        transform: translateY(180%);}
 
 .userIcon{margin-right:15px;}
 .herotext{
