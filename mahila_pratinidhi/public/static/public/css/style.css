@@ -36,8 +36,9 @@ nav{position: absolute;width: 100%;z-index: 4;}
 .menuCircle i.fa{    font-size: 28px;
     color: #fff;}
    
-    .menu{display:none;opacity:0; }
-    .menu.menuOn{display: block;opacity: 1;}
+    .menu{top:-100%;transition:all 0.3s ease-in-out; }
+    .menu.menuOn{
+        transform: translateY(100%);}
 
 .userIcon{margin-right:15px;}
 .herotext{
@@ -250,7 +251,16 @@ section.pratinidhi:after{
 .navbar-brand{margin-right:auto;position: relative;z-index: 1000;}
 .socialIcons i{transition:all 0.2s linear;cursor: pointer;}
 .socialIcons i:hover{color:#6f7cbb}
-.menu{position:fixed;top:0;left: 0;right: 0;bottom: 0;z-index: 100; background:#151b35;}
+.menu{    position: fixed;
+  
+    height: 100vh;
+    width: 100%;
+ 
+    left: 0;
+    z-index: 100;
+    background: rgba(21, 27, 53, 0.95);
+
+    transition: all 0.3s linear;}
 .menuheader{background:#020725;min-height: 100px;display:flex-end;align-items: flex-end;}
 /* other pages */
 .navigation.innerPage{background: rgba(8,17,66,0.91);}
@@ -639,20 +649,20 @@ background:rgba(255,255,255,0.02);padding:30px;}
             .menutabs#exTab3 .nav-pills li a.active{transform: scale(1)}
             .menutabs#exTab3 .nav-pills a.active:after{border:none;}
             .linkitems {
-               padding:10px 15px;
+                padding: 10px 15px;
                 border-radius: 30px;
                 min-width: 100px;
                 display: inline-block;
                 text-align: center;
                 margin-bottom: 15px;
-                background: #32216F;
-                border: #32216F;
-                color:#fff!important;
-                text-decoration: none!important;
-                cursor: pointer;
+                text-transform: uppercase;
+                color: #fff!important;
+           
+                font-size: 38px;
+                display: block;
             }
             .linkitems:not(:last-of-type){margin-right: 15px;}
-            .linkTabs{padding-top: 80px;     border-bottom: 1px solid rgba(255,255,255,0.1);
+            .linkTabs{padding-top: 80px;     
                 padding-bottom: 40px;}
                 body.overflowHidden{overflow: hidden;}
                 .selectOverlay{width: 100%;
@@ -704,7 +714,7 @@ background:rgba(255,255,255,0.02);padding:30px;}
             color: #fff;
             font-weight: bold;
             text-transform: uppercase;
-        padding-left: 10px;opacity: 0.5;}
+        padding-left: 7px;opacity: 0.5;}
    
         i.close{display: none}
        .circlefilter   i.show{display:block;}
@@ -723,9 +733,11 @@ background:rgba(255,255,255,0.02);padding:30px;}
         overflow: hidden;
         height:50px;
     }
+    .selectHolder  .selectList select{padding-right: 0;}
        
-        
 
+    /* slider */
+    .provienceHeading{color:#ff0000!important;}
         
       
            
