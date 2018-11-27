@@ -75,6 +75,7 @@ h1{font-size: 65px;}
     .selectHolder{display: flex;}
     .leader{padding-right:15px;}
     .province{padding-left: 15px;}
+    .province select option{color:#333!important;}
     .selectHolder > div{width:50%;}
     .selectHolder input{
         font-size: 16px;
