@@ -28,14 +28,14 @@ nav{position: absolute;width: 100%;z-index: 4;}
 .navbar-expand-lg .navbar-toggler {
     display: block;
 }
-.menuCircle{display:flex;align-items: center;justify-content: center; height :80px;width:80px;border-radius:50%;
+.menuCircle{display:flex;align-items: center;justify-content: center; height :50px;width:50px;border-radius:50%;
     background:rgba(255,255,255,0.1);transition:all 0.3s cubic-bezier(0.93, 0.01, 0.38, 0.79) 0s, opacity 0.4s cubic-bezier(0.5, 0, 0, 1) 0.05s
 }
 .menuCircle:hover{background:rgba(255,2555,255,0.4);cursor: pointer;}
 
-.menuCircle i.fa{    font-size: 40px;
+.menuCircle i.fa{    font-size: 28px;
     color: #fff;}
-    .userIcon .menuCircle i.fa{font-size: 45px;}
+   
     .menu{display:none;opacity:0; }
     .menu.menuOn{display: block;opacity: 1;}
 
@@ -87,14 +87,16 @@ h1{font-size: 65px;}
             border-radius: 26px;
             border: 2px solid #707070;
             padding-right:20px;
+            position: relative;
         outline: none;}
         .selectHolder select{font-size: 16px;
-           height: 52px;
+           height: 20px;
             background: transparent;
             padding-right: 60px;
             border:none;
             outline: none;}
             .leader{position: relative;}
+            .selectHolder  input{outline: none;}
        .leader .leaderWrp::before{
         content: "";
         height: 26px;
@@ -171,7 +173,7 @@ h1{font-size: 65px;}
     .pImageholder{overflow: hidden;}
     .pImageholder img{width:100%;     transition: all 0.5s cubic-bezier(0.18, 0.89, 0.32, 1.28);} 
     .pImageholder:hover img{transform: scale(1.2)}
-    .container{max-width:1500px;padding:0 15px;}
+    .container{ max-width: 1435px;padding:0 15px;}
     .persons{background:#080D2C;}
     .lists> div:nth-of-type(1),  .lists> div:nth-of-type(2),  .lists >div:nth-of-type(3),.lists >div:nth-of-type(4){
         margin-bottom:15px;
@@ -252,6 +254,7 @@ section.pratinidhi:after{
 .menuheader{background:#020725;min-height: 100px;display:flex-end;align-items: flex-end;}
 /* other pages */
 .navigation.innerPage{background: rgba(8,17,66,0.91);}
+.navigation a {text-decoration: none;}
 .darkBg{background: rgba(0,5,34,0.91);padding:80px 0;}
 .searchText{max-width: 80%;color:rgba(255,255,255,0.87);margin-top:70px;margin-bottom:70px;}
 #exTab3 .nav-pills li a{    min-height: 330px;
@@ -313,6 +316,7 @@ section.pratinidhi:after{
         display: flex;
     align-items: flex-end;
    justify-content: center;}
+ 
    .item1 p{margin-bottom:30px;color:rgba(255,255,255,0.68);font-size: 1rem;}
    .tab-content{margin-top:100px;}
 
@@ -321,7 +325,7 @@ section.pratinidhi:after{
    .darkbgl .tab-content{margin-top:30px;}
    .list .province{background:#32216F;border:#32216F;}
 
-
+  
 .list .province {
     height: 36px;
     border-radius: 18px;
@@ -651,6 +655,77 @@ background:rgba(255,255,255,0.02);padding:30px;}
             .linkTabs{padding-top: 80px;     border-bottom: 1px solid rgba(255,255,255,0.1);
                 padding-bottom: 40px;}
                 body.overflowHidden{overflow: hidden;}
+                .selectOverlay{width: 100%;
+                    background: #091142;
+                    position: absolute;
+                    left: 0;
+                    top: 105%;
+                
+                    padding: 30px 15px 15px 15px;
+                    border-bottom-right-radius: 4px;
+                    border-bottom-left-radius: 4px;
+                    height:0;
+                    overflow: hidden;
+                    transition:all 0.1s linear;
+                    box-shadow: -1px 5px 15px 0px rgba(0,0,0,0.3);
+                    z-index: -1;
+               
+                }
+                .selectOverlay.active{height:170px;z-index: 10;}
+                .selectList{display: flex;justify-content: space-around;}
+                .circlefilter{height: 26px;
+                    width: 26px;
+                    border-radius: 50%;
+                    position: absolute;
+                    top: 11px;
+                    right: 12px;
+                    z-index: 4;
+                    border: 2px solid #F3C2FF;
+                color:#F3C2FF;
+            display: flex;
+        align-items: center; justify-content: center;font-size: 18px;cursor: pointer;}
+        .selectList select{font-size: 13px;}
+        .popbtn{
+            width: 96px;
+            height: 43px;
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
+            border-radius: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.53);
+            background-color: #4e065f!important;
+            transition: all 0.3s cubic-bezier(0.93, 0.01, 0.38, 0.79);
+            cursor: pointer;
+            color:#fff;
+            outline: none!important;
+        }
+      .popbtn:hover{background:#be13e8!important;outline:none!important;}
+      
+        .st{    font-size: 13px;
+            margin-bottom: 0;
+            color: #fff;
+            font-weight: bold;
+            text-transform: uppercase;
+        padding-left: 10px;opacity: 0.5;}
+   
+        i.close{display: none}
+       .circlefilter   i.show{display:block;}
+       .circleActive i.arrow{display:none;}
+       .circleActive i.close{display:block;color: #F3C2FF;box-shadow: none;opacity: 1;}
+       .fullclick{padding-top:25px;display: flex;justify-content: flex-end;}
+       .firstBtn{margin-right: 10px;}
+       #selectedValue{ 
+        padding-top: 10px;
+        display: block;
+        padding-right: 35px;
+        color: #fff;
+        width: 100%;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+        height:50px;
+    }
+       
+        
+
         
       
            
