@@ -16,18 +16,19 @@ from django.contrib.auth.models import User
 from django.core.mail import EmailMessage
 import json
 from django.core.mail import EmailMessage
+from itertools import chain
 
 
 class Index(TemplateView):
 
     def get(self, request, *args, **kwargs):
         local_featured = MahilaPratinidhiForm.objects.filter(featured='True')[:1]
-        print(local_featured)
         national_featured = RastriyaShava.objects.filter(featured='True')[:1]
         pratinidhi_featured = PratinidhiShava.objects.filter(featured='True')[:1]
         provincial_featured = ProvinceMahilaPratinidhiForm.objects.filter(featured='True')[:1]
         featured_data = [local_featured, national_featured, pratinidhi_featured, provincial_featured]
         news = News.objects.all()
+
         images = BackgroundImage.objects.all()
         image_list = []
 
@@ -92,6 +93,7 @@ class ExploreView(TemplateView):
 
 
     def get(self, request, *args, **kwargs):
+
         district = District.objects.all()
         rastriyas = RastriyaShava.objects.all()
         pratinidhis = PratinidhiShava.objects.all()
@@ -115,7 +117,6 @@ class LocalMahilaPratinidhiDetail(DetailView):
 
     def get(self, request, *args, **kwargs):
         form = MahilaPratinidhiForm.objects.get(id=self.kwargs.get('pk'))
-        # news = News.objects.filter(newsOf=RastriyaShava.objects.get(id=self.kwargs.get('pk')))
         return render(request, self.template_name, {'form':form})
 
 
@@ -133,7 +134,6 @@ class ProvincialMahilaPratinidhiDetail(DetailView):
 
     def get(self, request, *args, **kwargs):
         form = ProvinceMahilaPratinidhiForm.objects.get(id=self.kwargs.get('pk'))
-        # news = News.objects.filter(newsOf=RastriyaShava.objects.get(id=self.kwargs.get('pk')))
         return render(request, self.template_name, {'form':form})
 
 
@@ -142,7 +142,6 @@ class RastriyaMahilaDetail(TemplateView):
 
     def get(self, request, *args, **kwargs):
         form = RastriyaShava.objects.get(id=self.kwargs.get('pk'))
-        # news = News.objects.filter(newsOf=RastriyaShava.objects.get(id=self.kwargs.get('pk')))
         return render(request, self.template_name, {'form':form})
 
 
@@ -151,7 +150,6 @@ class PratinidhiMahilaDetail(DetailView):
 
     def get(self, request, *args, **kwargs):
         form = PratinidhiShava.objects.get(id=self.kwargs.get('pk'))
-        # news = News.objects.filter(newsOf=RastriyaShava.objects.get(id=self.kwargs.get('pk')))
         return render(request, self.template_name, {'form':form})
 
 
@@ -213,9 +211,9 @@ class DataVisualize(TemplateView):
 class NewsView(TemplateView):
     template_name = 'public/news-detail.html'
 
-
-    def test_func(self):
-        return not self.request.user.is_superuser
+    def get(self, request, *args, **kwargs):
+        news = News.objects.get(id=self.kwargs.get('pk'))
+        return render(request, self.template_name, {'news':news})
 
 
 def read_view(request, ):
@@ -245,5 +243,25 @@ class callRequestView(TemplateView):
         except:
             print("Please login first!")
         return render(request, self.template_name)
+
+
+class searchView(ListView):
+    template_name = 'public/lists.html'
+    print('hellooo')
+
+    def get(self, request, *args, **kwargs):
+        print("dasda")
+        name = self.request.GET.get('search')
+        print("hello" + name)
+
+        national = RastriyaShava.objects.filter(name = name)
+        province = ProvinceMahilaPratinidhiForm.objects.filter(name__icontains = name)
+        federal = PratinidhiShava.objects.filter(name__icontains = name)
+        local = MahilaPratinidhiForm.objects.filter(name__icontains = name)
+
+        model = list(chain(national, province, federal, local))
+
+        if national is not None:
+            return render(self.request, self.template_name, {'forms': model})
 
 

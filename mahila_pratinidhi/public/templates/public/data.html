@@ -1,6 +1,7 @@
 {% extends 'public/public_base.html' %}
 {% load staticfiles %}
 {% block upper_content %}
+<script src="https://d3js.org/d3.v5.js"></script>
 
 <body>
     <header>
@@ -129,7 +130,7 @@
                 <div class="row">
                     <div class="col-md-6">
                         <p class="gheader">
-                            Age
+                            Age Variation
                         </p>
                         <p class="gtext">
                             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
@@ -153,8 +154,8 @@
                             </a>
                         </div>
                     </div>
-                    <div class="col-md-6" graphHolder>
-                        <img src="{% static 'public/image/graph1.png' %}" alt="">
+                    <div class="col-md-6 graphHolder">
+                        <!-- <img src="{% static 'public/image/graph1.png' %}" alt=""> -->
                     </div>
                 </div>
             </div>
@@ -163,7 +164,7 @@
                 <div class="row">
                     <div class="col-md-6">
                         <p class="gheader">
-                            Age Variable across Province Level
+                            Age Variable according to Political Party
                         </p>
                         <p class="gtext">
                             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
@@ -188,7 +189,7 @@
                         </div>
                     </div>
                     <div class="col-md-6 graphHolder">
-                        <img src="{% static 'public/image/graph2.png' %}" alt="">
+                        <!-- <img src="{% static 'public/image/graph2.png' %}" alt=""> -->
                     </div>
                 </div>
             </div>
@@ -196,7 +197,7 @@
                 <div class="row">
                     <div class="col-md-6">
                         <p class="gheader">
-                            Age Variable across Province vs Federal vs National
+                            Age Variable density curve
                         </p>
                         <p class="gtext">
                             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
@@ -221,7 +222,7 @@
                         </div>
                     </div>
                     <div class="col-md-6 graphHolder">
-                        <img src="{% static 'public/image/graph4.png' %}" alt="">
+                        <!-- <img src="{% static 'public/image/graph4.png' %}" alt=""> -->
                     </div>
                 </div>
             </div>
@@ -250,6 +251,43 @@
 
             });
         });
+
+
+    </script>
+
+    <script>
+
+      var svgWidth =400;
+      var svgHeight =180;
+
+var svg = d3.selectAll('.graphHolder').append('svg')
+              .attr("width",svgWidth)
+              .attr("height",svgHeight)
+              .attr("class","bar-chart");
+
+var data=[10,20,20,30,50,400];
+var barPadding = 5;
+var barHeight = (svgHeight/data.length);
+
+
+var scaling = d3.scaleLinear()
+    .domain([10,400])
+    .range([0,svgWidth]);
+
+
+var barChart = svg.selectAll("rect")
+                  .data(data)
+                  .enter()
+                  .append("rect")
+                  .attr("fill","orange")
+                  .attr("height",100)
+                  .attr("width",function(d){
+                      return d;
+                  })
+                  .attr("y", function(d,i){
+                    return i*30 ;
+                  });
+
 
 
     </script>

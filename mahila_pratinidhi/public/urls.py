@@ -30,7 +30,9 @@ urlpatterns = [
 	path('detail/pratinidhi/<int:pk>/call', views.callRequestView.as_view(), name="pratinidhi_call_request"),
 
 	path('visualize/', views.DataVisualize.as_view(), name="data_visualize"),
-	path('news/', views.NewsView.as_view(), name="news"),
 
+	path('news/<int:pk>/', views.NewsView.as_view(), name="news"),
+
+	path('explore/search/', views.searchView.as_view(), name="search"),
 
 ]

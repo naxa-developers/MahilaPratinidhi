@@ -245,6 +245,7 @@
                 <div class="col-md-3 aligncenter justify-content-center titl">Political
                     <br/>Commitments
                 </div>
+                {% if form.nirwachit_chetra_pratiko_pratibadhata %}
                 {% with form.nirwachit_chetra_pratiko_pratibadhata|split:"," as jimmewaris %}
                     {% for jimmewari in jimmewaris %}
                     <div class="col-md-3">
@@ -258,6 +259,7 @@
                     </div>
                     {% endfor %}
                 {% endwith %}
+                {% endif %}
                 </div>
 
 
@@ -284,8 +286,9 @@
                 RELATED NEWS
             </p>
             <div class="row lists ">
-                <!-- {% for news in news %}
+                {% for news in form.news.all %}
                 <div class="col-xl-3 col-lg-4 col-md-6 reveal" data-sr-id="12" style="visibility: visible; opacity: 1; transition: opacity 0.4s cubic-bezier(0.5, 0, 0, 1) 0.05s;">
+                    <a href="{% url 'public:news' news.pk %}">
                     <div class="pImageholder prelative">
                         <img src="{% static 'public/image/p1.jpg' %}" alt="user">
                         <div class="holderOverlay"></div>
@@ -294,8 +297,9 @@
                             <div class="pTitle">{{ news.title }}</div>
                         </div>
                     </div>
+                    </a>
                 </div>
-                {% endfor %} -->
+                {% endfor %}
 
             </div>
         </div>
