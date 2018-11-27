@@ -233,6 +233,8 @@
 
     </section>
 
+
+
     <section class="dataSection sectionPadding">
         <div class="container reveal">
             <div class="row">
@@ -292,28 +294,44 @@
 
 
     </section>
+
+
+
+
     {% endblock %} {% block scripts %}
+    <script>
+
+
+
+    </script>
 
     <script>
 
         $(document).ready(function () {
 
-
-
-
-            $("#selectedValue").click(function () {
-
+   $("#selectedValue").click(function () {
+    var ro = $("#selectedValue").offset();
+             
+                $('html, body').animate({
+                    scrollTop: ro.top-100
+                }, 800);
                 $(".selectOverlay").addClass("active");
-                $(".circlefilter ").addClass("circleActive");
+              $(".circlefilter ").addClass("circleActive");
+                return false;
+   });
+   $(".circlefilter").click(function () {
+    var ro = $(".circlefilter").offset();
+             
 
-            });
-            $(".circlefilter").click(function () {
-
-
+                $('html, body').animate({
+                    scrollTop: ro.top-100
+                }, 800);
                 $(".selectOverlay").toggleClass("active");
-                $(this).toggleClass("circleActive");
+              $(".circlefilter ").toggleClass("circleActive");
+                return false;
+   });  
 
-            });
+
 
             var first = "";
             var second = "";
@@ -352,6 +370,10 @@
 
             function reset() {
                 $("#selectedValue").text("Select Provience");
+                first = "";
+                second = "";
+                third = "";
+
             }
             function close() {
                 $(".selectOverlay").removeClass("active");
