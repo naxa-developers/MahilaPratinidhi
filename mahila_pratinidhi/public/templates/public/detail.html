@@ -99,10 +99,11 @@
                                         <i class="fa fa-phone ihs">
 
                                         </i>
-                                        <span class="contactIfo">
+                                        <span class="contactIfo"><a href="{% url 'public:pratinidhi_call_request' form.pk %}">
                                             Call Request
                                         </span>
                                     </div>
+                                    {% if form.email %}
                                     <div class="shareInfo">
                                         <i class="fa fa-envelope ihs">
 
@@ -111,6 +112,8 @@
                                             Write Email
                                         </span>
                                     </div>
+                                    {% endif %}
+                                    {% if form.social_networking_medium is not empty %}
                                     <div class="shareInfo">
                                         <span class="ihs">
                                             <i class="fa fa-facebook mr5 ">
@@ -125,6 +128,7 @@
                                             Find on Social Media
                                         </span>
                                     </div>
+                                    {% endif %}
                                 </div>
                             </div>
                         </div>

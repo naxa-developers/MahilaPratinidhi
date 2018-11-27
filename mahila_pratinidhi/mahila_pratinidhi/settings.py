@@ -137,11 +137,13 @@ LOCALE_PATHS = (
 )
 
 #Email settings
-EMAIL_USE_TLS = True
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'saneprijal@gmail.com'
-EMAIL_HOST_PASSWORD = '9843440022'
-EMAIL_PORT = 587
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+#
+# EMAIL_USE_TLS = True
+# EMAIL_HOST = 'smtp.gmail.com'
+# EMAIL_HOST_USER = 'saneprijal@gmail.com'
+# EMAIL_HOST_PASSWORD = '9843440022'
+# EMAIL_PORT = 587
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
@@ -151,3 +153,10 @@ try:
     from .local_settings import *
 except Exception as e:
     pass
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'akshya.shrestha7402@gmail.com'
+EMAIL_HOST_PASSWORD = '9815363198'
+EMAIL_PORT = 587

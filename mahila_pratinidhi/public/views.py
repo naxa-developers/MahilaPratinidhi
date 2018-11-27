@@ -15,6 +15,7 @@ from .tokens import account_activation_token
 from django.contrib.auth.models import User
 from django.core.mail import EmailMessage
 import json
+from django.core.mail import EmailMessage
 
 
 class Index(TemplateView):
@@ -231,4 +232,18 @@ def read_view(request, ):
 
 class Detail(TemplateView):
     template_name = 'public/lists.html'
+
+class callRequestView(TemplateView):
+    template_name = 'public/signup.html'
+
+    def get(self, request, *args, **kwargs):
+        try:
+            if request.user.is_authenticated():
+                email = EmailMessage('Call Request', 'This user has made the call request.',
+                                         to=['akshya.shrestha7402@gmail.com'])
+                email.send()
+        except:
+            print("Please login first!")
+        return render(request, self.template_name)
+
 
