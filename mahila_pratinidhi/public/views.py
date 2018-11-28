@@ -63,7 +63,7 @@ def signup(request):
             return HttpResponse('Please confirm your email address to complete the registration')
     else:
         form = UserCreateForm()
-    return render(request, 'public/signup.html', {'form': form})
+    return HttpResponseRedirect('login/')
 
 
 def activate(request, uidb64, token):
