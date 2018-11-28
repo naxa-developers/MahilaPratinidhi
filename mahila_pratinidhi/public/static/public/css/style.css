@@ -738,7 +738,34 @@ background:rgba(255,255,255,0.02);padding:30px;}
        
 
     /* slider */
-    .provienceHeading{color:#ff0000!important;}
-        
+
+    
+        /* for scrolling tab */
+        #scroltab .nav.nav-pills{flex-wrap: nowrap;}
+        #scroltab  li,.scrollicon{
+          padding: 20px 30px;
+          width: initial;
+          height: 40px;
+          font-size: 16px;
+          color: #333!important;
+          text-align: center;
+          border-radius: 20px;
+          background: #ddd;
+          position: relative;
+          width: 150px;
+          min-width: 150px;
+        }
+        #scroltab  li{margin-left: 10px;}
+        .scrollicon{display:flex;align-items: center;justify-content: center;}
+        #scroltab li a {height:initial!important;min-height:initial!important;}
+        .scrolltabs{display: flex;}
+        .tabheading{    display: flex;overflow:hidden;flex-grow: 1;
+          flex-direction: row;}
+          .vVariables{    min-width: 250px;
+              text-align: center;}
+              .widthScrol{overflow: hidden;position: relative;}
+              .tabheading{flex-grow: 1;}
+              .scrolleft,.scrollright{width:80px;min-width: 80px;}
+           
       
            
