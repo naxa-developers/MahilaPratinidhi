@@ -84,6 +84,107 @@
         <div class="container-fluid">
 
             <div class="tabHolder row centered">
+                    <div id="scroltab" class="container-fluid">
+                            <div class="scrolltabs">
+                                <div class="vVariables">Visualization Variables</div>
+                                <div class="tabheading">
+                                    <div class="scrolleft scrollicon">
+                                        <i class="fa fa-angle-left"></i>
+                                    </div>
+                                    <ul class="nav nav-pills widthScrol">
+                                        <li class="active">
+                                            <a href="#1a" data-toggle="tab">first</a>
+                                        </li>
+        
+                                        <li>
+                                            <a href="#3a" data-toggle="tab">Applying </a>
+                                        </li>
+                                        <li>
+                                            <a href="#4a" data-toggle="tab">Background</a>
+                                        </li>
+                                        <li>
+                                            <a href="#4a" data-toggle="tab">Background</a>
+                                        </li>
+                                        <li>
+                                            <a href="#4a" data-toggle="tab">Background</a>
+                                        </li>
+                                        <li>
+                                            <a href="#4a" data-toggle="tab">Background</a>
+                                        </li>
+                                        <li>
+                                            <a href="#4a" data-toggle="tab">Background</a>
+                                        </li>
+                                        <li>
+                                            <a href="#4a" data-toggle="tab">Last</a>
+                                        </li>
+                                        <li>
+                                            <a href="#3a" data-toggle="tab">Applying </a>
+                                        </li>
+                                        <li>
+                                            <a href="#4a" data-toggle="tab">Background</a>
+                                        </li>
+                                        <li>
+                                            <a href="#4a" data-toggle="tab">Background</a>
+                                        </li>
+                                        <li>
+                                            <a href="#4a" data-toggle="tab">Background</a>
+                                        </li>
+                                        <li>
+                                            <a href="#4a" data-toggle="tab">Background</a>
+                                        </li>
+                                        <li>
+                                            <a href="#4a" data-toggle="tab">Background</a>
+                                        </li>
+                                        <li>
+                                            <a href="#4a" data-toggle="tab">Last</a>
+                                        </li>
+                                        <li>
+                                            <a href="#3a" data-toggle="tab">Applying </a>
+                                        </li>
+                                        <li>
+                                            <a href="#4a" data-toggle="tab">Background</a>
+                                        </li>
+                                        <li>
+                                            <a href="#4a" data-toggle="tab">Background</a>
+                                        </li>
+                                        <li>
+                                            <a href="#4a" data-toggle="tab">Background</a>
+                                        </li>
+                                        <li>
+                                            <a href="#4a" data-toggle="tab">Background</a>
+                                        </li>
+                                        <li>
+                                            <a href="#4a" data-toggle="tab">Background</a>
+                                        </li>
+                                        <li>
+                                            <a href="#4a" data-toggle="tab">Last</a>
+                                        </li>
+        
+                                    </ul>
+                                    <div class="scrollright scrollicon">
+                                        <i class="fa fa-angle-right"></i>
+                                    </div>
+                                </div>
+                            </div>
+        
+                            <div class="tab-content clearfix">
+                                <div class="tab-pane active" id="1a">
+                                    <h3>Content's background color is the same for the tab</h3>
+                                </div>
+                                <div class="tab-pane" id="2a">
+                                    <h3>We use the class nav-pills instead of nav-tabs which automatically creates a background color
+                                        for the tab</h3>
+                                </div>
+                                <div class="tab-pane" id="3a">
+                                    <h3>We applied clearfix to the tab-content to rid of the gap between the tab and the content</h3>
+                                </div>
+                                <div class="tab-pane" id="4a">
+                                    <h3>We use css to change the background color of the content to be equal to the tab</h3>
+                                </div>
+                            </div>
+                        </div>
+        
+            
                 <div class="col dtitle1">
                     <div class="gtitle">
                         <p class="innerp"> POLITICAL ENGAGEMENT</p>
@@ -237,23 +338,65 @@
 
     {% block scripts %}
     <script>
-        $(document).ready(function () {
 
-            $(".filterBtn").click(function () {
-
-                $(".selectHolder.list").addClass("activated")
-
+            $(document).ready(function () {
+    
+    
+                $(window).resize(function () {
+                    scrolltabs();
+                });
+    
+                scrolltabs();
+                function scrolltabs() {
+                    var counter = 0;
+                    var elementNumber = $(".widthScrol").children().length;
+    
+    
+                    var elementWidth = elementNumber * 150;
+    
+                    var calcWidth = $(".widthScrol").innerWidth();
+                    console.log(calcWidth);
+                    var totalSlider = elementWidth - calcWidth;
+    
+    
+                    var intotal = totalSlider / 160;
+                    var n = Math.ceil(intotal);
+    
+    
+                    $(".scrolleft").click(function () {
+    
+                        if (counter != (-1 * n - 1)) {
+                            $(".widthScrol li ").animate({ left: '-=160' });
+                            counter--;
+                        }
+                    });
+    
+                    $(".scrollright").click(function () {
+                        console.log(counter);
+                        if (counter < 1) {
+                            $(".widthScrol li ").animate({ left: '+=160' });
+                            counter++;
+                        }
+                    });
+    
+    
+                    $(".filterBtn").click(function () {
+    
+                        $(".selectHolder.list").addClass("activated")
+    
+                    });
+    
+                    $(".closeBtn").click(function () {
+    
+                        $(".selectHolder.list").removeClass("activated")
+    
+                    });
+                }
             });
-
-            $(".closeBtn").click(function () {
-
-                $(".selectHolder.list").removeClass("activated")
-
-            });
-        });
-
-
-    </script>
+    
+    
+    
+        </script>
 
     <script>
 

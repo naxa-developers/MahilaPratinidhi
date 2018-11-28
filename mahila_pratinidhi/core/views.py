@@ -406,6 +406,44 @@ class UloadView(UserPassesTestMixin, TemplateView):
 		return context
 
 
+# def file_upload(request):
+# 	import pandas as pd
+
+# 	try:
+
+# 		request_files = request.FILES.getlist('file')
+# 		files = [pd.read_excel(filename).fillna(value='') for filename in request_files]
+# 		for df in files:
+# 			total = df['qm=;+'].count()
+
+# 			for row in range(0, total):
+# 				print(request.POST.get('dist'))
+
+# 				obj, created = MahilaPratinidhiForm.objects.create(
+# 					district=District.objects.get(name=request.POST.get('dist')),
+# 					name=df['gfd'][row],
+# 					age=df['pd]/'][row])
+
+# 				obj.marital_status=df['j}jflxs l:lYft'][row]
+# 				obj.educational_qualification=df['z}lIfs of]Uotf'][row]
+# 				obj.caste=df['hfltotf'][row]
+# 				obj.address=df['7]ufgf'][row]
+# 				obj.contact_number=df[';Dks{ g '][row]
+# 				obj.email=df['Od]n 7]ufgf'][row]
+# 				obj.nirwachit_padh=df['lgjf{lrt kb'][row]
+# 				obj.nirwachit_vdc_or_municipality_name=df['lgjf{lrt uf lj ; tyf gu/kflnsfsf]] gfd '][row]
+# 				obj.party_name=df['kf6L{sf] gfd '][row]
+# 				obj.party_joined_date=df['kf6L{df ;++++nUg ePsf] ldtL'][row]
+# 				obj.samlagna_sang_sastha_samuha=df[' ;++++nUg ;++3 ;F:yf ;d"x  '][row]
+# 				obj.nirwachit_chetra_pratiko_pratibadhata=df['lgjf{lrt Ifq k||ltsf] k|ltaM4tf '][row]
+# 				obj.save()
+# 		messages.success(request, 'Successfully loaded data from files')
+# 		return HttpResponseRedirect('/cms/upload')
+# 	except KeyError as e:
+# 		print(e)
+# 		messages.error(request, "File Format not supported")
+# 		return HttpResponseRedirect('/cms/upload')
+
 def file_upload(request):
 	import pandas as pd
 
@@ -414,28 +452,42 @@ def file_upload(request):
 		request_files = request.FILES.getlist('file')
 		files = [pd.read_excel(filename).fillna(value='') for filename in request_files]
 		for df in files:
-			total = df['qm=;+'].count()
+			total = df['S.N'].count()
 
 			for row in range(0, total):
-				print(request.POST.get('dist'))
 
-				obj, created = MahilaPratinidhiForm.objects.create(
+				obj = MahilaPratinidhiForm.objects.create(
 					district=District.objects.get(name=request.POST.get('dist')),
-					name=df['gfd'][row],
-					age=df['pd]/'][row])
+					name=df['Name_EN'][row],
+					age=df['Age_EN'][row])
+				obj.name_ne_NP=df['Name_NE'][row]
+				obj.age_ne_NP=int(df['Age_NE'][row])
+				obj.marital_status=df['Maritial_Status_EN'][row]
+				obj.marital_status_ne_NP=df['Maritial_Status_NE'][row]
+				obj.educational_qualification=df['Educational_Status_EN'][row]
+				obj.educational_qualification_ne_NP=df['Educational_Status_NE'][row]
+				obj.caste=df['Ethnicity_EN'][row]
+				obj.caste_ne_NP=df['Ethnicity_NE'][row]
+				obj.address=df['Location_EN'][row]
+				obj.address_ne_NP=df['Location_NE'][row]
+				obj.contact_number=df['Contact_Number_EN'][row]
+				obj.contact_number_ne_NP=df['Contact_Number_NE'][row]
+				obj.email=df['Email_Address'][row]
+				obj.nirwachit_padh=df['Elected_Post_EN'][row]
+				obj.nirwachit_padh_ne_NP=df['Elected_Post_NE'][row]
+				obj.nirwachit_vdc_or_municipality_name=df['Name_of _Elected_region_EN'][row]
+				obj.nirwachit_vdc_or_municipality_name_ne_NP=df['Name_of _Elected_region_NE'][row]
+				obj.party_name=df['Name_of_Party_EN'][row]
+				obj.party_name_ne_NP=df['Name_of_Party_NE'][row]
+				obj.party_joined_date=df['Date_of_Affiliation_with_Party_EN'][row]
+				obj.party_joined_date_ne_NP=df['Date_of_Affiliation_with_Party_NE'][row]
+				obj.samlagna_sang_sastha_samuha=df['Affiliated_Institutions_En'][row]
+				obj.samlagna_sang_sastha_samuha_ne_NP=df['Affiliated_Institutions_NE'][row]
+				obj.nirwachit_chetra_pratiko_pratibadhata=df['Responsibilities_towards_elected_region_EN'][row]
+				obj.nirwachit_chetra_pratiko_pratibadhata_ne_NP=df['Responsibilities_towards_elected_region_NE'][row]
+				obj.province_id=int(df['PROVINCE'][row])
+				
 
-				obj.marital_status=df['j}jflxs l:lYft'][row]
-				obj.educational_qualification=df['z}lIfs of]Uotf'][row]
-				obj.caste=df['hfltotf'][row]
-				obj.address=df['7]ufgf'][row]
-				obj.contact_number=df[';Dks{ g '][row]
-				obj.email=df['Od]n 7]ufgf'][row]
-				obj.nirwachit_padh=df['lgjf{lrt kb'][row]
-				obj.nirwachit_vdc_or_municipality_name=df['lgjf{lrt uf lj ; tyf gu/kflnsfsf]] gfd '][row]
-				obj.party_name=df['kf6L{sf] gfd '][row]
-				obj.party_joined_date=df['kf6L{df ;++++nUg ePsf] ldtL'][row]
-				obj.samlagna_sang_sastha_samuha=df[' ;++++nUg ;++3 ;F:yf ;d"x  '][row]
-				obj.nirwachit_chetra_pratiko_pratibadhata=df['lgjf{lrt Ifq k||ltsf] k|ltaM4tf '][row]
 				obj.save()
 		messages.success(request, 'Successfully loaded data from files')
 		return HttpResponseRedirect('/cms/upload')
@@ -443,6 +495,7 @@ def file_upload(request):
 		print(e)
 		messages.error(request, "File Format not supported")
 		return HttpResponseRedirect('/cms/upload')
+
 
 class ProvinceDashboard(LoginRequiredMixin, UserPassesTestMixin, TemplateView):
 
