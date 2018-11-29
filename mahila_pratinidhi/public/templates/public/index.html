@@ -282,7 +282,7 @@
                             <div class="tags"> General News</div>
                             {% endif %}
                             <div class="pTitle">{{ data.title }}</div>
-                        
+
                     </div>
                 </a>
                 </div>
@@ -311,7 +311,7 @@
 
    $("#selectedValue").click(function () {
     var ro = $("#selectedValue").offset();
-             
+
                 $('html, body').animate({
                     scrollTop: ro.top-100
                 }, 800);
@@ -321,7 +321,7 @@
    });
    $(".circlefilter").click(function () {
     var ro = $(".circlefilter").offset();
-             
+
 
                 $('html, body').animate({
                     scrollTop: ro.top-100
@@ -329,7 +329,7 @@
                 $(".selectOverlay").toggleClass("active");
               $(".circlefilter ").toggleClass("circleActive");
                 return false;
-   });  
+   });
 
 
 
@@ -488,5 +488,11 @@
             infoWindow.open(map);
         }
     </script>
+    <script src={% static 'public/js/mapping_script.js'%}></script>
+
+
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap">
-    </script> {% endblock %}
+    </script>
+
+
+     {% endblock %}
