@@ -63,6 +63,7 @@ def signup(request):
             return HttpResponse('Please confirm your email address to complete the registration')
     else:
         form = UserCreateForm()
+        print("hello")
     return HttpResponseRedirect('login/')
 
 

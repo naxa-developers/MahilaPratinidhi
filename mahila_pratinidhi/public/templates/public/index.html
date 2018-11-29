@@ -170,7 +170,7 @@
                                 <img src="{{ MEDIA_URL }} {{ data.image.url }}" alt="">
                             </div>
                             {% else %}
-                            <img src="{% static 'public/image/mahilalogo.png' %}" alt="" style="width:350px;height:250px;"> {% endif %}
+                            <img src="{% static 'public/image/mahilalogo.png' %}" alt="" style="width:250px;height:250px;"> {% endif %}
                         </div>
                     </div>
                     <div class="col-md-4">
@@ -273,7 +273,7 @@
                     <div class="pImageholder prelative">
                         {% if data.newsOf.image %}
                         <img src="{{ MEDIA_URL }} {{ data.newsOf.image.url }}"> {% else %}
-                        <img src="{% static 'public/image/mahilalogo.png' %}" alt="user" style="width:345px;height:250px;"> {% endif %}
+                        <img src="{% static 'public/image/mahilalogo.png' %}" alt="user" class="cropImg"> {% endif %}
                         <div class="holderOverlay"></div>
                         <a class="content" href="{% url 'public:news' data.pk %}">
                             {% if data.object_id %} {% with data|content_type as mahila_data %}
@@ -392,11 +392,6 @@
 
 
             });
-
-
-
-
-
 
 
             // $(".circlefilter").click(function () {
