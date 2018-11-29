@@ -110,6 +110,8 @@ class AgeViewSet(views.APIView):
     def get(self, request):
         provinces_avg_age = {}
         age=[]
+        sub_ranges = []
+        ranges = []
         rastriya_age = RastriyaShava.objects.values('age')
         pratinidhi_age = PratinidhiShava.objects.values('age')
         provincial_age = ProvinceMahilaPratinidhiForm.objects.values('age')
@@ -117,6 +119,18 @@ class AgeViewSet(views.APIView):
         
 
         ages = list(chain(rastriya_age, pratinidhi_age, provincial_age))
+
+        lists = 20
+        while lists < 100:
+            sub_lists = lists 
+            sub_ranges.append(sub_lists)
+            while sub_lists <= lists:
+                sub_lists = sub_lists + 5
+                sub_ranges.append(sub_lists)
+            ranges.append(sub_ranges)
+            lists = lists + 5
+
+        print(ranges)
 
         for ages in ages:
             if ages['age'] != "":

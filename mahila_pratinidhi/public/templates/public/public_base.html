@@ -28,7 +28,7 @@
         {% if request.user.is_authenticated %}
         <a href="{% url 'logout' %}" class="userIcon">
             {% else %}
-            <a href="{% url 'public:signup' %}" class="userIcon">
+            <a href="{% url 'login' %}" class="userIcon">
                 {% endif %}
                 <span class="menuCircle">
                     <i class="fa fa-user-circle">
@@ -71,10 +71,10 @@
             <div class="container">
                 <div class="linkTabs">
                     <a href="{% url 'public:index' %}" class="linkitems"> Home</a>
-                    <a href="" class="linkitems"> FIND YOUR LEADER</a>
+                    <a href="{% url 'public:index' %}" class="linkitems"> FIND YOUR LEADER</a>
                     <a href="{% url 'public:data_visualize' %}" class="linkitems">MAHILA PRATINIDHI IN DATA</a>
                     <a href="" class="linkitems"> FEATURED MAP</a>
-                    <a href="{% url 'public:index' %}" class="linkitems"> NEWS</a>
+                    <a href="{% url 'public:index' %}#news" class="linkitems"> NEWS</a>
                     <a href="{% url 'public:index' %}" class="linkitems"> Media</a>
 
                 </div>
@@ -162,7 +162,7 @@
                                 <a href="{% url 'login' %}">
                                     <button class="signinBtn"> SIGN IN</button>
                                 </a>
-                                <a href="{% url 'public:signup' %}">
+                                <a href="{% url 'login' %}">
                                     <button class="signUp"> SIGN UP</button>
                                 </a>
                                 {% endif %}
