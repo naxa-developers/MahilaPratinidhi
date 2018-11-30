@@ -1,13 +1,40 @@
 {% extends "public/public_base.html" %} {% load staticfiles %} {% load filters %} {% block upper_content %}
 
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.4/dist/leaflet.css"
+  integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
+  crossorigin=""/>
+
+  <script src="https://unpkg.com/leaflet@1.3.4/dist/leaflet.js"
+  integrity="sha512-nMMmRyTVoLYqjP9hrbed9S+FzjZHW5gY1TWCHA5ckwXZBadntCNs8kEqAWdrb9O7rxbCaA4lKTIWjDXZxflOcA=="
+  crossorigin=""></script>
+
+  <script src={% static 'public/js/leaflet.ajax.min.js'%}></script>
+
+
+
 <body>
     <style>
         /* Always set the map height explicitly to define the size of the div
                  * element that contains the map. */
 
-        #map {
+        #mapid {
             height: 100%;
         }
+        .custom-icon .leaflet-popup-tip,
+        .custom-icon .leaflet-popup-content-wrapper {
+            background: #e93434;
+            color: #ffffff;
+            font-size:20px;
+            border-radius:0;
+          }
+        .my-div-icon{
+          border-radius: 50%;
+          background:orange;
+          padding:15px;
+          font-size:1.5em;
+
+        }
+
 
         /* Optional: Makes the sample page fill the window. */
 
@@ -146,7 +173,7 @@
                         </div>
                     </div>
                     <div class="mapHolder grow redbg">
-                        <div id="map"></div>
+                        <div id="mapid"></div>
 
                     </div>
                 </div>
@@ -441,53 +468,6 @@
     </script>
 
     <!-- for geolocation of user -->
-    <script>
-        // Note: This example requires that you consent to location sharing when
-        // prompted by your browser. If you see the error "The Geolocation service
-        // failed.", it means you probably did not give permission for the browser to
-        // locate you.
-        var map, infoWindow;
-        function initMap() {
-            map = new google.maps.Map(document.getElementById('map'), {
-                center: { lat: -34.397, lng: 150.644 },
-                zoom: 6
-            });
-            infoWindow = new google.maps.InfoWindow;
-
-            // Try HTML5 geolocation.
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(function (position) {
-                    var pos = {
-                        lat: position.coords.latitude,
-                        lng: position.coords.longitude
-                    };
-
-                    infoWindow.setPosition(pos);
-                    infoWindow.setContent('Location found.');
-                    infoWindow.open(map);
-                    map.setCenter(pos);
-                }, function () {
-                    handleLocationError(true, infoWindow, map.getCenter());
-                });
-            } else {
-                // Browser doesn't support Geolocation
-                handleLocationError(false, infoWindow, map.getCenter());
-            }
-        }
-
-        function handleLocationError(browserHasGeolocation, infoWindow, pos) {
-            infoWindow.setPosition(pos);
-            infoWindow.setContent(browserHasGeolocation ?
-                'Error: The Geolocation service failed.' :
-                'Error: Your browser doesn\'t support geolocation.');
-            infoWindow.open(map);
-        }
-    </script>
     <script src={% static 'public/js/mapping_script.js'%}></script>
-
-
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap">
-    </script>
-
 
      {% endblock %}
