@@ -110,20 +110,21 @@ class MapViewSet(views.APIView):
 
 class AgeViewSet(views.APIView):
     def get(self, request):
-        provinces_avg_age = {}
-        age=[]
-        sub_ranges = []
+
+        total_ages = {}
+        data = []
         ranges = []
-        rastriya_age = RastriyaShava.objects.values('age')
-        pratinidhi_age = PratinidhiShava.objects.values('age')
-        provincial_age = ProvinceMahilaPratinidhiForm.objects.values('age')
+        rastriya_age = RastriyaShava.objects.values('age', 'province_id', 'party_name')
+        pratinidhi_age = PratinidhiShava.objects.values('age', 'province_id', 'party_name')
+        provincial_age = ProvinceMahilaPratinidhiForm.objects.values('age', 'province_id', 'party_name')
         # local_age = MahilaPratinidhiForm.objects.values('age')
         
-
+        # for total age groups
         ages = list(chain(rastriya_age, pratinidhi_age, provincial_age))
 
         lists = 20
         while lists < 100:
+            sub_ranges = []
             sub_lists = lists 
             sub_ranges.append(sub_lists)
             while sub_lists <= lists:
@@ -132,29 +133,60 @@ class AgeViewSet(views.APIView):
             ranges.append(sub_ranges)
             lists = lists + 5
 
-        print(ranges)
 
-        for ages in ages:
-            if ages['age'] != "":
-                age.append(ages['age'])
+        range_list = []
+
+        for age_range in ranges:
+            r = range(age_range[0], age_range[1])
+            for age in ages:
+                if age['age'] in r:
+                    range_list.append(str(age_range[0]) + "-" + str(age_range[1]))
+
+        total_arrays = np.array(np.unique(range_list, return_counts=True)).T
+        age_dict = {}
+        for total in total_arrays:
+            age_dict['label'] = total[0]
+            age_dict['total'] = total[1]
+            data.append(dict(age_dict))
+
+        total_ages['age_total'] = data
         
-        provinces_avg_age = ProvinceMahilaPratinidhiForm.objects.values('province_id')\
-        .annotate(Count('province_id'))\
-        .annotate(age_avg=Avg('age'))
+        #for ages per provinces
+        province_age = []
+        for age_range in ranges:
+            age_dict = {}
+            count = 0
+            r = range(age_range[0], age_range[1])
+            age_dict["label"] = str(age_range[0]) + "-" + str(age_range[1])
+            for age in provincial_age:
+                if age['age'] in r:
+                    count = count + 1
+                    age_dict[age['province_id']] = count + 1
+               
+            province_age.append(dict(age_dict))
 
-        province = ProvinceMahilaPratinidhiForm.objects.values('age')\
-        .aggregate(age_avg=Avg('age'))
+        total_ages['province_age'] = province_age
 
-        national = RastriyaShava.objects.values('age')\
-        .aggregate(age_avg=Avg('age'))
+        # for ages per party
+        age_list = list(chain(provincial_age, pratinidhi_age))
 
-        federal = PratinidhiShava.objects.values('age')\
-        .aggregate(age_avg=Avg('age'))
+        party_age = []
+        for age_range in ranges:
+            age_dict = {}
+            count = 0
+            r = range(age_range[0], age_range[1])
+            age_dict["label"] = str(age_range[0]) + "-" + str(age_range[1])
+            for age in age_list:
+                if age['age'] in r:
+                    count = count + 1
+                    age_dict[age['party_name']] = count + 1
+               
+            party_age.append(dict(age_dict))
 
-        data = {'total_age':age, 'provinces_average_age':provinces_avg_age, 
-        'province':province, 'national':national,
-        'federal':federal}
-        return Response(data)
+        total_ages['age_per_party'] = party_age
+
+
+        return Response(total_ages)
 
 
 class EthnicityViewSet(views.APIView):
@@ -174,10 +206,9 @@ class EthnicityViewSet(views.APIView):
         totals = []
         for caste in castes:
             totals.append(caste.caste)
-                
+        
         total_arrays = np.array(np.unique(totals, return_counts=True)).T
 
-        
         for total in total_arrays:
             ethnicity['caste'] = total[0]
             ethnicity['total'] = total[1]
@@ -195,12 +226,12 @@ class EthnicityViewSet(views.APIView):
             castes.append(caste)
         
         caste_set = set(castes)
-        print(caste_set)
 
         province_ethinicity=[]
-        province_dict = {}
+        
         
         for caste in caste_set:
+            province_dict = {}
             province_dict['caste'] = caste
             for item in province_caste:
                 if caste in item['caste']:
@@ -228,12 +259,11 @@ class EthnicityViewSet(views.APIView):
             castes.append(caste)
         
         caste_set = set(castes)
-        print(caste_set)
 
         party_ethinicity=[]
-        party_dict = {}
         
         for caste in caste_set:
+            party_dict = {}
             party_dict['caste'] = caste
             for item in party_caste:
                 if caste in item['caste']:
@@ -245,16 +275,6 @@ class EthnicityViewSet(views.APIView):
             party_ethinicity.append(dict(party_dict))
 
         total_ethnicity['party_ethnicity'] = party_ethinicity
-
-
-        # for castes in rastriya_caste:
-        #     if not castes['caste'] in ethnicity['caste']:
-            #     ethnicity['caste']=castes['caste']
-            #     ethnicity['total']=castes['total']
-            
-            # else:
-            #     ethnicity['total'] += castes['total']
-
         
         return Response(total_ethnicity)
 
@@ -263,59 +283,177 @@ class MotherTongueViewSet(views.APIView):
     
     def get(self, request):
 
-        total = {}
-        lang = {}
+        total_mother_tongue = {}
         data = []
+        mother_tongue={}
 
-        pratinidhi_lang = PratinidhiShava.objects.values('mother_tongue').annotate(Count('mother_tongue'))\
-        .annotate(total=Count('id'))
-
-        provincial_lang = ProvinceMahilaPratinidhiForm.objects.values('mother_tongue')\
-        .annotate(Count('mother_tongue'))\
-        .annotate(total=Count('id'))
+        #for total mother_tongues
+        pratinidhi_lang = PratinidhiShava.objects.all()
+        provincial_lang = ProvinceMahilaPratinidhiForm.objects.all()
 
         languages = list(chain(pratinidhi_lang, provincial_lang))
-
+        totals = []
         for language in languages:
-            lang['mother_tongue'] = language['mother_tongue']
-            lang['total'] = language['total']
-            data.append(dict(lang))
+            totals.append(language.mother_tongue)
         
+        total_arrays = np.array(np.unique(totals, return_counts=True)).T
+        
+        for total in total_arrays:
+            mother_tongue['mother_tongue'] = total[0]
+            mother_tongue['total'] = total[1]
 
-        total['total_mother_tongues'] = data
-        total['provincial_mother_tongue'] = provincial_lang
-        total['pratinidhi_mother_tongue'] = pratinidhi_lang
+            data.append(dict(mother_tongue))
 
-        return Response(total)
+        total_mother_tongue['total_mother_tongue'] = data
+
+        #for mother_tongue on basis of provinces
+        province_mother_tongue = ProvinceMahilaPratinidhiForm.objects.values('province_id', 'mother_tongue')\
+        .distinct().annotate(total=Count('mother_tongue'))
+        languages = []
+        for language in province_mother_tongue:
+            lang = language['mother_tongue']
+            languages.append(lang)
+        
+        language_set = set(languages)
+
+        province_language=[]
+        
+        
+        for language in language_set:
+            province_dict = {}
+            province_dict['mother_tongue'] = language
+            for item in province_mother_tongue:
+                if language in item['mother_tongue']:
+                    if str(item['province_id']) in province_dict:
+                        province_dict[str(item['province_id'])] = province_dict[str(item['province_id'])] + item['total']
+                    else:
+                        province_dict[item['province_id']] = item['total']
+            
+            province_language.append(dict(province_dict))
+
+
+        total_mother_tongue['provincial_mother_tongue'] = province_language
+        
+        #for mother tongue on basis of political parties
+        province_party_lang = ProvinceMahilaPratinidhiForm.objects.values('party_name', 'mother_tongue')\
+        .distinct().annotate(total=Count('mother_tongue'))
+        pratinidhi_party_lang = PratinidhiShava.objects.values('party_name', 'mother_tongue')\
+        .distinct().annotate(total=Count('mother_tongue'))
+
+        party_lang = list(chain(province_party_lang, pratinidhi_party_lang))
+
+        languages = []
+        for item in party_lang:
+            lang = item['mother_tongue']
+            languages.append(lang)
+        
+        language_set = set(languages)
+
+        party_language=[]
+        
+        for language in language_set:
+            party_dict = {}
+            party_dict['mother_tongue'] = language
+            for item in party_lang:
+                if language in item['mother_tongue']:
+                    if item['party_name'] in party_dict:
+                        party_dict[item['party_name']] = party_dict[item['party_name']] + item['total']
+                    else:
+                        party_dict[item['party_name']] = item['total']
+            
+            party_language.append(dict(party_dict))
+
+        total_mother_tongue['party_mother_tongue'] = party_language
+        
+        return Response(total_mother_tongue)
 
 class EducationViewSet(views.APIView):
 
-    def get(self, request):
+   def get(self, request):
 
-        total = {}
+        total_education = {}
         data = []
-        education = {}
+        edu={}
 
-        pratinidhi_edu = PratinidhiShava.objects.values('educational_qualification')\
-        .annotate(Count('educational_qualification'))\
-        .annotate(total=Count('id'))
+        #for total educational qualification
+        pratinidhi_education = PratinidhiShava.objects.all()
+        provincial_education = ProvinceMahilaPratinidhiForm.objects.all()
 
-        provincial_edu = ProvinceMahilaPratinidhiForm.objects.values('educational_qualification')\
-        .annotate(Count('educational_qualification'))\
-        .annotate(total=Count('id'))
+        educations = list(chain(pratinidhi_education, provincial_education))
+        totals = []
+        for education in educations:
+            totals.append(education.educational_qualification)
+        
+        total_arrays = np.array(np.unique(totals, return_counts=True)).T
+        
+        for total in total_arrays:
+            edu['education'] = total[0]
+            edu['total'] = total[1]
 
-        edu = list(chain(pratinidhi_edu, provincial_edu))
+            data.append(dict(edu))
 
-        for item in edu:
-            education['education'] = item['educational_qualification']
-            education['total'] = item['total']
-            data.append(dict(education))
+        total_education['total_education'] = data
 
-        total['total_education'] = data
-        total['provincial_education'] = provincial_edu
-        total['pratinidhi_education'] = pratinidhi_edu
+        #for educational qualification on basis of provinces
+        province_education = ProvinceMahilaPratinidhiForm.objects.values('province_id', 'educational_qualification')\
+        .distinct().annotate(total=Count('educational_qualification'))
+        educations = []
+        for education in province_education:
+            edu = education['educational_qualification']
+            educations.append(edu)
+        
+        education_set = set(educations)
 
-        return Response(total)
+        province_edu=[]
+        
+        
+        for education in education_set:
+            province_dict = {}
+            province_dict['education'] = education
+            for item in province_education:
+                if education in item['educational_qualification']:
+                    if str(item['province_id']) in province_dict:
+                        province_dict[item['province_id']] = province_dict[item['province_id']] + item['total']
+                    else:
+                        province_dict[item['province_id']] = item['total']
+            
+            province_edu.append(dict(province_dict))
+
+
+        total_education['provincial_education'] = province_edu
+        
+        #for ethnicities on basis of political parties
+        province_party_edu = ProvinceMahilaPratinidhiForm.objects.values('party_name', 'educational_qualification')\
+        .distinct().annotate(total=Count('educational_qualification'))
+        pratinidhi_party_edu = PratinidhiShava.objects.values('party_name', 'educational_qualification')\
+        .distinct().annotate(total=Count('educational_qualification'))
+
+        party_edu = list(chain(province_party_edu, pratinidhi_party_edu))
+
+        educations = []
+        for item in party_edu:
+            edu = item['educational_qualification']
+            educations.append(edu)
+        
+        education_set = set(educations)
+
+        party_education=[]
+        
+        for education in education_set:
+            party_dict = {}
+            party_dict['educational_qualification'] = education
+            for item in party_edu:
+                if education in item['educational_qualification']:
+                    if item['party_name'] in party_dict:
+                        party_dict[item['party_name']] = party_dict[item['party_name']] + item['total']
+                    else:
+                        party_dict[item['party_name']] = item['total']
+            
+            party_education.append(dict(party_dict))
+
+        total_education['party_educational_qualification'] = party_education
+        
+        return Response(total_education)
 
 
 class PoliticalEngagementViewSet(views.APIView):
