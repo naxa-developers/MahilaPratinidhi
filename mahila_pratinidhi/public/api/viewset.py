@@ -456,6 +456,94 @@ class EducationViewSet(views.APIView):
         return Response(total_education)
 
 
+class ElectionTypeViewSet(views.APIView):
+    def get(self, request):
+
+        total_election_type = {}
+        data = []
+        election_type={}
+
+        #for total educational qualification
+        pratinidhi = PratinidhiShava.objects.all()
+        provincial = ProvinceMahilaPratinidhiForm.objects.all()
+
+        election_types = list(chain(pratinidhi, provincial))
+        totals = []
+        for election in election_types:
+            totals.append(election.nirwachit_prakriya)
+        
+        total_arrays = np.array(np.unique(totals, return_counts=True)).T
+        
+        for total in total_arrays:
+            election_type['nirwachit_prakriya'] = total[0]
+            election_type['total'] = total[1]
+
+            data.append(dict(election_type))
+
+        total_election_type['total_election_type'] = data
+
+        #for educational qualification on basis of provinces
+        province_election = ProvinceMahilaPratinidhiForm.objects.values('province_id', 'nirwachit_prakriya')\
+        .distinct().annotate(total=Count('nirwachit_prakriya'))
+        election_types = []
+        for election in province_election:
+            elec = election['nirwachit_prakriya']
+            election_types.append(elec)
+        
+        election_set = set(election_types)
+
+        province_elect=[]
+        
+        
+        for elect in election_set:
+            province_dict = {}
+            province_dict['election_type'] = elect
+            for item in province_election:
+                if elect in item['nirwachit_prakriya']:
+                    if str(item['province_id']) in province_dict:
+                        province_dict[item['province_id']] = province_dict[item['province_id']] + item['total']
+                    else:
+                        province_dict[item['province_id']] = item['total']
+            
+            province_elect.append(dict(province_dict))
+
+
+        total_election_type['provincial_election_type'] = province_elect
+        
+        #for ethnicities on basis of political parties
+        province_party_election = ProvinceMahilaPratinidhiForm.objects.values('party_name', 'nirwachit_prakriya')\
+        .distinct().annotate(total=Count('nirwachit_prakriya'))
+        pratinidhi_party_election = PratinidhiShava.objects.values('party_name', 'nirwachit_prakriya')\
+        .distinct().annotate(total=Count('nirwachit_prakriya'))
+
+        party_election = list(chain(province_party_election, pratinidhi_party_election))
+
+        elections = []
+        for item in party_election:
+            elect = item['nirwachit_prakriya']
+            elections.append(elect)
+        
+        election_set = set(elections)
+
+        party_elections=[]
+        
+        for elect in election_set:
+            party_dict = {}
+            party_dict['election_type'] = elect
+            for item in party_election:
+                if elect in item['nirwachit_prakriya']:
+                    if item['party_name'] in party_dict:
+                        party_dict[item['party_name']] = party_dict[item['party_name']] + item['total']
+                    else:
+                        party_dict[item['party_name']] = item['total']
+            
+            party_elections.append(dict(party_dict))
+
+        total_election_type['party_election_type'] = party_elections
+        
+        return Response(total_election_type)
+
+
 class PoliticalEngagementViewSet(views.APIView):
 
     def get(self, request):
