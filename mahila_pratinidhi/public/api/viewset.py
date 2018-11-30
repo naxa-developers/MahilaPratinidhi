@@ -15,6 +15,8 @@ from .serializers import RastriyaShavaSerializer, ProvinceSerializer, LocalMahil
 from core.models import RastriyaShava, PratinidhiShava, ProvinceMahilaPratinidhiForm, MahilaPratinidhiForm
 from django.db.models import Avg, Count, Sum
 
+import numpy as np
+
 @api_view(['GET'])
 def country_geojson(request):
 
@@ -162,44 +164,89 @@ class EthnicityViewSet(views.APIView):
         data = []
         ethnicity={}
 
-        province_ethinicity=[]
         ethnicity.fromkeys({"caste"})
-        print(ethnicity)
 
-        # rastriya_caste = RastriyaShava.objects.values('caste').annotate(Count('caste'))\
-        # .annotate(total=Sum('id'))
-
-        pratinidhi_caste = PratinidhiShava.objects.values('caste').annotate(Count('caste'))\
-        .annotate(total=Count('id'))
-
-        provincial_caste = ProvinceMahilaPratinidhiForm.objects.values('caste').annotate(Count('caste'))\
-        .annotate(total=Count('id'))
-        # local_caste = MahilaPratinidhiForm.objects.values('caste')
-        
-        # for castes in rastriya_caste:
-        #     if not castes['caste'] in ethnicity['caste']:
-        #         ethnicity['caste']=castes['caste']
-        #         ethnicity[castes['caste']]['total']=castes['total']
-            
-        #     else:
-        #         ethnicity[castes['caste']]['total'] += castes['total']
+        #for total ethnicities
+        pratinidhi_caste = PratinidhiShava.objects.all()
+        provincial_caste = ProvinceMahilaPratinidhiForm.objects.all()
 
         castes = list(chain(pratinidhi_caste, provincial_caste))
-
+        totals = []
         for caste in castes:
-            ethnicity['caste'] = caste['caste']
-            ethnicity['total'] = caste['total']
-            data.append(dict(ethnicity))
+            totals.append(caste.caste)
+                
+        total_arrays = np.array(np.unique(totals, return_counts=True)).T
+
         
-        #total ethnicities and their numbers
+        for total in total_arrays:
+            ethnicity['caste'] = total[0]
+            ethnicity['total'] = total[1]
+
+            data.append(dict(ethnicity))
+
         total_ethnicity['total_ethnicity'] = data
 
-        #total ethnicities with respect to province
-        total_ethnicity['province_ethnicity'] = provincial_caste
-
-        #total ethnicities with respect to federal states
-        total_ethnicity['pratinidhi_ethnicity'] = pratinidhi_caste
+        #for ethnicities on basis of provinces
+        province_caste = ProvinceMahilaPratinidhiForm.objects.values('province_id', 'caste').distinct()\
+        .annotate(total=Count('caste'))
+        castes = []
+        for provinces in province_caste:
+            caste = provinces['caste']
+            castes.append(caste)
         
+        caste_set = set(castes)
+        print(caste_set)
+
+        province_ethinicity=[]
+        province_dict = {}
+        
+        for caste in caste_set:
+            province_dict['caste'] = caste
+            for item in province_caste:
+                if caste in item['caste']:
+                    if str(item['province_id']) in province_dict:
+                        province_dict[str(item['province_id'])] = province_dict[str(item['province_id'])] + item['total']
+                    else:
+                        province_dict[item['province_id']] = item['total']
+            
+            province_ethinicity.append(dict(province_dict))
+
+
+        total_ethnicity['provincial_ethnicity'] = province_ethinicity
+        
+        #for ethnicities on basis of political parties
+        province_party_caste = ProvinceMahilaPratinidhiForm.objects.values('party_name', 'caste').distinct()\
+        .annotate(total=Count('caste'))
+        pratinidhi_party_caste = PratinidhiShava.objects.values('party_name', 'caste').distinct()\
+        .annotate(total=Count('caste'))
+
+        party_caste = list(chain(province_party_caste, pratinidhi_party_caste))
+
+        castes = []
+        for item in party_caste:
+            caste = item['caste']
+            castes.append(caste)
+        
+        caste_set = set(castes)
+        print(caste_set)
+
+        party_ethinicity=[]
+        party_dict = {}
+        
+        for caste in caste_set:
+            party_dict['caste'] = caste
+            for item in party_caste:
+                if caste in item['caste']:
+                    if item['party_name'] in party_dict:
+                        party_dict[item['party_name']] = party_dict[item['party_name']] + item['total']
+                    else:
+                        party_dict[item['party_name']] = item['total']
+            
+            party_ethinicity.append(dict(party_dict))
+
+        total_ethnicity['party_ethnicity'] = party_ethinicity
+
+
         # for castes in rastriya_caste:
         #     if not castes['caste'] in ethnicity['caste']:
             #     ethnicity['caste']=castes['caste']
