@@ -19,7 +19,17 @@
     
 
 </head>
-
+<style>
+.tt-menu{
+left: 18px;
+    background: #eaeaea;
+    display: block;
+    text-align: center;
+    width: 194px;
+    border-bottom: 19px;
+    border-color: red;
+    }
+</style>
 <body>
 
     {% block upper_content %} {% endblock %}
@@ -29,9 +39,9 @@
         </a>
         {% if request.user.is_authenticated %}
         <a href="{% url 'logout' %}" class="userIcon">
-            {% else %}
-            <a href="{% url 'public:signup' %}" class="userIcon">
-                {% endif %}
+        {% else %}
+        <a href="{% url 'public:signup' %}" class="userIcon">
+        {% endif %}
                 <span class="menuCircle">
                     <i class="fa fa-user-circle">
 
@@ -232,26 +242,24 @@
                     </div>
 
 
-            </footer>
-            <section class="copyright">
-                <div class="container">
-                    <p>Copyright © 2018 Youth Innovation Lab</p>
-                </div>
-            </section>
-            <script src="{% static 'public/js/jquery.js'%}"></script>
-            <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
-
-
-            <script src="{% static 'public/js/bootstrap.min.js' %}"></script>
-            <script type="text/javascript" src="{% static 'public/js/slick.min.js' %}"></script>
-            <script src="{% static 'public/js/all.js' %}"></script>
-            <script src="https://unpkg.com/scrollreveal/dist/scrollreveal.min.js"></script>
-            <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
-            <script src="js/bootstrap.min.js"></script>
-            <script>
-
-                $(document).ready(function () {
-
+</footer>
+<section class="copyright">
+    <div class="container">
+        <p>Copyright © 2018 Youth Innovation Lab</p>
+    </div>
+</section>
+<!--<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"-->
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>-->
+<!--<script src="https://github.com/twitter/typeahead.js/blob/master/src/typeahead/typeahead.js"></script>-->
+<script src="{% static 'public/js/jquery.min.js' %}"></script>
+<script src="{% static 'public/js/bootstrap.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'public/js/slick.min.js' %}"></script>
+<script src="{% static 'public/js/all.js' %}"></script>
+<!--<script src="{% static 'public/js/typeahead.js' %}"></script>-->
+<script src="https://unpkg.com/scrollreveal/dist/scrollreveal.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/typeahead.js/0.9.0/typeahead.min.js"></script>
+<script>
+        $(document).ready(function () {
                     $(".menuIcon").click(function () {
 
                         $(".menu").addClass("menuOn");

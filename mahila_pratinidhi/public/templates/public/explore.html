@@ -17,8 +17,7 @@
             <div class="selectHolder">
                 <div class="leader searchP">
                     <div class="leaderWrp ">
-                        <input type="text" placeholder="SEARCH YOUR LEADER" class="leaderSearch">
-                        <span><button id="search_submit" type="submit" class="moreBtn">Search</button></span>
+                        <input type="text" placeholder="CHECK YOUR LEADER AROUND" class="leaderSearch">
                     </div>
                 </div>
             </div>
@@ -91,97 +90,97 @@
                 </ul>
 
                 <div class="tab-content clearfix">
-                    <div class="tab-pane active" id="1b">
-                        <div class="pfofileItems">
-                                {% for item in rastriyas %}
-                                <div class="pItem reveal">
-                                <a href="{% url 'public:national_detail' item.pk %}">
-                                        <div class="inner">
-
-                                                <div class="pimageHolder">
-                                                    {% if item.image %}
-                                                    <img src="{{ MEDIA_URL }} {{ item.image.url }}" alt="">
-                                                    {% else %}
-                                                    <img src="{% static 'public/image/mahilalogo.png' %}" alt="" >
-                                                    {% endif %}
-                                                    <div class="img"></div>
-                
-                                                    <div class="poverlay">
-                
-                                                    </div>
-                                                    <div class="aroup"></div>
-                                                </div>
-                                                <div class="detailHolder">
-                                                    <div class="deteilbg"></div>
-                                                    <div class="date">
-                                                        <div class="yrcnt">
-                                                            {{ item.age }}
+                        <div class="tab-pane active" id="1b">
+                                <div class="pfofileItems">
+                                        {% for item in rastriyas %}
+                                        <div class="pItem reveal">
+                                        <a href="{% url 'public:national_detail' item.pk %}">
+                                                <div class="inner">
+        
+                                                        <div class="pimageHolder">
+                                                            {% if item.image %}
+                                                            <img src="{{ MEDIA_URL }} {{ item.image.url }}" alt="">
+                                                            {% else %}
+                                                            <img src="{% static 'public/image/mahilalogo.png' %}" alt="" >
+                                                            {% endif %}
+                                                            <div class="img"></div>
+                        
+                                                            <div class="poverlay">
+                        
+                                                            </div>
+                                                            <div class="aroup"></div>
                                                         </div>
-                                                        <div class="dtl">
-                                                            Years
+                                                        <div class="detailHolder">
+                                                            <div class="deteilbg"></div>
+                                                            <div class="date">
+                                                                <div class="yrcnt">
+                                                                    {{ item.age }}
+                                                                </div>
+                                                                <div class="dtl">
+                                                                    Years
+                                                                </div>
+                        
+                        
+                                                            </div>
+                                                            <div class="dname">{{ item.name|upper }}</div>
+                                                            <div class="dlocation">{{ item.address|title }}</div>
+                                                            <div class="bottom">
+                                                                <i class="fa fa-arrow-right arow"></i>
+                                                            </div>
                                                         </div>
-                
-                
+                        
                                                     </div>
-                                                    <div class="dname">{{ item.name|upper }}</div>
-                                                    <div class="dlocation">{{ item.address|title }}</div>
-                                                    <div class="bottom">
-                                                        <i class="fa fa-arrow-right arow"></i>
-                                                    </div>
-                                                </div>
-                
-                                            </div>
-                                </a>
+                                        </a>
+                                        </div>
+                                        {% endfor %}
                                 </div>
-                                {% endfor %}
-                        </div>
-                    </div>
-                    <div class="tab-pane" id="2b">
-                            <div class="pfofileItems">
-                            {% for item in pratinidhis %}
-                            <div class="pItem reveal">
-                                    <a href="{% url 'public:pratinidhi_detail' item.pk %}">
-                                            <div class="inner">
-    
-                                                    <div class="pimageHolder">
-                                                        {% if item.image %}
-                                                        <img src="{{ MEDIA_URL }} {{ item.image.url }}" alt="">
-                                                        {% else %}
-                                                        <img src="{% static 'public/image/mahilalogo.png' %}" alt="" >
-                                                        {% endif %}
-                                                        <div class="img"></div>
-                    
-                                                        <div class="poverlay">
-                    
-                                                        </div>
-                                                        <div class="aroup"></div>
-                                                    </div>
-                                                    <div class="detailHolder">
-                                                        <div class="deteilbg"></div>
-                                                        <div class="date">
-                                                            <div class="yrcnt">
-                                                                {{ item.age }}
+                            </div>
+                            <div class="tab-pane" id="2b">
+                                    <div class="pfofileItems">
+                                    {% for item in pratinidhis %}
+                                    <div class="pItem reveal">
+                                            <a href="{% url 'public:pratinidhi_detail' item.pk %}">
+                                                    <div class="inner">
+            
+                                                            <div class="pimageHolder">
+                                                                {% if item.image %}
+                                                                <img src="{{ MEDIA_URL }} {{ item.image.url }}" alt="">
+                                                                {% else %}
+                                                                <img src="{% static 'public/image/mahilalogo.png' %}" alt="" >
+                                                                {% endif %}
+                                                                <div class="img"></div>
+                            
+                                                                <div class="poverlay">
+                            
+                                                                </div>
+                                                                <div class="aroup"></div>
                                                             </div>
-                                                            <div class="dtl">
-                                                                Years
+                                                            <div class="detailHolder">
+                                                                <div class="deteilbg"></div>
+                                                                <div class="date">
+                                                                    <div class="yrcnt">
+                                                                        {{ item.age }}
+                                                                    </div>
+                                                                    <div class="dtl">
+                                                                        Years
+                                                                    </div>
+                            
+                            
+                                                                </div>
+                                                                <div class="dname">{{ item.name|upper }}</div>
+                                                                <div class="dlocation">{{ item.address|title }}</div>
+                                                                <div class="bottom">
+                                                                    <i class="fa fa-arrow-right arow"></i>
+                                                                </div>
                                                             </div>
-                    
-                    
+                            
                                                         </div>
-                                                        <div class="dname">{{ item.name|upper }}</div>
-                                                        <div class="dlocation">{{ item.address|title }}</div>
-                                                        <div class="bottom">
-                                                            <i class="fa fa-arrow-right arow"></i>
-                                                        </div>
-                                                    </div>
-                    
-                                                </div>
+                                            </a>
+                                            </div>
                                     </a>
-                                    </div>
-                            </a>
-                            {% endfor %}
-                        </div>
-                    </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
                     <div class="tab-pane" id="3b">
                         <div class="linkItem row">
                             {% for item in provinces %}
@@ -229,7 +228,7 @@
         });
         var clicked = "{{ clicked }}";
         if(clicked == "national" || clicked == "general"){
-            document.getElementById("nation").click();
+            $("#nation").click();
             $("#nation").addClass("active");
         }
         else if(clicked == 'federal'){
@@ -237,7 +236,7 @@
             [].forEach.call(elems, function(el) {
                 el.classList.remove("active");
             });
-            document.getElementById("federal").click();
+            $("#federal").click();
             $("#federal").addClass("active");
         }
         else if(clicked == "provincial"){
@@ -245,7 +244,7 @@
             [].forEach.call(elems, function(el) {
                 el.classList.remove("active");
             });
-            document.getElementById("provincial").click();
+            $("#provincial").click();
             $("#provincial").addClass("active");
             
         }
@@ -254,7 +253,7 @@
             [].forEach.call(elems, function(el) {
                 el.classList.remove("active");
             });
-            document.getElementById("local").click();
+            $("#local").click();
             $("#local").addClass("active");   
         }
     </script>

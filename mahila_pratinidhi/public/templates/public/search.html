@@ -1,0 +1,79 @@
+{% extends 'public/public_base.html' %}
+{% load staticfiles %}
+{% block upper_content %}
+<body>
+        <header>
+            <div class="navigation innerPage">
+                <div class="container-fluid">
+{% endblock %}
+
+{% block lower_content%}
+</div>
+</div>
+</header>
+    <div class="sectionTop darkbgl">
+        <div class="container">
+            <div class="selectHolder list">
+                <div class="leader searchP">
+                    <div class="leaderWrp ">
+                        <form type="get" action=".">
+                                <input id="search_box" type="text" placeholder="CHECK YOUR LEADER AROUND" class="leaderSearch">
+                                <span><button id="search_submit" type="submit" class="moreBtn">Search</button></span>
+                        </form>
+                    </div>
+                </div>
+                <div class="closeBtn">
+                    <i class="fa fa-times"></i>
+                </div>
+                {% if submitbutton == 'Search' and request.GET.q != '' %}
+
+                    {% if results %}
+
+                    <h1>Results for <b>{{ request.GET.q }}</b></h1>
+                    <br/><br/>
+
+                        {% for result in results %}
+
+                        {{result.english_name}}
+
+                        <br/>
+
+
+                        {% endfor %}
+                    {% if locals %}
+                        {% for local in locals %}
+
+                        {{local.name}} <br/>
+                        {% endfor %}
+                    {% endif %}
+                    {% else %}
+                        No search results for this query
+                    {% endif %}
+                {% endif %}
+            </div>
+            </div>
+        </div>
+    </div>
+    {% endblock %}
+
+    {% block scripts %}
+
+    <script>
+        $(document).ready(function () {
+
+            $(".filterBtn").click(function () {
+
+                $(".selectHolder.list").addClass("activated")
+
+            });
+
+            $(".closeBtn").click(function () {
+
+                $(".selectHolder.list").removeClass("activated")
+
+            });
+        });
+
+
+    </script>
+{% endblock %}

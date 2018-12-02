@@ -159,7 +159,7 @@
         <div class="container topC">
 
             <p class="sTitle header mb80 reveal">FEATURED MAHILA PRATINIDHI 2018</p>
-
+            
             <div class="slider reveal">
                 {% for datas in featured_data %} 
                 {% for data in datas %}
@@ -205,7 +205,11 @@
                             </div>
                             <div>
                                 <span class="first"> Address:</span>
+                                {% if data.permanent_address %}
+                                <span class="value"> {{ data.permanent_address }}</span>
+                                {% else %}
                                 <span class="value"> {{ data.address }}</span>
+                                {% endif %}
 
                             </div>
 
@@ -404,7 +408,8 @@
             $('.slider').slick({
                 autoplay: false,
                 dots: true,
-                arrows: true
+                arrows: true,
+                color: red,
 
 
             });

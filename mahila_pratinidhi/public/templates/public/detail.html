@@ -99,10 +99,12 @@
                                         <i class="fa fa-phone ihs">
 
                                         </i>
-                                        <span class="contactIfo">
+                                        <span class="contactIfo"><a href="{% url 'public:pratinidhi_call_request' form.pk %}">
                                             Call Request
+                                            </a>
                                         </span>
                                     </div>
+                                    {% if form.email %}
                                     <div class="shareInfo">
                                         <i class="fa fa-envelope ihs">
 
@@ -111,6 +113,8 @@
                                             Write Email
                                         </span>
                                     </div>
+                                    {% endif %}
+                                    {% if form.social_networking_medium is not empty %}
                                     <div class="shareInfo">
                                         <span class="ihs">
                                             <i class="fa fa-facebook mr5 ">
@@ -122,9 +126,10 @@
                                         </span>
 
                                         <span class="contactIfo">
-                                            Find on Social Media
+                                            <a href="https://www.facebook.com/{{form.social_networking_medium}}">Find on Social Media</a>
                                         </span>
                                     </div>
+                                    {% endif %}
                                 </div>
                             </div>
                         </div>
@@ -241,6 +246,7 @@
                 <div class="col-md-3 aligncenter justify-content-center titl">Political
                     <br/>Commitments
                 </div>
+                {% if form.nirwachit_chetra_pratiko_pratibadhata %}
                 {% with form.nirwachit_chetra_pratiko_pratibadhata|split:"," as jimmewaris %}
                     {% for jimmewari in jimmewaris %}
                     <div class="col-md-3">
@@ -254,6 +260,7 @@
                     </div>
                     {% endfor %}
                 {% endwith %}
+                {% endif %}
                 </div>
 
 

@@ -1,6 +1,8 @@
 from django.urls import path, re_path
 from django.conf.urls import url
 from . import views
+from django.contrib import admin
+
 
 
 app_name = 'public'
@@ -25,7 +27,11 @@ urlpatterns = [
 
 	path('detail/national/<int:pk>/', views.RastriyaMahilaDetail.as_view(), name="national_detail"),
 	path('detail/pratinidhi/<int:pk>', views.PratinidhiMahilaDetail.as_view(), name="pratinidhi_detail"),
+	path('detail/pratinidhi/<int:pk>/call', views.callRequestView.as_view(), name="pratinidhi_call_request"),
 
 	path('visualize/', views.DataVisualize.as_view(), name="data_visualize"),
+
 	path('news/<int:pk>/', views.NewsView.as_view(), name="news"),
+
+	# path(r'^detail/name/(?P<name>\w+)/$', views.SearchDetail.as_view(), name='name_search'),
 ]
