@@ -16,7 +16,7 @@ class StackedChart extends React.Component{
 
   var margin = {top: 20, right: 170, bottom: 20, left: 30};
 
-  var width = 600 - margin.left - margin.right,
+  var width = 700 - margin.left - margin.right,
       height = 350 - margin.top - margin.bottom;
 
   var svg = d3.select(".stacked-bar")
@@ -64,6 +64,7 @@ class StackedChart extends React.Component{
     var xAxis = d3.svg.axis()
       .scale(x)
       .orient("bottom")
+      .tickPadding([0.4])
       //.tickFormat(d3.time.format("%Y"));
 
     svg.append("g")
@@ -103,6 +104,7 @@ class StackedChart extends React.Component{
 
 
       var tooltip = svg.append("g")
+        .style("display", "none");
 
       tooltip.append("rect")
 
