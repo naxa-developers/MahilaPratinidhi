@@ -1,6 +1,6 @@
 //alert("pasyo");
-//var base_url="http://mahilapratinidhi.naxa.com.np";
-var base_url="http://localhost:8000";
+var base_url="http://mahilapratinidhi.naxa.com.np";
+//var base_url="http://localhost:8000";
 var map =L.map('mapid').setView([27,85],7);
 
 var OSM = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
