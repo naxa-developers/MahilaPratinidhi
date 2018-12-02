@@ -148,6 +148,9 @@ class News(models.Model):
 
 	def __str__(self):
 		return "{}-{} news".format(self.date, self.title)
+	
+	class Meta:
+		get_latest_by = ['date']
 
 
 

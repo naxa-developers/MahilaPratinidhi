@@ -440,7 +440,7 @@ margin-top:-50px;}
      }
         .bottom i{transform: rotate(40deg); color:#fff;}
         .clickabletabs li:first-of-type{margin-right:10px;}
-        .cropImg{width:335px;height:120px;}
+        .cropImg{width:auto;height:200px;}
         .gitem{display:flex;flex-direction: row;
             min-width:100%;
             align-items: center;

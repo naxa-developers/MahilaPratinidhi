@@ -15,6 +15,12 @@ from .tokens import account_activation_token
 from django.contrib.auth.models import User
 from django.core.mail import EmailMessage
 import json
+from django.core.mail import EmailMessage
+from itertools import chain
+
+from django.shortcuts import render
+from django.db.models import Q
+# from posts.models import Post
 
 
 class Index(TemplateView):
@@ -42,9 +48,9 @@ class Index(TemplateView):
 
 def signup(request):
     if request.method == 'POST':
-        form = UserCreateForm(request.POST)
-        if form.is_valid():
-            user = form.save(commit=False)
+        signup_form = UserCreateForm(request.POST)
+        if signup_form.is_valid():
+            user = signup_form.save(commit=False)
             user.is_active = False
             user.save()
             current_site = get_current_site(request)
@@ -55,16 +61,16 @@ def signup(request):
             'uid': urlsafe_base64_encode(force_bytes(user.pk)).decode('utf8'),
             'token': account_activation_token.make_token(user),
             })
-            to_email = form.cleaned_data.get('email')
+            to_email = signup_form.cleaned_data.get('email')
             email = EmailMessage(
                         mail_subject, message, to=[to_email]
             )
             email.send()
             return HttpResponse('Please confirm your email address to complete the registration')
     else:
-        form = UserCreateForm()
-        print("hello")
-    return HttpResponseRedirect('login/')
+        signup_form = UserCreateForm()
+    return render(request, 'login.html', {'form':signup_form})
+    
 
 
 def activate(request, uidb64, token):
@@ -77,7 +83,6 @@ def activate(request, uidb64, token):
         user.is_active = True
         user.save()
         login(request, user)
-        # return redirect('home')
         return HttpResponse('Thank you for your email confirmation. Now you can login your account.')
     else:
         return HttpResponse('Activation link is invalid!')
@@ -92,13 +97,29 @@ class ExploreView(TemplateView):
 
 
     def get(self, request, *args, **kwargs):
+        names = []
         district = District.objects.all()
         rastriyas = RastriyaShava.objects.all()
         pratinidhis = PratinidhiShava.objects.all()
         provinces = Province.objects.all()
+
+        province_names = ProvinceMahilaPratinidhiForm.objects.all()
+        local_names = MahilaPratinidhiForm.objects.all()
+
+        object_list = list(chain(rastriyas, pratinidhis, province_names))
+
+        for lists in object_list:
+
+            names.append(lists.english_name)
+
+        for lists in local_names:
+            names.append(lists.name)
+
+        json_list = json.dumps(names)
+
         clicked = self.kwargs.get('clicked')
         return render(request, self.template_name, {'districts':district, 'rastriyas':rastriyas,
-        'pratinidhis':pratinidhis, 'provinces':provinces, 'clicked':clicked})
+        'pratinidhis':pratinidhis, 'provinces':provinces, 'clicked':clicked, 'names':json_list})
 
 
 class MahilaPratinidhiView(TemplateView):
@@ -211,7 +232,9 @@ class NewsView(TemplateView):
 
     def get(self, request, *args, **kwargs):
         news = News.objects.get(id=self.kwargs.get('pk'))
-        return render(request, self.template_name, {'news':news})
+        latest_news = News.objects.latest()
+        print(latest_news)
+        return render(request, self.template_name, {'news':news, 'latest_news': latest_news})
 
 
 def read_view(request, ):
@@ -228,4 +251,71 @@ def read_view(request, ):
 
 class Detail(TemplateView):
     template_name = 'public/lists.html'
+
+class callRequestView(TemplateView):
+    template_name = 'login.html'
+
+    def get(self, request, *args, **kwargs):
+        try:
+            if request.user.is_authenticated():
+                email = EmailMessage('Call Request', 'This user has made the call request.',
+                                         to=['example@admin.com'])
+                email.send()
+        except:
+            print("Please login first!")
+        return render(request, self.template_name)
+
+# class SearchDetail(DetailView):
+#     template_name = 'public/detail.html'
+
+#     def get(self, request, *args, **kwargs):
+#         rastriya = RastriyaShava.objects.filter(english_name=self.kwargs.get('english_name'))
+#         return render(request, self.template_name, {'form': rastriya})
+
+
+# class searchView(ListView):
+#     template_name = 'public/lists.html'
+
+#     def get(self, request, *args, **kwargs):
+#         print("dasda")
+#         name = self.request.GET.get('search')
+#         print("hello" + name)
+
+#         national = RastriyaShava.objects.filter(name = name)
+#         province = ProvinceMahilaPratinidhiForm.objects.filter(name__icontains = name)
+#         federal = PratinidhiShava.objects.filter(name__icontains = name)
+#         local = MahilaPratinidhiForm.objects.filter(name__icontains = name)
+
+#         model = list(chain(national, province, federal, local))
+
+#         if national is not None:
+#             return render(self.request, self.template_name, {'forms': model})
+
+# def searchposts(request):
+#     if request.method == 'GET':
+#         query= request.GET.get('q')
+
+
+#         submitbutton= request.GET.get('submit')
+
+#         if query is not None:
+#             print("entered")
+#             lookups= Q(english_name__icontains=query)
+#             print(lookups)
+#             rastriya = RastriyaShava.objects.filter(lookups)
+#             pratinidhi = PratinidhiShava.objects.filter(lookups)
+#             province = ProvinceMahilaPratinidhiForm.objects.filter(lookups)
+#             locals = MahilaPratinidhiForm.objects.filter(Q(name__icontains=query))
+#             results = list(chain(rastriya, pratinidhi, province))
+#             print("end")
+#             context={'results': results, 'locals': locals,
+#                      'submitbutton': submitbutton}
+
+#             return render(request, 'public/search.html', context)
+
+#         else:
+#             return render(request, 'public/explore.html')
+
+#     else:
+#         return render(request, 'public/explore.html')
 

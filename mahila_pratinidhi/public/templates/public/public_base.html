@@ -14,10 +14,22 @@
     <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
         crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="{% static 'public/css/slick.css' %}" />
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+
     
 
 </head>
-
+<style>
+.tt-menu{
+left: 18px;
+    background: #eaeaea;
+    display: block;
+    text-align: center;
+    width: 194px;
+    border-bottom: 19px;
+    border-color: red;
+    }
+</style>
 <body>
 
     {% block upper_content %} {% endblock %}
@@ -27,9 +39,9 @@
         </a>
         {% if request.user.is_authenticated %}
         <a href="{% url 'logout' %}" class="userIcon">
-            {% else %}
-            <a href="{% url 'login' %}" class="userIcon">
-                {% endif %}
+        {% else %}
+        <a href="{% url 'public:signup' %}" class="userIcon">
+        {% endif %}
                 <span class="menuCircle">
                     <i class="fa fa-user-circle">
 
@@ -74,7 +86,7 @@
                     <a href="{% url 'public:index' %}" class="linkitems"> FIND YOUR LEADER</a>
                     <a href="{% url 'public:data_visualize' %}" class="linkitems">MAHILA PRATINIDHI IN DATA</a>
                     <a href="" class="linkitems"> FEATURED MAP</a>
-                    <a href="{% url 'public:index' %}#news" class="linkitems"> NEWS</a>
+                    <a href="{% url 'public:index' %}#news" class="linkitems" id="news_link"> NEWS</a>
                     <a href="{% url 'public:index' %}" class="linkitems"> Media</a>
 
                 </div>
@@ -162,7 +174,7 @@
                                 <a href="{% url 'login' %}">
                                     <button class="signinBtn"> SIGN IN</button>
                                 </a>
-                                <a href="{% url 'login' %}">
+                                <a href="{% url 'public:signup' %}">
                                     <button class="signUp"> SIGN UP</button>
                                 </a>
                                 {% endif %}
@@ -230,24 +242,24 @@
                     </div>
 
 
-            </footer>
-            <section class="copyright">
-                <div class="container">
-                    <p>Copyright © 2018 Youth Innovation Lab</p>
-                </div>
-            </section>
-            <script src="{% static 'public/js/jquery.js'%}"></script>
-
-            <script src="{% static 'public/js/bootstrap.min.js' %}"></script>
-            <script type="text/javascript" src="{% static 'public/js/slick.min.js' %}"></script>
-            <script src="{% static 'public/js/all.js' %}"></script>
-            <script src="https://unpkg.com/scrollreveal/dist/scrollreveal.min.js"></script>
-            <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
-            <script src="js/bootstrap.min.js"></script>
-            <script>
-
-                $(document).ready(function () {
-
+</footer>
+<section class="copyright">
+    <div class="container">
+        <p>Copyright © 2018 Youth Innovation Lab</p>
+    </div>
+</section>
+<!--<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"-->
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>-->
+<!--<script src="https://github.com/twitter/typeahead.js/blob/master/src/typeahead/typeahead.js"></script>-->
+<script src="{% static 'public/js/jquery.min.js' %}"></script>
+<script src="{% static 'public/js/bootstrap.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'public/js/slick.min.js' %}"></script>
+<script src="{% static 'public/js/all.js' %}"></script>
+<!--<script src="{% static 'public/js/typeahead.js' %}"></script>-->
+<script src="https://unpkg.com/scrollreveal/dist/scrollreveal.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/typeahead.js/0.9.0/typeahead.min.js"></script>
+<script>
+        $(document).ready(function () {
                     $(".menuIcon").click(function () {
 
                         $(".menu").addClass("menuOn");
@@ -259,6 +271,11 @@
                         $(".menu").removeClass("menuOn");
                         $("body").removeClass("overflowHidden");
                     });
+                    $("#news_link").click(function () {
+                        $(".menu").removeClass("menuOn");
+                        $("body").removeClass("overflowHidden");
+                    });
+
                 });
             </script> 
             {% block scripts %} 
