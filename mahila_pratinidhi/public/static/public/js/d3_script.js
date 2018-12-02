@@ -1,4 +1,7 @@
 //alert("pasyo");
+var base_url="http://mahilapratinidhi.naxa.com.np";
+//var base_url="http://localhost:8000";
+
 //according to the tab pressed, call api , accordingly determine the no of checkbox app that needs to be called
 
     const sample = [ { language: 'Rust', value: 78.9, color: '#000000' }, {
@@ -12,7 +15,8 @@ language: 'F#', value: 59.6, color: '#008fc9' }, { language: 'Clojure', value:
 
 
 var data_to_use=[];
-$.get("http://localhost:8000/api/ethnicity/",function(data){
+console.log("baseurlcheck",base_url+'/api/ethnicity/');
+$.get(base_url+'/api/ethnicity/',function(data){
 
 
 

@@ -1,20 +1,22 @@
 //alert("pasyo");
+var base_url="http://mahilapratinidhi.naxa.com.np";
+//var base_url="http://localhost:8000";
 var map =L.map('mapid').setView([27,85],7);
 
 var OSM = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
   attribution: '&copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
-}).addTo(map);
+});
 
 var OpenStreetMap_BlackAndWhite = L.tileLayer('http://{s}.tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png', {
 	maxZoom: 18,
 	attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-}).addTo(map);
+});
 
 var Thunderforest_TransportDark = L.tileLayer('https://{s}.tile.thunderforest.com/transport-dark/{z}/{x}/{y}.png?apikey={apikey}', {
 	attribution: '&copy; <a href="http://www.thunderforest.com/">Thunderforest</a>, &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
 	apikey: 'ddb2f354bd68480ebfa4ce3a9726c511',
 	maxZoom: 22
-});
+}).addTo(map);
 
 baseMaps = {
     //"Street View": street_view,
@@ -69,7 +71,8 @@ function zoomToFeature(e){
   for (var i=0;i<marker_array.length;i++){
     marker_array[i].removeFrom(map);
   }
-  var layer = L.geoJson.ajax('http://localhost:8000/api/geojson/province/'+ province,
+  console.log("baseurlcheck",base_url+'/api/geojson/province/'+ province);
+  var layer = L.geoJson.ajax(base_url+'/api/geojson/province/'+ province,
             {onEachFeature:onEachFeature}
             );
 
@@ -121,8 +124,9 @@ function get_center(feature,layer){
   return center;
 
 }
+console.log("baseurlcheck",base_url+'/api/geojson/country');
 
-var country =L.geoJson.ajax('http://localhost:8000/api/geojson/country',
+var country =L.geoJson.ajax(base_url+'/api/geojson/country',
           {onEachFeature:onEachFeature,
            style: {fillOpacity:0}
           }).addTo(map);
@@ -143,41 +147,31 @@ var country =L.geoJson.ajax('http://localhost:8000/api/geojson/country',
     'provincial':[32, 37, 37, 20, 32, 13, 0]
     }
   frequency_array=[1187,1000,800,1730,2000,3212,3212];
-
-  $.get("http://localhost:8000/api/maps/",function(data){
+console.log("baseurlcheck",base_url+'/api/maps/);
+  $.get(base_url+'/api/maps/',function(data){
 
     data_summary_all['provincial']= data['provincial'];
+    data_summary_all['national']= data['national'];
 
 });
 //interaction with sidebar
 
 $("#national-all").on('click',function(){
 
-for(var i =0; i< data_summary_all['national'].length;i++)
-  {
-  circular_marker(center_for_markers[i],data_summary_all['national'][i]);
-}
+
+
 });
 
 $("#federal-all").on('click',function(){
 
-  for(var i =0; i< data_summary_all['national'].length;i++)
-    {
-    circular_marker(center_for_markers[i],data_summary_all['national'][i]);
-  }
+
 });
 
 $("#provincial-all").on('click',function(){
 
-  for(var i =0; i< data_summary_all['provincial'].length;i++)
-    {
-    circular_marker(center_for_markers[i],data_summary_all['provincial'][i]);
-  }
+
 });
 
 $("#local-all").on('click',function(){
-  for(var i =0; i< data_summary_all['national'].length;i++)
-    {
-    circular_marker(center_for_markers[i],data_summary_all['national'][i]);
-  }
+
 });

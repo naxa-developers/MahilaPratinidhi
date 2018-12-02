@@ -186,10 +186,9 @@
         <div class="container topC">
 
             <p class="sTitle header mb80 reveal">FEATURED MAHILA PRATINIDHI 2018</p>
-            
+
             <div class="slider reveal">
-                {% for datas in featured_data %} 
-                {% for data in datas %}
+                {% for datas in featured_data %} {% for data in datas %}
                 <div>
                     <div class="row align-items-md-center">
                         <div class="col-md-4">
@@ -198,8 +197,7 @@
                                 <img src="{{ MEDIA_URL }} {{ data.image.url }}" alt="">
                             </div>
                             {% else %}
-                            <img src="{% static 'public/image/heroimg.png' %}" alt=""> 
-                            {% endif %}
+                            <img src="{% static 'public/image/mahilalogo.png' %}" alt="" style="width:250px;height:250px;"> {% endif %}
                         </div>
                     </div>
                     <div class="col-md-4">
@@ -232,11 +230,7 @@
                             </div>
                             <div>
                                 <span class="first"> Address:</span>
-                                {% if data.permanent_address %}
-                                <span class="value"> {{ data.permanent_address }}</span>
-                                {% else %}
                                 <span class="value"> {{ data.address }}</span>
-                                {% endif %}
 
                             </div>
 
@@ -261,8 +255,7 @@
                     </div>
                 </div>
             </div>
-            {% endfor %} 
-            {% endfor %}
+            {% endfor %} {% endfor %}
         </div>
 
     </section>
@@ -335,12 +328,13 @@
     {% endblock %} {% block scripts %}
     <script>
 
+
+
     </script>
 
     <script>
 
         $(document).ready(function () {
-       
 
    $("#selectedValue").click(function () {
     var ro = $("#selectedValue").offset();
@@ -431,7 +425,8 @@
 
             //     $(".selectOverlay").toggleClass("active");
             // });
-            
+
+
             $('.slider').slick({
                 autoplay: false,
                 dots: true,
@@ -440,7 +435,6 @@
 
 
             });
-
             ScrollReveal().reveal('.reveal');
 
             ScrollReveal().reveal('.reveal', {
