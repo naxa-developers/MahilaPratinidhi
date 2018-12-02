@@ -42,9 +42,9 @@ class Index(TemplateView):
 
 def signup(request):
     if request.method == 'POST':
-        form = UserCreateForm(request.POST)
-        if form.is_valid():
-            user = form.save(commit=False)
+        signup_form = UserCreateForm(request.POST)
+        if signup_form.is_valid():
+            user = signup_form.save(commit=False)
             user.is_active = False
             user.save()
             current_site = get_current_site(request)
@@ -55,16 +55,16 @@ def signup(request):
             'uid': urlsafe_base64_encode(force_bytes(user.pk)).decode('utf8'),
             'token': account_activation_token.make_token(user),
             })
-            to_email = form.cleaned_data.get('email')
+            to_email = signup_form.cleaned_data.get('email')
             email = EmailMessage(
                         mail_subject, message, to=[to_email]
             )
             email.send()
             return HttpResponse('Please confirm your email address to complete the registration')
     else:
-        form = UserCreateForm()
-        print("hello")
-    return HttpResponseRedirect('login/')
+        signup_form = UserCreateForm()
+    return render(request, 'login.html', {'form':signup_form})
+    
 
 
 def activate(request, uidb64, token):

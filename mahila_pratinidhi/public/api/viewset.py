@@ -573,6 +573,185 @@ class PoliticalEngagementViewSet(views.APIView):
         return Response(total)
 
 
+class MaritalStatusViewSet(views.APIView):
+    def get(self, request):
+
+        total_maritalstatus_dict = {}
+        data_list = []
+        maritalstatus_dict = {}
+
+        #for total educational qualification
+        pratinidhi = PratinidhiShava.objects.all()
+        provincial = ProvinceMahilaPratinidhiForm.objects.all()
+
+        maritalstatus_list = list(chain(pratinidhi, provincial))
+        totals = []
+        for marital in maritalstatus_list:
+            totals.append(marital.marital_status)
+        
+        total_arrays = np.array(np.unique(totals, return_counts=True)).T
+        
+        for total in total_arrays:
+            maritalstatus_dict['marital_status'] = total[0]
+            maritalstatus_dict['total'] = total[1]
+
+            data_list.append(dict(maritalstatus_dict))
+
+        total_maritalstatus_dict['total_marital_status'] = data_list
+
+        #for educational qualification on basis of provinces
+        province_maritalstatus = ProvinceMahilaPratinidhiForm.objects.values('province_id', 'marital_status')\
+        .distinct().annotate(total=Count('marital_status'))
+        marital_status_list = []
+        for marital in province_maritalstatus:
+            maritals = marital['marital_status']
+            marital_status_list.append(maritals)
+        
+        marital_status_set = set(marital_status_list)
+
+        province_marital_list = []
+        
+        
+        for marital in marital_status_set:
+            province_dict = {}
+            province_dict['marital_status'] = marital
+            for item in province_maritalstatus:
+                if marital in item['marital_status']:
+                    if str(item['province_id']) in province_dict:
+                        province_dict[item['province_id']] = province_dict[item['province_id']] + item['total']
+                    else:
+                        province_dict[item['province_id']] = item['total']
+            
+            province_marital_list.append(dict(province_dict))
+
+
+        total_maritalstatus_dict['provincial_marital_status'] = province_marital_list
+        
+        #for ethnicities on basis of political parties
+        province_party_marital = ProvinceMahilaPratinidhiForm.objects.values('party_name', 'marital_status')\
+        .distinct().annotate(total=Count('marital_status'))
+        pratinidhi_party_marital = PratinidhiShava.objects.values('party_name', 'marital_status')\
+        .distinct().annotate(total=Count('marital_status'))
+
+        party_marital =  list(chain(province_party_marital, pratinidhi_party_marital))
+
+        marital_list = []
+        for item in party_marital:
+            marital = item['marital_status']
+            marital_list.append(marital)
+        
+        marital_set = set(marital_list)
+
+        party_marital_list = []
+        
+        for m in marital_set:
+            party_dict = {}
+            party_dict['marital_status'] = m
+            for item in party_marital:
+                if m in item['marital_status']:
+                    if item['party_name'] in party_dict:
+                        party_dict[item['party_name']] = party_dict[item['party_name']] + item['total']
+                    else:
+                        party_dict[item['party_name']] = item['total']
+            
+            party_marital_list.append(dict(party_dict))
+
+        total_maritalstatus_dict['party_marital_list'] = party_marital_list
+        
+        return Response(total_maritalstatus_dict)
+
+
+class ElectionParticipate(views.APIView):
+    def get(self, request):
+        total_election_before_dict = {}
+        data_list = []
+        election_before_dict = {}
+
+        #for total educational qualification
+        pratinidhi = PratinidhiShava.objects.all()
+        provincial = ProvinceMahilaPratinidhiForm.objects.all()
+
+        election_before_list = list(chain(pratinidhi, provincial))
+        totals = []
+        for elect in election_before_list:
+            totals.append(elect.aaja_vanda_agadi_chunab_ladnu_vayeko_chha)
+        
+        total_arrays = np.array(np.unique(totals, return_counts=True)).T
+        
+        for total in total_arrays:
+            election_before_dict['aaja_vanda_agadi_chunab_ladnu_vayeko_chha'] = total[0]
+            election_before_dict['total'] = total[1]
+
+            data_list.append(dict(election_before_dict))
+
+        total_election_before_dict['total_election_before'] = data_list
+
+        #for educational qualification on basis of provinces
+        province_election_before = ProvinceMahilaPratinidhiForm.objects.values('province_id', 'aaja_vanda_agadi_chunab_ladnu_vayeko_chha')\
+        .distinct().annotate(total=Count('aaja_vanda_agadi_chunab_ladnu_vayeko_chha'))
+        election_before_list = []
+        for election_before in province_election_before:
+            elections = election_before['aaja_vanda_agadi_chunab_ladnu_vayeko_chha']
+            election_before_list.append(elections)
+        
+        election_before_set = set(election_before_list)
+
+        province_election_before_list = []
+        
+        
+        for election in election_before_set:
+            province_dict = {}
+            province_dict['aaja_vanda_agadi_chunab_ladnu_vayeko_chha'] = election
+            for item in province_election_before:
+                if election in item['aaja_vanda_agadi_chunab_ladnu_vayeko_chha']:
+                    if str(item['province_id']) in province_dict:
+                        province_dict[item['province_id']] = province_dict[item['province_id']] + item['total']
+                    else:
+                        province_dict[item['province_id']] = item['total']
+            
+            province_election_before_list.append(dict(province_dict))
+
+
+        total_election_before_dict['provincial_election_before'] = province_election_before_list
+        
+        #for ethnicities on basis of political parties
+        province_party_election_before = ProvinceMahilaPratinidhiForm.objects\
+        .values('party_name', 'aaja_vanda_agadi_chunab_ladnu_vayeko_chha')\
+        .distinct().annotate(total=Count('aaja_vanda_agadi_chunab_ladnu_vayeko_chha'))
+        pratinidhi_party_election_before = PratinidhiShava.objects\
+        .values('party_name', 'aaja_vanda_agadi_chunab_ladnu_vayeko_chha')\
+        .distinct().annotate(total=Count('aaja_vanda_agadi_chunab_ladnu_vayeko_chha'))
+
+        party_election_before_list =  list(
+            chain(
+                province_party_election_before, pratinidhi_party_election_before))
+
+        election_before_list = []
+        for item in party_election_before_list:
+            election_before = item['aaja_vanda_agadi_chunab_ladnu_vayeko_chha']
+            election_before_list.append(election_before)
+        
+        election_before_set = set(election_before_list)
+
+        party_election_before = []
+        
+        for m in election_before_set:
+            party_dict = {}
+            party_dict['aaja_vanda_agadi_chunab_ladnu_vayeko_chha'] = m
+            for item in party_election_before_list:
+                if m in item['aaja_vanda_agadi_chunab_ladnu_vayeko_chha']:
+                    if item['party_name'] in party_dict:
+                        party_dict[item['party_name']] = party_dict[item['party_name']] + item['total']
+                    else:
+                        party_dict[item['party_name']] = item['total']
+            
+            party_election_before.append(dict(party_dict))
+
+        total_election_before_dict['party_election_before'] = party_election_before
+        
+        return Response(total_election_before_dict)
+
+
 
 
 

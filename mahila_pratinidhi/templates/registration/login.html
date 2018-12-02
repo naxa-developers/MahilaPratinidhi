@@ -30,9 +30,9 @@
                     <img src="{% static 'assets/img/logo.png' %}" alt="" width="100">
                     <h3>महिला प्रतिनिधि</h3>
                 </div>
-                <ul class="nav nav-pills row">
-                        <li class="active"><a href="#1a" data-toggle="tab" >Login</a></li>
-                        <li><a href="#1b" data-toggle="tab" >Sign Up</a></li>
+                <ul class="nav nav-pills nav-justified">
+                        <li class="nav-item active"><a class="nav-link" href="#1a" data-toggle="tab" >Login</a></li><span>&nbsp;</span>
+                        <li class="nav-item"><a class="nav-link" href="#1b" data-toggle="tab" >Sign Up</a></li>
                 </ul>
                 <div class="tab-content clearfix">
                 <div class="tab-pane active" id="1a" >
@@ -66,7 +66,7 @@
                         <form action="{% url 'public:signup' %}" method="post"> {% csrf_token %}
                                 {% for field in form %}
                             <div class="form-group">
-                                    <label for="{{ field.label_id }}"> <strong>{{ field.label_tag }}</strong></label>&nbsp;
+                                    <label for="{{ field.label_id }}"> <strong>{{ field.label_tag }}</strong></label>&nbsp;<br>
                                     {{ field }}
                                     {% if field.help_text %}
                                       <small style="display: none">{{ field.help_text }}</small>

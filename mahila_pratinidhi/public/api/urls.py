@@ -17,4 +17,6 @@ urlpatterns = [
 	path('education/', viewset.EducationViewSet.as_view()),
 	path('political_engagement/', viewset.PoliticalEngagementViewSet.as_view()),
 	path('election_type/', viewset.ElectionTypeViewSet.as_view()),
+	path('marital_status/', viewset.MaritalStatusViewSet.as_view()),
+	path('election_experience/', viewset.ElectionParticipate.as_view()),
 ]

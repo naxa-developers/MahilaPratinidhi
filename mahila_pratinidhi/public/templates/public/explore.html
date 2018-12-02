@@ -140,7 +140,7 @@
                             <div class="pfofileItems">
                             {% for item in pratinidhis %}
                             <div class="pItem reveal">
-                                    <a href="{% url 'public:national_detail' item.pk %}">
+                                    <a href="{% url 'public:pratinidhi_detail' item.pk %}">
                                             <div class="inner">
     
                                                     <div class="pimageHolder">
@@ -227,41 +227,35 @@
                 }, 2000);
             });
         });
-
         var clicked = "{{ clicked }}";
-
         if(clicked == "national" || clicked == "general"){
-            $("#nation").click();
+            document.getElementById("nation").click();
             $("#nation").addClass("active");
         }
-
         else if(clicked == 'federal'){
             var elems = document.querySelectorAll(".active");
             [].forEach.call(elems, function(el) {
                 el.classList.remove("active");
             });
-            $("#federal").click();
+            document.getElementById("federal").click();
             $("#federal").addClass("active");
         }
-
         else if(clicked == "provincial"){
             var elems = document.querySelectorAll(".active");
             [].forEach.call(elems, function(el) {
                 el.classList.remove("active");
             });
-            $("#provincial").click();
+            document.getElementById("provincial").click();
             $("#provincial").addClass("active");
             
         }
-
         else if(clicked == "local"){
             var elems = document.querySelectorAll(".active");
             [].forEach.call(elems, function(el) {
                 el.classList.remove("active");
             });
-            $("#local").click();
+            document.getElementById("local").click();
             $("#local").addClass("active");   
         }
-
     </script>
     {% endblock %}
