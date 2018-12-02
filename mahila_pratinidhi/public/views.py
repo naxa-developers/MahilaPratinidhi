@@ -47,29 +47,32 @@ class Index(TemplateView):
 
 
 def signup(request):
-    if request.method == 'POST':
-        signup_form = UserCreateForm(request.POST)
-        if signup_form.is_valid():
-            user = signup_form.save(commit=False)
-            user.is_active = False
-            user.save()
-            current_site = get_current_site(request)
-            mail_subject = 'Activate your blog account.'
-            message = render_to_string('public/acc_active_email.html', {
-            'user': user,
-            'domain': current_site.domain,
-            'uid': urlsafe_base64_encode(force_bytes(user.pk)).decode('utf8'),
-            'token': account_activation_token.make_token(user),
-            })
-            to_email = signup_form.cleaned_data.get('email')
-            email = EmailMessage(
-                        mail_subject, message, to=[to_email]
-            )
-            email.send()
-            return HttpResponse('Please confirm your email address to complete the registration')
+    if request.GET.get('login'):
+        return HttpResponseRedirect('/accounts/login/')
     else:
-        signup_form = UserCreateForm()
-    return render(request, 'login.html', {'form':signup_form})
+        if request.method == 'POST':
+            signup_form = UserCreateForm(request.POST)
+            if signup_form.is_valid():
+                user = signup_form.save(commit=False)
+                user.is_active = False
+                user.save()
+                current_site = get_current_site(request)
+                mail_subject = 'Activate your blog account.'
+                message = render_to_string('public/acc_active_email.html', {
+                'user': user,
+                'domain': current_site.domain,
+                'uid': urlsafe_base64_encode(force_bytes(user.pk)).decode('utf8'),
+                'token': account_activation_token.make_token(user),
+                })
+                to_email = signup_form.cleaned_data.get('email')
+                email = EmailMessage(
+                            mail_subject, message, to=[to_email]
+                )
+                email.send()
+                return HttpResponse('Please confirm your email address to complete the registration')
+        else:
+            signup_form = UserCreateForm()
+        return render(request, 'login.html', {'form':signup_form})
     
 
 
@@ -188,40 +191,40 @@ class DataVisualize(TemplateView):
         direct = 0
 
         for mahila in local:
-            if mahila.marital_status == 'ljjflxt':
+            if mahila.marital_status == 'Married':
                 married = married + 1
             
-            if ':gfts' in mahila.educational_qualification:
+            if 'Graduate' in mahila.educational_qualification:
                 graduate = graduate + 1
             
         for mahila in national:
-            if mahila.marital_status == 'विवाहित':
+            if mahila.marital_status == 'Married':
                 married = married + 1
             
-            if 'स्नात' in mahila.educational_qualification:
+            if 'Graduate' in mahila.educational_qualification:
                 graduate = graduate + 1
             
-            if 'प्रत्यक्ष' in mahila.nirwachit_prakriya:
+            if 'Directly Elected' in mahila.nirwachit_prakriya:
                 direct = direct + 1
             
         for mahila in pratinidhi:
-            if mahila.marital_status == 'विवाहित':
+            if mahila.marital_status == 'Married':
                 married = married + 1
             
-            if 'स्नात' in mahila.educational_qualification:
+            if 'Graduate' in mahila.educational_qualification:
                 graduate = graduate + 1
             
-            if 'प्रत्यक्ष' in mahila.nirwachit_prakriya:
+            if 'Directly Elected' in mahila.nirwachit_prakriya:
                 direct = direct + 1
         
         for mahila in provincial:
-            if mahila.marital_status == 'विवाहित':
+            if mahila.marital_status == 'Married':
                 married = married + 1
             
-            if 'स्नात' in mahila.educational_qualification:
+            if 'Graduate' in mahila.educational_qualification:
                 graduate = graduate + 1
             
-            if 'प्रत्यक्ष' in mahila.nirwachit_prakriya:
+            if 'Directly Elected' in mahila.nirwachit_prakriya:
                 direct = direct + 1
 
         return render(request, self.template_name, {'total':total, 'married':married, 'graduate':graduate, 'direct':direct})
