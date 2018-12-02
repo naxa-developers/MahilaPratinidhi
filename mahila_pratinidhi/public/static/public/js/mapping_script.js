@@ -79,7 +79,9 @@ function zoomToFeature(e){
 }
 
 function onEachFeature(feature,layer){
-  circular_marker(get_center(feature,layer),"xx");
+
+
+  circular_marker(get_center(feature,layer),data_summary_all['total'][feature.properties.Province-1]);
   layer.bindPopup(customPopup,customOptions);
   layer.on('mouseover', function (e) {
               this.openPopup();
@@ -95,6 +97,12 @@ function onEachFeature(feature,layer){
 }
 
 function circular_marker(center,number){
+
+      if (number){ }
+      else{
+        number="xx";
+      }
+
 
       var myIcon = L.divIcon({
           className:'my-div-icon',
