@@ -46,18 +46,22 @@
                             <p class="recentPost boarderd">
                                 RECENT POSTS
                             </p>
+                            {% for ln in latest_news %}
                             <div class="listItem">
-                                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Reiciendis
+                                <a href="{% url 'public:news' ln.pk %}"></a>
+                               <p class="lnews"> {{ ln.title }}
 
+                            </p>
                             </div>
-                            <div class="listItem">
-                                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Reiciendis
+                            {% endfor %}
+                            <!--<div class="listItem">-->
+                                <!--Lorem ipsum dolor, sit amet consectetur adipisicing elit. Reiciendis-->
 
-                            </div>
-                            <div class="listItem">
-                                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Reiciendis
+                            <!--</div>-->
+                            <!--<div class="listItem">-->
+                                <!--Lorem ipsum dolor, sit amet consectetur adipisicing elit. Reiciendis-->
 
-                            </div>
+                            <!--</div>-->
 
                         </div>
                         <div class="recentList">

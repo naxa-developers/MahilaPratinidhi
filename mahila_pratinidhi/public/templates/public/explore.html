@@ -10,18 +10,27 @@
             </div>
         </div>
     </header>
-
+    <style>
+        span.tt-dropdown-menu {
+    background: white;
+        left: 12px;
+        width:100%;
+    border-radius: 12px;
+    background-color: white;
+    border: 3px solid #AAAAAA;
+}
+    </style>
     <section class="darkBg">
 
         <div class="container">
             <div class="selectHolder">
                 <div class="leader searchP">
-                    <div class="leaderWrp ">
-                        <form action="{% url 'public:search' %}" method="get">
-                        <input type="text" name="search" id="id_search" placeholder="SEARCH YOUR LEADER" class="leaderSearch">
-                        <span><button id="search_submit" type="submit" class="moreBtn">Search</button></span>
-                    </form>
+
+
+                    <div id="the-basics">
+                        <input class="typeahead" type="text" placeholder="SEARCH YOUR LEADER">
                     </div>
+
                 </div>
             </div>
             <p class="searchText ste"> Lorem ipsum, dolor sit amet consectetur adipisicing elit. Laboriosam a tenetur itaque, nobis ut fuga qui iusto
@@ -163,16 +172,74 @@
     {% endblock %}
 
     {% block scripts %}
-
+<!--for search-->
     <script>
         $(document).ready(function () {
-            $("#button").click(function () {
-                $('html, body').animate({
-                    scrollTop: $("#myDiv").offset().top
-                }, 2000);
-            });
-        });
 
+            $('input.typeahead').typeahead({
+              local: {{ names|safe }}
+            }).on('typeahead:selected', function(event, selection) {
+
+              // the second argument has the info you want
+              <!--alert(selection.value);-->
+              window.location.href="{% url 'public:name_search'}"
+
+              // clearing the selection requires a typeahead method
+              $(this).typeahead('setQuery', '');
+            });
+
+
+            <!--var substringMatcher = function(strs) {-->
+              <!--return function findMatches(q, cb) {-->
+                <!--var matches, substringRegex;-->
+
+                <!--// an array that will be populated with substring matches-->
+                <!--matches = [];-->
+
+                <!--// regex used to determine if a string contains the substring `q`-->
+                <!--substrRegex = new RegExp(q, 'i');-->
+
+                <!--// iterate through the pool of strings and for any string that-->
+                <!--// contains the substring `q`, add it to the `matches` array-->
+                <!--$.each(strs, function(i, str) {-->
+                  <!--if (substrRegex.test(str)) {-->
+                    <!--matches.push(str);-->
+                  <!--}-->
+                <!--});-->
+
+                <!--cb(matches);-->
+              <!--};-->
+            <!--};-->
+
+            <!--var states = {{ names|safe }}-->
+
+            <!--$('#the-basics .typeahead').typeahead({-->
+              <!--hint: true,-->
+              <!--highlight: true,-->
+              <!--minLength: 1-->
+            <!--},-->
+            <!--{-->
+              <!--name: 'states',-->
+              <!--source: substringMatcher(states)-->
+            <!--});-->
+            <!--$("#button").click(function () {-->
+                <!--$('html, body').animate({-->
+                    <!--scrollTop: $("#myDiv").offset().top-->
+                <!--}, 2000);-->
+            <!--});-->
+        <!--});-->
+
+         <!--$('.typeahead').on('click', function(){-->
+            <!--console.log("RED");-->
+         <!--});-->
+
+        <!--$('.typeahead').on('click', '.tt-menu', function(){-->
+        <!--console.log("clicked");-->
+            <!--var string= $(this).value();-->
+            <!--console.log(string);-->
+
+});
+        <!--});-->
         var clicked = "{{ clicked }}";
 
         if(clicked == "national" || clicked == "general"){

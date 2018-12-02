@@ -18,6 +18,10 @@ import json
 from django.core.mail import EmailMessage
 from itertools import chain
 
+from django.shortcuts import render
+from django.db.models import Q
+# from posts.models import Post
+
 
 class Index(TemplateView):
 
@@ -93,14 +97,29 @@ class ExploreView(TemplateView):
 
 
     def get(self, request, *args, **kwargs):
-
+        names = []
         district = District.objects.all()
         rastriyas = RastriyaShava.objects.all()
         pratinidhis = PratinidhiShava.objects.all()
         provinces = Province.objects.all()
+
+        province_names = ProvinceMahilaPratinidhiForm.objects.all()
+        local_names = MahilaPratinidhiForm.objects.all()
+
+        object_list = list(chain(rastriyas, pratinidhis, province_names))
+
+        for lists in object_list:
+
+            names.append(lists.english_name)
+
+        # for lists in local_names:
+        #     names.append(lists.name)
+        # print(names)
+        json_list = json.dumps(names)
+
         clicked = self.kwargs.get('clicked')
         return render(request, self.template_name, {'districts':district, 'rastriyas':rastriyas,
-        'pratinidhis':pratinidhis, 'provinces':provinces, 'clicked':clicked})
+        'pratinidhis':pratinidhis, 'provinces':provinces, 'clicked':clicked, 'names':json_list})
 
 
 class MahilaPratinidhiView(TemplateView):
@@ -213,7 +232,8 @@ class NewsView(TemplateView):
 
     def get(self, request, *args, **kwargs):
         news = News.objects.get(id=self.kwargs.get('pk'))
-        return render(request, self.template_name, {'news':news})
+        latest_news = News.objects.latest
+        return render(request, self.template_name, {'news':news, 'latest_news': latest_news})
 
 
 def read_view(request, ):
@@ -244,24 +264,59 @@ class callRequestView(TemplateView):
             print("Please login first!")
         return render(request, self.template_name)
 
-
-class searchView(ListView):
-    template_name = 'public/lists.html'
-    print('hellooo')
+class SearchDetail(DetailView):
+    template_name = 'public/detail.html'
 
     def get(self, request, *args, **kwargs):
-        print("dasda")
-        name = self.request.GET.get('search')
-        print("hello" + name)
+        rastriya = RastriyaShava.objects.filter(english_name=self.kwargs.get('english_name'))
+        return render(request, self.template_name, {'form': rastriya})
 
-        national = RastriyaShava.objects.filter(name = name)
-        province = ProvinceMahilaPratinidhiForm.objects.filter(name__icontains = name)
-        federal = PratinidhiShava.objects.filter(name__icontains = name)
-        local = MahilaPratinidhiForm.objects.filter(name__icontains = name)
 
-        model = list(chain(national, province, federal, local))
+# class searchView(ListView):
+#     template_name = 'public/lists.html'
+#     print('hellooo')
+#
+#     def get(self, request, *args, **kwargs):
+#         print("dasda")
+#         name = self.request.GET.get('search')
+#         print("hello" + name)
+#
+#         national = RastriyaShava.objects.filter(name = name)
+#         province = ProvinceMahilaPratinidhiForm.objects.filter(name__icontains = name)
+#         federal = PratinidhiShava.objects.filter(name__icontains = name)
+#         local = MahilaPratinidhiForm.objects.filter(name__icontains = name)
+#
+#         model = list(chain(national, province, federal, local))
+#
+#         if national is not None:
+#             return render(self.request, self.template_name, {'forms': model})
 
-        if national is not None:
-            return render(self.request, self.template_name, {'forms': model})
-
+# def searchposts(request):
+#     print("hello")
+#     if request.method == 'GET':
+#         query= request.GET.get('q')
+#
+#
+#         submitbutton= request.GET.get('submit')
+#
+#         if query is not None:
+#             print("entered")
+#             lookups= Q(english_name__icontains=query)
+#             print(lookups)
+#             rastriya = RastriyaShava.objects.filter(lookups)
+#             pratinidhi = PratinidhiShava.objects.filter(lookups)
+#             province = ProvinceMahilaPratinidhiForm.objects.filter(lookups)
+#             locals = MahilaPratinidhiForm.objects.filter(Q(name__icontains=query))
+#             results = list(chain(rastriya, pratinidhi, province))
+#             print("end")
+#             context={'results': results, 'locals': locals,
+#                      'submitbutton': submitbutton}
+#
+#             return render(request, 'public/search.html', context)
+#
+#         else:
+#             return render(request, 'public/explore.html')
+#
+#     else:
+#         return render(request, 'public/explore.html')
 
