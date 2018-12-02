@@ -15,6 +15,7 @@ language: 'F#', value: 59.6, color: '#008fc9' }, { language: 'Clojure', value:
 
 
 var data_to_use=[];
+console.log("baseurlcheck",base_url+'/api/ethnicity/');
 $.get(base_url+'/api/ethnicity/',function(data){
 
 

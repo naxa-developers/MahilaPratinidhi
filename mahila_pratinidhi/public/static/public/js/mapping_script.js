@@ -1,6 +1,6 @@
 //alert("pasyo");
-//var base_url="http://mahilapratinidhi.naxa.com.np";
-var base_url="http://localhost:8000";
+var base_url="http://mahilapratinidhi.naxa.com.np";
+//var base_url="http://localhost:8000";
 var map =L.map('mapid').setView([27,85],7);
 
 var OSM = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -71,6 +71,7 @@ function zoomToFeature(e){
   for (var i=0;i<marker_array.length;i++){
     marker_array[i].removeFrom(map);
   }
+  console.log("baseurlcheck",base_url+'/api/geojson/province/'+ province);
   var layer = L.geoJson.ajax(base_url+'/api/geojson/province/'+ province,
             {onEachFeature:onEachFeature}
             );
@@ -123,6 +124,7 @@ function get_center(feature,layer){
   return center;
 
 }
+console.log("baseurlcheck",base_url+'/api/geojson/country');
 
 var country =L.geoJson.ajax(base_url+'/api/geojson/country',
           {onEachFeature:onEachFeature,
@@ -145,7 +147,7 @@ var country =L.geoJson.ajax(base_url+'/api/geojson/country',
     'provincial':[32, 37, 37, 20, 32, 13, 0]
     }
   frequency_array=[1187,1000,800,1730,2000,3212,3212];
-
+console.log("baseurlcheck",base_url+'/api/maps/);
   $.get(base_url+'/api/maps/',function(data){
 
     data_summary_all['provincial']= data['provincial'];
