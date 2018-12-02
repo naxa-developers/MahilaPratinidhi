@@ -1,8 +1,78 @@
 {% extends 'public/public_base.html' %}
 {% load staticfiles %}
 {% block upper_content %}
-<script src="https://d3js.org/d3.v5.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.24.0/babel.js"></script>
+<script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
 
+<!-- <script src="https://d3js.org/d3.v5.min.js"></script>  -->
+
+
+<style>
+  .stacked-bar {
+    font: 10px sans-serif;
+    text: white;
+    shape-rendering: crispEdges;
+  }
+
+
+
+  .simple-bar{
+    height: 100%;
+    width:100%;
+    fill:white
+  }
+
+  text.simple-divergence {
+  font-size: 14px;
+  fill: #2F4A6D;
+}
+
+text.simple-value {
+  font-size: 12px;
+}
+
+text.simple-title {
+  font-size: 22px;
+  font-weight: 600;
+}
+
+text.simple-label {
+  font-size: 14px;
+  font-weight: 400;
+}
+
+
+  .simple-rect {
+  fill: skyblue;
+}
+
+
+  .axis path,
+  .axis line {
+    fill: none;
+    stroke: red;
+
+  }
+
+  path.domain {
+    stroke: none;
+  }
+
+  .y .tick line {
+    stroke:green;
+
+  }
+
+  .tick{
+    fill:white;
+    font-size:small
+  }
+
+
+
+</style>
 <body>
     <header>
         <div class="navigation innerPage">
@@ -95,7 +165,7 @@
                                         <li class="active">
                                             <a href="#1a" data-toggle="tab">first</a>
                                         </li>
-        
+
                                         <li>
                                             <a href="#3a" data-toggle="tab">Applying </a>
                                         </li>
@@ -159,14 +229,14 @@
                                         <li>
                                             <a href="#4a" data-toggle="tab">Last</a>
                                         </li>
-        
+
                                     </ul>
                                     <div class="scrollright scrollicon">
                                         <i class="fa fa-angle-right"></i>
                                     </div>
                                 </div>
                             </div>
-        
+
                             <div class="tab-content clearfix">
                                 <div class="tab-pane active" id="1a">
                                     <h3>Content's background color is the same for the tab</h3>
@@ -183,8 +253,8 @@
                                 </div>
                             </div>
                         </div>
-        
-            
+
+
                 <div class="col dtitle1">
                     <div class="gtitle">
                         <p class="innerp"> POLITICAL ENGAGEMENT</p>
@@ -226,107 +296,11 @@
     </section>
 
     <section class="dk">
-        <div class="container">
-            <div class="graphItem">
-                <div class="row">
-                    <div class="col-md-6">
-                        <p class="gheader">
-                            Age Variation
-                        </p>
-                        <p class="gtext">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                            Consequat ac felis donec et odio. Natoque penatibus et magnis dis parturient montes nascetur
-                        </p>
-                        <div class="icons">
-                            <a href="">
-                                <i class="fa fa-facebook-f"></i>
-                            </a>
-                            <a href="">
-                                <i class="fa fa-twitter"></i>
-                            </a>
-                            <a href="">
-                                <i class="fa fa-linkedin-in"></i>
-                            </a>
-                            <a class="l5" href="">
-                                <i class="fa fa-download"></i>
-                            </a>
-                            <a href="">
-                                <i class="fa fa-share-alt"></i>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="col-md-6 graphHolder">
-                        <!-- <img src="{% static 'public/image/graph1.png' %}" alt=""> -->
-                    </div>
-                </div>
-            </div>
+        <div class="container" id="react-container">
 
-            <div class="graphItem">
-                <div class="row">
-                    <div class="col-md-6">
-                        <p class="gheader">
-                            Age Variable according to Political Party
-                        </p>
-                        <p class="gtext">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                            Consequat ac felis donec et odio. Natoque penatibus et magnis dis parturient montes nascetur
-                        </p>
-                        <div class="icons">
-                            <a href="">
-                                <i class="fa fa-facebook-f"></i>
-                            </a>
-                            <a href="">
-                                <i class="fa fa-twitter"></i>
-                            </a>
-                            <a href="">
-                                <i class="fa fa-linkedin-in"></i>
-                            </a>
-                            <a class="l5" href="">
-                                <i class="fa fa-download"></i>
-                            </a>
-                            <a href="">
-                                <i class="fa fa-share-alt"></i>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="col-md-6 graphHolder">
-                        <!-- <img src="{% static 'public/image/graph2.png' %}" alt=""> -->
-                    </div>
-                </div>
-            </div>
-            <div class="graphItem">
-                <div class="row">
-                    <div class="col-md-6">
-                        <p class="gheader">
-                            Age Variable density curve
-                        </p>
-                        <p class="gtext">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                            Consequat ac felis donec et odio. Natoque penatibus et magnis dis parturient montes nascetur
-                        </p>
-                        <div class="icons">
-                            <a href="">
-                                <i class="fa fa-facebook-f"></i>
-                            </a>
-                            <a href="">
-                                <i class="fa fa-twitter"></i>
-                            </a>
-                            <a href="">
-                                <i class="fa fa-linkedin-in"></i>
-                            </a>
-                            <a class="l5" href="">
-                                <i class="fa fa-download"></i>
-                            </a>
-                            <a href="">
-                                <i class="fa fa-share-alt"></i>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="col-md-6 graphHolder">
-                        <!-- <img src="{% static 'public/image/graph4.png' %}" alt=""> -->
-                    </div>
-                </div>
-            </div>
+
+
+
 
         </div>
 
@@ -340,37 +314,37 @@
     <script>
 
             $(document).ready(function () {
-    
-    
+
+
                 $(window).resize(function () {
                     scrolltabs();
                 });
-    
+
                 scrolltabs();
                 function scrolltabs() {
                     var counter = 0;
                     var elementNumber = $(".widthScrol").children().length;
-    
-    
+
+
                     var elementWidth = elementNumber * 150;
-    
+
                     var calcWidth = $(".widthScrol").innerWidth();
                     console.log(calcWidth);
                     var totalSlider = elementWidth - calcWidth;
-    
-    
+
+
                     var intotal = totalSlider / 160;
                     var n = Math.ceil(intotal);
-    
-    
+
+
                     $(".scrolleft").click(function () {
-    
+
                         if (counter != (-1 * n - 1)) {
                             $(".widthScrol li ").animate({ left: '-=160' });
                             counter--;
                         }
                     });
-    
+
                     $(".scrollright").click(function () {
                         console.log(counter);
                         if (counter < 1) {
@@ -378,60 +352,25 @@
                             counter++;
                         }
                     });
-    
-    
+
+
                     $(".filterBtn").click(function () {
-    
+
                         $(".selectHolder.list").addClass("activated")
-    
+
                     });
-    
+
                     $(".closeBtn").click(function () {
-    
+
                         $(".selectHolder.list").removeClass("activated")
-    
+
                     });
                 }
             });
-    
-    
-    
         </script>
+        <script type= "text/babel" src={% static 'public/js/bar.js'%}></script>
+        <script type= "text/babel" src={% static 'public/js/stacked.js'%}></script>
+        <script type= "text/babel" src={% static 'public/js/d3_app.js'%}></script>
+        <script type= "text/babel" src ={% static 'public/js/d3_script.js'%}></script>
 
-    <script>
-
-      var svgWidth =400;
-      var svgHeight =180;
-
-var svg = d3.selectAll('.graphHolder').append('svg')
-              .attr("width",svgWidth)
-              .attr("height",svgHeight)
-              .attr("class","bar-chart");
-
-var data=[10,20,20,30,50,400];
-var barPadding = 5;
-var barHeight = (svgHeight/data.length);
-
-
-var scaling = d3.scaleLinear()
-    .domain([10,400])
-    .range([0,svgWidth]);
-
-
-var barChart = svg.selectAll("rect")
-                  .data(data)
-                  .enter()
-                  .append("rect")
-                  .attr("fill","orange")
-                  .attr("height",100)
-                  .attr("width",function(d){
-                      return d;
-                  })
-                  .attr("y", function(d,i){
-                    return i*30 ;
-                  });
-
-
-
-    </script>
 {% endblock %}

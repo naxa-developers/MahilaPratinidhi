@@ -1,0 +1,156 @@
+//alert("pasyo");
+var map =L.map('mapid').setView([27,85],7);
+
+var OSM = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  attribution: '&copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
+}).addTo(map);
+
+baseMaps = {
+    //"Street View": street_view,
+    "OSM": OSM,
+    "Empty" : L.tileLayer(''),
+};
+L.control.layers(baseMaps).addTo(map);
+
+
+
+var customPopup = "National:<br/>Federal:<br/>Provincial:<br/>Local:<br/>";
+var customOptions =
+    {
+    'maxWidth': '1000',
+    'className' : 'custom-icon',
+    'closeButton': false,
+    'autoClose': false
+    }
+
+function update_popup(data){
+  customPopup = "National:"+data[0]+"<br/>Federal:"+data[1]+"<br/>Provincial:"+data[2]+"<br/>Local:"+data[3]+"<br/>";
+
+}
+
+function highlightFeature(e){
+  layer= e.target;
+  var province=layer.feature.properties.Province;
+  layer.setStyle({
+    weight:4,
+    color: '#666',
+    dashArray :'',
+    fillOpacity:0.7
+  });
+}
+
+function resetHighlight(e){
+  country.resetStyle(e.target);
+}
+
+
+var last_layer =[];
+var marker_array=[];
+function zoomToFeature(e){
+  map.fitBounds(e.target.getBounds());
+  if(last_layer[0]){
+      map.removeLayer(last_layer[0]);
+      last_layer.pop();
+    }
+  var province= e.target.feature.properties.Province;
+  for (var i=0;i<marker_array.length;i++){
+    marker_array[i].removeFrom(map);
+  }
+  var layer = L.geoJson.ajax('http://localhost:8000/api/geojson/province/'+ province,
+            {onEachFeature:onEachFeature}
+            );
+
+   layer.addTo(map);
+   last_layer.push(layer);
+
+}
+
+function onEachFeature(feature,layer){
+  circular_marker(get_center(feature,layer),"xx");
+  layer.bindPopup(customPopup,customOptions);
+  layer.on('mouseover', function (e) {
+              this.openPopup();
+          });
+  layer.on('mouseout', function (e) {
+              this.closePopup();
+          });
+  layer.on({
+    mouseover: highlightFeature,
+    mouseout: resetHighlight,
+    click:zoomToFeature
+  })
+}
+
+function circular_marker(center,number){
+
+      var myIcon = L.divIcon({
+          className:'my-div-icon',
+          iconSize: new L.Point(60, 60),
+          html: number
+      });
+      // you can set .my-div-icon styles in CSS
+      var marker= L.marker(center, {icon: myIcon}).addTo(map);
+      marker_array.push(marker);
+          //.bindPopup('divIcon CSS3 popup. <br> Supposed to be easily stylable.');
+}
+
+function get_center(feature,layer){
+
+  var center =(layer.getBounds().getCenter());
+  return center;
+
+}
+
+var country =L.geoJson.ajax('http://localhost:8000/api/geojson/country',
+          {onEachFeature:onEachFeature}).addTo(map);
+
+
+
+  //
+  // var center_for_markers = [ [27.244862521497282,87.2314453125],
+  // [26.941659545381516,85.67138671875], [27.751607687549384,85.352783203125],
+  // [28.294707428421205,84.166259765625], [28,83], [29.,82.5],
+  // [29.49698759653577,80.980224609375] ]
+
+//api call_
+
+  var data_summary_all ={
+    'total':[32, 37, 37, 20, 32, 13, 18],
+    'national': [1,2,2,5,3,30,7],
+    'provincial':[32, 37, 37, 20, 32, 13, 18]
+
+    }
+  frequency_array=[1187,1000,800,1730,2000,3212,3212];
+
+//interaction with sidebar
+
+$("#national-all").on('click',function(){
+
+for(var i =0; i< data_summary_all['national'].length;i++)
+  {
+  circular_marker(center_for_markers[i],data_summary_all['national'][i]);
+}
+});
+
+$("#federal-all").on('click',function(){
+
+  for(var i =0; i< data_summary_all['national'].length;i++)
+    {
+    circular_marker(center_for_markers[i],data_summary_all['national'][i]);
+  }
+});
+
+$("#provincial-all").on('click',function(){
+
+  for(var i =0; i< data_summary_all['provincial'].length;i++)
+    {
+    circular_marker(center_for_markers[i],data_summary_all['provincial'][i]);
+  }
+});
+
+$("#local-all").on('click',function(){
+  for(var i =0; i< data_summary_all['national'].length;i++)
+    {
+    circular_marker(center_for_markers[i],data_summary_all['national'][i]);
+  }
+});
