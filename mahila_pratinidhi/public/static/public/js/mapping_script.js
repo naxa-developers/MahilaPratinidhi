@@ -5,9 +5,22 @@ var OSM = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
   attribution: '&copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
 }).addTo(map);
 
+var OpenStreetMap_BlackAndWhite = L.tileLayer('http://{s}.tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png', {
+	maxZoom: 18,
+	attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+}).addTo(map);
+
+var Thunderforest_TransportDark = L.tileLayer('https://{s}.tile.thunderforest.com/transport-dark/{z}/{x}/{y}.png?apikey={apikey}', {
+	attribution: '&copy; <a href="http://www.thunderforest.com/">Thunderforest</a>, &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+	apikey: 'ddb2f354bd68480ebfa4ce3a9726c511',
+	maxZoom: 22
+});
+
 baseMaps = {
     //"Street View": street_view,
     "OSM": OSM,
+    "blackwhite":OpenStreetMap_BlackAndWhite,
+    "dark":Thunderforest_TransportDark,
     "Empty" : L.tileLayer(''),
 };
 L.control.layers(baseMaps).addTo(map);
@@ -66,7 +79,9 @@ function zoomToFeature(e){
 }
 
 function onEachFeature(feature,layer){
-  circular_marker(get_center(feature,layer),"xx");
+
+
+  circular_marker(get_center(feature,layer),data_summary_all['total'][feature.properties.Province-1]);
   layer.bindPopup(customPopup,customOptions);
   layer.on('mouseover', function (e) {
               this.openPopup();
@@ -83,9 +98,15 @@ function onEachFeature(feature,layer){
 
 function circular_marker(center,number){
 
+      if (number){ }
+      else{
+        number="xx";
+      }
+
+
       var myIcon = L.divIcon({
           className:'my-div-icon',
-          iconSize: new L.Point(60, 60),
+          iconSize: new L.Point(50, 50),
           html: number
       });
       // you can set .my-div-icon styles in CSS
@@ -102,7 +123,9 @@ function get_center(feature,layer){
 }
 
 var country =L.geoJson.ajax('http://localhost:8000/api/geojson/country',
-          {onEachFeature:onEachFeature}).addTo(map);
+          {onEachFeature:onEachFeature,
+           style: {fillOpacity:0}
+          }).addTo(map);
 
 
 
@@ -117,11 +140,15 @@ var country =L.geoJson.ajax('http://localhost:8000/api/geojson/country',
   var data_summary_all ={
     'total':[32, 37, 37, 20, 32, 13, 18],
     'national': [1,2,2,5,3,30,7],
-    'provincial':[32, 37, 37, 20, 32, 13, 18]
-
+    'provincial':[32, 37, 37, 20, 32, 13, 0]
     }
   frequency_array=[1187,1000,800,1730,2000,3212,3212];
 
+  $.get("http://localhost:8000/api/maps/",function(data){
+
+    data_summary_all['provincial']= data['provincial'];
+
+});
 //interaction with sidebar
 
 $("#national-all").on('click',function(){
