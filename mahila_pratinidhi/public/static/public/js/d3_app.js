@@ -10,25 +10,27 @@ class ChartBox extends React.Component {
 
   handleCheck= () => this.setState({checked : !this.state.checked});
 
-  draw_d3 = function (data){
-    }
+
 
 
     render (){
       var msg="checked";
-       if (this.state.checked){
-         msg= "yeschecked";
-       }
-       else{
-        msg="unchecked";
-       }
+      let bar;
+      if(this.props.data_pass[0]['data-type']=="1"){
+        bar = <StackedChart data={this.props.data_pass[0]['data']} />;
+      }
 
-       if(this.props.data_pass[0].data){
-         this.draw_d3(this.props.data_pass[0].data);
-       }
+      else if(this.props.data_pass[0]['data-type']=="0"){
+        bar = <SimpleBar data={this.props.data_pass[0]['data']} />;
+      }
+
+      console.log("render",this.props.data_pass[0]['data'])
+
+
+
   return (
         <div>
-    <div className="graphItem"> <div className="row"> <div
+    <div className="graphItem" > <div className="row"> <div
     className="col-md-6"> <p className="gheader"> {this.props.data_pass[0].title}  </p> <p
     className="gtext"> Lorem ipsum dolor sit amet, consectetur adipiscing
     elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
@@ -39,7 +41,9 @@ class ChartBox extends React.Component {
     </a> <a className="l5" href=""> <i className="fa fa-download"></i> </a>
     <a href=""> <i className="fa fa-share-alt"></i> </a> </div> </div> <div
     className="col-md-6 graphHolder">
-    <StackedChart data={this.props.data_pass[0].data} />
+
+      {bar}
+
     </div></div> </div>
     </div>
       )

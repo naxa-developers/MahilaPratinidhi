@@ -1,5 +1,32 @@
-alert("pasyo");
+//alert("pasyo");
 //according to the tab pressed, call api , accordingly determine the no of checkbox app that needs to be called
+
+    const sample = [ { language: 'Rust', value: 78.9, color: '#000000' }, {
+language: 'Kotlin', value: 75.1, color: '#00a2ee' }, { language: 'Python',
+value: 68.0, color: '#fbcb39' }, { language: 'TypeScript', value: 67.0, color:
+'#007bc8' }, { language: 'Go', value: 65.6, color: '#65cedb' }, { language:
+'Swift', value: 65.1, color: '#ff6e52' }, { language: 'JavaScript', value: 61.9,
+color: '#f9de3f' }, { language: 'C#', value: 60.4, color: '#5d2f8e' }, {
+language: 'F#', value: 59.6, color: '#008fc9' }, { language: 'Clojure', value:
+59.6, color: '#507dca' } ];
+
+
+var data_to_use=[];
+$.get("http://localhost:8000/api/ethnicity/",function(data){
+
+
+
+  ReactDOM.render(
+    <div>
+    <ChartBox data_pass={[{'title':"Ethnictiy",'data-type':'0','data':data['total_ethnicity']}]} />
+    <ChartBox data_pass={[{'title':"Ethnictiy vs party",'data-type':'1','data':data['party_ethnicity']}]} />
+    </div>,
+    document.getElementById("react-container")
+  )
+
+});
+
+
 
 //format the data from api according to need
 var data_fruit = [
@@ -15,14 +42,3 @@ var data_fruit = [
   { year: "2015", redDelicious: "16", mcintosh: "19", oranges: "6", pears: "9" },
   { year: "2016", redDelicious: "19", mcintosh: "17", oranges: "5", pears: "7" },
 ];
-
-//pass the data to react component as prop
-var data_pass =[{'title':"age",'data':data_fruit}]
-ReactDOM.render(
-  <div>
-  <ChartBox data_pass={data_pass} />
-  
-
-  </div>,
-  document.getElementById("react-container")
-)

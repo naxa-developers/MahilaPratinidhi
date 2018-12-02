@@ -5,17 +5,54 @@
 <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
 <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
 <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+
+<!-- <script src="https://d3js.org/d3.v5.min.js"></script>  -->
+
+
 <style>
-  svg {
+  .stacked-bar {
     font: 10px sans-serif;
     text: white;
     shape-rendering: crispEdges;
   }
 
+
+
+  .simple-bar{
+    height: 100%;
+    width:100%;
+    fill:white
+  }
+
+  text.simple-divergence {
+  font-size: 14px;
+  fill: #2F4A6D;
+}
+
+text.simple-value {
+  font-size: 12px;
+}
+
+text.simple-title {
+  font-size: 22px;
+  font-weight: 600;
+}
+
+text.simple-label {
+  font-size: 14px;
+  font-weight: 400;
+}
+
+
+  .simple-rect {
+  fill: skyblue;
+}
+
+
   .axis path,
   .axis line {
     fill: none;
-    stroke: #000;
+    stroke: red;
 
   }
 
@@ -24,9 +61,17 @@
   }
 
   .y .tick line {
-    stroke: #ddd;
+    stroke:green;
 
   }
+
+  .tick{
+    fill:white;
+    font-size:small
+  }
+
+
+
 </style>
 <body>
     <header>
@@ -323,6 +368,7 @@
                 }
             });
         </script>
+        <script type= "text/babel" src={% static 'public/js/bar.js'%}></script>
         <script type= "text/babel" src={% static 'public/js/stacked.js'%}></script>
         <script type= "text/babel" src={% static 'public/js/d3_app.js'%}></script>
         <script type= "text/babel" src ={% static 'public/js/d3_script.js'%}></script>
