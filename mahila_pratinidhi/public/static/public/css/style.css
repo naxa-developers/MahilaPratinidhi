@@ -765,4 +765,5 @@ background:rgba(255,255,255,0.02);padding:30px;}
               text-align: center;}
               .widthScrol{overflow: hidden;position: relative;}
               .tabheading{flex-grow: 1;}
-              .scrolleft,.scrollright{width:80px;min-width: 80px;}
+              .scrolleft,.scrollright{width:80px;min-width: 80px;
+            }
