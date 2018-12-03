@@ -17,15 +17,17 @@ class SimpleBar extends React.Component{
     const svg = d3.select('.simple-bar');
     const svgContainer = d3.select('#container');
 
-    const margin = 20;
-    const width = 550 - 2 * margin;
-    const height = 300 - 2 * margin;
+
+    var margin0 = {top: 20, right: 0, bottom: 30, left: 20};
+
+    const width = 550 -margin0.left-margin0.right;
+    const height = 300 -margin0.top- margin0.bottom;
 
     const chart = svg.append('g')
-      .attr('transform', "translate(" + margin + "," + margin + ")");
+      .attr('transform', "translate(" + margin0.left + "," + margin0.top + ")");
 
       const xScale = d3.scale.ordinal()
-      .rangeRoundBands([0, width])
+      .rangeRoundBands([0, width],0.1)
       .domain(sample.map((s) => s.caste))
       ;
 
@@ -131,22 +133,22 @@ class SimpleBar extends React.Component{
     svg
       .append('text')
       .attr('class', 'simple-label')
-      .attr('x', -(height / 2) - margin)
-      .attr('y', margin / 2.4)
+      .attr('x', -(height / 2) - margin0.left)
+      .attr('y', margin0.top / 2.4)
       .attr('transform', 'rotate(-90)')
       .attr('text-anchor', 'middle')
       .text('')
 
     svg.append('text')
       .attr('class', 'simple-label')
-      .attr('x', width / 2 + margin)
-      .attr('y', height + margin * 1.7+25)
+      .attr('x', width / 2 + margin0.left)
+      .attr('y', height + margin0.top * 1.7+25)
       .attr('text-anchor', 'middle')
       .text('Ethnictiy')
 
     svg.append('text')
       .attr('class', 'simple-title')
-      .attr('x', width / 2 + margin)
+      .attr('x', width / 2 + margin0.left)
       .attr('y', 40)
       .attr('text-anchor', 'middle')
       .text('')
