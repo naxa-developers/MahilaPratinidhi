@@ -147,7 +147,7 @@ var country =L.geoJson.ajax(base_url+'/api/geojson/country',
     'provincial':[32, 37, 37, 20, 32, 13, 0]
     }
   frequency_array=[1187,1000,800,1730,2000,3212,3212];
-console.log("baseurlcheck",base_url+'/api/maps/);
+console.log("baseurlcheck",base_url+'/api/maps/');
   $.get(base_url+'/api/maps/',function(data){
 
     data_summary_all['provincial']= data['provincial'];
