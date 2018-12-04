@@ -18,9 +18,9 @@ class SimpleBar extends React.Component{
     const svgContainer = d3.select('#container');
 
 
-    var margin0 = {top: 20, right: 0, bottom: 30, left: 20};
+    var margin0 = {top: 20, right: 40, bottom: 30, left: 10};
 
-    const width = 550 -margin0.left-margin0.right;
+    const width = 600 -margin0.left-margin0.right;
     const height = 300 -margin0.top- margin0.bottom;
 
     const chart = svg.append('g')
