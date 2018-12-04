@@ -25,6 +25,7 @@ urlpatterns = [
 	path('explore/province/<province_id>/<int:pk>/', views.ProvincialMahilaPratinidhiDetail.as_view(),
 	name="provincial_mahila_detail"),
 
+	path('detail/<int:pk>', views.MahilaDetail.as_view(), name="detail"),
 	path('detail/national/<int:pk>/', views.RastriyaMahilaDetail.as_view(), name="national_detail"),
 	path('detail/pratinidhi/<int:pk>', views.PratinidhiMahilaDetail.as_view(), name="pratinidhi_detail"),
 	path('detail/pratinidhi/<int:pk>/call', views.callRequestView.as_view(), name="pratinidhi_call_request"),

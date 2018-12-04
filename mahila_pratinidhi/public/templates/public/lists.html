@@ -101,9 +101,9 @@
 
                                 <div class="pimageHolder">
                                     {% if form.image %}
-                                    <img src="{{ MEDIA_URL }} {{ form.image.url }}" alt="">
+                                    <img src="{{ MEDIA_URL }} {{ form.image.url }}" class="cropList" alt="">
                                     {% else %}
-                                    <img src="{% static 'public/image/mahilalogo.png' %}" alt="" >
+                                    <img src="{% static 'public/image/mahilalogo.png' %}" class="cropList" alt="" >
                                     {% endif %}
                                     <div class="img"></div>
 

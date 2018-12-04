@@ -159,6 +159,25 @@ class ProvincialMahilaPratinidhiDetail(DetailView):
         return render(request, self.template_name, {'form':form})
 
 
+class MahilaDetail(DetailView):
+    template_name = 'public/detail.html'
+
+    def get(self, request, *args, **kwargs):
+        if RastriyaShava.objects.get(id=self.kwargs.get('pk')):
+            form = RastriyaShava.objects.get(id=self.kwargs.get('pk'))
+
+        elif PratinidhiShava.objects.get(id=self.kwargs.get('pk')):
+            form = RastriyaShava.objects.get(id=self.kwargs.get('pk'))
+
+        elif ProvinceMahilaPratinidhiForm.objects.get(id=self.kwargs.get('pk')):
+            form = RastriyaShava.objects.get(id=self.kwargs.get('pk'))
+
+        else:
+            form = MahilaPratinidhiForm.objects.get(id=self.kwargs.get('pk'))
+        
+        return render(request, self.template_name, {'form':form})
+
+
 class RastriyaMahilaDetail(TemplateView):
     template_name = 'public/detail.html'
 
