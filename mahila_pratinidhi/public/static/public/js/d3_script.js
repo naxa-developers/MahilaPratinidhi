@@ -5,14 +5,15 @@ var base_url="http://localhost:8000";
 //according to the tab pressed, call api , accordingly determine the no of checkbox app that needs to be called
 $(".dataVariable").on("click",function(){
 
-  var variable = $(this).text().toLowerCase();
+  var variable = $(this).text().toLowerCase().replace(" ","_");
+  alert(variable)
 
   $.get(base_url+'/api/'+ variable +'/',function(data){
 
     ReactDOM.render(
       <div>
-      <ChartBox data_pass={[{'title':"Ethnictiy",'data-type':'0','data':data['total_ethnicity']}]} />
-      <ChartBox data_pass={[{'title':"Ethnictiy vs party",'data-type':'1','data':data['party_ethnicity']}]} />
+      <ChartBox data_pass={[{'title':variable,'data-type':'0','data':data['total']}]} />
+
       </div>,
       document.getElementById("react-container")
     )

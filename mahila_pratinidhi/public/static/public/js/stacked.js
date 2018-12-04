@@ -17,7 +17,7 @@ class StackedChart extends React.Component{
   var margin = {top: 20, right: 170, bottom: 20, left: 30};
 
   var width = 700 - margin.left - margin.right,
-      height = 350 - margin.top - margin.bottom;
+      height = 400 - margin.top - margin.bottom;
 
   var svg = d3.select(".stacked-bar")
     .attr("width", width + margin.left + margin.right)
@@ -34,7 +34,7 @@ class StackedChart extends React.Component{
     // Transpose the data into layers
     var dataset = d3.layout.stack()(party_array.map(function(fruit) {
       return data.map(function(d) {
-        return {x: d.caste, y: +d[fruit]};
+        return {x: d.label, y: +d[fruit]};
       });
     }));
 

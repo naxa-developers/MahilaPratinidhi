@@ -12,9 +12,8 @@ class ChartBox extends React.Component {
 
 
 
-
     render (){
-      var msg="checked";
+      //alert(this.props.data_pass[0].title);
       let bar;
       if(this.props.data_pass[0]['data-type']=="1"){
         bar = <StackedChart data={this.props.data_pass[0]['data']} />;
@@ -30,8 +29,9 @@ class ChartBox extends React.Component {
 
   return (
         <div>
-    <div className="graphItem" > <div className="row"> <div
-    className="col-md-5"> <p className="gheader"> {this.props.data_pass[0].title}  </p> <p
+    <div className="graphItem" > <div className="row">
+    <div className="col-md-1"><i className="fa fa-chevron-circle-left finon"></i></div>
+    <div className="col-md-4">  <p className="gheader"> {this.props.data_pass[0].title}  </p> <p
     className="gtext"> Lorem ipsum dolor sit amet, consectetur adipiscing
     elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
     Consequat ac felis donec et odio. Natoque penatibus et magnis dis
@@ -40,11 +40,11 @@ class ChartBox extends React.Component {
     fa-twitter"></i> </a> <a href=""> <i className="fa fa-linkedin-in"></i>
     </a> <a className="l5" href=""> <i className="fa fa-download"></i> </a>
     <a href=""> <i className="fa fa-share-alt"></i> </a> </div> </div> <div
-    className="col-md-7 graphHolder">
+    className="col-md-6 graphHolder">
 
       {bar}
 
-    </div></div> </div>
+    </div><div className="col-md-1"><i className="fa fa-chevron-circle-right ficon"></i></div></div> </div>
     </div>
       )
     };

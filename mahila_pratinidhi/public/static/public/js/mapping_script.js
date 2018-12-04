@@ -10,7 +10,7 @@ var OSM = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 var OpenStreetMap_BlackAndWhite = L.tileLayer('http://{s}.tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png', {
 	maxZoom: 18,
 	attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-}).addTo(map);
+});
 
 var Thunderforest_TransportDark = L.tileLayer('https://{s}.tile.thunderforest.com/transport-dark/{z}/{x}/{y}.png?apikey={apikey}', {
 	attribution: '&copy; <a href="http://www.thunderforest.com/">Thunderforest</a>, &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
@@ -18,12 +18,20 @@ var Thunderforest_TransportDark = L.tileLayer('https://{s}.tile.thunderforest.co
 	maxZoom: 22
 });
 
+
+var gl = L.mapboxGL({
+       attribution: '<a href="https://www.maptiler.com/license/maps/" target="_blank">&copy; MapTiler</a> <a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap contributors</a>',
+       accessToken: 'not-needed',
+       style: 'https://maps.tilehosting.com/c/163bd208-a4f1-4885-8b97-416ac0b47d00/styles/darkmatter_upen/style.json?key=SWfpfQVfURyYQrAEj6J3'
+     }).addTo(map);
+
 baseMaps = {
     //"Street View": street_view,
     "OSM": OSM,
     "blackwhite":OpenStreetMap_BlackAndWhite,
     "dark":Thunderforest_TransportDark,
     "Empty" : L.tileLayer(''),
+    "gl":gl
 };
 L.control.layers(baseMaps).addTo(map);
 
