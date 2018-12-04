@@ -1,7 +1,7 @@
 //alert("pasyo");
 var base_url="http://mahilapratinidhi.naxa.com.np";
 //var base_url="http://localhost:8000";
-var map =L.map('mapid').setView([27,85],7);
+var map =L.map('mapid',{minZoom: 7,maxZoom: 10}).setView([27,85],7);
 
 var OSM = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
   attribution: '&copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
@@ -10,13 +10,13 @@ var OSM = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 var OpenStreetMap_BlackAndWhite = L.tileLayer('http://{s}.tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png', {
 	maxZoom: 18,
 	attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-});
+}).addTo(map);
 
 var Thunderforest_TransportDark = L.tileLayer('https://{s}.tile.thunderforest.com/transport-dark/{z}/{x}/{y}.png?apikey={apikey}', {
 	attribution: '&copy; <a href="http://www.thunderforest.com/">Thunderforest</a>, &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
 	apikey: 'ddb2f354bd68480ebfa4ce3a9726c511',
 	maxZoom: 22
-}).addTo(map);
+});
 
 baseMaps = {
     //"Street View": street_view,
@@ -47,7 +47,7 @@ function highlightFeature(e){
   layer= e.target;
   var province=layer.feature.properties.Province;
   layer.setStyle({
-    weight:4,
+    weight:3,
     color: '#666',
     dashArray :'',
     fillOpacity:0.7
@@ -73,7 +73,11 @@ function zoomToFeature(e){
   }
   console.log("baseurlcheck",base_url+'/api/geojson/province/'+ province);
   var layer = L.geoJson.ajax(base_url+'/api/geojson/province/'+ province,
-            {onEachFeature:onEachFeature}
+            {onEachFeature:onEachFeature,
+              style: { color: "black",
+                       weight:1.5,
+
+                       fillOpacity:0}}
             );
 
    layer.addTo(map);
@@ -85,7 +89,7 @@ function onEachFeature(feature,layer){
 
 
   circular_marker(get_center(feature,layer),data_summary_all['total'][feature.properties.Province-1]);
-  layer.bindPopup(customPopup,customOptions);
+  //layer.bindPopup(customPopup,customOptions);
   layer.on('mouseover', function (e) {
               this.openPopup();
           });
@@ -109,7 +113,7 @@ function circular_marker(center,number){
 
       var myIcon = L.divIcon({
           className:'my-div-icon',
-          iconSize: new L.Point(50, 50),
+          iconSize: new L.Point(40, 40),
           html: number
       });
       // you can set .my-div-icon styles in CSS
@@ -128,7 +132,10 @@ console.log("baseurlcheck",base_url+'/api/geojson/country');
 
 var country =L.geoJson.ajax(base_url+'/api/geojson/country',
           {onEachFeature:onEachFeature,
-           style: {fillOpacity:0}
+           style: { color: "black",
+                    weight:1.5,
+
+                    fillOpacity:0}
           }).addTo(map);
 
 
