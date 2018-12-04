@@ -180,51 +180,53 @@ class DataVisualize(TemplateView):
 
 
     def get(self, request, *args, **kwargs):
-        local = MahilaPratinidhiForm.objects.all()
+        # local = MahilaPratinidhiForm.objects.all()
         national = RastriyaShava.objects.all()
         pratinidhi = PratinidhiShava.objects.all()
         provincial = ProvinceMahilaPratinidhiForm.objects.all()
-        total = local.count() + national.count() + pratinidhi.count() + provincial.count()
+        # total = local.count() + national.count() + pratinidhi.count() + provincial.count()
+        total = national.count() + pratinidhi.count() + provincial.count()
+
 
         married = 0
         graduate = 0
         direct = 0
 
-        for mahila in local:
-            if mahila.marital_status == 'Married':
-                married = married + 1
+        # for mahila in local:
+        #     if mahila.marital_status == 'Married' or mahila.marital_status == 'विवाहित':
+        #         married = married + 1
             
-            if 'Graduate' in mahila.educational_qualification:
-                graduate = graduate + 1
+        #     if mahila.educational_qualification == 'Graduate' or 'स्नातक' in mahila.educational_qualification:
+        #         graduate = graduate + 1
             
         for mahila in national:
-            if mahila.marital_status == 'Married':
+            if mahila.marital_status == 'Married' or mahila.marital_status == 'विवाहित':
                 married = married + 1
             
-            if 'Graduate' in mahila.educational_qualification:
+            if mahila.educational_qualification == 'Graduate' or 'स्नातक' in mahila.educational_qualification:
                 graduate = graduate + 1
             
-            if 'Directly Elected' in mahila.nirwachit_prakriya:
+            if mahila.nirwachit_prakriya == 'Directly Elected' or 'निर्वाचित' in mahila.nirwachit_prakriya:
                 direct = direct + 1
             
         for mahila in pratinidhi:
-            if mahila.marital_status == 'Married':
+            if mahila.marital_status == 'Married' or mahila.marital_status == 'विवाहित':
                 married = married + 1
             
-            if 'Graduate' in mahila.educational_qualification:
+            if mahila.educational_qualification == 'Graduate' or 'स्नातक' in mahila.educational_qualification:
                 graduate = graduate + 1
             
-            if 'Directly Elected' in mahila.nirwachit_prakriya:
+            if mahila.nirwachit_prakriya == 'Directly Elected' or 'निर्वाचित' in mahila.nirwachit_prakriya:
                 direct = direct + 1
         
         for mahila in provincial:
-            if mahila.marital_status == 'Married':
+            if mahila.marital_status == 'Married' or mahila.marital_status == 'विवाहित':
                 married = married + 1
             
-            if 'Graduate' in mahila.educational_qualification:
+            if mahila.educational_qualification == 'Graduate' or 'स्नातक' in mahila.educational_qualification:
                 graduate = graduate + 1
             
-            if 'Directly Elected' in mahila.nirwachit_prakriya:
+            if mahila.nirwachit_prakriya == 'Directly Elected' or 'निर्वाचित' in mahila.nirwachit_prakriya:
                 direct = direct + 1
 
         return render(request, self.template_name, {'total':total, 'married':married, 'graduate':graduate, 'direct':direct})
@@ -262,7 +264,7 @@ class callRequestView(TemplateView):
         try:
             if request.user.is_authenticated():
                 email = EmailMessage('Call Request', 'This user has made the call request.',
-                                         to=['example@admin.com'])
+                                         to=['admin@example.com'], from_email=request.user.email)
                 email.send()
         except:
             print("Please login first!")

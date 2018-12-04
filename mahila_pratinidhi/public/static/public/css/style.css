@@ -247,7 +247,7 @@ section.pratinidhi:after{
     position: absolute;
     left: calc(33.3333% + 25px);
 }
-.topC{position: relative;z-index: 2;}
+.topC{position: relative;z-index: 2; padding-top: 50px;}
 .navflex{display: flex;align-items: center;}
 .navbar-brand{margin-right:auto;position: relative;z-index: 1000;}
 .socialIcons i{transition:all 0.2s linear;cursor: pointer;}

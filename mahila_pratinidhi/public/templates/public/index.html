@@ -8,7 +8,7 @@
   integrity="sha512-nMMmRyTVoLYqjP9hrbed9S+FzjZHW5gY1TWCHA5ckwXZBadntCNs8kEqAWdrb9O7rxbCaA4lKTIWjDXZxflOcA=="
   crossorigin=""></script>
 
-  <script src={% static 'public/js/leaflet.ajax.min.js' %}></script>
+  <script src= "{% static 'public/js/leaflet.ajax.min.js' %}" ></script>
 
 
 
@@ -90,7 +90,7 @@
                         <i class="close fa fa-times"></i>
                     </span>
 
-                    <div class="selectOverlay">
+                    <div class="selectOverlay" style="z-index: 10000">
                         <div class="selectList">
                             <div class="">
                                 <label for="" class="st">State</label>
@@ -197,7 +197,7 @@
                                 <img src="{{ MEDIA_URL }} {{ data.image.url }}" alt="">
                             </div>
                             {% else %}
-                            <img src="{% static 'public/image/mahilalogo.png' %}" alt="" style="width:250px;height:250px;"> {% endif %}
+                            <img src="{% static 'public/image/heroimg.png' %}" alt=""> {% endif %}
                         </div>
                     </div>
                     <div class="col-md-4">
