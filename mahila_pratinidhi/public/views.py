@@ -86,7 +86,7 @@ def activate(request, uidb64, token):
         user.is_active = True
         user.save()
         login(request, user)
-        return HttpResponse('Thank you for your email confirmation. Now you can login your account.')
+        return HttpResponseRedirect('/signup/')
     else:
         return HttpResponse('Activation link is invalid!')
 
@@ -283,7 +283,7 @@ class callRequestView(TemplateView):
         try:
             if request.user.is_authenticated():
                 email = EmailMessage('Call Request', 'This user has made the call request.',
-                                         to=['admin@example.com'], from_email=request.user.email)
+                                         to=['saneprijal@gmail.com'])
                 email.send()
         except:
             print("Please login first!")
