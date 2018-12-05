@@ -38,7 +38,7 @@ class StackedChart extends React.Component{
   var margin = {top: 20, right: 170, bottom: 20, left: 30};
 
   var width = 700 - margin.left - margin.right,
-      height = 400 - margin.top - margin.bottom;
+      height = 300 - margin.top - margin.bottom;
 
   var svg = d3.selectAll(".stacked-bar").filter(function(d,i){
     return i === count;

@@ -21,14 +21,20 @@ class SimpleBar extends React.Component{
 
   simpleBar(sample){
 
+    var value_value = sample.map((s)=> +s.total);
+    console.log("value_value",value_value);
+
+    alert(d3.max(value_value));
+  var max_value=  Math.max.apply(null, value_value);
+
 
     const svg = d3.select('.simple-bar');
 
 
-    var margin0 = {top: 10, right: 40, bottom: 10, left: 10};
+    var margin0 = {top: 20, right: 40, bottom: 10, left: 10};
 
     const width = 650 -margin0.left-margin0.right;
-    const height = 400 -margin0.top- margin0.bottom;
+    const height = 350 -margin0.top- margin0.bottom;
 
     const chart = svg.append('g')
       .attr('transform', "translate(" + margin0.left + "," + margin0.top + ")");
@@ -39,8 +45,8 @@ class SimpleBar extends React.Component{
       ;
 
         const yScale = d3.scale.linear()
-          .range([height, 0])
-          .domain([0, 100 ]);
+          .domain([0, d3.max(value_value) ])
+          .range([height, 0]);
 
 
           var yAxis0 = d3.svg.axis()
