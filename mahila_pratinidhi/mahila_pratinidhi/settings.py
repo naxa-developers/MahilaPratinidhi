@@ -160,6 +160,6 @@ except Exception as e:
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'saneprijal@gmail.com'
+EMAIL_HOST_USER = 'akshya.shrestha7402@gmail.com'
 EMAIL_HOST_PASSWORD = '9815363198'
 EMAIL_PORT = 587

@@ -277,8 +277,21 @@ class Detail(TemplateView):
     template_name = 'public/lists.html'
 
 def callRequestView(request, *args, **kwargs):
+    if RastriyaShava.objects.get(pk=kwargs.get('pk')):
+        mahila = RastriyaShava.objects.get(pk=kwargs.get('pk'))
+
+    elif PratinidhiShava.objects.get(pk=kwargs.get('pk')):
+        mahila = PratinidhiShava.objects.get(pk=kwargs.get('pk'))
+
+    elif ProvinceMahilaPratinidhiForm.objects.get(pk=kwargs.get('pk')):
+        mahila = ProvinceMahilaPratinidhiForm.objects.get(pk=kwargs.get('pk'))
+
+    else:
+        mahila = MahilaPratinidhiForm.objects.get(pk=kwargs.get('pk'))
+
+
     if request.user.is_authenticated:
-        email = EmailMessage('Call Request', 'This user has made the call request.',
+        email = EmailMessage('Call Request', request.user.username+"has made call request to "+ mahila.name ,
                                          to=['akshya.shrestha7402@gmail.com'])
         email.send()
     else:
