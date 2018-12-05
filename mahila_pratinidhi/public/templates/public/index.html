@@ -95,7 +95,7 @@
                         <i class="close fa fa-times"></i>
                     </span>
 
-                    <div class="selectOverlay" style="z-index: 10000">
+                    <div class="selectOverlay" >
                         <div class="selectList">
                             <div class="">
                                 <label for="" class="st">State</label>
@@ -196,16 +196,19 @@
                 {% for datas in featured_data %} {% for data in datas %}
                 <div>
                     <div class="row align-items-md-center">
+                        {% if data.image %}
                         <div class="col-md-4">
-                            <div class="imageHolder">
-                                {% if data.image %}
-                                <img src="{{ MEDIA_URL }} {{ data.image.url }}" class="cropFeatured" alt="">
-                            </div>
-                            {% else %}
-                            <img src="{% static 'public/image/p1.jpg' %}" class="cropFeatured" alt=""> {% endif %}
-                            
+                                <div class="imageHolder">
+                                    <img src="{{ MEDIA_URL }} {{ data.image.url }}" class="cropFeatured" alt="">
+                                </div>
                         </div>
-                    </div>
+                        {% else %}
+                        <div class="col-md-4">
+                                <div class="imageHolder"> 
+                                    <img src = "{% static 'public/image/p1.jpg' %}" class="cropFeatured" alt="">
+                                </div>
+                        </div>
+                        {% endif %}
                     <div class="col-md-4">
                         <div class="info slidefont">
                             <div class="Name">
@@ -231,7 +234,7 @@
                             </div>
                             <div>
                                 <span class="first"> Political Involvement:</span>
-                                <span class="value"> Since {{ data.party_joined_date }} Bs</span>
+                                <span class="value"> Since {{ data.party_joined_date|slice:":4" }} Bs</span>
 
                             </div>
                             <div>
@@ -256,7 +259,7 @@
                         
                         <div class="fullBtn centeredvh">
                                 <a href="{% url 'public:detail' data.pk %}">
-                            <button class="btn btn-round revbtn mtb50"> Profile Detail
+                            <button class="btn btn-round revbtn mtb50"> PROFILE DETAIL
                                 <i class="fa fa-arrow-right arow"></i>
                             </button>
                         </a>

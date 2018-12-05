@@ -380,7 +380,7 @@ a.active .holder{ background:rgba(255,255,255,0.16)}
 .clickabletabs{display: flex;padding-bottom:30px;align-items: center;justify-content: center;}
 .clickabletabs >div:first-of-type{margin-right:15px;}
 .pimageHolder{position: relative;}
-.cropList{width:251px; height:313px;}
+.cropList{width:258px; height:258px;}
 .poverlay{ position: absolute;
     top: 0;
     bottom: 0;
