@@ -251,18 +251,14 @@ def read_view(request, ):
 class Detail(TemplateView):
     template_name = 'public/lists.html'
 
-class callRequestView(TemplateView):
-    template_name = 'public/signup.html'
-
-    def get(self, request, *args, **kwargs):
-        try:
-            if request.user.is_authenticated():
-                email = EmailMessage('Call Request', 'This user has made the call request.',
+def callRequestView(request, *args, **kwargs):
+    if request.user.is_authenticated:
+        email = EmailMessage('Call Request', 'This user has made the call request.',
                                          to=['akshya.shrestha7402@gmail.com'])
-                email.send()
-        except:
-            print("Please login first!")
-        return render(request, self.template_name)
+        email.send()
+    else:
+        print("Please login first!")
+        return render(request, "login.html")
 
 class SearchDetail(DetailView):
     template_name = 'public/detail.html'
