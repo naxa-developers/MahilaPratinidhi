@@ -276,18 +276,17 @@ def read_view(request, ):
 class Detail(TemplateView):
     template_name = 'public/lists.html'
 
-class callRequestView(TemplateView):
-    template_name = 'login.html'
 
-    def get(self, request, *args, **kwargs):
-        try:
-            if request.user.is_authenticated():
-                email = EmailMessage('Call Request', 'This user has made the call request.',
-                                         to=['saneprijal@gmail.com'])
-                email.send()
-        except:
-            print("Please login first!")
-        return render(request, self.template_name)
+def callRequestView(request, *args, **kwargs):
+    if request.user.is_authenticated:
+        email = EmailMessage('Call Request', 'This user has made the call request.',
+                                         to=['akshya.shrestha7402@gmail.com'])
+        email.send()
+        return HttpResponseRedirect('/explore/general')
+    else:
+        print("Please login first!")
+        return render(request, "login.html")
+
 
 # class SearchDetail(DetailView):
 #     template_name = 'public/detail.html'
@@ -314,6 +313,7 @@ class callRequestView(TemplateView):
 
 #         if national is not None:
 #             return render(self.request, self.template_name, {'forms': model})
+
 
 # def searchposts(request):
 #     if request.method == 'GET':
