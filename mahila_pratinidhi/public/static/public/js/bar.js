@@ -7,24 +7,21 @@ class SimpleBar extends React.Component{
 
   componentDidMount(){
     //alert("component did mont")
-    this.simpleBar(this.props.data);
+    this.simpleBar(this.props.data[0].data);
 
   }
 
 
   componentWillReceiveProps(nextProps){
-    alert("x");
-
-    this.simpleBar(nextProps.data);
+    d3.select('.simple-bar').selectAll("*").remove();
+    this.simpleBar(nextProps.data[0].data);
 
 
   }
 
   simpleBar(sample){
 
-    console.log("sample",sample.map((s) => s.label));
 
-    d3.select('.simple-bar').selectAll("*").remove()
     const svg = d3.select('.simple-bar');
 
 
@@ -64,9 +61,14 @@ class SimpleBar extends React.Component{
       .call(yAxis0);
 
       chart.append('g')
-        .attr("class", "x axis")
+        .attr("class", "x-axis")
         .attr('transform', "translate(0," + height + ")")
         .call(xAxis0);
+
+        chart.selectAll(".x-axis text")
+       .attr("transform", function(d) {
+          return "translate(" + this.getBBox().height*-2 + "," + this.getBBox().height + ")rotate(-45)";
+      });
 
     const barGroups = chart.selectAll()
       .data(sample)
@@ -152,9 +154,9 @@ class SimpleBar extends React.Component{
     svg.append('text')
       .attr('class', 'simple-label')
       .attr('x', width / 2 + margin0.left)
-      .attr('y', height + margin0.top * 1.7+25)
+      .attr('y', height + margin0.top * 1.7+50)
       .attr('text-anchor', 'middle')
-      .text('Ethnictiy')
+      .text('')
 
     svg.append('text')
       .attr('class', 'simple-title')

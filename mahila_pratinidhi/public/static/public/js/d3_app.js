@@ -13,17 +13,16 @@ class ChartBox extends React.Component {
 
 
     render (){
-      //alert(this.props.data_pass[0].title);
       let bar;
       if(this.props.data_pass[0]['data-type']=="1"){
-        bar = <StackedChart data={this.props.data_pass[0]['data']} />;
+        bar = <StackedChart data={[{'data':this.props.data_pass[0]['data'],'dataName':this.props.data_pass[0]['dataName']}]}  />;
       }
 
       else if(this.props.data_pass[0]['data-type']=="0"){
-        bar = <SimpleBar data={this.props.data_pass[0]['data']} />;
+        bar = <SimpleBar data={[{'data':this.props.data_pass[0]['data'],'dataName':this.props.data_pass[0]['dataName']}]}  />;
       }
 
-      console.log("render",this.props.data_pass[0]['data'])
+      console.log("render",this.props.data_pass[0]['data']);
 
 
 
@@ -39,12 +38,10 @@ class ChartBox extends React.Component {
     className="fa fa-facebook-f"></i> </a> <a href=""> <i className="fa
     fa-twitter"></i> </a> <a href=""> <i className="fa fa-linkedin-in"></i>
     </a> <a className="l5" href=""> <i className="fa fa-download"></i> </a>
-    <a href=""> <i className="fa fa-share-alt"></i> </a> </div> </div> <div
-    className="col-md-6 graphHolder">
-
-      {bar}
-
-    </div><div className="col-md-1"><i className="fa fa-chevron-circle-right ficon"></i></div></div> </div>
+    <a href=""> <i className="fa fa-share-alt"></i> </a> </div> </div>
+    <div className="col-md-6 graphHolder">{bar}</div>
+    <div className="col-md-1"><i className="fa fa-chevron-circle-right ficon"></i></div>
+    </div> </div>
     </div>
       )
     };
