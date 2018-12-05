@@ -3,6 +3,7 @@ from django.db import models
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes.fields import GenericRelation
+from PIL import Image, ImageOps
 
 
 BOOL_CHOICES = (
@@ -126,6 +127,15 @@ class CommonShavaFields(models.Model):
 	featured = models.BooleanField(default=False)
 	class Meta:
 		abstract = True
+	
+	def save(self, force_insert=False, force_update=False):
+		super(CommonShavaFields, self).save(force_insert, force_update)
+		if self.image:
+			image = Image.open(self.image.path)
+			# image = image.resize((1350, 700), Image.ANTIALIAS)
+			# image.thumbnail((1350, 700), Image.ANTIALIAS)
+			image = ImageOps.fit(image, (400, 315), Image.ANTIALIAS)
+			image.save(self.image.path)
 
 
 class District(models.Model):
@@ -141,13 +151,31 @@ class News(models.Model):
 	title = models.CharField(max_length=300, blank=False)
 	content = models.TextField(blank=False)
 	story_headline = models.TextField(blank=True)
-	
+	image = models.ImageField(blank=True, upload_to="news/")
+	image_credit = models.CharField(blank=True, max_length=300)
 	content_type =   models.ForeignKey(ContentType, on_delete=models.CASCADE, null=True)
 	object_id = models.PositiveIntegerField(null=True)
 	content_object=GenericForeignKey('content_type', 'object_id')
 
+
+	def get_absolute_image_url(self):
+		return os.path.join('/media/', self.image.url)
+	
+	def save(self, force_insert=False, force_update=False):
+		super(News, self).save(force_insert, force_update)
+		if self.image:
+			image = Image.open(self.image.path)
+			# image = image.resize((1350, 700), Image.ANTIALIAS)
+        	# image.thumbnail((1350, 700), Image.ANTIALIAS)
+			image = ImageOps.fit(image, (661, 661), Image.ANTIALIAS)
+			image.save(self.image.path)
+	
+	
 	def __str__(self):
 		return "{}-{} news".format(self.date, self.title)
+	
+	class Meta:
+		get_latest_by = ['date']
 
 
 
@@ -186,6 +214,17 @@ class MahilaPratinidhiForm(models.Model):
 
 	def __str__(self):
 		return "{} फारम".format(self.district.name)
+	
+	def save(self, force_insert=False, force_update=False):
+		
+		super(MahilaPratinidhiForm, self).save(force_insert, force_update)
+		
+		if self.image:
+			image = Image.open(self.image.path)
+    	    # image = image.resize((1350, 700), Image.ANTIALIAS)
+    	    # image.thumbnail((1350, 700), Image.ANTIALIAS)
+			image = ImageOps.fit(image, (400, 315), Image.ANTIALIAS)
+			image.save(self.image.path)
 
 
 class ProvinceMahilaPratinidhiForm(CommonShavaFields):
@@ -219,6 +258,18 @@ class BackgroundImage(models.Model):
 
 	def get_absolute_image_url(self):
 		return os.path.join('/media/', self.image.url)
+
+	def save(self, force_insert=False, force_update=False):
+		
+		super(BackgroundImage, self).save(force_insert, force_update)
+		
+		if self.image:
+			image = Image.open(self.image.path)
+            # image = image.resize((1350, 700), Image.ANTIALIAS)
+            # image.thumbnail((1350, 700), Image.ANTIALIAS)
+			image = ImageOps.fit(image, (1920, 1080), Image.ANTIALIAS)
+			
+			image.save(self.image.path)
 
 
 

@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import UserPassesTestMixin
 from django.views.generic import CreateView, UpdateView, DetailView, DeleteView, TemplateView, ListView
@@ -47,29 +47,33 @@ class Index(TemplateView):
 
 
 def signup(request):
-    if request.method == 'POST':
-        form = UserCreateForm(request.POST)
-        if form.is_valid():
-            user = form.save(commit=False)
-            user.is_active = False
-            user.save()
-            current_site = get_current_site(request)
-            mail_subject = 'Activate your blog account.'
-            message = render_to_string('public/acc_active_email.html', {
-            'user': user,
-            'domain': current_site.domain,
-            'uid': urlsafe_base64_encode(force_bytes(user.pk)).decode('utf8'),
-            'token': account_activation_token.make_token(user),
-            })
-            to_email = form.cleaned_data.get('email')
-            email = EmailMessage(
-                        mail_subject, message, to=[to_email]
-            )
-            email.send()
-            return HttpResponse('Please confirm your email address to complete the registration')
+    if request.GET.get('login'):
+        return HttpResponseRedirect('/accounts/login/')
     else:
-        form = UserCreateForm()
-    return render(request, 'public/signup.html', {'form': form})
+        if request.method == 'POST':
+            signup_form = UserCreateForm(request.POST)
+            if signup_form.is_valid():
+                user = signup_form.save(commit=False)
+                user.is_active = False
+                user.save()
+                current_site = get_current_site(request)
+                mail_subject = 'Activate your blog account.'
+                message = render_to_string('public/acc_active_email.html', {
+                'user': user,
+                'domain': current_site.domain,
+                'uid': urlsafe_base64_encode(force_bytes(user.pk)).decode('utf8'),
+                'token': account_activation_token.make_token(user),
+                })
+                to_email = signup_form.cleaned_data.get('email')
+                email = EmailMessage(
+                            mail_subject, message, to=[to_email]
+                )
+                email.send()
+                return HttpResponse('Please confirm your email address to complete the registration')
+        else:
+            signup_form = UserCreateForm()
+        return render(request, 'login.html', {'form':signup_form})
+    
 
 
 def activate(request, uidb64, token):
@@ -82,7 +86,6 @@ def activate(request, uidb64, token):
         user.is_active = True
         user.save()
         login(request, user)
-        # return redirect('home')
         return HttpResponse('Thank you for your email confirmation. Now you can login your account.')
     else:
         return HttpResponse('Activation link is invalid!')
@@ -112,9 +115,9 @@ class ExploreView(TemplateView):
 
             names.append(lists.english_name)
 
-        # for lists in local_names:
-        #     names.append(lists.name)
-        # print(names)
+        for lists in local_names:
+            names.append(lists.name)
+
         json_list = json.dumps(names)
 
         clicked = self.kwargs.get('clicked')
@@ -156,6 +159,25 @@ class ProvincialMahilaPratinidhiDetail(DetailView):
         return render(request, self.template_name, {'form':form})
 
 
+class MahilaDetail(DetailView):
+    template_name = 'public/detail.html'
+
+    def get(self, request, *args, **kwargs):
+        if RastriyaShava.objects.filter(id=self.kwargs.get('pk')):
+            form = RastriyaShava.objects.get(id=self.kwargs.get('pk'))
+
+        elif PratinidhiShava.objects.filter(id=self.kwargs.get('pk')):
+            form = PratinidhiShava.objects.get(id=self.kwargs.get('pk'))
+
+        elif ProvinceMahilaPratinidhiForm.objects.filter(id=self.kwargs.get('pk')):
+            form = ProvinceMahilaPratinidhiForm.objects.get(id=self.kwargs.get('pk'))
+
+        else:
+            form = MahilaPratinidhiForm.objects.get(id=self.kwargs.get('pk'))
+        
+        return render(request, self.template_name, {'form':form})
+
+
 class RastriyaMahilaDetail(TemplateView):
     template_name = 'public/detail.html'
 
@@ -177,51 +199,53 @@ class DataVisualize(TemplateView):
 
 
     def get(self, request, *args, **kwargs):
-        local = MahilaPratinidhiForm.objects.all()
+        # local = MahilaPratinidhiForm.objects.all()
         national = RastriyaShava.objects.all()
         pratinidhi = PratinidhiShava.objects.all()
         provincial = ProvinceMahilaPratinidhiForm.objects.all()
-        total = local.count() + national.count() + pratinidhi.count() + provincial.count()
+        # total = local.count() + national.count() + pratinidhi.count() + provincial.count()
+        total = national.count() + pratinidhi.count() + provincial.count()
+
 
         married = 0
         graduate = 0
         direct = 0
 
-        for mahila in local:
-            if mahila.marital_status == 'ljjflxt':
-                married = married + 1
+        # for mahila in local:
+        #     if mahila.marital_status == 'Married' or mahila.marital_status == 'विवाहित':
+        #         married = married + 1
             
-            if ':gfts' in mahila.educational_qualification:
-                graduate = graduate + 1
+        #     if mahila.educational_qualification == 'Graduate' or 'स्नातक' in mahila.educational_qualification:
+        #         graduate = graduate + 1
             
         for mahila in national:
-            if mahila.marital_status == 'विवाहित':
+            if mahila.marital_status == 'Married' or mahila.marital_status == 'विवाहित':
                 married = married + 1
             
-            if 'स्नात' in mahila.educational_qualification:
+            if mahila.educational_qualification == 'Graduate' or 'स्नातक' in mahila.educational_qualification:
                 graduate = graduate + 1
             
-            if 'प्रत्यक्ष' in mahila.nirwachit_prakriya:
+            if mahila.nirwachit_prakriya == 'Directly Elected' or 'निर्वाचित' in mahila.nirwachit_prakriya:
                 direct = direct + 1
             
         for mahila in pratinidhi:
-            if mahila.marital_status == 'विवाहित':
+            if mahila.marital_status == 'Married' or mahila.marital_status == 'विवाहित':
                 married = married + 1
             
-            if 'स्नात' in mahila.educational_qualification:
+            if mahila.educational_qualification == 'Graduate' or 'स्नातक' in mahila.educational_qualification:
                 graduate = graduate + 1
             
-            if 'प्रत्यक्ष' in mahila.nirwachit_prakriya:
+            if mahila.nirwachit_prakriya == 'Directly Elected' or 'निर्वाचित' in mahila.nirwachit_prakriya:
                 direct = direct + 1
         
         for mahila in provincial:
-            if mahila.marital_status == 'विवाहित':
+            if mahila.marital_status == 'Married' or mahila.marital_status == 'विवाहित':
                 married = married + 1
             
-            if 'स्नात' in mahila.educational_qualification:
+            if mahila.educational_qualification == 'Graduate' or 'स्नातक' in mahila.educational_qualification:
                 graduate = graduate + 1
             
-            if 'प्रत्यक्ष' in mahila.nirwachit_prakriya:
+            if mahila.nirwachit_prakriya == 'Directly Elected' or 'निर्वाचित' in mahila.nirwachit_prakriya:
                 direct = direct + 1
 
         return render(request, self.template_name, {'total':total, 'married':married, 'graduate':graduate, 'direct':direct})
@@ -232,7 +256,8 @@ class NewsView(TemplateView):
 
     def get(self, request, *args, **kwargs):
         news = News.objects.get(id=self.kwargs.get('pk'))
-        latest_news = News.objects.latest
+        latest_news = News.objects.latest()
+        print(latest_news)
         return render(request, self.template_name, {'news':news, 'latest_news': latest_news})
 
 
@@ -260,41 +285,40 @@ def callRequestView(request, *args, **kwargs):
         print("Please login first!")
         return render(request, "login.html")
 
-class SearchDetail(DetailView):
-    template_name = 'public/detail.html'
 
-    def get(self, request, *args, **kwargs):
-        rastriya = RastriyaShava.objects.filter(english_name=self.kwargs.get('english_name'))
-        return render(request, self.template_name, {'form': rastriya})
+# class SearchDetail(DetailView):
+#     template_name = 'public/detail.html'
+
+#     def get(self, request, *args, **kwargs):
+#         rastriya = RastriyaShava.objects.filter(english_name=self.kwargs.get('english_name'))
+#         return render(request, self.template_name, {'form': rastriya})
 
 
 # class searchView(ListView):
 #     template_name = 'public/lists.html'
-#     print('hellooo')
-#
+
 #     def get(self, request, *args, **kwargs):
 #         print("dasda")
 #         name = self.request.GET.get('search')
 #         print("hello" + name)
-#
+
 #         national = RastriyaShava.objects.filter(name = name)
 #         province = ProvinceMahilaPratinidhiForm.objects.filter(name__icontains = name)
 #         federal = PratinidhiShava.objects.filter(name__icontains = name)
 #         local = MahilaPratinidhiForm.objects.filter(name__icontains = name)
-#
+
 #         model = list(chain(national, province, federal, local))
-#
+
 #         if national is not None:
 #             return render(self.request, self.template_name, {'forms': model})
 
 # def searchposts(request):
-#     print("hello")
 #     if request.method == 'GET':
 #         query= request.GET.get('q')
-#
-#
+
+
 #         submitbutton= request.GET.get('submit')
-#
+
 #         if query is not None:
 #             print("entered")
 #             lookups= Q(english_name__icontains=query)
@@ -307,12 +331,12 @@ class SearchDetail(DetailView):
 #             print("end")
 #             context={'results': results, 'locals': locals,
 #                      'submitbutton': submitbutton}
-#
+
 #             return render(request, 'public/search.html', context)
-#
+
 #         else:
 #             return render(request, 'public/explore.html')
-#
+
 #     else:
 #         return render(request, 'public/explore.html')
 

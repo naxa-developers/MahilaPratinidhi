@@ -60,7 +60,7 @@ ROOT_URLCONF = 'mahila_pratinidhi.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [(os.path.join(BASE_DIR, 'templates')),],
+        'DIRS': [(os.path.join(BASE_DIR, 'templates')),os.path.join(BASE_DIR, 'templates/registration')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -133,7 +133,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 LOGIN_REDIRECT_URL = '/'
-LOGOUT_REDIRECT_URL = '/accounts/login'
+LOGOUT_REDIRECT_URL = 'public:signup'
 
 LOCALE_PATHS = (
     os.path.join(BASE_DIR, 'locale'),
@@ -160,6 +160,6 @@ except Exception as e:
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'akshya.shrestha7402@gmail.com'
+EMAIL_HOST_USER = 'saneprijal@gmail.com'
 EMAIL_HOST_PASSWORD = '9815363198'
 EMAIL_PORT = 587

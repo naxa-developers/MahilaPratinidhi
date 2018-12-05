@@ -55,6 +55,18 @@ class EducationSerializers(serializers.ListSerializer):
 class PoliticalEngagementSerializers(serializers.ListSerializer):
     political_engagement = serializers.DictField()
 
+
+class ElectionTypeSerializers(serializers.ListSerializer):
+    election_type = serializers.DictField()
+
+
+class MaritalStatusSerializers(serializers.ListSerializer):
+    marital_status = serializers.DictField()
+
+
+class ElectionExperienceSerializers(serializers.ListSerializer):
+    election_before = serializers.DictField()
+
     
 
 

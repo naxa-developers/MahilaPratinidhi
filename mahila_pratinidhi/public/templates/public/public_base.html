@@ -14,6 +14,9 @@
     <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
         crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="{% static 'public/css/slick.css' %}" />
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+
+    
 
 </head>
 <style>
@@ -29,31 +32,30 @@ left: 18px;
 </style>
 <body>
 
-{% block upper_content %}
-{% endblock %}
-<nav class="navbar navbar-expand-lg navbar-light navflex ">
+    {% block upper_content %} {% endblock %}
+    <nav class="navbar navbar-expand-lg navbar-light navflex ">
         <a class="navbar-brand" href="{% url 'public:index' %}">
             <img src="{% static 'public/image/logo.png' %}" alt="logo">
         </a>
         {% if request.user.is_authenticated %}
-        <a href="{% url 'logout' %}"class="userIcon">
+        <a href="{% url 'logout' %}" class="userIcon">
         {% else %}
-        <a href="{% url 'public:signup' %}"class="userIcon">
+        <a href="{% url 'public:signup' %}" class="userIcon">
         {% endif %}
-            <span class="menuCircle">
-                <i class="fa fa-user-circle">
+                <span class="menuCircle">
+                    <i class="fa fa-user-circle">
 
-                </i>
-            </span>
-        </a>
-        <a>
-            <span class="menuCircle menuIcon">
-                <i class="fa fa-bars">
+                    </i>
+                </span>
+            </a>
+            <a>
+                <span class="menuCircle menuIcon">
+                    <i class="fa fa-bars">
 
-                </i>
-            </span>
-        </a>
-        <!-- {% if request.user.is_authenticated %}
+                    </i>
+                </span>
+            </a>
+            <!-- {% if request.user.is_authenticated %}
         <a href="{% url 'login' %}">
         {% else %}
         <a href="{% url 'public:signup' %}">
@@ -65,34 +67,36 @@ left: 18px;
         </a> -->
 
     </nav>
-</div>
-</div>
-<div class="menu">
-
-    <div class="menuheader">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="{% url 'public:index' %}">
-                <img src="{% static 'public/image/logo.png' %}" alt="logo">
-            </a>
-            <i class="fa fa-times"></i>
-        </div>
     </div>
-    <div class="links">
-        <div class="container">
-            <div class="linkTabs">
-                <a href="{% url 'public:index' %}" class="linkitems"> Home</a>
-                <a href="" class="linkitems"> About</a>
-                <a href="{% url 'public:index' %}" class="linkitems"> News</a>
-                <a href="{% url 'public:index' %}" class="linkitems"> Media</a>
-                <a href="{% url 'public:data_visualize' %}" class="linkitems"> Datas</a>
+    </div>
+    <div class="menu">
+
+        <div class="menuheader">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="{% url 'public:index' %}">
+                    <img src="{% static 'public/image/logo.png' %}" alt="logo">
+                </a>
+                <i class="fa fa-times"></i>
             </div>
         </div>
-    </div>
+        <div class="links">
+            <div class="container">
+                <div class="linkTabs">
+                    <a href="{% url 'public:index' %}" class="linkitems"> Home</a>
+                    <a href="{% url 'public:index' %}" class="linkitems"> FIND YOUR LEADER</a>
+                    <a href="{% url 'public:data_visualize' %}" class="linkitems">MAHILA PRATINIDHI IN DATA</a>
+                    <a href="" class="linkitems"> FEATURED MAP</a>
+                    <a href="{% url 'public:index' %}#news" class="linkitems" id="news_link"> NEWS</a>
+                    <a href="{% url 'public:index' %}" class="linkitems"> Media</a>
+
+                </div>
+            </div>
+        </div>
 
 
-    <div class="container">
-        <div id="exTab3" class="menutabs">
-            <ul class="nav nav-pills row">
+        <div class="container">
+            <div id="exTab3" class="menutabs">
+                <!-- <ul class="nav nav-pills row">
                 <li class=" col-md-3">
                     <a href="{% url 'public:explore' 'national' %}">
                         <div class="limgHolder">
@@ -152,76 +156,90 @@ left: 18px;
                     </a>
                 </li>
 
-            </ul>
-        </div class="">
+            </ul> -->
+            </div class="">
 
-{% block lower_content %}
-{% endblock %}
+            {% block lower_content %} {% endblock %}
 
-<footer class="footer sectionPadding">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-3 col-sm-6 textWhite">
-                <div class="btnaholder">
-                    {% if request.user.is_authenticated %}
-                    <a href="{% url 'logout' %}"><button class="signinBtn"> LOG OUT</button></a>
-                    {% else %}
-                    <a href="{% url 'login' %}"><button class="signinBtn"> SIGN IN</button></a>
-                    <a href="{% url 'public:signup' %}"><button class="signUp"> SIGN UP</button></a>
-                    {% endif %}
-                </div>
-                <div class="onlineLink">Read Harmo Mahila Pratinidhi Ebook Online</div>
-                <button class="btn readOnline"><a target="_blank" href="{% url 'public:read' %}" style="color:white;"> READ ONLINE</button>
+            <footer class="footer sectionPadding">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-3 col-sm-6 textWhite">
+                            <div class="btnaholder">
+                                {% if request.user.is_authenticated %}
+                                <a href="{% url 'logout' %}">
+                                    <button class="signinBtn"> LOG OUT</button>
+                                </a>
+                                {% else %}
+                                <a href="{% url 'public:signup' %}">
+                                    <button class="signinBtn"> SIGN IN</button>
+                                </a>
+                                <a href="{% url 'public:signup' %}">
+                                    <button class="signUp"> SIGN UP</button>
+                                </a>
+                                {% endif %}
+                            </div>
+                            <div class="onlineLink">Read Harmo Mahila Pratinidhi Ebook Online</div>
+                            <button class="btn readOnline">
+                                <a target="_blank" href="{% url 'public:read' %}" style="color:white;"> READ ONLINE</button>
 
-            </div>
-            <div class="col-md-3 col-sm-6 textWhite">
-                <div class="flogoHolder">
-                    <a href="{% url 'public:index'%}">
-                        <img src="{% static 'public/image/logo.png' %}" alt="logo">
-                    </a>
-                </div>
+                        </div>
+                        <div class="col-md-3 col-sm-6 textWhite">
+                            <div class="flogoHolder">
+                                <a href="{% url 'public:index'%}">
+                                    <img src="{% static 'public/image/logo.png' %}" alt="logo">
+                                </a>
+                            </div>
 
-                <div class="ftitle">
-                    MEET YOUR REPRESENTATIVE
-                </div>
-                <div class="flist"><a href="{% url 'public:explore' 'national' %}" style="color:white;"> National Assembly</a></div>
-                <div class="flist"><a href="{% url 'public:explore' 'federal' %}" style="color:white;"> Federal Parliament</a></div>
-                <div class="flist"><a href="{% url 'public:explore' 'provincial' %}" style="color:white;"> Provincial Assembly</a></div>
-                <div class="flist"><a href="{% url 'public:explore' 'local' %}" style="color:white;"> Local Level</a></div>
-                <div class="ftitle fbottom">
-                    MAP VISUALIZATION
-                </div>
+                            <div class="ftitle">
+                                MEET YOUR REPRESENTATIVE
+                            </div>
+                            <div class="flist">
+                                <a href="{% url 'public:explore' 'national' %}" style="color:white;"> National Assembly</a>
+                            </div>
+                            <div class="flist">
+                                <a href="{% url 'public:explore' 'federal' %}" style="color:white;"> Federal Parliament</a>
+                            </div>
+                            <div class="flist">
+                                <a href="{% url 'public:explore' 'provincial' %}" style="color:white;"> Provincial Assembly</a>
+                            </div>
+                            <div class="flist">
+                                <a href="{% url 'public:explore' 'local' %}" style="color:white;"> Local Level</a>
+                            </div>
+                            <div class="ftitle fbottom">
+                                MAP VISUALIZATION
+                            </div>
 
-            </div>
-
-
-            <div class="col-md-3 col-sm-6 textWhite">
-
-                <div class="ftitle mt177">
-                    DATA VISUALIZATION</div>
-                <div class="flist">Age</div>
-                <div class="flist">Ethinicity</div>
-                <div class="flist">Mother Tongue</div>
-                <div class="flist"> Education</div>
-                <div class="flist"> Election Type</div>
-                <div class="flist"> Political Party</div>
-                <div class="flist"> Political Engagement</div>
-                <div class="flist"> Political Commitment</div>
-                <div class="ftitle fbottom">
-                    PRIVACY POLICY
-                </div>
-
-            </div>
-
-            <div class="col-md-3 col-sm-6 textWhite">
-                <div class="ftitle mt177">
-                    MAHILA PRATINIDHI ON MEDIA</div>
-
-            </div>
+                        </div>
 
 
+                        <div class="col-md-3 col-sm-6 textWhite">
 
-        </div>
+                            <div class="ftitle mt177">
+                                DATA VISUALIZATION</div>
+                            <div class="flist">Age</div>
+                            <div class="flist">Ethinicity</div>
+                            <div class="flist">Mother Tongue</div>
+                            <div class="flist"> Education</div>
+                            <div class="flist"> Election Type</div>
+                            <div class="flist"> Political Party</div>
+                            <div class="flist"> Political Engagement</div>
+                            <div class="flist"> Political Commitment</div>
+                            <div class="ftitle fbottom">
+                                PRIVACY POLICY
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-3 col-sm-6 textWhite">
+                            <div class="ftitle mt177">
+                                MAHILA PRATINIDHI ON MEDIA</div>
+
+                        </div>
+
+
+
+                    </div>
 
 
 </footer>
@@ -241,24 +259,27 @@ left: 18px;
 <script src="https://unpkg.com/scrollreveal/dist/scrollreveal.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/typeahead.js/0.9.0/typeahead.min.js"></script>
 <script>
+        $(document).ready(function () {
+                    $(".menuIcon").click(function () {
 
-    $(document).ready(function () {
+                        $(".menu").addClass("menuOn");
+                        $("body").addClass("overflowHidden");
 
-        $(".menuIcon").click(function () {
+                    });
+                    $(".menuheader .fa.fa-times").click(function () {
 
-            $(".menu").addClass("menuOn");
-            $("body").addClass("overflowHidden");
+                        $(".menu").removeClass("menuOn");
+                        $("body").removeClass("overflowHidden");
+                    });
+                    $("#news_link").click(function () {
+                        $(".menu").removeClass("menuOn");
+                        $("body").removeClass("overflowHidden");
+                    });
 
-        });
-        $(".menuheader .fa.fa-times").click(function () {
-
-            $(".menu").removeClass("menuOn");
-            $("body").removeClass("overflowHidden");
-        });
-    });
-</script>
-{% block scripts %}
-{% endblock %}
+                });
+            </script> 
+            {% block scripts %} 
+            {% endblock %}
 
 
 </body>

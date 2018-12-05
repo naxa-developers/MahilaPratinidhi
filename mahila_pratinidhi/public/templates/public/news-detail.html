@@ -38,22 +38,25 @@
                 </div>
                 <div class="col-md-4">
                     <div class="newsimgHolder">
-                        <img src="image/newsimg.png" alt="">
-                        <span class="pdates">Photo Credit: Dr. Quraishi is the former Chief Election </span>
+                            {% if news.image %}
+                            <img src="{{MEDIA_URL}} {{news.image.url}}" alt="profileImage">
+                            <span class="pdates">Photo Credit: {{ news.image_credit }}</span>
+                            {% endif %}
                     </div>
                     <div class="listHolder">
                         <div class="recentList">
                             <p class="recentPost boarderd">
                                 RECENT POSTS
                             </p>
-                            {% for ln in latest_news %}
+                            
                             <div class="listItem">
-                                <a href="{% url 'public:news' ln.pk %}"></a>
-                               <p class="lnews"> {{ ln.title }}
+                                <a href="{% url 'public:news' latest_news.pk %}">
+                               <p class="lnews"> {{ latest_news.title }}
+                                </a>
 
                             </p>
                             </div>
-                            {% endfor %}
+                            
                             <!--<div class="listItem">-->
                                 <!--Lorem ipsum dolor, sit amet consectetur adipisicing elit. Reiciendis-->
 

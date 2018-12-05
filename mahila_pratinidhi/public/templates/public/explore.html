@@ -10,27 +10,15 @@
             </div>
         </div>
     </header>
-    <style>
-        span.tt-dropdown-menu {
-    background: white;
-        left: 12px;
-        width:100%;
-    border-radius: 12px;
-    background-color: white;
-    border: 3px solid #AAAAAA;
-}
-    </style>
+
     <section class="darkBg">
 
         <div class="container">
             <div class="selectHolder">
                 <div class="leader searchP">
-
-
-                    <div id="the-basics">
-                        <input class="typeahead" type="text" placeholder="SEARCH YOUR LEADER">
+                    <div class="leaderWrp ">
+                        <input type="text" placeholder="CHECK YOUR LEADER AROUND" class="leaderSearch">
                     </div>
-
                 </div>
             </div>
             <p class="searchText ste"> Lorem ipsum, dolor sit amet consectetur adipisicing elit. Laboriosam a tenetur itaque, nobis ut fuga qui iusto
@@ -102,53 +90,110 @@
                 </ul>
 
                 <div class="tab-content clearfix">
-                    <div class="tab-pane active" id="1b">
-                        <div class="linkItem row">
-                                {% for item in rastriyas %}
-                                <a href="{% url 'public:national_detail' item.pk %}">
-                                        {% if item.image %}
-                                        <div class="item1 col" style="background-image:url({{ item.image.url }}) no-repeat;">
-                                        {% else %}
-                                        <div class="item1 col" style="background:url(/static/public/image/maskimg.jpg) no-repeat;">
-                                            {% endif %}
-                                    <p class="provienceHeading">
-                                        {{ item.name }}
-                                    </p>
+                        <div class="tab-pane active" id="1b">
+                                <div class="pfofileItems">
+                                        {% for item in rastriyas %}
+                                        <div class="pItem reveal">
+                                        <a href="{% url 'public:national_detail' item.pk %}">
+                                                <div class="inner">
+
+                                                    <div class="pimageHolder">
+                                                        {% if item.image %}
+                                                        <img src="{{ MEDIA_URL }} {{ item.image.url }}" class="cropList" alt="">
+                                                        {% else %}
+                                                        <img src="{% static 'public/image/mahilalogo.png' %}" class="cropList" alt="" >
+                                                        {% endif %}
+                                                        <div class="img"></div>
+                    
+                                                        <div class="poverlay">
+                    
+                                                        </div>
+                                                        <div class="aroup"></div>
+                                                    </div>
+                                                    <div class="detailHolder">
+                                                        <div class="deteilbg"></div>
+                                                        <div class="date">
+                                                            <div class="yrcnt">
+                                                                {{ item.age }}
+                                                            </div>
+                                                            <div class="dtl">
+                                                                Years
+                                                            </div>
+                    
+                    
+                                                        </div>
+                                                        <div class="dname">{{ item.name|upper }}</div>
+                                                        <div class="dlocation">{{ item.permanent_address|title }}</div>
+                                                        <div class="bottom">
+                                                            <i class="fa fa-arrow-right arow"></i>
+                                                        </div>
+                                                    </div>
+                        
+                                                </div>
+                                        </a>
+                                        </div>
+                                        {% endfor %}
                                 </div>
-                                </a>
-                                {% endfor %}
                         </div>
-                    </div>
-                    <div class="tab-pane" id="2b">
-                        <div class="linkItem row">
-                            {% for item in pratinidhis %}
-                            <a href="{% url 'public:pratinidhi_detail' item.pk %}">
-                                    {% if item.image %}
-                                    <div class="item1 col" style="background-image:url({{ item.image.url }}) no-repeat;">
-                                    {% else %}
-                                    <div class="item1 col" style="background:url(/static/public/image/maskimg.jpg) no-repeat;">
-                                        {% endif %}
-                                <p class="provienceHeading">
-                                    {{ item.name }}
-                                </p>
-                            </div>
-                            </a>
-                            {% endfor %}
-                        </div>
+                        <div class="tab-pane" id="2b">
+                                <div class="pfofileItems">
+                                    {% for item in pratinidhis %}
+                                    <div class="pItem reveal">
+                                        <a href="{% url 'public:pratinidhi_detail' item.pk %}">
+                                            <div class="inner">
+
+                                                <div class="pimageHolder">
+                                                    {% if item.image %}
+                                                    <img src="{{ MEDIA_URL }} {{ item.image.url }}" class="cropList" alt="">
+                                                    {% else %}
+                                                    <img src="{% static 'public/image/mahilalogo.png' %}" class="cropList" alt="" >
+                                                    {% endif %}
+                                                    <div class="img"></div>
+                    
+                                                    <div class="poverlay"></div>
+                                                    <div class="aroup"></div>
+                                                </div>
+                                                <div class="detailHolder">
+                                                    <div class="deteilbg"></div>
+                                                    <div class="date">
+                                                        <div class="yrcnt">
+                                                            {{ item.age }}
+                                                        </div>
+                                                        <div class="dtl">
+                                                            Years
+                                                        </div>
+                    
+                    
+                                                    </div>
+                                                    <div class="dname">{{ item.name|upper }}</div>
+                                                    <div class="dlocation">{{ item.permanent_address|title }}</div>
+                                                    <div class="bottom">
+                                                        <i class="fa fa-arrow-right arow"></i>
+                                                    </div>
+                                                </div>
+                        
+                                            </div>
+                                        </a>
+                                    </div>
+                                    {% endfor %}
+                                </div>
                     </div>
                     <div class="tab-pane" id="3b">
-                        <div class="linkItem row">
-                            {% for item in provinces %}
-                            <a href="{% url 'public:explore_province' item.pk %}">
-                            <div class="item1 col" style="background:url(/static/public/image/maskimg.jpg) no-repeat;">
-                                <p class="provienceHeading">
-                                    {{ item.name }}
-                                </p>
-                            </div>
-                            </a>
-                            {% endfor %}
+                            <div class="linkItem row">
+                                
+                                {% for province in provinces %}
+                                <a href="{% url 'public:explore_province' province.pk %}">
+                                <div class="item1 col" style="background:url(/static/public/image/maskimg.jpg) no-repeat;">
+                                    <p class="provienceHeading">
+                                        {{ province.name }}
+                                    </p>
+                                </div>
+                            
+                                </a>
+    
+                                {% endfor %}
+                          </div>
                         </div>
-                    </div>
                     <div class="tab-pane" id="4b">
                         <div class="linkItem row">
                             
@@ -160,7 +205,7 @@
                                 </p>
                             </div>
                         
-                        </a>
+                            </a>
 
                             {% endfor %}
                       </div>
@@ -172,81 +217,20 @@
     {% endblock %}
 
     {% block scripts %}
-<!--for search-->
+
     <script>
         $(document).ready(function () {
-
-            $('input.typeahead').typeahead({
-              local: {{ names|safe }}
-            }).on('typeahead:selected', function(event, selection) {
-
-              // the second argument has the info you want
-              <!--alert(selection.value);-->
-              window.location.href="{% url 'public:name_search'}"
-
-              // clearing the selection requires a typeahead method
-              $(this).typeahead('setQuery', '');
+            $("#button").click(function () {
+                $('html, body').animate({
+                    scrollTop: $("#myDiv").offset().top
+                }, 2000);
             });
-
-
-            <!--var substringMatcher = function(strs) {-->
-              <!--return function findMatches(q, cb) {-->
-                <!--var matches, substringRegex;-->
-
-                <!--// an array that will be populated with substring matches-->
-                <!--matches = [];-->
-
-                <!--// regex used to determine if a string contains the substring `q`-->
-                <!--substrRegex = new RegExp(q, 'i');-->
-
-                <!--// iterate through the pool of strings and for any string that-->
-                <!--// contains the substring `q`, add it to the `matches` array-->
-                <!--$.each(strs, function(i, str) {-->
-                  <!--if (substrRegex.test(str)) {-->
-                    <!--matches.push(str);-->
-                  <!--}-->
-                <!--});-->
-
-                <!--cb(matches);-->
-              <!--};-->
-            <!--};-->
-
-            <!--var states = {{ names|safe }}-->
-
-            <!--$('#the-basics .typeahead').typeahead({-->
-              <!--hint: true,-->
-              <!--highlight: true,-->
-              <!--minLength: 1-->
-            <!--},-->
-            <!--{-->
-              <!--name: 'states',-->
-              <!--source: substringMatcher(states)-->
-            <!--});-->
-            <!--$("#button").click(function () {-->
-                <!--$('html, body').animate({-->
-                    <!--scrollTop: $("#myDiv").offset().top-->
-                <!--}, 2000);-->
-            <!--});-->
-        <!--});-->
-
-         <!--$('.typeahead').on('click', function(){-->
-            <!--console.log("RED");-->
-         <!--});-->
-
-        <!--$('.typeahead').on('click', '.tt-menu', function(){-->
-        <!--console.log("clicked");-->
-            <!--var string= $(this).value();-->
-            <!--console.log(string);-->
-
-});
-        <!--});-->
+        });
         var clicked = "{{ clicked }}";
-
         if(clicked == "national" || clicked == "general"){
             $("#nation").click();
             $("#nation").addClass("active");
         }
-
         else if(clicked == 'federal'){
             var elems = document.querySelectorAll(".active");
             [].forEach.call(elems, function(el) {
@@ -255,7 +239,6 @@
             $("#federal").click();
             $("#federal").addClass("active");
         }
-
         else if(clicked == "provincial"){
             var elems = document.querySelectorAll(".active");
             [].forEach.call(elems, function(el) {
@@ -265,7 +248,6 @@
             $("#provincial").addClass("active");
             
         }
-
         else if(clicked == "local"){
             var elems = document.querySelectorAll(".active");
             [].forEach.call(elems, function(el) {
@@ -274,6 +256,5 @@
             $("#local").click();
             $("#local").addClass("active");   
         }
-
     </script>
     {% endblock %}

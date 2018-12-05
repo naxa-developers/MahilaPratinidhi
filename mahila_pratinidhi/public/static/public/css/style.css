@@ -11,7 +11,7 @@ nav{position: absolute;width: 100%;z-index: 4;}
     width: 100%;
     position: relative;
     transition: background-position linear;
-    
+
 }
 @keyframes slide {
     20% {
@@ -35,9 +35,10 @@ nav{position: absolute;width: 100%;z-index: 4;}
 
 .menuCircle i.fa{    font-size: 28px;
     color: #fff;}
-   
-    .menu{display:none;opacity:0; }
-    .menu.menuOn{display: block;opacity: 1;}
+
+    .menu{top:-180%;transition:all 0.3s ease-in-out; }
+    .menu.menuOn{
+        transform: translateY(180%);}
 
 .userIcon{margin-right:15px;}
 .herotext{
@@ -74,6 +75,7 @@ h1{font-size: 65px;}
     .selectHolder{display: flex;}
     .leader{padding-right:15px;}
     .province{padding-left: 15px;}
+    .province select option{color:#333!important;}
     .selectHolder > div{width:50%;}
     .selectHolder input{
         font-size: 16px;
@@ -107,8 +109,8 @@ h1{font-size: 65px;}
         left: 12px;
         z-index: 4;
         border: 2px solid #F3C2FF;
-                  
-    }     
+
+    }
 
     .selectHolder input,.selectHolder select{width:100%;color:#fff;}
 
@@ -119,12 +121,12 @@ h1{font-size: 65px;}
    .grow{flex-grow:1;}
    .redbg{background:#ddd;}
    .tabHolder{padding-left: 0;}
-   .mapHolder{background:url(../image/map.png)no-repeat;}
+   .mapHolder{}
    .tabHolder li{padding:50px;font-size: 28px;color:#000;display: flex;align-items: center;width:100%;list-style-type: none;transition:all 0.3s linear;}
    .tabHolder li.active{background:#F7F7F7;font-weight:bold;}
    .tabHolder li:hover{background:#dedede;cursor: pointer;}
    .tabHolder li img{width:73px;}
-  
+
 
    .tabHolder .text{padding-left: 60px;font-size: 28px;}
    .revbtn{height:53px;border-radius:27px;
@@ -136,7 +138,7 @@ h1{font-size: 65px;}
         button.revbtn:hover{
             background: rgba(255,255,255,0.89);
             color:#333;
-            
+
         }
         .revbtn.tbtn{border:2px solid rgba(8,17,66,0.59);
         color:rgba(8,17,66,0.59);
@@ -171,13 +173,14 @@ h1{font-size: 65px;}
     .tags{background:#BE13E8;font-size: 12px;padding:5px 10px;margin-bottom:10px;border-radius:15px;color:rgba(255,255,255,0.57);display: inline-block;}
     .pTitle{font-size: 21px;color:rgba(255,255,255,0.57);bottom:40px;margin-bottom: 0;}
     .pImageholder{overflow: hidden;}
-    .pImageholder img{width:100%;     transition: all 0.5s cubic-bezier(0.18, 0.89, 0.32, 1.28);} 
+    .pImageholder img{width:100%;     transition: all 0.5s cubic-bezier(0.18, 0.89, 0.32, 1.28);}
     .pImageholder:hover img{transform: scale(1.2)}
     .container{ max-width: 1435px;padding:0 15px;}
     .persons{background:#080D2C;}
     .lists> div:nth-of-type(1),  .lists> div:nth-of-type(2),  .lists >div:nth-of-type(3),.lists >div:nth-of-type(4){
         margin-bottom:15px;
     }
+    .cropNews{width:400.75px; height:258.83px;}
     .content{    position: absolute;
         bottom: 0;
         z-index: 5;
@@ -218,8 +221,9 @@ h1{font-size: 65px;}
                     .copyright p{margin-bottom:0;}
 
 .imageHolder img{width:100%;}
+.cropFeatured{width:449px; height:375px;}
 .imageHolder{transform: skewX(-8deg);position: relative;left: 20px;}
-.pratinidhi{position: relative;} 
+.pratinidhi{position: relative;}
 section.pratinidhi:after{
     content: "";
     height: 300px;
@@ -250,7 +254,16 @@ section.pratinidhi:after{
 .navbar-brand{margin-right:auto;position: relative;z-index: 1000;}
 .socialIcons i{transition:all 0.2s linear;cursor: pointer;}
 .socialIcons i:hover{color:#6f7cbb}
-.menu{position:fixed;top:0;left: 0;right: 0;bottom: 0;z-index: 100; background:#151b35;}
+.menu{    position: fixed;
+
+    height: 100vh;
+    width: 100%;
+
+    left: 0;
+    z-index: 100;
+    background: rgba(21, 27, 53, 0.95);
+
+    transition: all 0.3s linear;}
 .menuheader{background:#020725;min-height: 100px;display:flex-end;align-items: flex-end;}
 /* other pages */
 .navigation.innerPage{background: rgba(8,17,66,0.91);}
@@ -316,7 +329,7 @@ section.pratinidhi:after{
         display: flex;
     align-items: flex-end;
    justify-content: center;}
- 
+
    .item1 p{margin-bottom:30px;color:rgba(255,255,255,0.68);font-size: 1rem;}
    .tab-content{margin-top:100px;}
 
@@ -325,13 +338,13 @@ section.pratinidhi:after{
    .darkbgl .tab-content{margin-top:30px;}
    .list .province{background:#32216F;border:#32216F;}
 
-  
+
 .list .province {
     height: 36px;
     border-radius: 18px;
     width:180px;
     margin-bottom:15px;
-  
+
 }
 
 .selectHolder.list select {width: 150px;}
@@ -367,6 +380,7 @@ a.active .holder{ background:rgba(255,255,255,0.16)}
 .clickabletabs{display: flex;padding-bottom:30px;align-items: center;justify-content: center;}
 .clickabletabs >div:first-of-type{margin-right:15px;}
 .pimageHolder{position: relative;}
+.cropList{width:258px; height:258px;}
 .poverlay{ position: absolute;
     top: 0;
     bottom: 0;
@@ -401,7 +415,7 @@ margin-top:-50px;}
 .dlocation{margin-bottom:15px;margin-top:5px;}
 
     .aroup {
-  
+
         width: 302px;
         height: 128px;
         background: rgba(49, 34, 110, 0.5);
@@ -415,7 +429,7 @@ margin-top:-50px;}
     .deteilbg{background:#231D51;top:0;left: 0;bottom: 0;right: 0;position: absolute;z-index: 10;}
      .date,.dname,.dlocation{position: relative; z-index: 12;}
      .dname,.dlocation{padding-right:20px;}
-     .bottom{ 
+     .bottom{
         position: absolute;
         bottom: -35px;
         right: -54px;
@@ -429,7 +443,7 @@ margin-top:-50px;}
      }
         .bottom i{transform: rotate(40deg); color:#fff;}
         .clickabletabs li:first-of-type{margin-right:10px;}
-        .cropImg{width:335px;height:120px;}
+        .cropImg{width:auto;height:200px;}
         .gitem{display:flex;flex-direction: row;
             min-width:100%;
             align-items: center;
@@ -448,7 +462,7 @@ margin-top:-50px;}
     .gitem:not(:last-of-type){margin-bottom:10px;}
   .filterBtn{height:36px;width:80px;font-size:14px;color:#fff;border-radius:18px;    background: #32216F;
   border: #32216F;display:none;}
-  .closeBtn{   
+  .closeBtn{
      position: absolute;
     bottom: -24px;
     right: 0;
@@ -578,7 +592,7 @@ background:rgba(255,255,255,0.02);padding:30px;}
         display: inline-block;
         margin-right: 8px;
         transform: rotate(45deg);
-        transform-origin: center;} 
+        transform-origin: center;}
         .loft{       font-size: 24px;
             margin-bottom: 40px;
             margin-top: 30px;}
@@ -587,7 +601,7 @@ background:rgba(255,255,255,0.02);padding:30px;}
             .lispTitle{font-size: 40px;margin-bottom:40px;}
             .profileHolder{display:flex;align-items: center;padding:80px 0;;}
             .infocontainer{padding-right: 50px;}
-            .profileImg img{position: relative; width:105%;}
+            .profileImg img{position: relative; width:530px; height:620px;}
             .pheader span{vertical-align: middle;}
             .pheader img{margin-left:10px;}
             .we{min-height: 150px;}
@@ -639,20 +653,20 @@ background:rgba(255,255,255,0.02);padding:30px;}
             .menutabs#exTab3 .nav-pills li a.active{transform: scale(1)}
             .menutabs#exTab3 .nav-pills a.active:after{border:none;}
             .linkitems {
-               padding:10px 15px;
+                padding: 10px 15px;
                 border-radius: 30px;
                 min-width: 100px;
                 display: inline-block;
                 text-align: center;
                 margin-bottom: 15px;
-                background: #32216F;
-                border: #32216F;
-                color:#fff!important;
-                text-decoration: none!important;
-                cursor: pointer;
+                text-transform: uppercase;
+                color: #fff!important;
+
+                font-size: 38px;
+                display: block;
             }
             .linkitems:not(:last-of-type){margin-right: 15px;}
-            .linkTabs{padding-top: 80px;     border-bottom: 1px solid rgba(255,255,255,0.1);
+            .linkTabs{padding-top: 80px;
                 padding-bottom: 40px;}
                 body.overflowHidden{overflow: hidden;}
                 .selectOverlay{width: 100%;
@@ -660,7 +674,7 @@ background:rgba(255,255,255,0.02);padding:30px;}
                     position: absolute;
                     left: 0;
                     top: 105%;
-                
+
                     padding: 30px 15px 15px 15px;
                     border-bottom-right-radius: 4px;
                     border-bottom-left-radius: 4px;
@@ -669,7 +683,7 @@ background:rgba(255,255,255,0.02);padding:30px;}
                     transition:all 0.1s linear;
                     box-shadow: -1px 5px 15px 0px rgba(0,0,0,0.3);
                     z-index: -1;
-               
+
                 }
                 .selectOverlay.active{height:170px;z-index: 10;}
                 .selectList{display: flex;justify-content: space-around;}
@@ -698,21 +712,21 @@ background:rgba(255,255,255,0.02);padding:30px;}
             outline: none!important;
         }
       .popbtn:hover{background:#be13e8!important;outline:none!important;}
-      
+
         .st{    font-size: 13px;
             margin-bottom: 0;
             color: #fff;
             font-weight: bold;
             text-transform: uppercase;
-        padding-left: 10px;opacity: 0.5;}
-   
+        padding-left: 7px;opacity: 0.5;}
+
         i.close{display: none}
        .circlefilter   i.show{display:block;}
        .circleActive i.arrow{display:none;}
        .circleActive i.close{display:block;color: #F3C2FF;box-shadow: none;opacity: 1;}
        .fullclick{padding-top:25px;display: flex;justify-content: flex-end;}
        .firstBtn{margin-right: 10px;}
-       #selectedValue{ 
+       #selectedValue{
         padding-top: 10px;
         display: block;
         padding-right: 35px;
@@ -723,9 +737,35 @@ background:rgba(255,255,255,0.02);padding:30px;}
         overflow: hidden;
         height:50px;
     }
-       
-        
+    .selectHolder  .selectList select{padding-right: 0;}
 
-        
-      
-           
+
+    /* slider */
+
+
+        /* for scrolling tab */
+        #scroltab .nav.nav-pills{flex-wrap: nowrap;}
+        #scroltab  li,.scrollicon{
+          padding: 20px 30px;
+          width: initial;
+          height: 40px;
+          font-size: 16px;
+          color: #333!important;
+          text-align: center;
+          border-radius: 20px;
+          background: #ddd;
+          position: relative;
+          width: 150px;
+          min-width: 150px;
+        }
+        #scroltab  li{margin-left: 10px;}
+        .scrollicon{display:flex;align-items: center;justify-content: center;}
+        #scroltab li a {height:initial!important;min-height:initial!important;}
+        .scrolltabs{display: flex;}
+        .tabheading{    display: flex;overflow:hidden;flex-grow: 1;
+          flex-direction: row;}
+          .vVariables{    min-width: 250px;
+              text-align: center;}
+              .widthScrol{overflow: hidden;position: relative;}
+              .tabheading{flex-grow: 1;}
+              .scrolleft,.scrollright{width:80px;min-width: 80px;}

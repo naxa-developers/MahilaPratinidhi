@@ -129,6 +129,9 @@
   
 }
 @media screen and (max-width:768px){
+    .selectHolder{flex-direction: column;}
+    .selectHolder > div{width:100%;padding-right:0 ;}
+    .province{margin-top: 30px;}
     .menuCircle{height: 50px;width: 50px;}
     .menuCircle i.fa{font-size: 24px;}
     .userIcon .menuCircle i.fa{font-size: 28px}
@@ -351,6 +354,7 @@ h3.newsHeader{font-size: 38px;}
         margin-left: -10px;
     
     }
+    .linkitems{font-size: 28px;}
 
 }
 
