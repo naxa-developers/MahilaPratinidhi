@@ -163,14 +163,14 @@ class MahilaDetail(DetailView):
     template_name = 'public/detail.html'
 
     def get(self, request, *args, **kwargs):
-        if RastriyaShava.objects.get(id=self.kwargs.get('pk')):
+        if RastriyaShava.objects.filter(id=self.kwargs.get('pk')):
             form = RastriyaShava.objects.get(id=self.kwargs.get('pk'))
 
-        elif PratinidhiShava.objects.get(id=self.kwargs.get('pk')):
-            form = RastriyaShava.objects.get(id=self.kwargs.get('pk'))
+        elif PratinidhiShava.objects.filter(id=self.kwargs.get('pk')):
+            form = PratinidhiShava.objects.get(id=self.kwargs.get('pk'))
 
-        elif ProvinceMahilaPratinidhiForm.objects.get(id=self.kwargs.get('pk')):
-            form = RastriyaShava.objects.get(id=self.kwargs.get('pk'))
+        elif ProvinceMahilaPratinidhiForm.objects.filter(id=self.kwargs.get('pk')):
+            form = ProvinceMahilaPratinidhiForm.objects.get(id=self.kwargs.get('pk'))
 
         else:
             form = MahilaPratinidhiForm.objects.get(id=self.kwargs.get('pk'))
