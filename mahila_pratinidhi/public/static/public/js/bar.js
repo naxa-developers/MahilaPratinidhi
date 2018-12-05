@@ -11,24 +11,34 @@ class SimpleBar extends React.Component{
 
   }
 
+
+  componentWillReceiveProps(nextProps){
+    alert("x");
+
+    this.simpleBar(nextProps.data);
+
+
+  }
+
   simpleBar(sample){
 
-    console.log("sample",sample.map((s) => s.caste));
+    console.log("sample",sample.map((s) => s.label));
+
+    d3.select('.simple-bar').selectAll("*").remove()
     const svg = d3.select('.simple-bar');
-    const svgContainer = d3.select('#container');
 
 
-    var margin0 = {top: 20, right: 40, bottom: 30, left: 10};
+    var margin0 = {top: 10, right: 40, bottom: 10, left: 10};
 
-    const width = 600 -margin0.left-margin0.right;
-    const height = 300 -margin0.top- margin0.bottom;
+    const width = 650 -margin0.left-margin0.right;
+    const height = 400 -margin0.top- margin0.bottom;
 
     const chart = svg.append('g')
       .attr('transform', "translate(" + margin0.left + "," + margin0.top + ")");
 
       const xScale = d3.scale.ordinal()
       .rangeRoundBands([0, width],0.1)
-      .domain(sample.map((s) => s.caste))
+      .domain(sample.map((s) => s.label))
       ;
 
         const yScale = d3.scale.linear()
@@ -66,7 +76,7 @@ class SimpleBar extends React.Component{
     barGroups
       .append('rect')
       .attr('class', 'simple-rect')
-      .attr('x', (g) => xScale(g.caste))
+      .attr('x', (g) => xScale(g.label))
       .attr('y', (g) => yScale(g.total))
       .attr('height', (g) => height - yScale(g.total))
       .attr('width', xScale.rangeBand())
@@ -78,7 +88,7 @@ class SimpleBar extends React.Component{
           .transition()
           .duration(300)
           .attr('opacity', 0.6)
-          .attr('x', (a) => xScale(a.caste) - 5)
+          .attr('x', (a) => xScale(a.label) - 5)
           .attr('width', xScale.rangeBand() + 10)
 
         const y = yScale(actual.total)
@@ -92,7 +102,7 @@ class SimpleBar extends React.Component{
 
         barGroups.append('text')
           .attr('class', 'simple-divergence')
-          .attr('x', (a) => xScale(a.caste) + xScale.rangeBand() / 2)
+          .attr('x', (a) => xScale(a.label) + xScale.rangeBand() / 2)
           .attr('y', (a) => yScale(a.total) + 30)
           .attr('fill', 'white')
           .attr('text-anchor', 'middle')
@@ -115,7 +125,7 @@ class SimpleBar extends React.Component{
           .transition()
           .duration(300)
           .attr('opacity', 1)
-          .attr('x', (a) => xScale(a.caste))
+          .attr('x', (a) => xScale(a.label))
           .attr('width', xScale.rangeBand())
 
         chart.selectAll('#limit').remove()
@@ -125,7 +135,7 @@ class SimpleBar extends React.Component{
     barGroups
       .append('text')
       .attr('class', 'simple-value')
-      .attr('x', (a) => xScale(a.caste) + xScale.rangeBand() / 2)
+      .attr('x', (a) => xScale(a.label) + xScale.rangeBand() / 2)
       .attr('y', (a) => yScale(a.total) - 5)
       .attr('text-anchor', 'middle')
       .text((a) => `${a.total}`)
