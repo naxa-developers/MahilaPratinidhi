@@ -86,7 +86,7 @@ def activate(request, uidb64, token):
         user.is_active = True
         user.save()
         login(request, user)
-        return HttpResponse('Thank you for your email confirmation. Now you can login your account.')
+        return HttpResponseRedirect('/signup/')
     else:
         return HttpResponse('Activation link is invalid!')
 
@@ -156,6 +156,25 @@ class ProvincialMahilaPratinidhiDetail(DetailView):
 
     def get(self, request, *args, **kwargs):
         form = ProvinceMahilaPratinidhiForm.objects.get(id=self.kwargs.get('pk'))
+        return render(request, self.template_name, {'form':form})
+
+
+class MahilaDetail(DetailView):
+    template_name = 'public/detail.html'
+
+    def get(self, request, *args, **kwargs):
+        if RastriyaShava.objects.filter(id=self.kwargs.get('pk')):
+            form = RastriyaShava.objects.get(id=self.kwargs.get('pk'))
+
+        elif PratinidhiShava.objects.filter(id=self.kwargs.get('pk')):
+            form = PratinidhiShava.objects.get(id=self.kwargs.get('pk'))
+
+        elif ProvinceMahilaPratinidhiForm.objects.filter(id=self.kwargs.get('pk')):
+            form = ProvinceMahilaPratinidhiForm.objects.get(id=self.kwargs.get('pk'))
+
+        else:
+            form = MahilaPratinidhiForm.objects.get(id=self.kwargs.get('pk'))
+        
         return render(request, self.template_name, {'form':form})
 
 
@@ -257,18 +276,17 @@ def read_view(request, ):
 class Detail(TemplateView):
     template_name = 'public/lists.html'
 
-class callRequestView(TemplateView):
-    template_name = 'login.html'
 
-    def get(self, request, *args, **kwargs):
-        try:
-            if request.user.is_authenticated():
-                email = EmailMessage('Call Request', 'This user has made the call request.',
-                                         to=['admin@example.com'], from_email=request.user.email)
-                email.send()
-        except:
-            print("Please login first!")
-        return render(request, self.template_name)
+def callRequestView(request, *args, **kwargs):
+    if request.user.is_authenticated:
+        email = EmailMessage('Call Request', 'This user has made the call request.',
+                                         to=['akshya.shrestha7402@gmail.com'])
+        email.send()
+        return HttpResponseRedirect('/explore/general')
+    else:
+        print("Please login first!")
+        return render(request, "login.html")
+
 
 # class SearchDetail(DetailView):
 #     template_name = 'public/detail.html'
@@ -295,6 +313,7 @@ class callRequestView(TemplateView):
 
 #         if national is not None:
 #             return render(self.request, self.template_name, {'forms': model})
+
 
 # def searchposts(request):
 #     if request.method == 'GET':

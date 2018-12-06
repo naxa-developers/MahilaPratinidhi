@@ -4,7 +4,7 @@ decorator==4.3.0
 Django==2.0.7
 django-debug-toolbar==1.10.1
 #for model translation
-pip install https://github.com/abdolhosein/django-modeltranslation/archive/patch-the-issue-with-django2.zip
+#pip install https://github.com/abdolhosein/django-modeltranslation/archive/patch-the-issue-with-django2.zip
 
 djangorestframework==3.9.0
 ipdb==0.11
