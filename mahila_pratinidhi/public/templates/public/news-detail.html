@@ -50,9 +50,12 @@
                             </p>
                             
                             <div class="listItem">
-                                <a href="{% url 'public:news' latest_news.pk %}">
-                               <p class="lnews"> {{ latest_news.title }}
+                                    {% for lnews in latest_news %}
+                                <a href="{% url 'public:news' lnews.pk %}">
+                                    
+                               <p class="lnews"> {{ lnews.title }}
                                 </a>
+                                {% endfor %}
 
                             </p>
                             </div>
