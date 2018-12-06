@@ -20,7 +20,9 @@ class SimpleBar extends React.Component{
   }
 
   simpleBar(sample){
+console.log("sample",sample);
 
+console.log("sampleafterdlt",sample);
     var value_value = sample.map((s)=> +s.total);
     console.log("value_value",value_value);
 

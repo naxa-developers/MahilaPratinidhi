@@ -69,18 +69,39 @@ function resetHighlight(e){
 
 var last_layer =[];
 var marker_array=[];
+
+
 function zoomToFeature(e){
   map.fitBounds(e.target.getBounds());
   if(last_layer[0]){
       map.removeLayer(last_layer[0]);
       last_layer.pop();
-    }
-  var province= e.target.feature.properties.Province;
+
+  }
+
+
+ var properties_object = e.target.feature.properties;
+
+
+ if(Object.keys(properties_object).length=="1"){
+   var division = "province";
+   var prodric= properties_object.Province;
+
+ }
+
+ else if (Object.keys(properties_object).length=="8"){
+   var division = "municipality";
+   var prodric= properties_object['FIRST_DIST'].charAt(0).toUpperCase() +  properties_object['FIRST_DIST'].slice(1).toLowerCase();
+
+ }
+
+
   for (var i=0;i<marker_array.length;i++){
     marker_array[i].removeFrom(map);
   }
-  console.log("baseurlcheck",base_url+'/api/geojson/province/'+ province);
-  var layer = L.geoJson.ajax(base_url+'/api/geojson/province/'+ province,
+
+
+  var layer = L.geoJson.ajax(base_url+'/api/geojson/'+ division +'/'+ prodric,
             {onEachFeature:onEachFeature,
               style: { color: "black",
                        weight:1.5,

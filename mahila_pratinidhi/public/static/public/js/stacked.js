@@ -70,7 +70,7 @@ class StackedChart extends React.Component{
       .domain([0, d3.max(dataset, function(d) {  return d3.max(d, function(d) { return d.y0 + d.y; });  })])
       .range([height, 0]);
 
-    var colors = ["#d25c4d", "#f2b447", "#d9d574","#9b42f4","#68f442","#f441a6","#f44141"];
+    var colors = [	 "#69131a","#e86c75","#faa2ad","#ac779d","#4b1b31" ,"#f441a6","#f44141"];
 
 
     // Define and draw axes
