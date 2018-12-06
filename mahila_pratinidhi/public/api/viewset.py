@@ -55,6 +55,7 @@ def gapanapa_geojson(request, district):
 
 
 class RastriyaViewSet(ReadOnlyModelViewSet):
+   
     queryset = RastriyaShava.objects.all()
     serializer_class = RastriyaShavaSerializer
 
@@ -171,6 +172,7 @@ class MapViewSet(views.APIView):
 
 
 class AgeViewSet(views.APIView):
+    
     def get(self, request):
 
         total_ages = {}
@@ -252,6 +254,7 @@ class AgeViewSet(views.APIView):
 
 
 class EthnicityViewSet(views.APIView):
+    
     def get(self, request):
 
         total_ethnicity = {}
@@ -519,6 +522,7 @@ class EducationViewSet(views.APIView):
 
 
 class ElectionTypeViewSet(views.APIView):
+    
     def get(self, request):
 
         total_election_type = {}
@@ -636,6 +640,7 @@ class PoliticalEngagementViewSet(views.APIView):
 
 
 class MaritalStatusViewSet(views.APIView):
+    
     def get(self, request):
 
         total_maritalstatus_dict = {}
@@ -724,6 +729,7 @@ class MaritalStatusViewSet(views.APIView):
 
 
 class ElectionParticipate(views.APIView):
+  
     def get(self, request):
         total_election_before_dict = {}
         data_list = []
@@ -812,3 +818,60 @@ class ElectionParticipate(views.APIView):
         total_election_before_dict['party'] = party_election_before
         
         return Response(total_election_before_dict)
+
+
+class PartyViewSet(views.APIView):
+
+    def get(self, request):
+
+        total_party_dict = {}
+        data_list = []
+        party_dict = {}
+
+        #for total educational qualification
+        pratinidhi = PratinidhiShava.objects.all()
+        provincial = ProvinceMahilaPratinidhiForm.objects.all()
+
+        party_list = list(chain(pratinidhi, provincial))
+        totals = []
+        for party in party_list:
+            totals.append(party.party_name)
+        
+        total_arrays = np.array(np.unique(totals, return_counts=True)).T
+        
+        for total in total_arrays:
+            party_dict['label'] = total[0]
+            party_dict['total'] = total[1]
+
+            data_list.append(dict(party_dict))
+
+        total_party_dict['total'] = data_list
+
+        province_party = ProvinceMahilaPratinidhiForm.objects.values('province_id', 'party_name')\
+        .distinct().annotate(total=Count('party_name'))
+        party_list = []
+        for party in province_party:
+            parties = party['party_name']
+            party_list.append(parties)
+        
+        party_set = set(party_list)
+
+        province_party_list = []
+        
+        
+        for party in party_set:
+            province_dict = {}
+            province_dict['label'] = party
+            for item in province_party:
+                if party in item['party_name']:
+                    if str(item['province_id']) in province_dict:
+                        province_dict[item['province_id']] = province_dict[item['province_id']] + item['total']
+                    else:
+                        province_dict[item['province_id']] = item['total']
+            
+            province_party_list.append(dict(province_dict))
+
+
+        total_party_dict['provincial'] = province_party_list
+
+        return Response(total_party_dict)
