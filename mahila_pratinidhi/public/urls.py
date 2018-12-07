@@ -2,6 +2,7 @@ from django.urls import path, re_path
 from django.conf.urls import url
 from . import views
 from django.contrib import admin
+# from public.views import NameAutocomplete
 
 
 
@@ -35,4 +36,6 @@ urlpatterns = [
 	path('news/<int:pk>/', views.NewsView.as_view(), name="news"),
 
 	# path(r'^detail/name/(?P<name>\w+)/$', views.SearchDetail.as_view(), name='name_search'),
+
+	# path(r'^name-autocomplete/$', NameAutocomplete.as_view(), name="name-autocomplete"),
 ]

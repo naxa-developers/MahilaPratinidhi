@@ -261,7 +261,7 @@ section.pratinidhi:after{
 
     left: 0;
     z-index: 100;
-    background: rgba(21, 27, 53, 0.95);
+    background: rgba(21, 27, 53, 0.89);
 
     transition: all 0.3s linear;}
 .menuheader{background:#020725;min-height: 100px;display:flex-end;align-items: flex-end;}
@@ -643,8 +643,8 @@ background:rgba(255,255,255,0.02);padding:30px;}
             .menuheader i{    font-size: 38px;
                 color: #fff;
                 float: right;
-                padding-top: 35px;
-                padding-right: 15px;
+                padding-top: 16px;
+                padding-right: 27px;
             opacity: 0.4;cursor: pointer;}
             .menuheader i:hover{opacity: 0.8;}
 
@@ -661,8 +661,8 @@ background:rgba(255,255,255,0.02);padding:30px;}
                 margin-bottom: 15px;
                 text-transform: uppercase;
                 color: #fff!important;
-
-                font-size: 38px;
+           
+                font-size: 28px;
                 display: block;
             }
             .linkitems:not(:last-of-type){margin-right: 15px;}
@@ -769,3 +769,11 @@ background:rgba(255,255,255,0.02);padding:30px;}
               .widthScrol{overflow: hidden;position: relative;}
               .tabheading{flex-grow: 1;}
               .scrolleft,.scrollright{width:80px;min-width: 80px;}
+              .menuOn .menuheader{background:transparent;}
+              .links  .linkTabs{padding-top: 0;}
+           .socialIconsBtm{text-align: center;}
+           .socialIconsBtm a {color:#fff;font-size: 24px;margin-right: 15px;text-decoration: none;}
+           .socialIconsBtm a i.fa.fa-twitter{font-size: 28px;}
+           .socialIconsBtm a:last-of-type{margin-right: 0;}
+      
+           
