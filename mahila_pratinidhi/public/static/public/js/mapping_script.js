@@ -10,7 +10,7 @@ var OSM = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 var OpenStreetMap_BlackAndWhite = L.tileLayer('http://{s}.tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png', {
 	maxZoom: 18,
 	attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-});
+}).addTo(map);
 
 var Thunderforest_TransportDark = L.tileLayer('https://{s}.tile.thunderforest.com/transport-dark/{z}/{x}/{y}.png?apikey={apikey}', {
 	attribution: '&copy; <a href="http://www.thunderforest.com/">Thunderforest</a>, &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
@@ -23,7 +23,7 @@ var gl = L.mapboxGL({
        attribution: '<a href="https://www.maptiler.com/license/maps/" target="_blank">&copy; MapTiler</a> <a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap contributors</a>',
        accessToken: 'not-needed',
        style: 'https://maps.tilehosting.com/c/163bd208-a4f1-4885-8b97-416ac0b47d00/styles/darkmatter_upen/style.json?key=SWfpfQVfURyYQrAEj6J3'
-     }).addTo(map);
+     });
 
 baseMaps = {
     //"Street View": street_view,
@@ -55,15 +55,16 @@ function highlightFeature(e){
   layer= e.target;
   var province=layer.feature.properties.Province;
   layer.setStyle({
-    weight:3,
-    color: '#666',
-    dashArray :'',
-    fillOpacity:0.7
+    weight:4,
+
   });
 }
 
 function resetHighlight(e){
-  country.resetStyle(e.target);
+  e.target.setStyle({
+    weight:2,
+
+  });
 }
 
 
@@ -103,10 +104,11 @@ function zoomToFeature(e){
 
   var layer = L.geoJson.ajax(base_url+'/api/geojson/'+ division +'/'+ prodric,
             {onEachFeature:onEachFeature,
-              style: { color: "black",
-                       weight:1.5,
+              style: { color: "white",
+                       weight:2,
+                       fillColor:"grey",
 
-                       fillOpacity:0}}
+                       fillOpacity:1}}
             );
 
    layer.addTo(map);
@@ -114,9 +116,22 @@ function zoomToFeature(e){
 
 }
 
+var sum=0;
+function returnSum(value){
+
+  var sum =0;
+  for(var i =0; i<array.length;i++){
+    sum+= array[i];
+  }
+  return sum;
+
+}
+
 function onEachFeature(feature,layer){
 
+  //alert(data_summary_all_percentage['total'][feature.properties.Province-1]);
 
+  Choropleth(layer,data_summary_all_percentage['total'][feature.properties.Province-1]);
   circular_marker(get_center(feature,layer),data_summary_all['total'][feature.properties.Province-1]);
   //layer.bindPopup(customPopup,customOptions);
   layer.on('mouseover', function (e) {
@@ -157,14 +172,44 @@ function get_center(feature,layer){
   return center;
 
 }
+
+function getColor(d) {
+
+
+//alert(d);
+
+    return d > 25 ? '#031A3F' :
+            d > 18 ? '#08204E' :
+            d > 16 ? '#0F275E' :
+           d > 14  ? '#22377E' :
+           d > 12  ? '#3D4C9D' :
+           d > 10  ? '#7276CD' :
+           d > 5  ? '#8888DD' :
+
+                      '#C1C1E6';
+}
+
+
+function Choropleth(layer,frequency){
+
+  var color= getColor(frequency);
+  layer.setStyle({fillColor :color}) ;
+
+}
+
+
+
+
 console.log("baseurlcheck",base_url+'/api/geojson/country');
 
 var country =L.geoJson.ajax(base_url+'/api/geojson/country',
           {onEachFeature:onEachFeature,
-           style: { color: "black",
-                    weight:1.5,
+           style: { color: "white",
+                    weight:2,
+                    fillColor:"grey",
+                    fillOpacity:"0.6"
 
-                    fillOpacity:0}
+                    }
           }).addTo(map);
 
 
@@ -177,12 +222,29 @@ var country =L.geoJson.ajax(base_url+'/api/geojson/country',
 
 //api call_
 
+function percentage(array){
+  var total = array.reduce(function(total,num){
+    return total +num;
+  });
+  percentage_array =  array.map(function(i){
+    return (i*100)/total;
+
+  });
+  return percentage_array;
+
+}
+
   var data_summary_all ={
     'total':[32, 37, 37, 20, 32, 13, 18],
     'national': [1,2,2,5,3,30,7],
     'provincial':[32, 37, 37, 20, 32, 13, 0]
     }
-  frequency_array=[1187,1000,800,1730,2000,3212,3212];
+
+
+
+
+
+
 console.log("baseurlcheck",base_url+'/api/maps/');
   $.get(base_url+'/api/maps/',function(data){
 
@@ -190,6 +252,17 @@ console.log("baseurlcheck",base_url+'/api/maps/');
     data_summary_all['national']= data['national'];
 
 });
+
+var data_summary_all_percentage ={
+  'total':percentage(data_summary_all['total']),
+  'national': percentage(data_summary_all['national']),
+  'provincial':percentage(data_summary_all['provincial'])
+
+  }
+
+  console.log("percentage",data_summary_all_percentage);
+
+
 //interaction with sidebar
 
 $("#national-all").on('click',function(){

@@ -22,7 +22,7 @@ class ChartBox extends React.Component {
         bar = <SimpleBar data={[{'data':this.props.data_pass[0]['data'],'dataName':this.props.data_pass[0]['dataName']}]}  />;
       }
 
-      console.log("render",this.props.data_pass[0]['data']);
+      console.log("render"+this.props.data_pass[0]);
 
 
 

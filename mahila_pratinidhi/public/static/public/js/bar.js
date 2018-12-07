@@ -26,7 +26,7 @@ console.log("sampleafterdlt",sample);
     var value_value = sample.map((s)=> +s.total);
     console.log("value_value",value_value);
 
-    alert(d3.max(value_value));
+    //alert(d3.max(value_value));
   var max_value=  Math.max.apply(null, value_value);
 
 

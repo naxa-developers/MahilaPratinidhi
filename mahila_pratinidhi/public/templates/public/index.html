@@ -34,9 +34,12 @@
           }
         .my-div-icon{
           border-radius: 50%;
+          border: 1px solid white;
           background:green;
           padding:15px;
-          font-size:1.5em;
+          font-weight: bold;
+          font-size: 16px;          
+          color:white
 
         }
 
@@ -204,7 +207,7 @@
                         </div>
                         {% else %}
                         <div class="col-md-4">
-                                <div class="imageHolder"> 
+                                <div class="imageHolder">
                                     <img src = "{% static 'public/image/p1.jpg' %}" class="cropFeatured" alt="">
                                 </div>
                         </div>
@@ -256,7 +259,7 @@
                                 <i class="fa fa-envelope"></i>
                             </div>
                         </div>
-                        
+
                         <div class="fullBtn centeredvh">
                                 <a href="{% url 'public:detail' data.pk %}">
                             <button class="btn btn-round revbtn mtb50"> PROFILE DETAIL
@@ -264,7 +267,7 @@
                             </button>
                         </a>
                         </div>
-                    
+
                     </div>
                 </div>
             </div>
@@ -324,12 +327,12 @@
                         </a>
                     </div>
                     {% endfor %}
-                    
-    
+
+
                 </div>
             </div>
-    
-    
+
+
         </section>
 
 
