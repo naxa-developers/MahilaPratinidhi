@@ -13,11 +13,9 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.template.loader import render_to_string
 from .tokens import account_activation_token
 from django.contrib.auth.models import User
-from django.core.mail import EmailMessage
 import json
 from django.core.mail import EmailMessage
 from itertools import chain
-from dal import autocomplete
 
 from django.shortcuts import render
 from django.db.models import Q
