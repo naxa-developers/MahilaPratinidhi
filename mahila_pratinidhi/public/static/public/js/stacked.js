@@ -6,20 +6,43 @@ class StackedChart extends React.Component{
   }
 
   componentDidMount(){
-    //alert("component did mont")
-    this.stackedChart(this.props.data);
+    //alert("component did mont" +this.props.data[0].dataName)
+    this.stackedChart(this.props.data[0].data, this.props.data[0].dataName);
 
   }
 
-  stackedChart(data){
+  componentWillReceiveProps(nextProps){
+    alert("component did receive");
+    d3.selectAll('.stacked-bar').selectAll("*").remove();
+    this.stackedChart(nextProps.data[0].data,nextProps.data[0].dataName);
+  }
+
+  stackedChart(data,dataName){
+
+
+    if (dataName== "party"){
+
+        var legend_array =["Nepal Communist Party","Nepali Congress","Federal Socialist Forum, Nepal",
+        "Rastriya Janata Party Nepal"];
+        var count = 0;
+    }
+
+    else if(dataName== "provincial") {
+
+        var legend_array= ["1","2","3","4","5","6","7"];
+        count =1;
+    }
+
 
 
   var margin = {top: 20, right: 170, bottom: 20, left: 30};
 
   var width = 700 - margin.left - margin.right,
-      height = 350 - margin.top - margin.bottom;
+      height = 300 - margin.top - margin.bottom;
 
-  var svg = d3.select(".stacked-bar")
+  var svg = d3.selectAll(".stacked-bar").filter(function(d,i){
+    return i === count;
+  })
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
     .append("g")
@@ -27,14 +50,11 @@ class StackedChart extends React.Component{
 
     //var parse = d3.time.format("%Y").parse;
 
-    var party_array =["Nepal Communist Party","Nepali Congress","Federal Socialist Forum, Nepal",
-    "Rastriya Janata Party Nepal"]
-
 //["redDelicious", "mcintosh", "oranges", "pears"]
     // Transpose the data into layers
-    var dataset = d3.layout.stack()(party_array.map(function(fruit) {
+    var dataset = d3.layout.stack()(legend_array.map(function(fruit) {
       return data.map(function(d) {
-        return {x: d.caste, y: +d[fruit]};
+        return {x: d.label, y: +d[fruit]};
       });
     }));
 
@@ -50,7 +70,7 @@ class StackedChart extends React.Component{
       .domain([0, d3.max(dataset, function(d) {  return d3.max(d, function(d) { return d.y0 + d.y; });  })])
       .range([height, 0]);
 
-    var colors = ["#d25c4d", "#f2b447", "#d9d574","#9b42f4"];
+    var colors = [	 "#69131a","#e86c75","#faa2ad","#ac779d","#4b1b31" ,"#f441a6","#f44141"];
 
 
     // Define and draw axes
@@ -72,10 +92,15 @@ class StackedChart extends React.Component{
       .call(yAxis);
 
     svg.append("g")
-      .attr("class", "x axis")
+      .attr("class", "x-axis")
       .attr("transform", "translate(0," + height + ")")
       .call(xAxis);
 
+
+      svg.selectAll(".x-axis text")
+     .attr("transform", function(d) {
+        return "translate(" + this.getBBox().height*-2 + "," + this.getBBox().height + ")rotate(-35)";
+    });
 
     // Create groups for each series, rects for each segment
     var groups = svg.selectAll("g.cost")
@@ -123,7 +148,7 @@ class StackedChart extends React.Component{
 
     // Draw legend
     var legend = svg.selectAll(".legend")
-      .data(colors)
+      .data(colors.slice(0,legend_array.length))
       .enter().append("g")
       .attr("class", "legend")
       .attr("transform", function(d, i) { return "translate(30," + i * 19 + ")"; });
@@ -143,10 +168,14 @@ class StackedChart extends React.Component{
       .style("font-size","small")
       .text(function(d, i) {
         switch (i) {
-          case 0: return party_array[0];
-          case 1: return party_array[1];
-          case 2: return party_array[2];
-          case 3: return party_array[3];
+          case 0: return legend_array[0];
+          case 1: return legend_array[1];
+          case 2: return legend_array[2];
+          case 3: return legend_array[3];
+          case 4: return legend_array[4];
+          case 5: return legend_array[5];
+          case 6: return legend_array[6];
+          case 7: return legend_array[7];
 
         }
       });

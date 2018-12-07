@@ -17,6 +17,8 @@ from django.core.mail import EmailMessage
 import json
 from django.core.mail import EmailMessage
 from itertools import chain
+from datetime import timedelta
+from django.utils import timezone
 
 from django.shortcuts import render
 from django.db.models import Q
@@ -86,7 +88,7 @@ def activate(request, uidb64, token):
         user.is_active = True
         user.save()
         login(request, user)
-        return HttpResponse('Thank you for your email confirmation. Now you can login your account.')
+        return HttpResponseRedirect('/signup/')
     else:
         return HttpResponse('Activation link is invalid!')
 
@@ -159,6 +161,25 @@ class ProvincialMahilaPratinidhiDetail(DetailView):
         return render(request, self.template_name, {'form':form})
 
 
+class MahilaDetail(DetailView):
+    template_name = 'public/detail.html'
+
+    def get(self, request, *args, **kwargs):
+        if RastriyaShava.objects.filter(id=self.kwargs.get('pk')):
+            form = RastriyaShava.objects.get(id=self.kwargs.get('pk'))
+
+        elif PratinidhiShava.objects.filter(id=self.kwargs.get('pk')):
+            form = PratinidhiShava.objects.get(id=self.kwargs.get('pk'))
+
+        elif ProvinceMahilaPratinidhiForm.objects.filter(id=self.kwargs.get('pk')):
+            form = ProvinceMahilaPratinidhiForm.objects.get(id=self.kwargs.get('pk'))
+
+        else:
+            form = MahilaPratinidhiForm.objects.get(id=self.kwargs.get('pk'))
+        
+        return render(request, self.template_name, {'form':form})
+
+
 class RastriyaMahilaDetail(TemplateView):
     template_name = 'public/detail.html'
 
@@ -180,22 +201,24 @@ class DataVisualize(TemplateView):
 
 
     def get(self, request, *args, **kwargs):
-        local = MahilaPratinidhiForm.objects.all()
+        # local = MahilaPratinidhiForm.objects.all()
         national = RastriyaShava.objects.all()
         pratinidhi = PratinidhiShava.objects.all()
         provincial = ProvinceMahilaPratinidhiForm.objects.all()
-        total = local.count() + national.count() + pratinidhi.count() + provincial.count()
+        # total = local.count() + national.count() + pratinidhi.count() + provincial.count()
+        total = national.count() + pratinidhi.count() + provincial.count()
+
 
         married = 0
         graduate = 0
         direct = 0
 
-        for mahila in local:
-            if mahila.marital_status == 'Married' or mahila.marital_status == 'विवाहित':
-                married = married + 1
+        # for mahila in local:
+        #     if mahila.marital_status == 'Married' or mahila.marital_status == 'विवाहित':
+        #         married = married + 1
             
-            if mahila.educational_qualification == 'Graduate' or 'स्नातक' in mahila.educational_qualification:
-                graduate = graduate + 1
+        #     if mahila.educational_qualification == 'Graduate' or 'स्नातक' in mahila.educational_qualification:
+        #         graduate = graduate + 1
             
         for mahila in national:
             if mahila.marital_status == 'Married' or mahila.marital_status == 'विवाहित':
@@ -204,7 +227,7 @@ class DataVisualize(TemplateView):
             if mahila.educational_qualification == 'Graduate' or 'स्नातक' in mahila.educational_qualification:
                 graduate = graduate + 1
             
-            if mahila.nirwachit_prakriya == 'Directly Elected' or mahila.nirwachit_prakriya == 'निर्वाचित':
+            if mahila.nirwachit_prakriya == 'Directly Elected' or 'निर्वाचित' in mahila.nirwachit_prakriya:
                 direct = direct + 1
             
         for mahila in pratinidhi:
@@ -214,7 +237,7 @@ class DataVisualize(TemplateView):
             if mahila.educational_qualification == 'Graduate' or 'स्नातक' in mahila.educational_qualification:
                 graduate = graduate + 1
             
-            if mahila.nirwachit_prakriya == 'Directly Elected' or mahila.nirwachit_prakriya == 'निर्वाचित':
+            if mahila.nirwachit_prakriya == 'Directly Elected' or 'निर्वाचित' in mahila.nirwachit_prakriya:
                 direct = direct + 1
         
         for mahila in provincial:
@@ -224,7 +247,7 @@ class DataVisualize(TemplateView):
             if mahila.educational_qualification == 'Graduate' or 'स्नातक' in mahila.educational_qualification:
                 graduate = graduate + 1
             
-            if mahila.nirwachit_prakriya == 'Directly Elected' or mahila.nirwachit_prakriya == 'निर्वाचित':
+            if mahila.nirwachit_prakriya == 'Directly Elected' or 'निर्वाचित' in mahila.nirwachit_prakriya:
                 direct = direct + 1
 
         return render(request, self.template_name, {'total':total, 'married':married, 'graduate':graduate, 'direct':direct})
@@ -235,8 +258,13 @@ class NewsView(TemplateView):
 
     def get(self, request, *args, **kwargs):
         news = News.objects.get(id=self.kwargs.get('pk'))
-        latest_news = News.objects.latest()
-        print(latest_news)
+
+        #for latest news list
+        some_day_last_week = timezone.now().date() - timedelta(days=7)
+        monday_of_last_week = some_day_last_week - timedelta(days=(some_day_last_week.isocalendar()[2] - 1))
+        monday_of_this_week = monday_of_last_week + timedelta(days=7)
+        latest_news = News.objects.filter(date__gte=monday_of_last_week)
+        
         return render(request, self.template_name, {'news':news, 'latest_news': latest_news})
 
 
@@ -255,18 +283,17 @@ def read_view(request, ):
 class Detail(TemplateView):
     template_name = 'public/lists.html'
 
-class callRequestView(TemplateView):
-    template_name = 'login.html'
 
-    def get(self, request, *args, **kwargs):
-        try:
-            if request.user.is_authenticated():
-                email = EmailMessage('Call Request', 'This user has made the call request.',
-                                         to=['admin@example.com'], from_email=request.user.email)
-                email.send()
-        except:
-            print("Please login first!")
-        return render(request, self.template_name)
+def callRequestView(request, *args, **kwargs):
+    if request.user.is_authenticated:
+        email = EmailMessage('Call Request', 'This user has made the call request.',
+                                         to=['akshya.shrestha7402@gmail.com'])
+        email.send()
+        return HttpResponseRedirect('/explore/general')
+    else:
+        print("Please login first!")
+        return render(request, "login.html")
+
 
 # class SearchDetail(DetailView):
 #     template_name = 'public/detail.html'
@@ -293,6 +320,7 @@ class callRequestView(TemplateView):
 
 #         if national is not None:
 #             return render(self.request, self.template_name, {'forms': model})
+
 
 # def searchposts(request):
 #     if request.method == 'GET':

@@ -8,6 +8,11 @@
   integrity="sha512-nMMmRyTVoLYqjP9hrbed9S+FzjZHW5gY1TWCHA5ckwXZBadntCNs8kEqAWdrb9O7rxbCaA4lKTIWjDXZxflOcA=="
   crossorigin=""></script>
 
+   <script src="https://cdn.klokantech.com/mapbox-gl-js/v0.43.0/mapbox-gl.js"></script>
+   <script src="https://cdn.klokantech.com/mapbox-gl-leaflet/latest/leaflet-mapbox-gl.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.0.3/leaflet.css" />
+  <link rel="stylesheet" href="https://cdn.klokantech.com/mapbox-gl-js/v0.43.0/mapbox-gl.css" />
+
   <script src= "{% static 'public/js/leaflet.ajax.min.js' %}" ></script>
 
 
@@ -29,9 +34,12 @@
           }
         .my-div-icon{
           border-radius: 50%;
-          background:orange;
+          border: 1px solid white;
+          background:green;
           padding:15px;
-          font-size:1.5em;
+          font-weight: bold;
+          font-size: 16px;          
+          color:white
 
         }
 
@@ -90,7 +98,7 @@
                         <i class="close fa fa-times"></i>
                     </span>
 
-                    <div class="selectOverlay">
+                    <div class="selectOverlay" >
                         <div class="selectList">
                             <div class="">
                                 <label for="" class="st">State</label>
@@ -145,7 +153,7 @@
                 <div class="mapTab">
                     <div class="tabs">
                         <ul class="tabHolder">
-                            <li class="active">
+                            <li class="">
                                 <img src="{% static 'public/image/city-hall.svg' %}" alt="">
                                 <div class="text">NATIONAL ASSEMBLY
                                 </div>
@@ -182,7 +190,7 @@
         </div>
 
     </section>
-    <section class="pratinidhi sectionPadding">
+    <section class="pratinidhi sectionPadding" id="featured">
         <div class="container topC">
 
             <p class="sTitle header mb80 reveal">FEATURED MAHILA PRATINIDHI 2018</p>
@@ -191,15 +199,19 @@
                 {% for datas in featured_data %} {% for data in datas %}
                 <div>
                     <div class="row align-items-md-center">
+                        {% if data.image %}
                         <div class="col-md-4">
-                            <div class="imageHolder">
-                                {% if data.image %}
-                                <img src="{{ MEDIA_URL }} {{ data.image.url }}" alt="">
-                            </div>
-                            {% else %}
-                            <img src="{% static 'public/image/heroimg.png' %}" alt=""> {% endif %}
+                                <div class="imageHolder">
+                                    <img src="{{ MEDIA_URL }} {{ data.image.url }}" class="cropFeatured" alt="">
+                                </div>
                         </div>
-                    </div>
+                        {% else %}
+                        <div class="col-md-4">
+                                <div class="imageHolder">
+                                    <img src = "{% static 'public/image/p1.jpg' %}" class="cropFeatured" alt="">
+                                </div>
+                        </div>
+                        {% endif %}
                     <div class="col-md-4">
                         <div class="info slidefont">
                             <div class="Name">
@@ -225,7 +237,7 @@
                             </div>
                             <div>
                                 <span class="first"> Political Involvement:</span>
-                                <span class="value"> Since {{ data.party_joined_date }} Bs</span>
+                                <span class="value"> Since {{ data.party_joined_date|slice:":4" }} Bs</span>
 
                             </div>
                             <div>
@@ -247,11 +259,15 @@
                                 <i class="fa fa-envelope"></i>
                             </div>
                         </div>
+
                         <div class="fullBtn centeredvh">
-                            <button class="btn btn-round revbtn mtb50"> MAP VISUALIZATION
+                                <a href="{% url 'public:detail' data.pk %}">
+                            <button class="btn btn-round revbtn mtb50"> PROFILE DETAIL
                                 <i class="fa fa-arrow-right arow"></i>
                             </button>
+                        </a>
                         </div>
+
                     </div>
                 </div>
             </div>
@@ -289,39 +305,35 @@
     </section>
 
 
-
     <section class="persons sectionPadding" id="news">
-        <div class="container ">
-            <p class="sTitle header mb80 reveal">MAHILA PRATINIDHI ON MEDIA</p>
-            <div class="row lists ">
-                {% for data in news %}
-                <a href="{% url 'public:news' data.pk %}">
-                <div class="col-xl-3 col-lg-4 col-md-6 reveal">
-                    <div class="pImageholder prelative">
-                        {% if data.newsOf.image %}
-                        <img src="{{ MEDIA_URL }} {{ data.newsOf.image.url }}"> {% else %}
-                        <img src="{% static 'public/image/mahilalogo.png' %}" alt="user" class="cropImg"> {% endif %}
-                        <div class="holderOverlay"></div>
-                        <a class="content" href="{% url 'public:news' data.pk %}">
-                            {% if data.object_id %} {% with data|content_type as mahila_data %}
-                            <div class="tags"> {{ mahila_data.name }} in News</div>
-                            {% endwith %} {% else %}
-                            <div class="tags"> General News</div>
-                            {% endif %}
-                            <div class="pTitle">{{ data.title }}</div>
-
+            <div class="container ">
+                <p class="sTitle header mb80 reveal">MAHILA PRATINIDHI ON MEDIA</p>
+                <div class="row lists ">
+                    {% for data in news %}
+                    <div class="col-xl-3 col-lg-4 col-md-6 reveal">
+                        <a href="{% url 'public:news' data.pk %}">
+                        <div class="pImageholder prelative">
+                            <img src="{% static 'public/image/p1.jpg' %}" class="cropNews" alt="user">
+                            <div class="holderOverlay"></div>
+                            <div class="content">
+                                    {% if data.object_id %} {% with data|content_type as mahila_data %}
+                                    <div class="tags"> {{ mahila_data.name }} in News</div>
+                                    {% endwith %} {% else %}
+                                    <div class="tags"> General News</div>
+                                    {% endif %}
+                                    <div class="pTitle">{{ data.title }}</div>
+                            </div>
+                        </div>
+                        </a>
                     </div>
-                </a>
+                    {% endfor %}
+
+
                 </div>
-            </a>
-                {% endfor %}
-
             </div>
-        </div>
 
 
-    </section>
-
+        </section>
 
 
 

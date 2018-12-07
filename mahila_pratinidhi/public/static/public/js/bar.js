@@ -7,33 +7,48 @@ class SimpleBar extends React.Component{
 
   componentDidMount(){
     //alert("component did mont")
-    this.simpleBar(this.props.data);
+    this.simpleBar(this.props.data[0].data);
+
+  }
+
+
+  componentWillReceiveProps(nextProps){
+    d3.select('.simple-bar').selectAll("*").remove();
+    this.simpleBar(nextProps.data[0].data);
+
 
   }
 
   simpleBar(sample){
+console.log("sample",sample);
 
-    console.log("sample",sample.map((s) => s.caste));
+console.log("sampleafterdlt",sample);
+    var value_value = sample.map((s)=> +s.total);
+    console.log("value_value",value_value);
+
+    //alert(d3.max(value_value));
+  var max_value=  Math.max.apply(null, value_value);
+
+
     const svg = d3.select('.simple-bar');
-    const svgContainer = d3.select('#container');
 
 
-    var margin0 = {top: 20, right: 0, bottom: 30, left: 20};
+    var margin0 = {top: 20, right: 40, bottom: 10, left: 10};
 
-    const width = 550 -margin0.left-margin0.right;
-    const height = 300 -margin0.top- margin0.bottom;
+    const width = 650 -margin0.left-margin0.right;
+    const height = 350 -margin0.top- margin0.bottom;
 
     const chart = svg.append('g')
       .attr('transform', "translate(" + margin0.left + "," + margin0.top + ")");
 
       const xScale = d3.scale.ordinal()
       .rangeRoundBands([0, width],0.1)
-      .domain(sample.map((s) => s.caste))
+      .domain(sample.map((s) => s.label))
       ;
 
         const yScale = d3.scale.linear()
-          .range([height, 0])
-          .domain([0, 100 ]);
+          .domain([0, d3.max(value_value) ])
+          .range([height, 0]);
 
 
           var yAxis0 = d3.svg.axis()
@@ -54,9 +69,14 @@ class SimpleBar extends React.Component{
       .call(yAxis0);
 
       chart.append('g')
-        .attr("class", "x axis")
+        .attr("class", "x-axis")
         .attr('transform', "translate(0," + height + ")")
         .call(xAxis0);
+
+        chart.selectAll(".x-axis text")
+       .attr("transform", function(d) {
+          return "translate(" + this.getBBox().height*-2 + "," + this.getBBox().height + ")rotate(-45)";
+      });
 
     const barGroups = chart.selectAll()
       .data(sample)
@@ -66,7 +86,7 @@ class SimpleBar extends React.Component{
     barGroups
       .append('rect')
       .attr('class', 'simple-rect')
-      .attr('x', (g) => xScale(g.caste))
+      .attr('x', (g) => xScale(g.label))
       .attr('y', (g) => yScale(g.total))
       .attr('height', (g) => height - yScale(g.total))
       .attr('width', xScale.rangeBand())
@@ -78,7 +98,7 @@ class SimpleBar extends React.Component{
           .transition()
           .duration(300)
           .attr('opacity', 0.6)
-          .attr('x', (a) => xScale(a.caste) - 5)
+          .attr('x', (a) => xScale(a.label) - 5)
           .attr('width', xScale.rangeBand() + 10)
 
         const y = yScale(actual.total)
@@ -92,7 +112,7 @@ class SimpleBar extends React.Component{
 
         barGroups.append('text')
           .attr('class', 'simple-divergence')
-          .attr('x', (a) => xScale(a.caste) + xScale.rangeBand() / 2)
+          .attr('x', (a) => xScale(a.label) + xScale.rangeBand() / 2)
           .attr('y', (a) => yScale(a.total) + 30)
           .attr('fill', 'white')
           .attr('text-anchor', 'middle')
@@ -115,7 +135,7 @@ class SimpleBar extends React.Component{
           .transition()
           .duration(300)
           .attr('opacity', 1)
-          .attr('x', (a) => xScale(a.caste))
+          .attr('x', (a) => xScale(a.label))
           .attr('width', xScale.rangeBand())
 
         chart.selectAll('#limit').remove()
@@ -125,7 +145,7 @@ class SimpleBar extends React.Component{
     barGroups
       .append('text')
       .attr('class', 'simple-value')
-      .attr('x', (a) => xScale(a.caste) + xScale.rangeBand() / 2)
+      .attr('x', (a) => xScale(a.label) + xScale.rangeBand() / 2)
       .attr('y', (a) => yScale(a.total) - 5)
       .attr('text-anchor', 'middle')
       .text((a) => `${a.total}`)
@@ -142,9 +162,9 @@ class SimpleBar extends React.Component{
     svg.append('text')
       .attr('class', 'simple-label')
       .attr('x', width / 2 + margin0.left)
-      .attr('y', height + margin0.top * 1.7+25)
+      .attr('y', height + margin0.top * 1.7+50)
       .attr('text-anchor', 'middle')
-      .text('Ethnictiy')
+      .text('')
 
     svg.append('text')
       .attr('class', 'simple-title')

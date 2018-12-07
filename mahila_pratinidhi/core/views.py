@@ -444,6 +444,8 @@ class UloadView(UserPassesTestMixin, TemplateView):
 # 		messages.error(request, "File Format not supported")
 # 		return HttpResponseRedirect('/cms/upload')
 
+
+#for english and nepali file upload
 def file_upload(request):
 	import pandas as pd
 
