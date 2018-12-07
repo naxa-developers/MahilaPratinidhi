@@ -7,31 +7,36 @@ class SimpleBar extends React.Component{
 
   componentDidMount(){
     //alert("component did mont")
-    this.simpleBar(this.props.data);
+    this.simpleBar(this.props.data[0].data);
 
   }
 
 
   componentWillReceiveProps(nextProps){
-    alert("x");
-
-    this.simpleBar(nextProps.data);
+    d3.select('.simple-bar').selectAll("*").remove();
+    this.simpleBar(nextProps.data[0].data);
 
 
   }
 
   simpleBar(sample){
+console.log("sample",sample);
 
-    console.log("sample",sample.map((s) => s.label));
+console.log("sampleafterdlt",sample);
+    var value_value = sample.map((s)=> +s.total);
+    console.log("value_value",value_value);
 
-    d3.select('.simple-bar').selectAll("*").remove()
+    //alert(d3.max(value_value));
+  var max_value=  Math.max.apply(null, value_value);
+
+
     const svg = d3.select('.simple-bar');
 
 
-    var margin0 = {top: 10, right: 40, bottom: 10, left: 10};
+    var margin0 = {top: 20, right: 40, bottom: 10, left: 10};
 
     const width = 650 -margin0.left-margin0.right;
-    const height = 400 -margin0.top- margin0.bottom;
+    const height = 350 -margin0.top- margin0.bottom;
 
     const chart = svg.append('g')
       .attr('transform', "translate(" + margin0.left + "," + margin0.top + ")");
@@ -42,8 +47,8 @@ class SimpleBar extends React.Component{
       ;
 
         const yScale = d3.scale.linear()
-          .range([height, 0])
-          .domain([0, 100 ]);
+          .domain([0, d3.max(value_value) ])
+          .range([height, 0]);
 
 
           var yAxis0 = d3.svg.axis()
@@ -64,9 +69,14 @@ class SimpleBar extends React.Component{
       .call(yAxis0);
 
       chart.append('g')
-        .attr("class", "x axis")
+        .attr("class", "x-axis")
         .attr('transform', "translate(0," + height + ")")
         .call(xAxis0);
+
+        chart.selectAll(".x-axis text")
+       .attr("transform", function(d) {
+          return "translate(" + this.getBBox().height*-2 + "," + this.getBBox().height + ")rotate(-45)";
+      });
 
     const barGroups = chart.selectAll()
       .data(sample)
@@ -152,9 +162,9 @@ class SimpleBar extends React.Component{
     svg.append('text')
       .attr('class', 'simple-label')
       .attr('x', width / 2 + margin0.left)
-      .attr('y', height + margin0.top * 1.7+25)
+      .attr('y', height + margin0.top * 1.7+50)
       .attr('text-anchor', 'middle')
-      .text('Ethnictiy')
+      .text('')
 
     svg.append('text')
       .attr('class', 'simple-title')
