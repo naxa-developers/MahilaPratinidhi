@@ -1,6 +1,19 @@
 {% extends 'public/public_base.html' %}
 {% load staticfiles %}
 {% block upper_content %}
+<link rel="stylesheet" href="{% static 'public/css/twitter.css' %}">
+<style>
+  .tt-menu{  position: absolute;
+    top: 100%;
+    width: 100%;
+    z-index: 100;
+    border: 2px solid #6e6060;
+    border-radius: 10px;
+    }
+    typeahead tt-input{
+        left: -236px;
+    }
+</style>
 <body>
     <header>
         <div class="navigation innerPage">
@@ -17,7 +30,13 @@
             <div class="selectHolder">
                 <div class="leader searchP">
                     <div class="leaderWrp ">
-                        <input type="text" placeholder="CHECK YOUR LEADER AROUND" class="leaderSearch">
+
+                    <div id="the-basics">
+                      <input class="typeahead" type="text" placeholder="CHECK YOUR LEADER AROUND">
+                    </div>
+                        <!--<div id="the-basics">-->
+                        <!--<input type="text" placeholder="CHECK YOUR LEADER AROUND" class="leaderSearch typeahead">-->
+                        <!--</div>-->
                     </div>
                 </div>
             </div>
@@ -218,8 +237,90 @@
 
     {% block scripts %}
 
+
+    <script type="text/javascript" src="{% static 'public/js/jquery.js' %}"></script>
+    <script type="text/javascript" src="{% static 'public/js/twitter.js' %}"></script>
+
+
     <script>
         $(document).ready(function () {
+                var substringMatcher = function(strs) {
+          return function findMatches(q, cb) {
+            var matches, substringRegex;
+
+            // an array that will be populated with substring matches
+            matches = [];
+
+            // regex used to determine if a string contains the substring `q`
+            substrRegex = new RegExp(q, 'i');
+
+            // iterate through the pool of strings and for any string that
+            // contains the substring `q`, add it to the `matches` array
+            $.each(strs, function(i, str) {
+              if (substrRegex.test(str)) {
+                matches.push(str);
+              }
+            });
+
+            cb(matches);
+          };
+        };
+    var states=[]
+        var test = {{names|safe}};
+        for(var i=0; i<test.length; i++){
+            states.push(test[i].name)
+        }
+        console.log(states);
+
+
+        <!--var states= [-->
+
+        $('#the-basics .typeahead').typeahead({
+          hint: true,
+          highlight: true,
+          minLength: 1
+        },
+        {
+          name: 'states',
+          source: substringMatcher(states)
+        }).on('typeahead:selected', function(event, selection) {
+            var clicked= this.value;
+            output =null;
+
+          // the second argument has the info you want
+
+          for(var i=0; i<test.length; i++){
+                if(test[i].name== clicked && test[i].models== "ProvinceMahilaPratinidhiForm"){
+                location.href = "http://localhost:8000/explore/province/" + test[i].province_id + "/" +test[i].id;
+                }
+                else if (test[i].name== clicked && test[i].models== "RastriyaShava" ){
+                              location.href = "http://localhost:8000/detail/national/"+test[i].id;
+                console.log("normal");
+                }
+                else if (test[i].name== clicked && test[i].models== "PratinidhiShava" ){
+                console.log(test[i]);
+                              location.href = "http://localhost:8000/detail/pratinidhi/"+test[i].id;
+                }
+                else if (test[i].name== clicked && test[i].models== "MahilaPratinidhiForm" ){
+                              location.href = "http://localhost:8000/explore/district/" + test[i].district_id + "/" +test[i].id;
+                }
+          }
+        });
+
+console.log(names);
+        <!--$('.typeahead').typeahead({-->
+        <!--}).on('typeahead:selected', function(event, selection) {-->
+
+          <!--// the second argument has the info you want-->
+          <!--alert(this.value);-->
+        <!--});-->
+
+<!--$('input.typeahead').typeahead().on('typeahead:selected typeahead:autocompleted', function(e, datum) {-->
+            <!--console.log(this.value);-->
+
+        <!--});-->
+
+
             $("#button").click(function () {
                 $('html, body').animate({
                     scrollTop: $("#myDiv").offset().top
