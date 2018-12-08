@@ -64,108 +64,120 @@ class MapViewSet(views.APIView):
 
     def get(self, request):
         map_api = {}
-        maps = {}
-        nat = []
-        province = []
-        fed = []
-        loc = []
-        prov = {}
 
-        local = MahilaPratinidhiForm.objects.values('province_id')\
-        .annotate(Count('province_id'))\
-        .annotate(total=Count('id')).order_by('province_id')
+        total_list = []
+        total_dict = {}
+        national_dict = {}
+        province_dict = {}
+        local_dict = {}
+        federal_dict = {}
+        totals = []
 
-        national = RastriyaShava.objects.values('province_id')\
-        .annotate(Count('province_id'))\
-        .annotate(total=Count('id')).order_by('province_id')
+        national_province = Province.objects.values('name').annotate(total=Count('rastriyashava'))
+        for item in national_province:
+            for i in range(item['total']):
+                totals.append(item['name'])
 
-        provincial = ProvinceMahilaPratinidhiForm.objects.values('province_id')\
-        .annotate(Count('province_id'))\
-        .annotate(total=Count('id')).order_by('province_id')
+        federal_province = Province.objects.values('name').annotate(total=Count('pratinidhishava'))
+        for item in federal_province:
+            for i in range(item['total']):
+                totals.append(item['name'])
+        
+        local_province = Province.objects.values('name').annotate(total=Count('mahilapratinidhiform'))
+        for item in local_province:
+            for i in range(item['total']):
+                totals.append(item['name'])
+        
+        province_province = Province.objects.values('name').annotate(total=Count('province_mahila_pratinidhi_form'))
+        for item in province_province:
+            for i in range(item['total']):
+                totals.append(item['name'])
+        
+        total_arrays = np.array(np.unique(totals, return_counts=True)).T
+        
+        for total in total_arrays:
+            total_dict[total[0]] = int(total[1])
+        
+        totals = []
+        national_district = RastriyaShava.objects.values('permanent_address').annotate(total=Count('permanent_address'))
+        for item in national_district:
+            for i in range(item['total']):
+                totals.append(item['permanent_address'])
 
-        federal = PratinidhiShava.objects.values('province_id')\
-        .annotate(Count('province_id'))\
-        .annotate(total=Count('id')).order_by('province_id')
+        federal_district = PratinidhiShava.objects.values('permanent_address').annotate(total=Count('permanent_address'))
+        for item in federal_district:
+            for i in range(item['total']):
+                totals.append(item['permanent_address'])
+        
+        province_district = ProvinceMahilaPratinidhiForm.objects.values('permanent_address').annotate(total=Count('permanent_address'))
+        for item in province_district:
+            for i in range(item['total']):
+                totals.append(item['permanent_address'])
 
+        district_district = District.objects.values('name').annotate(total=Count('district'))
+        for item in district_district:
+            for i in range(item['total']):
+                totals.append(item['name'])
+        
+        total_arrays = np.array(np.unique(totals, return_counts=True)).T
+        
+        for total in total_arrays:
+            total_dict[total[0]] = int(total[1])
+        
+        total_list.append(total_dict)
 
-        for item in local:
-            loc.append(item['total'])
-
-        maps['local']=loc
-
-        for item in national:
-            nat.append(item['total'])
-
-        maps['national']=nat
-
-        for item in provincial:
-            province.append(item['total'])
-
-        maps['provincial']=province
-
-        for item in federal:
-            fed.append(item['total'])
-
-        maps['federal']=fed
-
-        map_api['all'] = maps
+        map_api['all']=total_list
 
         #for national lists
+        national_list = []
         national_dict = {}
-        national_province_dict = {}
 
         national_province = Province.objects.values('name').annotate(total=Count('rastriyashava'))
 
         for item in national_province:
-            national_province_dict[item['name']] = item['total']
-        national_dict['province'] = national_province_dict
+            national_dict[item['name']] = item['total']
 
-        national_district_dict = {}
         national_district = RastriyaShava.objects.values('permanent_address').annotate(total=Count('permanent_address'))
 
         for item in national_district:
-            national_district_dict[item['permanent_address']] = item['total']
-        national_dict['district'] = national_district_dict
+            national_dict[item['permanent_address']] = item['total']
+        national_list.append(national_dict)
 
-        map_api['national']=national_dict
+        map_api['national']=national_list
 
         #for federal lists
+        federal_list = []
         federal_dict = {}
-        federal_province_dict = {}
 
         federal_province = Province.objects.values('name').annotate(total=Count('pratinidhishava'))
 
         for item in federal_province:
-            federal_province_dict[item['name']] = item['total']
-        federal_dict['province'] = federal_province_dict
+            federal_dict[item['name']] = item['total']
 
-        federal_district_dict = {}
         federal_district = PratinidhiShava.objects.values('permanent_address').annotate(total=Count('permanent_address'))
 
         for item in federal_district:
-            federal_district_dict[item['permanent_address']] = item['total']
-        federal_dict['district'] = federal_district_dict
+            federal_dict[item['permanent_address']] = item['total']
+        federal_list.append(federal_dict)
 
-        map_api['federal']=federal_dict
+        map_api['federal']=federal_list
 
         #for provincial lists
+        provincial_list = []
         provincial_dict = {}
-        provincial_province_dict = {}
 
-        provincial_province = Province.objects.values('name').annotate(total=Count('pratinidhishava'))
+        provincial_province = Province.objects.values('name').annotate(total=Count('province_mahila_pratinidhi_form'))
 
         for item in provincial_province:
-            provincial_province_dict[item['name']] = item['total']
-        provincial_dict['province'] = provincial_province_dict
+            provincial_dict[item['name']] = item['total']
 
-        provincial_district_dict = {}
         provincial_district = ProvinceMahilaPratinidhiForm.objects.values('permanent_address').annotate(total=Count('permanent_address'))
 
         for item in provincial_district:
-            provincial_district_dict[item['permanent_address']] = item['total']
-        provincial_dict['district'] = provincial_district_dict
+            provincial_dict[item['permanent_address']] = item['total']
+        provincial_list.append(provincial_dict)
 
-        map_api['provincial'] = provincial_dict
+        map_api['provincial'] = provincial_list
 
 
         return Response(map_api)
