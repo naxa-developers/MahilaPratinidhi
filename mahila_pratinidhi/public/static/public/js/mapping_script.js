@@ -1,6 +1,6 @@
 //alert("pasyo");
-var base_url="http://mahilapratinidhi.naxa.com.np";
-//var base_url="http://localhost:8000";
+//var base_url="http://mahilapratinidhi.naxa.com.np";
+var base_url="http://localhost:8000";
 var map =L.map('mapid',{minZoom: 7,maxZoom: 10}).setView([27,85],7);
 
 var OSM = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -129,7 +129,7 @@ function returnSum(value){
 
 function onEachFeature(feature,layer){
 
-  //alert(data_summary_all_percentage['total'][feature.properties.Province-1]);
+  console.log("props",feature.properties);
 
   Choropleth(layer,data_summary_all_percentage['total'][feature.properties.Province-1]);
   circular_marker(get_center(feature,layer),data_summary_all['total'][feature.properties.Province-1]);
