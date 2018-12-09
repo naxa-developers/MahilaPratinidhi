@@ -29,7 +29,6 @@ console.log("sampleafterdlt",sample);
     //alert(d3.max(value_value));
   var max_value=  Math.max.apply(null, value_value);
 
-
     const svg = d3.select('.simple-bar');
 
 
@@ -47,14 +46,14 @@ console.log("sampleafterdlt",sample);
       ;
 
         const yScale = d3.scale.linear()
-          .domain([0, d3.max(value_value) ])
+          .domain([0, max_value])
           .range([height, 0]);
 
 
           var yAxis0 = d3.svg.axis()
             .scale(yScale)
             .orient("left")
-            .ticks(5)
+            .ticks(0)
             .tickSize(-width, 0, 0)
             .tickFormat( function(d) { return d } );
 

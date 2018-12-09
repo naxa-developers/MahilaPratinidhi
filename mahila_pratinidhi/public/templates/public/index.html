@@ -34,15 +34,16 @@
           }
         .my-div-icon{
           /* border: 1px solid white; */
-
-          font-size: 16px;
+          /* width:auto !important; */
+          font-size: 12px;
           background:orange;
           border:5px solid rgba(255,255,255,0.5);
           color:black;
-          font-weight:bold; 
+          font-weight:bold;
           text-align:center;
           border-radius:50%;
           line-height:30px;
+          padding-top:6px;
 
         }
 
@@ -156,22 +157,22 @@
                 <div class="mapTab">
                     <div class="tabs">
                         <ul class="tabHolder">
-                            <li class="">
+                            <li id="national-all">
                                 <img src="{% static 'public/image/city-hall.svg' %}" alt="">
                                 <div class="text">NATIONAL ASSEMBLY
                                 </div>
                             </li>
-                            <li>
+                            <li id="federal-all">
                                 <img src="{% static 'public/image/elementary-school.svg' %}" alt="">
                                 <div class="text">FEDERAL PARLIAMENT
                                 </div>
                             </li>
-                            <li>
+                            <li id="provincial-all">
                                 <img src="{% static 'public/image/parliament.svg' %}" alt="">
                                 <div class="text">PROVINCIAL ASSEMBLY
                                 </div>
                             </li>
-                            <li>
+                            <li id="local-all">
                                 <img src="{% static 'public/image/government.svg' %}" alt="">
                                 <div class="text">LOCAL LEVEL GOVERNMENT
                                 </div>
