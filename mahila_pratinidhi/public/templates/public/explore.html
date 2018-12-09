@@ -244,7 +244,8 @@
 
     <script>
         $(document).ready(function () {
-                var substringMatcher = function(strs) {
+
+        var substringMatcher = function(strs) {
           return function findMatches(q, cb) {
             var matches, substringRegex;
 
@@ -271,9 +272,6 @@
             states.push(test[i].name)
         }
         console.log(states);
-
-
-        <!--var states= [-->
 
         $('#the-basics .typeahead').typeahead({
           hint: true,
@@ -307,27 +305,14 @@
           }
         });
 
-console.log(names);
-        <!--$('.typeahead').typeahead({-->
-        <!--}).on('typeahead:selected', function(event, selection) {-->
-
-          <!--// the second argument has the info you want-->
-          <!--alert(this.value);-->
-        <!--});-->
-
-<!--$('input.typeahead').typeahead().on('typeahead:selected typeahead:autocompleted', function(e, datum) {-->
-            <!--console.log(this.value);-->
-
-        <!--});-->
-
-
-            $("#button").click(function () {
-                $('html, body').animate({
-                    scrollTop: $("#myDiv").offset().top
-                }, 2000);
-            });
+        $("#button").click(function () {
+            $('html, body').animate({
+                scrollTop: $("#myDiv").offset().top
+            }, 2000);
         });
-        var clicked = "{{ clicked }}";
+    });
+
+    var clicked = "{{ clicked }}";
         if(clicked == "national" || clicked == "general"){
             $("#nation").click();
             $("#nation").addClass("active");
@@ -337,7 +322,7 @@ console.log(names);
             [].forEach.call(elems, function(el) {
                 el.classList.remove("active");
             });
-            $("#federal").click();
+            document.getElementById("federal").click();
             $("#federal").addClass("active");
         }
         else if(clicked == "provincial"){
@@ -345,7 +330,7 @@ console.log(names);
             [].forEach.call(elems, function(el) {
                 el.classList.remove("active");
             });
-            $("#provincial").click();
+            document.getElementById("provincial").click();
             $("#provincial").addClass("active");
             
         }
@@ -354,7 +339,7 @@ console.log(names);
             [].forEach.call(elems, function(el) {
                 el.classList.remove("active");
             });
-            $("#local").click();
+            document.getElementById("local").click();
             $("#local").addClass("active");   
         }
     </script>
