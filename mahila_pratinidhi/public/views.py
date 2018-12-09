@@ -16,6 +16,8 @@ from django.contrib.auth.models import User
 import json
 from django.core.mail import EmailMessage
 from itertools import chain
+from datetime import timedelta
+from django.utils import timezone
 
 from django.shortcuts import render
 from django.db.models import Q
@@ -313,8 +315,13 @@ class NewsView(TemplateView):
 
     def get(self, request, *args, **kwargs):
         news = News.objects.get(id=self.kwargs.get('pk'))
-        latest_news = News.objects.latest()
-        print(latest_news)
+
+        #for latest news list
+        some_day_last_week = timezone.now().date() - timedelta(days=7)
+        monday_of_last_week = some_day_last_week - timedelta(days=(some_day_last_week.isocalendar()[2] - 1))
+        monday_of_this_week = monday_of_last_week + timedelta(days=7)
+        latest_news = News.objects.filter(date__gte=monday_of_last_week)
+        
         return render(request, self.template_name, {'news':news, 'latest_news': latest_news})
 
 

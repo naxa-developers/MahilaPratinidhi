@@ -67,6 +67,9 @@ class MaritalStatusSerializers(serializers.ListSerializer):
 class ElectionExperienceSerializers(serializers.ListSerializer):
     election_before = serializers.DictField()
 
+
+class PartySerializers(serializers.ListSerializer):
+    party = serializers.DictField()
     
 
 
