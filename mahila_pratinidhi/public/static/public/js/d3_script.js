@@ -1,6 +1,6 @@
 //alert("pasyo");
-//var base_url="http://mahilapratinidhi.naxa.com.np";
-var base_url="http://localhost:8000";
+var base_url="http://mahilapratinidhi.naxa.com.np";
+// var base_url="http://localhost:8000";
 $(".dataVariable").on("click",function(){
 
   var variable = $(this).text().toLowerCase().replace(" ","_");
