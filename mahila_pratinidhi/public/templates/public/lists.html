@@ -1,6 +1,7 @@
 {% extends 'public/public_base.html' %}
 {% load staticfiles %}
 {% block upper_content %}
+<link rel="stylesheet" href="{% static 'public/css/twitter.css' %}">
 <body>
         <header>
             <div class="navigation innerPage">
@@ -50,10 +51,13 @@
 
                 <div class="leader searchP">
                     <div class="leaderWrp ">
-                        <form type="get" action=".">
-                                <input id="search_box" type="text" placeholder="CHECK YOUR LEADER AROUND" class="leaderSearch">
-                                <span><button id="search_submit" type="submit" class="moreBtn">Search</button></span>
-                        </form>
+                        <div id="the-basics">
+                            <input class="typeahead" type="text" placeholder="CHECK YOUR LEADER AROUND">
+                         </div>
+                        <!--<form type="get" action=".">-->
+                                <!--<input id="search_box" type="text" placeholder="CHECK YOUR LEADER AROUND" class="leaderSearch">-->
+                                <!--&lt;!&ndash;<span><button id="search_submit" type="submit" class="moreBtn">Search</button></span>&ndash;&gt;-->
+                        <!--</form>-->
                     </div>
                 </div>
                 <div class="closeBtn">
@@ -188,8 +192,77 @@
    
     {% block scripts %}
 
+        <script type="text/javascript" src="{% static 'public/js/jquery.js' %}"></script>
+    <script type="text/javascript" src="{% static 'public/js/twitter.js' %}"></script>
+
     <script>
         $(document).ready(function () {
+            var substringMatcher = function(strs) {
+              return function findMatches(q, cb) {
+                var matches, substringRegex;
+
+                // an array that will be populated with substring matches
+                matches = [];
+
+                // regex used to determine if a string contains the substring `q`
+                substrRegex = new RegExp(q, 'i');
+
+                // iterate through the pool of strings and for any string that
+                // contains the substring `q`, add it to the `matches` array
+                $.each(strs, function(i, str) {
+                  if (substrRegex.test(str)) {
+                    matches.push(str);
+                  }
+                });
+
+                cb(matches);
+              };
+            };
+        var states=[]
+            var test = {{names|safe}};
+            for(var i=0; i<test.length; i++){
+                states.push(test[i].name)
+            }
+            console.log(states);
+
+
+            <!--var states= [-->
+
+            $('#the-basics .typeahead').typeahead({
+              hint: true,
+              highlight: true,
+              minLength: 1
+            },
+            {
+              name: 'states',
+              source: substringMatcher(states)
+            }).on('typeahead:selected', function(event, selection) {
+                var clicked= this.value;
+            output =null;
+              // the second argument has the info you want
+              for(var i=0; i<test.length; i++){
+                    if(test[i].name== clicked && test[i].models== "ProvinceMahilaPratinidhiForm"){
+                    location.href = "http://localhost:8000/explore/province/" + test[i].province_id + "/" +test[i].id;
+                    }
+                    else if (test[i].name== clicked && test[i].models== "MahilaPratinidhiForm" ){
+                                  location.href = "http://localhost:8000/explore/district/" + test[i].district_id + "/" +test[i].id;
+                    }
+                }
+
+            });
+
+    console.log(names);
+            <!--$('.typeahead').typeahead({-->
+            <!--}).on('typeahead:selected', function(event, selection) {-->
+
+              <!--// the second argument has the info you want-->
+              <!--alert(this.value);-->
+            <!--});-->
+
+    <!--$('input.typeahead').typeahead().on('typeahead:selected typeahead:autocompleted', function(e, datum) {-->
+                <!--console.log(this.value);-->
+
+            <!--});-->
 
             $(".filterBtn").click(function () {
 
