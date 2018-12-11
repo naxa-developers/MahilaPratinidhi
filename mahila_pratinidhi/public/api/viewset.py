@@ -11,7 +11,7 @@ from itertools import chain
 from rest_framework.decorators import api_view
 from rest_framework.viewsets import ModelViewSet, ReadOnlyModelViewSet
 from rest_framework.views import APIView
-from .serializers import RastriyaShavaSerializer, ProvinceSerializer, LocalMahilaSerializer, PratinidhiShavaSerializer, AgeSerializers
+from .serializers import RastriyaShavaSerializer, ProvinceSerializer, LocalMahilaSerializer, PratinidhiShavaSerializer, AgeSerializers, DistrictsSerializer
 from core.models import RastriyaShava, PratinidhiShava, ProvinceMahilaPratinidhiForm, MahilaPratinidhiForm, Province, District
 from django.db.models import Avg, Count, Sum
 
@@ -887,3 +887,14 @@ class PartyViewSet(views.APIView):
         total_party_dict['provincial'] = province_party_list
 
         return Response(total_party_dict)
+
+
+class DistrictsViewSet(ReadOnlyModelViewSet):
+    serializer_class = DistrictsSerializer
+
+    def get_queryset(self):
+        queryset = District.objects.all().select_related('province')
+        province_query = self.request.query_params.get('province_id', None)
+        if province_query is not None:
+            queryset = queryset.filter(province=province_query)
+        return queryset

@@ -138,14 +138,6 @@ class CommonShavaFields(models.Model):
 			image.save(self.image.path)
 
 
-class District(models.Model):
-	name = models.CharField(max_length=300)
-	elected_women = models.IntegerField(default=0)
-
-	def __str__(self):
-		return self.name
-
-
 class News(models.Model):
 	date = models.DateField(blank=False)
 	title = models.CharField(max_length=300, blank=False)
@@ -185,6 +177,13 @@ class Province(models.Model):
 	def __str__(self):
 		return self.name
 
+class District(models.Model):
+	name = models.CharField(max_length=300)
+	elected_women = models.IntegerField(default=0)
+	province = models.ForeignKey(Province, on_delete=models.CASCADE, verbose_name="प्रदेश", related_name="districts", null=True, blank=True)
+
+	def __str__(self):
+		return self.name
 
 class MahilaPratinidhiForm(models.Model):
 	district = models.ForeignKey(District, on_delete=models.CASCADE, related_name='district', verbose_name="जिल्ला")
@@ -270,6 +269,5 @@ class BackgroundImage(models.Model):
 			image = ImageOps.fit(image, (1920, 1080), Image.ANTIALIAS)
 			
 			image.save(self.image.path)
-
 
 
