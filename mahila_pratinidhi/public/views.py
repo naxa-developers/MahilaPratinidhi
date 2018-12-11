@@ -13,7 +13,6 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.template.loader import render_to_string
 from .tokens import account_activation_token
 from django.contrib.auth.models import User
-from django.core.mail import EmailMessage
 import json
 from django.core.mail import EmailMessage
 from itertools import chain
@@ -104,15 +103,15 @@ class ExploreView(TemplateView):
     def get(self, request, *args, **kwargs):
         names = {}
         name_list = []
-        district = District.objects.all()
+        # district = District.objects.all()
         rastriyas = RastriyaShava.objects.all()
         pratinidhis = PratinidhiShava.objects.all()
         provinces = Province.objects.all()
 
         province_names = ProvinceMahilaPratinidhiForm.objects.all()
-        local_names = MahilaPratinidhiForm.objects.all()
+        # local_names = MahilaPratinidhiForm.objects.all()
 
-        object_list = list(chain(rastriyas, pratinidhis, province_names, local_names))
+        object_list = list(chain(rastriyas, pratinidhis, province_names))
 
         for lists in object_list:
             try:
@@ -124,7 +123,7 @@ class ExploreView(TemplateView):
             names['models']=lists.__class__.__name__
             try:
                 names['province_id']=lists.province_id
-                names['district']=lists.district_id
+                # names['district']=lists.district_id
 
             except:
                 pass
@@ -136,7 +135,7 @@ class ExploreView(TemplateView):
         # print(json_list)
 
         clicked = self.kwargs.get('clicked')
-        return render(request, self.template_name, {'districts':district, 'rastriyas':rastriyas,
+        return render(request, self.template_name, {'rastriyas':rastriyas,
         'pratinidhis':pratinidhis, 'provinces':provinces, 'clicked':clicked, 'names':json_list})
 
 
