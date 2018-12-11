@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from core.models import RastriyaShava, PratinidhiShava, ProvinceMahilaPratinidhiForm, MahilaPratinidhiForm
+from core.models import RastriyaShava, PratinidhiShava, ProvinceMahilaPratinidhiForm, MahilaPratinidhiForm, District
 
 class RastriyaShavaSerializer(serializers.ModelSerializer):
     
@@ -70,6 +70,10 @@ class ElectionExperienceSerializers(serializers.ListSerializer):
 
 class PartySerializers(serializers.ListSerializer):
     party = serializers.DictField()
-    
+
+class DistrictsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = District
+        exclude = ('elected_women', )
 
 
