@@ -107,10 +107,15 @@
                             <div class="">
                                 <label for="" class="st">State</label>
                                 <select class="sel1" name="" id="">
-                                    <option value="national">NATIONAL</option>
-                                    <option value="federal">FEDERAL</option>
-                                    <option value="provincial">PROVINCIAL</option>
-                                    <option value="local">LOCAL</option>
+                                  <option value="">Provinces</option>
+                                    <option value="">Province 1</option>
+                                    <option value="">Province 2</option>
+                                    <option value="">Province 3</option>
+                                    <option value="">Province 4</option>
+                                    <option value="">Province 5</option>
+                                    <option value="">Province 6</option>
+                                    <option value="">Province 7</option>
+
                                 </select>
                             </div>
                             <div class="">
@@ -370,6 +375,9 @@
                     scrollTop: ro.top-100
                 }, 800);
                 $(".selectOverlay").toggleClass("active");
+
+                $(".selectOverlay").css("z-index","401");
+
               $(".circlefilter ").toggleClass("circleActive");
                 return false;
    });
@@ -412,7 +420,7 @@
             });
 
             function reset() {
-                $("#selectedValue").text("Select Provience");
+                $("#selectedValue").text("Select Province");
                 first = "";
                 second = "";
                 third = "";
