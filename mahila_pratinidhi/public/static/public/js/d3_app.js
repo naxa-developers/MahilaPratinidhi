@@ -14,6 +14,11 @@ class ChartBox extends React.Component {
 
     render (){
       let bar;
+      if(this.props.data_pass[0]['data']=="1"){
+        bar = <StackedChart data={[{'data':this.props.data_pass[0]['data'],'dataName':this.props.data_pass[0]['dataName']}]}  />;
+      }
+
+
       if(this.props.data_pass[0]['data-type']=="1"){
         bar = <StackedChart data={[{'data':this.props.data_pass[0]['data'],'dataName':this.props.data_pass[0]['dataName']}]}  />;
       }

@@ -126,8 +126,11 @@ return marker_content[xx];
 
 function zoomToFeature(e){
  var properties_object = e.target.feature.properties;
+
+
   total_instance = get_total_instance(e);
   map.fitBounds(e.target.getBounds(),{padding:[25,25]});
+
 
 if(Object.keys(properties_object).length=="1"){
 
@@ -140,6 +143,7 @@ if(Object.keys(properties_object).length=="1"){
   }
 
 }
+
 if(Object.keys(properties_object).length=="8"){
 
 
@@ -164,7 +168,10 @@ if(Object.keys(properties_object).length=="8"){
    var prodric= properties_object['FIRST_DIST'].charAt(0).toUpperCase() +  properties_object['FIRST_DIST'].slice(1).toLowerCase();
 
  }
+else if (Object.keys(properties_object).length=="10"){
+  return false
 
+}
 
   for (var i=0;i<marker_array.length;i++){
     marker_array[i].removeFrom(map);
@@ -204,7 +211,7 @@ function onEachFeature(feature,layer){
 
 
   Choropleth(feature,layer);
-  circular_marker(get_center(feature,layer),get_number(feature),get_name(feature));
+  circular_marker(get_center(feature,layer),get_number(feature),get_name(feature),feature);
   //layer.bindPopup(customPopup,customOptions);
   layer.on('mouseover', function (e) {
               this.openPopup();
@@ -219,10 +226,10 @@ function onEachFeature(feature,layer){
   })
 }
 
-function circular_marker(center,number,name){
+function circular_marker(center,number,name,feature){
       if (number){ }
       else{
-        number="xx";
+        number=4;
       }
 
       var name = name.replace(" ","_");
@@ -237,11 +244,29 @@ function circular_marker(center,number,name){
 
 
       // you can set .my-div-icon styles in CSS
-      var marker= L.marker(center, {icon: myIcon}).addTo(map);
+      if (Object.keys(feature.properties).length=="10"){
 
 
+
+                var marker_cluster = L.markerClusterGroup();
+                for(let i=0;i<number;i++){
+                  marker_cluster.addLayer(L.marker(center).bindPopup("Mahila Prathinidhi"));
+                }
+
+                map.addLayer(marker_cluster);
+              marker_array.push(marker_cluster);
+
+    }
+
+      else{
+
+
+      let marker= L.marker(center, {icon: myIcon}).addTo(map);
       marker_array.push(marker);
-          //.bindPopup('divIcon CSS3 popup. <br> Supposed to be easily stylable.');
+
+    }
+
+                //.bindPopup('divIcon CSS3 popup. <br> Supposed to be easily stylable.');
 }
 
 function get_center(feature,layer){
@@ -458,3 +483,20 @@ for( var i=0; i< marker_array.length;i++){
 
 
 });
+
+
+// var myRenderer = L.canvas({ padding: 0.5 });
+//
+//
+// for (var i = 0; i < 100000; i += 1) { // 100k points
+// 	L.circleMarker(getRandomLatLng(), {
+//   	renderer: myRenderer
+//   }).addTo(map).bindPopup('marker ' + i);
+// }
+//
+// function getRandomLatLng() {
+// 	return [
+//     -90 + 180 * Math.random(),
+//     -180 + 360 * Math.random()
+//   ];
+// }
