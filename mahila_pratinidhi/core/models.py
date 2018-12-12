@@ -208,7 +208,7 @@ class MahilaPratinidhiForm(models.Model):
 	image = models.ImageField(blank=True, upload_to='profile/', verbose_name="फोटो")
 	featured = models.BooleanField(default=False)
 	news = GenericRelation(News)
-	province = models.ForeignKey(Province, on_delete=models.CASCADE, verbose_name="प्रदेश", default=1)
+	province = models.ForeignKey(Province, on_delete=models.CASCADE, verbose_name="प्रदेश", related_name="mahilapratinidhiform", default=1)
  
 
 	def __str__(self):
