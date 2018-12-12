@@ -219,7 +219,7 @@
                     <div class="col-md-4">
                         <div class="info slidefont">
                             <div class="Name">
-                                {{data.name}}
+                                {{data.english_name}}
                             </div>
                             <div class="position">
                                 {{data.nirwachit_padh}}
@@ -321,7 +321,7 @@
                             <div class="holderOverlay"></div>
                             <div class="content">
                                     {% if data.object_id %} {% with data|content_type as mahila_data %}
-                                    <div class="tags"> {{ mahila_data.name }} in News</div>
+                                    <div class="tags"> {{ mahila_data.english_name }} in News</div>
                                     {% endwith %} {% else %}
                                     <div class="tags"> General News</div>
                                     {% endif %}
