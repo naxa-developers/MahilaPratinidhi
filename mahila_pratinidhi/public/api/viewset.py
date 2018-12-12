@@ -83,6 +83,7 @@ class MapViewSet(views.APIView):
             for i in range(item['total']):
                 totals.append(item['name'])
         
+        #for local
         # local_province = Province.objects.values('name').annotate(total=Count('mahilapratinidhiform'))
         # for item in local_province:
         #     for i in range(item['total']):
@@ -114,6 +115,7 @@ class MapViewSet(views.APIView):
             for i in range(item['total']):
                 totals.append(item['permanent_address'])
 
+        #for local
         # district_district = District.objects.values('name').annotate(total=Count('district'))
         # for item in district_district:
         #     for i in range(item['total']):
@@ -167,6 +169,23 @@ class MapViewSet(views.APIView):
         provincial_dict = {}
 
         provincial_province = Province.objects.values('name').annotate(total=Count('province_mahila_pratinidhi_form'))
+
+        for item in provincial_province:
+            provincial_dict[item['name']] = item['total']
+
+        provincial_district = ProvinceMahilaPratinidhiForm.objects.values('permanent_address').annotate(total=Count('permanent_address'))
+
+        for item in provincial_district:
+            provincial_dict[item['permanent_address']] = item['total']
+        provincial_list.append(provincial_dict)
+
+        map_api['provincial'] = provincial_list
+
+        #for local lists
+        local_list = []
+        local_dict = {}
+
+        local_province = Province.objects.values('name').annotate(total=Count('mahilapratinidhiform'))
 
         for item in provincial_province:
             provincial_dict[item['name']] = item['total']
@@ -898,5 +917,3 @@ class DistrictsViewSet(ReadOnlyModelViewSet):
         if province_query is not None:
             queryset = queryset.filter(province=province_query)
         return queryset
-
- 

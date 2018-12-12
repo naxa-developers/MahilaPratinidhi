@@ -219,7 +219,11 @@
                     <div class="col-md-4">
                         <div class="info slidefont">
                             <div class="Name">
-                                {{data.english_name}}
+                                {% if data.english_name %}
+                                    {{ data.english_name|title }}
+                                {% else %}
+                                    {{ data.name|title }}
+                                {% endif %}
                             </div>
                             <div class="position">
                                 {{data.nirwachit_padh}}
@@ -231,7 +235,7 @@
                             </div>
                             <div>
                                 <span class="first"> Age:</span>
-                                <span class="value"> {{data.age}} Years</span>
+                                <span class="value"> {{data.age|slice:":2"}} Years</span>
 
                             </div>
                             <div>
@@ -246,7 +250,13 @@
                             </div>
                             <div>
                                 <span class="first"> Address:</span>
-                                <span class="value"> {{ data.address }}</span>
+                                <span class="value">
+                                    {% if data.permanent_address %}
+                                        {{ data.permanent_address|title }}
+                                    {% else %}
+                                        {{ data.address|title }}
+                                    {% endif %}
+                                    </span>
 
                             </div>
 
