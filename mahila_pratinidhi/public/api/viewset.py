@@ -182,21 +182,21 @@ class MapViewSet(views.APIView):
         map_api['provincial'] = provincial_list
 
         #for local lists
-        local_list = []
-        local_dict = {}
-
-        local_province = Province.objects.values('name').annotate(total=Count('mahilapratinidhiform'))
-
-        for item in provincial_province:
-            provincial_dict[item['name']] = item['total']
-
-        provincial_district = ProvinceMahilaPratinidhiForm.objects.values('permanent_address').annotate(total=Count('permanent_address'))
-
-        for item in provincial_district:
-            provincial_dict[item['permanent_address']] = item['total']
-        provincial_list.append(provincial_dict)
-
-        map_api['provincial'] = provincial_list
+        # local_list = []
+        # local_dict = {}
+        #
+        # local_province = Province.objects.values('name').annotate(total=Count('mahilapratinidhiform'))
+        #
+        # for item in provincial_province:
+        #     provincial_dict[item['name']] = item['total']
+        #
+        # provincial_district = ProvinceMahilaPratinidhiForm.objects.values('permanent_address').annotate(total=Count('permanent_address'))
+        #
+        # for item in provincial_district:
+        #     provincial_dict[item['permanent_address']] = item['total']
+        # provincial_list.append(provincial_dict)
+        #
+        # map_api['provincial'] = provincial_list
 
 
         return Response(map_api)
