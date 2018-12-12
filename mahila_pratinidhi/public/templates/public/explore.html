@@ -133,7 +133,7 @@
                                                         <div class="deteilbg"></div>
                                                         <div class="date">
                                                             <div class="yrcnt">
-                                                                {{ item.age }}
+                                                                {{ item.age|slice:":2" }}
                                                             </div>
                                                             <div class="dtl">
                                                                 Years
@@ -141,7 +141,7 @@
                     
                     
                                                         </div>
-                                                        <div class="dname">{{ item.name|upper }}</div>
+                                                        <div class="dname">{{ item.english_name|upper }}</div>
                                                         <div class="dlocation">{{ item.permanent_address|title }}</div>
                                                         <div class="bottom">
                                                             <i class="fa fa-arrow-right arow"></i>
@@ -176,7 +176,7 @@
                                                     <div class="deteilbg"></div>
                                                     <div class="date">
                                                         <div class="yrcnt">
-                                                            {{ item.age }}
+                                                            {{ item.age|slice:":2" }}
                                                         </div>
                                                         <div class="dtl">
                                                             Years
@@ -184,7 +184,7 @@
                     
                     
                                                     </div>
-                                                    <div class="dname">{{ item.name|upper }}</div>
+                                                    <div class="dname">{{ item.english_name|upper }}</div>
                                                     <div class="dlocation">{{ item.permanent_address|title }}</div>
                                                     <div class="bottom">
                                                         <i class="fa fa-arrow-right arow"></i>

@@ -1,7 +1,7 @@
 //alert("pasyo");
 var base_url="http://mahilapratinidhi.naxa.com.np";
-//var base_url="http://localhost:8000";
-var map =L.map('mapid',{minZoom: 7,maxZoom: 10}).setView([27,85],7);
+// var base_url="http://localhost:8000";
+var map =L.map('mapid',{minZoom: 7,maxZoom: 11,zoomSnap:0.3}).setView([27,85],7);
 
 var OSM = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
   attribution: '&copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
@@ -35,6 +35,34 @@ baseMaps = {
 };
 L.control.layers(baseMaps).addTo(map);
 
+
+
+console.log("baseurlcheck",base_url+'/api/maps/');
+
+
+
+function fetchapi(){
+
+  $.ajax({
+     url: base_url+'/api/maps/',
+     type: 'get',
+     dataType: 'json',
+     async: false,
+     success: handleData
+  });
+
+}
+
+function handleData(data) {
+  window["data_summary_all"]= data;
+  window["marker_content"] = data["all"][0]
+}
+
+fetchapi();
+
+
+
+var total_instance = 12004;
 
 
 var customPopup = "National:<br/>Federal:<br/>Provincial:<br/>Local:<br/>";
@@ -71,9 +99,30 @@ function resetHighlight(e){
 var last_layer =[];
 var marker_array=[];
 
+function get_total_instance(e){
+
+
+  var properties_object = e.target.feature.properties;
+
+  if(Object.keys(properties_object).length=="1"){
+    var xx = "Province "+ properties_object.Province;
+  }
+
+  else if (Object.keys(properties_object).length=="8"){
+    var xx = properties_object['FIRST_DIST'].charAt(0).toUpperCase()+properties_object['FIRST_DIST'].slice(1).toLowerCase();
+  }
+
+//alert(marker_content[xx]);
+return marker_content[xx];
+
+
+}
+
 
 function zoomToFeature(e){
-  map.fitBounds(e.target.getBounds());
+
+  total_instance = get_total_instance(e);
+  map.fitBounds(e.target.getBounds(),{padding:[25,25]});
   if(last_layer[0]){
       map.removeLayer(last_layer[0]);
       last_layer.pop();
@@ -102,7 +151,7 @@ function zoomToFeature(e){
   }
 
 
-  var layer = L.geoJson.ajax(base_url+'/api/geojson/'+ division +'/'+ prodric,
+  var layer_inside = L.geoJson.ajax(base_url+'/api/geojson/'+ division +'/'+ prodric,
             {onEachFeature:onEachFeature,
               style: { color: "white",
                        weight:2,
@@ -111,8 +160,11 @@ function zoomToFeature(e){
                        fillOpacity:1}}
             );
 
-   layer.addTo(map);
-   last_layer.push(layer);
+
+
+
+   layer_inside.addTo(map);
+   last_layer.push(layer_inside);
 
 }
 
@@ -129,10 +181,12 @@ function returnSum(value){
 
 function onEachFeature(feature,layer){
 
-  //alert(data_summary_all_percentage['total'][feature.properties.Province-1]);
+  console.log("feature",feature);
+  console.log("layer",layer);
 
-  Choropleth(layer,data_summary_all_percentage['total'][feature.properties.Province-1]);
-  circular_marker(get_center(feature,layer),data_summary_all['total'][feature.properties.Province-1]);
+
+  Choropleth(feature,layer);
+  circular_marker(get_center(feature,layer),get_number(feature),get_name(feature));
   //layer.bindPopup(customPopup,customOptions);
   layer.on('mouseover', function (e) {
               this.openPopup();
@@ -147,21 +201,27 @@ function onEachFeature(feature,layer){
   })
 }
 
-function circular_marker(center,number){
-
+function circular_marker(center,number,name){
       if (number){ }
       else{
         number="xx";
       }
 
+      var name = name.replace(" ","_");
+
 
       var myIcon = L.divIcon({
-          className:'my-div-icon',
-          iconSize: new L.Point(40, 40),
-          html: number
+          className:'my-div-icon'+ ' ' + name,
+          iconSize: new L.Point(50, 50),
+          html: '<p id='+ name +'>'+ number + '<p>',
+
       });
+
+
       // you can set .my-div-icon styles in CSS
       var marker= L.marker(center, {icon: myIcon}).addTo(map);
+      console.log("marker",marker)
+
       marker_array.push(marker);
           //.bindPopup('divIcon CSS3 popup. <br> Supposed to be easily stylable.');
 }
@@ -173,12 +233,37 @@ function get_center(feature,layer){
 
 }
 
+function get_name(feature){
+
+  var properties_object = feature.properties;
+  if(Object.keys(properties_object).length=="1"){
+    var xx = "Province "+ feature.properties.Province;
+
+  }
+
+  else if (Object.keys(properties_object).length=="8"){
+    var xx = feature.properties['FIRST_DIST'].charAt(0).toUpperCase()+feature.properties['FIRST_DIST'].slice(1).toLowerCase();
+  }
+  return xx;
+
+}
+
+function get_number(feature){
+
+var xx = get_name(feature);
+
+  var number = marker_content[xx];
+
+  return number;
+}
+
+
 function getColor(d) {
 
 
 //alert(d);
 
-    return d > 25 ? '#031A3F' :
+    return d > 20 ? '#031A3F' :
             d > 18 ? '#08204E' :
             d > 16 ? '#0F275E' :
            d > 14  ? '#22377E' :
@@ -187,20 +272,34 @@ function getColor(d) {
            d > 5  ? '#8888DD' :
 
                       '#C1C1E6';
-}
-
-
-function Choropleth(layer,frequency){
-
-  var color= getColor(frequency);
-  layer.setStyle({fillColor :color}) ;
 
 }
 
 
+function Choropleth(feature,layer){
+
+  var properties_object = feature.properties;
+  if(Object.keys(properties_object).length=="1"){
+    var xx = "Province "+ feature.properties.Province;
+  }
+
+  else if (Object.keys(properties_object).length=="8"){
+    var xx = feature.properties['FIRST_DIST'].charAt(0).toUpperCase()+feature.properties['FIRST_DIST'].slice(1).toLowerCase();
+  }
 
 
-console.log("baseurlcheck",base_url+'/api/geojson/country');
+ var frequency = marker_content[xx];
+ var percentage = (frequency*100)/total_instance;
+
+  var color= getColor(percentage);
+  layer.setStyle({fillColor :color});
+
+
+
+}
+
+
+
 
 var country =L.geoJson.ajax(base_url+'/api/geojson/country',
           {onEachFeature:onEachFeature,
@@ -222,9 +321,11 @@ var country =L.geoJson.ajax(base_url+'/api/geojson/country',
 
 //api call_
 
+
+
 function percentage(array){
   var total = array.reduce(function(total,num){
-    return total +num;
+    return total + num;
   });
   percentage_array =  array.map(function(i){
     return (i*100)/total;
@@ -234,53 +335,96 @@ function percentage(array){
 
 }
 
-  var data_summary_all ={
-    'total':[32, 37, 37, 20, 32, 13, 18],
-    'national': [1,2,2,5,3,30,7],
-    'provincial':[32, 37, 37, 20, 32, 13, 0]
-    }
 
 
 
-
-
-
-console.log("baseurlcheck",base_url+'/api/maps/');
-  $.get(base_url+'/api/maps/',function(data){
-
-    data_summary_all['provincial']= data['provincial'];
-    data_summary_all['national']= data['national'];
-
-});
-
-var data_summary_all_percentage ={
-  'total':percentage(data_summary_all['total']),
-  'national': percentage(data_summary_all['national']),
-  'provincial':percentage(data_summary_all['provincial'])
-
-  }
-
-  console.log("percentage",data_summary_all_percentage);
 
 
 //interaction with sidebar
 
 $("#national-all").on('click',function(){
 
+console.log(marker_array);
+marker_content =data_summary_all['national'][0];
+for( var i=0; i< marker_array.length;i++){
+  if(marker_array[i]._icon == null){
 
+  }
+  else {
+    var key = marker_array[i]._icon.firstChild.id;
+    var marker_value = marker_content[key.replace("_"," ")];
+    if(marker_value == null){
+      marker_value = "xxx";
+    }
+
+
+
+    marker_array[i]._icon.innerHTML =   '<p id='+ key +'>'+ marker_value + '<p>'
+}
+}
 
 });
 
 $("#federal-all").on('click',function(){
+console.log(marker_array);
+marker_content =data_summary_all['federal'][0];
+
+for( var i=0; i< marker_array.length;i++){
+  if(marker_array[i]._icon == null){
+
+  }
+else{
+    var key = marker_array[i]._icon.firstChild.id;
+    var marker_value = marker_content[key.replace("_"," ")];
+    if(marker_value == null){
+      marker_value = "xxx";
+    }
+
+    marker_array[i]._icon.innerHTML =   '<p id='+ key +'>'+ marker_value + '<p>'
+  }
+}
 
 
 });
 
 $("#provincial-all").on('click',function(){
+console.log(marker_array);
+marker_content =data_summary_all['provincial'][0];
+for( var i=0; i< marker_array.length;i++){
+  if(marker_array[i]._icon == null){
+  }
+  else{
+    console.log(marker_array[i]._icon);
+    var key = marker_array[i]._icon.firstChild.id;
+    var marker_value = marker_content[key.replace("_"," ")]
+    if(marker_value == null){
+      marker_value = "xxx";
+    }
 
+    marker_array[i]._icon.innerHTML =   '<p id='+ key +'>'+ marker_value + '<p>'
+}
+
+}
 
 });
 
 $("#local-all").on('click',function(){
+console.log(marker_array);
+marker_content =data_summary_all['local'][0];
+for( var i=0; i< marker_array.length;i++){
+  if(marker_array[i]._icon == null){
+  }
+  else {
+    console.log(marker_array[i]._icon);
+
+    var key = marker_array[i]._icon.firstChild.id;
+    var marker_value = marker_content[key.replace("_"," ")];
+    if(marker_value == null){
+      marker_value = "xxx";
+    }
+    marker_array[i]._icon.innerHTML =   '<p id='+ key +'>'+ marker_value  + '<p>'
+}
+}
+
 
 });

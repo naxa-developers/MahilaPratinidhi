@@ -128,8 +128,8 @@ class CommonShavaFields(models.Model):
 	class Meta:
 		abstract = True
 	
-	def save(self, force_insert=False, force_update=False):
-		super(CommonShavaFields, self).save(force_insert, force_update)
+	def save(self, force_insert=False, force_update=False, *args, **kwargs):
+		super(CommonShavaFields, self).save(force_insert, force_update, *args, **kwargs)
 		if self.image:
 			image = Image.open(self.image.path)
 			# image = image.resize((1350, 700), Image.ANTIALIAS)
@@ -153,8 +153,8 @@ class News(models.Model):
 	def get_absolute_image_url(self):
 		return os.path.join('/media/', self.image.url)
 	
-	def save(self, force_insert=False, force_update=False):
-		super(News, self).save(force_insert, force_update)
+	def save(self, force_insert=False, force_update=False, *args, **kwargs):
+		super(News, self).save(force_insert, force_update, *args, **kwargs)
 		if self.image:
 			image = Image.open(self.image.path)
 			# image = image.resize((1350, 700), Image.ANTIALIAS)
@@ -214,9 +214,9 @@ class MahilaPratinidhiForm(models.Model):
 	def __str__(self):
 		return "{} फारम".format(self.district.name)
 	
-	def save(self, force_insert=False, force_update=False):
+	def save(self, force_insert=False, force_update=False, *args, **kwargs):
 		
-		super(MahilaPratinidhiForm, self).save(force_insert, force_update)
+		super(MahilaPratinidhiForm, self).save(force_insert, force_update, *args, **kwargs)
 		
 		if self.image:
 			image = Image.open(self.image.path)
@@ -258,9 +258,9 @@ class BackgroundImage(models.Model):
 	def get_absolute_image_url(self):
 		return os.path.join('/media/', self.image.url)
 
-	def save(self, force_insert=False, force_update=False):
+	def save(self, force_insert=False, force_update=False, *args, **kwargs):
 		
-		super(BackgroundImage, self).save(force_insert, force_update)
+		super(BackgroundImage, self).save(force_insert, force_update, *args, **kwargs)
 		
 		if self.image:
 			image = Image.open(self.image.path)
