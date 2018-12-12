@@ -120,7 +120,7 @@
                                     <div class="deteilbg"></div>
                                     <div class="date">
                                         <div class="yrcnt">
-                                            {{ form.age }}
+                                            {{ form.age|slice:":2" }}
                                         </div>
                                         <div class="dtl">
                                             Years
@@ -128,8 +128,20 @@
 
 
                                     </div>
-                                    <div class="dname">{{ form.name|upper }}</div>
-                                    <div class="dlocation">{{ form.address|title }}</div>
+                                    <div class="dname">
+                                        {% if form.english_name %}
+                                            {{ form.english_name|upper }}
+                                        {% else %}
+                                            {{ form.name|upper }}
+                                        {% endif %}
+                                    </div>
+                                    <div class="dlocation">
+                                        {% if form.permanent_address %}
+                                            {{ form.permanent_address|title }}
+                                        {% else %}
+                                            {{ form.address|title }}
+                                        {% endif %}
+                                    </div>
                                     <div class="bottom">
                                         <i class="fa fa-arrow-right arow"></i>
                                     </div>
@@ -155,8 +167,20 @@
                             <img src="{% static 'public/image/mahilalogo.png' %}" class="cropImg" alt="">
                         </div>
                         <div class="info">
-                            <div class="dname">{{ form.name|upper }}</div>
-                            <div class="dlocation">{{ form.address|title }}</div>
+                            <div class="dname">
+                                {% if form.english_name %}
+                                    {{ form.english_name|upper }}
+                                {% else %}
+                                    {{ form.name|upper }}
+                                {% endif %}
+                            </div>
+                            <div class="dlocation">
+                                {% if form.permanent_address %}
+                                    {{ form.permanent_address|title }}
+                                {% else %}
+                                    {{ form.address|title }}
+                                {% endif %}
+                            </div>
                         </div>
                         <div class="dateinner mla">
                             <div class="yrcnt">

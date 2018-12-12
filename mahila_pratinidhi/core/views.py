@@ -167,7 +167,7 @@ def rastriya_shava_file_upload(request):
 				# import ipdb; ipdb.set_trace()
 
 				obj, created =RastriyaShava.objects.get_or_create(
-					province=Province.objects.get(name=df['Province'][1]),
+					province=Province.objects.get(name=df['Province'][row]),
 					name=df['Name_NE'][row],
 					english_name=df['Name_EN'][row],
 					date_of_birth=df['Date of Birth_NE'][row])
@@ -398,7 +398,7 @@ def pratinidhi_shava_file_upload(request):
 				# import ipdb; ipdb.set_trace()
 
 				obj, created =PratinidhiShava.objects.get_or_create(
-					province=Province.objects.get(name=df['Province'][1]),
+					province=Province.objects.get(name=df['Province'][row]),
 					name=df['Name_NE'][row],
 					english_name=df['Name_EN'][row],
 					date_of_birth=str(df['Date of Birth_NE'][row])[:10])

@@ -11,7 +11,7 @@ from itertools import chain
 from rest_framework.decorators import api_view
 from rest_framework.viewsets import ModelViewSet, ReadOnlyModelViewSet
 from rest_framework.views import APIView
-from .serializers import RastriyaShavaSerializer, ProvinceSerializer, LocalMahilaSerializer, PratinidhiShavaSerializer, AgeSerializers
+from .serializers import RastriyaShavaSerializer, ProvinceSerializer, LocalMahilaSerializer, PratinidhiShavaSerializer, AgeSerializers, DistrictsSerializer
 from core.models import RastriyaShava, PratinidhiShava, ProvinceMahilaPratinidhiForm, MahilaPratinidhiForm, Province, District
 from django.db.models import Avg, Count, Sum
 
@@ -83,10 +83,10 @@ class MapViewSet(views.APIView):
             for i in range(item['total']):
                 totals.append(item['name'])
         
-        local_province = Province.objects.values('name').annotate(total=Count('mahilapratinidhiform'))
-        for item in local_province:
-            for i in range(item['total']):
-                totals.append(item['name'])
+        # local_province = Province.objects.values('name').annotate(total=Count('mahilapratinidhiform'))
+        # for item in local_province:
+        #     for i in range(item['total']):
+        #         totals.append(item['name'])
         
         province_province = Province.objects.values('name').annotate(total=Count('province_mahila_pratinidhi_form'))
         for item in province_province:
@@ -114,10 +114,10 @@ class MapViewSet(views.APIView):
             for i in range(item['total']):
                 totals.append(item['permanent_address'])
 
-        district_district = District.objects.values('name').annotate(total=Count('district'))
-        for item in district_district:
-            for i in range(item['total']):
-                totals.append(item['name'])
+        # district_district = District.objects.values('name').annotate(total=Count('district'))
+        # for item in district_district:
+        #     for i in range(item['total']):
+        #         totals.append(item['name'])
         
         total_arrays = np.array(np.unique(totals, return_counts=True)).T
         
@@ -887,3 +887,14 @@ class PartyViewSet(views.APIView):
         total_party_dict['provincial'] = province_party_list
 
         return Response(total_party_dict)
+
+
+class DistrictsViewSet(ReadOnlyModelViewSet):
+    serializer_class = DistrictsSerializer
+
+    def get_queryset(self):
+        queryset = District.objects.all().select_related('province')
+        province_query = self.request.query_params.get('province_id', None)
+        if province_query is not None:
+            queryset = queryset.filter(province=province_query)
+        return queryset
