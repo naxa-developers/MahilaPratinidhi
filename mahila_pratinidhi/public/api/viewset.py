@@ -182,21 +182,21 @@ class MapViewSet(views.APIView):
         map_api['provincial'] = provincial_list
 
         #for local lists
-        local_list = []
-        local_dict = {}
+        # local_list = []
+        # local_dict = {}
 
-        local_province = Province.objects.values('name').annotate(total=Count('mahilapratinidhiform'))
+        # local_province = Province.objects.values('name').annotate(total=Count('mahilapratinidhiform'))
 
-        for item in provincial_province:
-            provincial_dict[item['name']] = item['total']
+        # for item in local_province:
+        #     local_dict[item['name']] = item['total']
 
-        provincial_district = ProvinceMahilaPratinidhiForm.objects.values('permanent_address').annotate(total=Count('permanent_address'))
+        # local_district = ProvinceMahilaPratinidhiForm.objects.values('address').annotate(total=Count('address'))
 
-        for item in provincial_district:
-            provincial_dict[item['permanent_address']] = item['total']
-        provincial_list.append(provincial_dict)
+        # for item in local_district:
+        #     local_dict[item['address']] = item['total']
+        # local_list.append(local_dict)
 
-        map_api['provincial'] = provincial_list
+        # map_api['provincial'] = local_list
 
 
         return Response(map_api)
@@ -297,8 +297,9 @@ class EthnicityViewSet(views.APIView):
         #for total ethnicities
         pratinidhi_caste = PratinidhiShava.objects.all()
         provincial_caste = ProvinceMahilaPratinidhiForm.objects.all()
+        national_caste = RastriyaShava.objects.all()
 
-        castes = list(chain(pratinidhi_caste, provincial_caste))
+        castes = list(chain(pratinidhi_caste, provincial_caste, national_caste))
         totals = []
         for caste in castes:
             totals.append(caste.caste)
@@ -346,8 +347,10 @@ class EthnicityViewSet(views.APIView):
         .annotate(total=Count('caste'))
         pratinidhi_party_caste = PratinidhiShava.objects.values('party_name', 'caste').distinct()\
         .annotate(total=Count('caste'))
+        national_party_caste = RastriyaShava.objects.values('party_name', 'caste').distinct()\
+        .annotate(total=Count('caste'))
 
-        party_caste = list(chain(province_party_caste, pratinidhi_party_caste))
+        party_caste = list(chain(province_party_caste, pratinidhi_party_caste, national_party_caste))
 
         castes = []
         for item in party_caste:
@@ -386,8 +389,9 @@ class MotherTongueViewSet(views.APIView):
         #for total mother_tongues
         pratinidhi_lang = PratinidhiShava.objects.all()
         provincial_lang = ProvinceMahilaPratinidhiForm.objects.all()
+        national_lang = RastriyaShava.objects.all()
 
-        languages = list(chain(pratinidhi_lang, provincial_lang))
+        languages = list(chain(pratinidhi_lang, provincial_lang, national_lang))
         totals = []
         for language in languages:
             totals.append(language.mother_tongue)
@@ -435,8 +439,10 @@ class MotherTongueViewSet(views.APIView):
         .distinct().annotate(total=Count('mother_tongue'))
         pratinidhi_party_lang = PratinidhiShava.objects.values('party_name', 'mother_tongue')\
         .distinct().annotate(total=Count('mother_tongue'))
+        national_party_lang = RastriyaShava.objects.values('party_name', 'mother_tongue')\
+        .distinct().annotate(total=Count('mother_tongue'))
 
-        party_lang = list(chain(province_party_lang, pratinidhi_party_lang))
+        party_lang = list(chain(province_party_lang, pratinidhi_party_lang, national_party_lang))
 
         languages = []
         for item in party_lang:
@@ -474,8 +480,9 @@ class EducationViewSet(views.APIView):
         #for total educational qualification
         pratinidhi_education = PratinidhiShava.objects.all()
         provincial_education = ProvinceMahilaPratinidhiForm.objects.all()
+        national_education = RastriyaShava.objects.all()
 
-        educations = list(chain(pratinidhi_education, provincial_education))
+        educations = list(chain(pratinidhi_education, provincial_education, national_education))
         totals = []
         for education in educations:
             totals.append(education.educational_qualification)
@@ -523,6 +530,8 @@ class EducationViewSet(views.APIView):
         .distinct().annotate(total=Count('educational_qualification'))
         pratinidhi_party_edu = PratinidhiShava.objects.values('party_name', 'educational_qualification')\
         .distinct().annotate(total=Count('educational_qualification'))
+        national_party_edu = RastriyaShava.objects.values('party_name', 'educational_qualification')\
+        .distinct().annotate(total=Count('educational_qualification'))
 
         party_edu = list(chain(province_party_edu, pratinidhi_party_edu))
 
@@ -563,8 +572,9 @@ class ElectionTypeViewSet(views.APIView):
         #for total educational qualification
         pratinidhi = PratinidhiShava.objects.all()
         provincial = ProvinceMahilaPratinidhiForm.objects.all()
+        national = RastriyaShava.objects.all()
 
-        election_types = list(chain(pratinidhi, provincial))
+        election_types = list(chain(pratinidhi, provincial, national))
         totals = []
         for election in election_types:
             totals.append(election.nirwachit_prakriya)
@@ -612,8 +622,10 @@ class ElectionTypeViewSet(views.APIView):
         .distinct().annotate(total=Count('nirwachit_prakriya'))
         pratinidhi_party_election = PratinidhiShava.objects.values('party_name', 'nirwachit_prakriya')\
         .distinct().annotate(total=Count('nirwachit_prakriya'))
+        national_party_election = RastriyaShava.objects.values('party_name', 'nirwachit_prakriya')\
+        .distinct().annotate(total=Count('nirwachit_prakriya'))
 
-        party_election = list(chain(province_party_election, pratinidhi_party_election))
+        party_election = list(chain(province_party_election, pratinidhi_party_election, naitonal_party_election))
 
         elections = []
         for item in party_election:
@@ -681,8 +693,9 @@ class MaritalStatusViewSet(views.APIView):
         #for total educational qualification
         pratinidhi = PratinidhiShava.objects.all()
         provincial = ProvinceMahilaPratinidhiForm.objects.all()
+        national = RastriyaShava.objects.all()
 
-        maritalstatus_list = list(chain(pratinidhi, provincial))
+        maritalstatus_list = list(chain(pratinidhi, provincial, national))
         totals = []
         for marital in maritalstatus_list:
             totals.append(marital.marital_status)
@@ -730,8 +743,10 @@ class MaritalStatusViewSet(views.APIView):
         .distinct().annotate(total=Count('marital_status'))
         pratinidhi_party_marital = PratinidhiShava.objects.values('party_name', 'marital_status')\
         .distinct().annotate(total=Count('marital_status'))
+        national_party_marital = RastriyaShava.objects.values('party_name', 'marital_status')\
+        .distinct().annotate(total=Count('marital_status'))
 
-        party_marital =  list(chain(province_party_marital, pratinidhi_party_marital))
+        party_marital =  list(chain(province_party_marital, pratinidhi_party_marital, national_party_marital))
 
         marital_list = []
         for item in party_marital:
@@ -769,8 +784,9 @@ class ElectionParticipate(views.APIView):
         #for total educational qualification
         pratinidhi = PratinidhiShava.objects.all()
         provincial = ProvinceMahilaPratinidhiForm.objects.all()
+        national = RastriyaShava.objects.all()
 
-        election_before_list = list(chain(pratinidhi, provincial))
+        election_before_list = list(chain(pratinidhi, provincial, national))
         totals = []
         for elect in election_before_list:
             totals.append(elect.aaja_vanda_agadi_chunab_ladnu_vayeko_chha)
@@ -820,10 +836,13 @@ class ElectionParticipate(views.APIView):
         pratinidhi_party_election_before = PratinidhiShava.objects\
         .values('party_name', 'aaja_vanda_agadi_chunab_ladnu_vayeko_chha')\
         .distinct().annotate(total=Count('aaja_vanda_agadi_chunab_ladnu_vayeko_chha'))
+        national_party_election_before = PratinidhiShava.objects\
+        .values('party_name', 'aaja_vanda_agadi_chunab_ladnu_vayeko_chha')\
+        .distinct().annotate(total=Count('aaja_vanda_agadi_chunab_ladnu_vayeko_chha'))
 
         party_election_before_list =  list(
             chain(
-                province_party_election_before, pratinidhi_party_election_before))
+                province_party_election_before, pratinidhi_party_election_before, national_party_election_before))
 
         election_before_list = []
         for item in party_election_before_list:
@@ -862,8 +881,9 @@ class PartyViewSet(views.APIView):
         #for total educational qualification
         pratinidhi = PratinidhiShava.objects.all()
         provincial = ProvinceMahilaPratinidhiForm.objects.all()
+        national = RastriyaShava.objects.all()
 
-        party_list = list(chain(pratinidhi, provincial))
+        party_list = list(chain(pratinidhi, provincial, national))
         totals = []
         for party in party_list:
             totals.append(party.party_name)
