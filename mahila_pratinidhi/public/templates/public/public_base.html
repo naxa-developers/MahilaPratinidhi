@@ -83,14 +83,34 @@ left: 18px;
             <div class="container">
                 <div class="linkTabs">
                     <a href="{% url 'public:index' %}" class="linkitems"> Home</a>
-                    <a href="{% url 'public:index' %}" class="linkitems"> FIND YOUR LEADER</a>
+                    <a href="{% url 'public:explore' 'general' %}" class="linkitems"> FIND YOUR LEADER</a>
                     <a href="{% url 'public:data_visualize' %}" class="linkitems">MAHILA PRATINIDHI IN DATA</a>
-                    <a href="" class="linkitems"> FEATURED MAP</a>
+                    <a href="{% url 'public:index' %}#featured" class="linkitems" id="featured_link"> FEATURED MAHILA</a>
+                    <a href="{% url 'public:index' %}#find" class="linkitems" id="maps_link"> FEATURED MAP</a>
                     <a href="{% url 'public:index' %}#news" class="linkitems" id="news_link"> NEWS</a>
                     <a href="{% url 'public:index' %}" class="linkitems"> Media</a>
 
                 </div>
             </div>
+
+            <div class="socialIconsBtm">
+                <a href="#">
+                    <i class="fa fa-facebook-square"></i>
+                </a>
+                <a href="#">
+                    <i class=" fa fa-twitter"></i>
+                </a>
+                <a href="#">
+                    <i class="fa fa-instagram"></i>
+                </a>
+                <a href="#">
+                    <i class="fa fa-youtube"></i>
+                </a>
+                <a href="#">
+                    <i class=" fa fa-medium-m"></i>
+                </a>
+            </div>
+
         </div>
 
 
@@ -203,9 +223,9 @@ left: 18px;
                             <div class="flist">
                                 <a href="{% url 'public:explore' 'provincial' %}" style="color:white;"> Provincial Assembly</a>
                             </div>
-                            <div class="flist">
-                                <a href="{% url 'public:explore' 'local' %}" style="color:white;"> Local Level</a>
-                            </div>
+                            <!--<div class="flist">-->
+                                <!--<a href="{% url 'public:explore' 'local' %}" style="color:white;"> Local Level</a>-->
+                            <!--</div>-->
                             <div class="ftitle fbottom">
                                 MAP VISUALIZATION
                             </div>
@@ -232,8 +252,8 @@ left: 18px;
                         </div>
 
                         <div class="col-md-3 col-sm-6 textWhite">
-                            <div class="ftitle mt177">
-                                MAHILA PRATINIDHI ON MEDIA</div>
+                            <div class="ftitle mt177"><a href="{% url 'public:index'%}#news" style="color:white;">
+                                MAHILA PRATINIDHI ON MEDIA</a></div>
 
                         </div>
 
@@ -272,6 +292,14 @@ left: 18px;
                         $("body").removeClass("overflowHidden");
                     });
                     $("#news_link").click(function () {
+                        $(".menu").removeClass("menuOn");
+                        $("body").removeClass("overflowHidden");
+                    });
+                    $("#featured_link").click(function () {
+                        $(".menu").removeClass("menuOn");
+                        $("body").removeClass("overflowHidden");
+                    });
+                    $("#maps_link").click(function () {
                         $(".menu").removeClass("menuOn");
                         $("body").removeClass("overflowHidden");
                     });

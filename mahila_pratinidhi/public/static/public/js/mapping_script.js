@@ -1,7 +1,7 @@
 //alert("pasyo");
 var base_url="http://mahilapratinidhi.naxa.com.np";
-//var base_url="http://localhost:8000";
-var map =L.map('mapid').setView([27,85],7);
+// var base_url="http://localhost:8000";
+var map =L.map('mapid',{minZoom: 7,maxZoom: 11,zoomSnap:0.3}).setView([27,85],7);
 
 var OSM = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
   attribution: '&copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
@@ -10,13 +10,20 @@ var OSM = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 var OpenStreetMap_BlackAndWhite = L.tileLayer('http://{s}.tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png', {
 	maxZoom: 18,
 	attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-});
+}).addTo(map);
 
 var Thunderforest_TransportDark = L.tileLayer('https://{s}.tile.thunderforest.com/transport-dark/{z}/{x}/{y}.png?apikey={apikey}', {
 	attribution: '&copy; <a href="http://www.thunderforest.com/">Thunderforest</a>, &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
 	apikey: 'ddb2f354bd68480ebfa4ce3a9726c511',
 	maxZoom: 22
-}).addTo(map);
+});
+
+
+var gl = L.mapboxGL({
+       attribution: '<a href="https://www.maptiler.com/license/maps/" target="_blank">&copy; MapTiler</a> <a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap contributors</a>',
+       accessToken: 'not-needed',
+       style: 'https://maps.tilehosting.com/c/163bd208-a4f1-4885-8b97-416ac0b47d00/styles/darkmatter_upen/style.json?key=SWfpfQVfURyYQrAEj6J3'
+     });
 
 baseMaps = {
     //"Street View": street_view,
@@ -24,9 +31,38 @@ baseMaps = {
     "blackwhite":OpenStreetMap_BlackAndWhite,
     "dark":Thunderforest_TransportDark,
     "Empty" : L.tileLayer(''),
+    "gl":gl
 };
 L.control.layers(baseMaps).addTo(map);
 
+
+
+console.log("baseurlcheck",base_url+'/api/maps/');
+
+
+
+function fetchapi(){
+
+  $.ajax({
+     url: base_url+'/api/maps/',
+     type: 'get',
+     dataType: 'json',
+     async: false,
+     success: handleData
+  });
+
+}
+
+function handleData(data) {
+  window["data_summary_all"]= data;
+  window["marker_content"] = data["all"][0]
+}
+
+fetchapi();
+
+
+
+var total_instance = 12004;
 
 
 var customPopup = "National:<br/>Federal:<br/>Provincial:<br/>Local:<br/>";
@@ -48,44 +84,110 @@ function highlightFeature(e){
   var province=layer.feature.properties.Province;
   layer.setStyle({
     weight:4,
-    color: '#666',
-    dashArray :'',
-    fillOpacity:0.7
+
   });
 }
 
 function resetHighlight(e){
-  country.resetStyle(e.target);
+  e.target.setStyle({
+    weight:2,
+
+  });
 }
 
 
 var last_layer =[];
 var marker_array=[];
+
+function get_total_instance(e){
+
+
+  var properties_object = e.target.feature.properties;
+
+  if(Object.keys(properties_object).length=="1"){
+    var xx = "Province "+ properties_object.Province;
+  }
+
+  else if (Object.keys(properties_object).length=="8"){
+    var xx = properties_object['FIRST_DIST'].charAt(0).toUpperCase()+properties_object['FIRST_DIST'].slice(1).toLowerCase();
+  }
+
+//alert(marker_content[xx]);
+return marker_content[xx];
+
+
+}
+
+
 function zoomToFeature(e){
-  map.fitBounds(e.target.getBounds());
+
+  total_instance = get_total_instance(e);
+  map.fitBounds(e.target.getBounds(),{padding:[25,25]});
   if(last_layer[0]){
       map.removeLayer(last_layer[0]);
       last_layer.pop();
-    }
-  var province= e.target.feature.properties.Province;
+
+  }
+
+
+ var properties_object = e.target.feature.properties;
+
+
+ if(Object.keys(properties_object).length=="1"){
+   var division = "province";
+   var prodric= properties_object.Province;
+
+ }
+
+ else if (Object.keys(properties_object).length=="8"){
+   var division = "municipality";
+   var prodric= properties_object['FIRST_DIST'].charAt(0).toUpperCase() +  properties_object['FIRST_DIST'].slice(1).toLowerCase();
+
+ }
+
+
   for (var i=0;i<marker_array.length;i++){
     marker_array[i].removeFrom(map);
   }
-  console.log("baseurlcheck",base_url+'/api/geojson/province/'+ province);
-  var layer = L.geoJson.ajax(base_url+'/api/geojson/province/'+ province,
-            {onEachFeature:onEachFeature}
+
+
+  var layer_inside = L.geoJson.ajax(base_url+'/api/geojson/'+ division +'/'+ prodric,
+            {onEachFeature:onEachFeature,
+              style: { color: "white",
+                       weight:2,
+                       fillColor:"grey",
+
+                       fillOpacity:1}}
             );
 
-   layer.addTo(map);
-   last_layer.push(layer);
+
+
+
+   layer_inside.addTo(map);
+   last_layer.push(layer_inside);
+
+}
+
+var sum=0;
+function returnSum(value){
+
+  var sum =0;
+  for(var i =0; i<array.length;i++){
+    sum+= array[i];
+  }
+  return sum;
 
 }
 
 function onEachFeature(feature,layer){
 
+  console.log("feature",feature);
+  console.log("layer",layer);
 
-  circular_marker(get_center(feature,layer),data_summary_all['total'][feature.properties.Province-1]);
-  layer.bindPopup(customPopup,customOptions);
+
+  Choropleth(feature,layer);
+  circular_marker(get_center(feature,layer),get_number(feature),get_name(feature));
+  //layer.bindPopup(customPopup,customOptions);
   layer.on('mouseover', function (e) {
               this.openPopup();
           });
@@ -99,21 +201,27 @@ function onEachFeature(feature,layer){
   })
 }
 
-function circular_marker(center,number){
-
+function circular_marker(center,number,name){
       if (number){ }
       else{
         number="xx";
       }
 
+      var name = name.replace(" ","_");
+
 
       var myIcon = L.divIcon({
-          className:'my-div-icon',
+          className:'my-div-icon'+ ' ' + name,
           iconSize: new L.Point(50, 50),
-          html: number
+          html: '<p id='+ name +'>'+ number + '<p>',
+
       });
+
+
       // you can set .my-div-icon styles in CSS
       var marker= L.marker(center, {icon: myIcon}).addTo(map);
+      console.log("marker",marker)
+
       marker_array.push(marker);
           //.bindPopup('divIcon CSS3 popup. <br> Supposed to be easily stylable.');
 }
@@ -124,11 +232,83 @@ function get_center(feature,layer){
   return center;
 
 }
-console.log("baseurlcheck",base_url+'/api/geojson/country');
+
+function get_name(feature){
+
+  var properties_object = feature.properties;
+  if(Object.keys(properties_object).length=="1"){
+    var xx = "Province "+ feature.properties.Province;
+
+  }
+
+  else if (Object.keys(properties_object).length=="8"){
+    var xx = feature.properties['FIRST_DIST'].charAt(0).toUpperCase()+feature.properties['FIRST_DIST'].slice(1).toLowerCase();
+  }
+  return xx;
+
+}
+
+function get_number(feature){
+
+var xx = get_name(feature);
+
+  var number = marker_content[xx];
+
+  return number;
+}
+
+
+function getColor(d) {
+
+
+//alert(d);
+
+    return d > 20 ? '#031A3F' :
+            d > 18 ? '#08204E' :
+            d > 16 ? '#0F275E' :
+           d > 14  ? '#22377E' :
+           d > 12  ? '#3D4C9D' :
+           d > 10  ? '#7276CD' :
+           d > 5  ? '#8888DD' :
+
+                      '#C1C1E6';
+
+}
+
+
+function Choropleth(feature,layer){
+
+  var properties_object = feature.properties;
+  if(Object.keys(properties_object).length=="1"){
+    var xx = "Province "+ feature.properties.Province;
+  }
+
+  else if (Object.keys(properties_object).length=="8"){
+    var xx = feature.properties['FIRST_DIST'].charAt(0).toUpperCase()+feature.properties['FIRST_DIST'].slice(1).toLowerCase();
+  }
+
+
+ var frequency = marker_content[xx];
+ var percentage = (frequency*100)/total_instance;
+
+  var color= getColor(percentage);
+  layer.setStyle({fillColor :color});
+
+
+
+}
+
+
+
 
 var country =L.geoJson.ajax(base_url+'/api/geojson/country',
           {onEachFeature:onEachFeature,
-           style: {fillOpacity:0}
+           style: { color: "white",
+                    weight:2,
+                    fillColor:"grey",
+                    fillOpacity:"0.6"
+
+                    }
           }).addTo(map);
 
 
@@ -141,37 +321,110 @@ var country =L.geoJson.ajax(base_url+'/api/geojson/country',
 
 //api call_
 
-  var data_summary_all ={
-    'total':[32, 37, 37, 20, 32, 13, 18],
-    'national': [1,2,2,5,3,30,7],
-    'provincial':[32, 37, 37, 20, 32, 13, 0]
-    }
-  frequency_array=[1187,1000,800,1730,2000,3212,3212];
-console.log("baseurlcheck",base_url+'/api/maps/);
-  $.get(base_url+'/api/maps/',function(data){
 
-    data_summary_all['provincial']= data['provincial'];
-    data_summary_all['national']= data['national'];
 
-});
+function percentage(array){
+  var total = array.reduce(function(total,num){
+    return total + num;
+  });
+  percentage_array =  array.map(function(i){
+    return (i*100)/total;
+
+  });
+  return percentage_array;
+
+}
+
+
+
+
+
+
 //interaction with sidebar
 
 $("#national-all").on('click',function(){
 
+console.log(marker_array);
+marker_content =data_summary_all['national'][0];
+for( var i=0; i< marker_array.length;i++){
+  if(marker_array[i]._icon == null){
 
+  }
+  else {
+    var key = marker_array[i]._icon.firstChild.id;
+    var marker_value = marker_content[key.replace("_"," ")];
+    if(marker_value == null){
+      marker_value = "xxx";
+    }
+
+
+
+    marker_array[i]._icon.innerHTML =   '<p id='+ key +'>'+ marker_value + '<p>'
+}
+}
 
 });
 
 $("#federal-all").on('click',function(){
+console.log(marker_array);
+marker_content =data_summary_all['federal'][0];
+
+for( var i=0; i< marker_array.length;i++){
+  if(marker_array[i]._icon == null){
+
+  }
+else{
+    var key = marker_array[i]._icon.firstChild.id;
+    var marker_value = marker_content[key.replace("_"," ")];
+    if(marker_value == null){
+      marker_value = "xxx";
+    }
+
+    marker_array[i]._icon.innerHTML =   '<p id='+ key +'>'+ marker_value + '<p>'
+  }
+}
 
 
 });
 
 $("#provincial-all").on('click',function(){
+console.log(marker_array);
+marker_content =data_summary_all['provincial'][0];
+for( var i=0; i< marker_array.length;i++){
+  if(marker_array[i]._icon == null){
+  }
+  else{
+    console.log(marker_array[i]._icon);
+    var key = marker_array[i]._icon.firstChild.id;
+    var marker_value = marker_content[key.replace("_"," ")]
+    if(marker_value == null){
+      marker_value = "xxx";
+    }
 
+    marker_array[i]._icon.innerHTML =   '<p id='+ key +'>'+ marker_value + '<p>'
+}
+
+}
 
 });
 
 $("#local-all").on('click',function(){
+console.log(marker_array);
+marker_content =data_summary_all['local'][0];
+for( var i=0; i< marker_array.length;i++){
+  if(marker_array[i]._icon == null){
+  }
+  else {
+    console.log(marker_array[i]._icon);
+
+    var key = marker_array[i]._icon.firstChild.id;
+    var marker_value = marker_content[key.replace("_"," ")];
+    if(marker_value == null){
+      marker_value = "xxx";
+    }
+    marker_array[i]._icon.innerHTML =   '<p id='+ key +'>'+ marker_value  + '<p>'
+}
+}
+
 
 });

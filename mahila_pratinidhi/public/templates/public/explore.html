@@ -1,6 +1,19 @@
 {% extends 'public/public_base.html' %}
 {% load staticfiles %}
 {% block upper_content %}
+<link rel="stylesheet" href="{% static 'public/css/twitter.css' %}">
+<style>
+  .tt-menu{  position: absolute;
+    top: 100%;
+    width: 100%;
+    z-index: 100;
+    border: 2px solid #6e6060;
+    border-radius: 10px;
+    }
+    typeahead tt-input{
+        left: -236px;
+    }
+</style>
 <body>
     <header>
         <div class="navigation innerPage">
@@ -17,7 +30,13 @@
             <div class="selectHolder">
                 <div class="leader searchP">
                     <div class="leaderWrp ">
-                        <input type="text" placeholder="CHECK YOUR LEADER AROUND" class="leaderSearch">
+
+                    <div id="the-basics">
+                      <input class="typeahead" type="text" placeholder="CHECK YOUR LEADER AROUND">
+                    </div>
+                        <!--<div id="the-basics">-->
+                        <!--<input type="text" placeholder="CHECK YOUR LEADER AROUND" class="leaderSearch typeahead">-->
+                        <!--</div>-->
                     </div>
                 </div>
             </div>
@@ -28,7 +47,7 @@
             <div class="clearfix"></div>
 
             <div id="exTab3" class="container">
-                <ul class="nav nav-pills row">
+                <ul class="nav nav-pills row" style="text-align:center;">
                     <li class=" col-md-3">
                         <a href="#1b" data-toggle="tab" class="active" id="national">
                             <div class="limgHolder">
@@ -72,20 +91,20 @@
 
                         </a>
                     </li>
-                    <li class="active col-md-3">
-                        <a href="#4b" data-toggle="tab" id="local">
-                            <div class="limgHolder">
-                                <img src="{% static 'public/image/government1.svg' %}" alt="">
+                    <!--<li class="active col-md-3">-->
+                        <!--<a href="#4b" data-toggle="tab" id="local">-->
+                            <!--<div class="limgHolder">-->
+                                <!--<img src="{% static 'public/image/government1.svg' %}" alt="">-->
 
 
-                            </div>
-                            <div class="text-center tabtext">
-                                LOCAL LEVEL
-                                <br/> GOVERNMENT
-                            </div>
+                            <!--</div>-->
+                            <!--<div class="text-center tabtext">-->
+                                <!--LOCAL LEVEL-->
+                                <!--<br/> GOVERNMENT-->
+                            <!--</div>-->
 
-                        </a>
-                    </li>
+                        <!--</a>-->
+                    <!--</li>-->
 
                 </ul>
 
@@ -99,9 +118,9 @@
 
                                                     <div class="pimageHolder">
                                                         {% if item.image %}
-                                                        <img src="{{ MEDIA_URL }} {{ item.image.url }}" alt="">
+                                                        <img src="{{ MEDIA_URL }} {{ item.image.url }}" class="cropList" alt="">
                                                         {% else %}
-                                                        <img src="{% static 'public/image/mahilalogo.png' %}" alt="" >
+                                                        <img src="{% static 'public/image/mahilalogo.png' %}" class="cropList" alt="" >
                                                         {% endif %}
                                                         <div class="img"></div>
                     
@@ -114,7 +133,7 @@
                                                         <div class="deteilbg"></div>
                                                         <div class="date">
                                                             <div class="yrcnt">
-                                                                {{ item.age }}
+                                                                {{ item.age|slice:":2" }}
                                                             </div>
                                                             <div class="dtl">
                                                                 Years
@@ -122,7 +141,7 @@
                     
                     
                                                         </div>
-                                                        <div class="dname">{{ item.name|upper }}</div>
+                                                        <div class="dname">{{ item.english_name|upper }}</div>
                                                         <div class="dlocation">{{ item.permanent_address|title }}</div>
                                                         <div class="bottom">
                                                             <i class="fa fa-arrow-right arow"></i>
@@ -137,47 +156,45 @@
                         </div>
                         <div class="tab-pane" id="2b">
                                 <div class="pfofileItems">
-                                        {% for item in pratinidhis %}
-                                        <div class="pItem reveal">
+                                    {% for item in pratinidhis %}
+                                    <div class="pItem reveal">
                                         <a href="{% url 'public:pratinidhi_detail' item.pk %}">
-                                                <div class="inner">
+                                            <div class="inner">
 
-                                                    <div class="pimageHolder">
-                                                        {% if item.image %}
-                                                        <img src="{{ MEDIA_URL }} {{ item.image.url }}" alt="">
-                                                        {% else %}
-                                                        <img src="{% static 'public/image/mahilalogo.png' %}" alt="" >
-                                                        {% endif %}
-                                                        <div class="img"></div>
+                                                <div class="pimageHolder">
+                                                    {% if item.image %}
+                                                    <img src="{{ MEDIA_URL }} {{ item.image.url }}" class="cropList" alt="">
+                                                    {% else %}
+                                                    <img src="{% static 'public/image/mahilalogo.png' %}" class="cropList" alt="" >
+                                                    {% endif %}
+                                                    <div class="img"></div>
                     
-                                                        <div class="poverlay">
-                    
-                                                        </div>
-                                                        <div class="aroup"></div>
-                                                    </div>
-                                                    <div class="detailHolder">
-                                                        <div class="deteilbg"></div>
-                                                        <div class="date">
-                                                            <div class="yrcnt">
-                                                                {{ item.age }}
-                                                            </div>
-                                                            <div class="dtl">
-                                                                Years
-                                                            </div>
-                    
-                    
-                                                        </div>
-                                                        <div class="dname">{{ item.name|upper }}</div>
-                                                        <div class="dlocation">{{ item.permanent_address|title }}</div>
-                                                        <div class="bottom">
-                                                            <i class="fa fa-arrow-right arow"></i>
-                                                        </div>
-                                                    </div>
-                        
+                                                    <div class="poverlay"></div>
+                                                    <div class="aroup"></div>
                                                 </div>
+                                                <div class="detailHolder">
+                                                    <div class="deteilbg"></div>
+                                                    <div class="date">
+                                                        <div class="yrcnt">
+                                                            {{ item.age|slice:":2" }}
+                                                        </div>
+                                                        <div class="dtl">
+                                                            Years
+                                                        </div>
+                    
+                    
+                                                    </div>
+                                                    <div class="dname">{{ item.english_name|upper }}</div>
+                                                    <div class="dlocation">{{ item.permanent_address|title }}</div>
+                                                    <div class="bottom">
+                                                        <i class="fa fa-arrow-right arow"></i>
+                                                    </div>
+                                                </div>
+                        
+                                            </div>
                                         </a>
-                                        </div>
-                                        {% endfor %}
+                                    </div>
+                                    {% endfor %}
                                 </div>
                     </div>
                     <div class="tab-pane" id="3b">
@@ -191,7 +208,7 @@
                                     </p>
                                 </div>
                             
-                            </a>
+                                </a>
     
                                 {% endfor %}
                           </div>
@@ -207,7 +224,7 @@
                                 </p>
                             </div>
                         
-                        </a>
+                            </a>
 
                             {% endfor %}
                       </div>
@@ -220,17 +237,84 @@
 
     {% block scripts %}
 
+
+    <script type="text/javascript" src="{% static 'public/js/jquery.js' %}"></script>
+    <script type="text/javascript" src="{% static 'public/js/twitter.js' %}"></script>
+
+
     <script>
         $(document).ready(function () {
-            $("#button").click(function () {
-                $('html, body').animate({
-                    scrollTop: $("#myDiv").offset().top
-                }, 2000);
+
+        var substringMatcher = function(strs) {
+          return function findMatches(q, cb) {
+            var matches, substringRegex;
+
+            // an array that will be populated with substring matches
+            matches = [];
+
+            // regex used to determine if a string contains the substring `q`
+            substrRegex = new RegExp(q, 'i');
+
+            // iterate through the pool of strings and for any string that
+            // contains the substring `q`, add it to the `matches` array
+            $.each(strs, function(i, str) {
+              if (substrRegex.test(str)) {
+                matches.push(str);
+              }
             });
+
+            cb(matches);
+          };
+        };
+    var states=[]
+        var test = {{names|safe}};
+        for(var i=0; i<test.length; i++){
+            states.push(test[i].name)
+        }
+        console.log(states);
+
+        $('#the-basics .typeahead').typeahead({
+          hint: true,
+          highlight: true,
+          minLength: 1
+        },
+        {
+          name: 'states',
+          source: substringMatcher(states)
+        }).on('typeahead:selected', function(event, selection) {
+            var clicked= this.value;
+            output =null;
+
+          // the second argument has the info you want
+
+          for(var i=0; i<test.length; i++){
+                if(test[i].name== clicked && test[i].models== "ProvinceMahilaPratinidhiForm"){
+                location.href = "http://localhost:8000/explore/province/" + test[i].province_id + "/" +test[i].id;
+                }
+                else if (test[i].name== clicked && test[i].models== "RastriyaShava" ){
+                              location.href = "http://localhost:8000/detail/national/"+test[i].id;
+                console.log("normal");
+                }
+                else if (test[i].name== clicked && test[i].models== "PratinidhiShava" ){
+                console.log(test[i]);
+                              location.href = "http://localhost:8000/detail/pratinidhi/"+test[i].id;
+                }
+                else if (test[i].name== clicked && test[i].models== "MahilaPratinidhiForm" ){
+                              location.href = "http://localhost:8000/explore/district/" + test[i].district_id + "/" +test[i].id;
+                }
+          }
         });
-        var clicked = "{{ clicked }}";
+
+        $("#button").click(function () {
+            $('html, body').animate({
+                scrollTop: $("#myDiv").offset().top
+            }, 2000);
+        });
+    });
+
+    var clicked = "{{ clicked }}";
         if(clicked == "national" || clicked == "general"){
-            $("#nation").click();
+            document.getElementById("nation").click();
             $("#nation").addClass("active");
         }
         else if(clicked == 'federal'){
@@ -238,7 +322,7 @@
             [].forEach.call(elems, function(el) {
                 el.classList.remove("active");
             });
-            $("#federal").click();
+            document.getElementById("federal").click();
             $("#federal").addClass("active");
         }
         else if(clicked == "provincial"){
@@ -246,7 +330,7 @@
             [].forEach.call(elems, function(el) {
                 el.classList.remove("active");
             });
-            $("#provincial").click();
+            document.getElementById("provincial").click();
             $("#provincial").addClass("active");
             
         }
@@ -255,7 +339,7 @@
             [].forEach.call(elems, function(el) {
                 el.classList.remove("active");
             });
-            $("#local").click();
+            document.getElementById("local").click();
             $("#local").addClass("active");   
         }
     </script>

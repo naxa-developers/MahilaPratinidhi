@@ -3,6 +3,7 @@ from django.db import models
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes.fields import GenericRelation
+from PIL import Image, ImageOps
 
 
 BOOL_CHOICES = (
@@ -126,14 +127,15 @@ class CommonShavaFields(models.Model):
 	featured = models.BooleanField(default=False)
 	class Meta:
 		abstract = True
-
-
-class District(models.Model):
-	name = models.CharField(max_length=300)
-	elected_women = models.IntegerField(default=0)
-
-	def __str__(self):
-		return self.name
+	
+	def save(self, force_insert=False, force_update=False, *args, **kwargs):
+		super(CommonShavaFields, self).save(force_insert, force_update, *args, **kwargs)
+		if self.image:
+			image = Image.open(self.image.path)
+			# image = image.resize((1350, 700), Image.ANTIALIAS)
+			# image.thumbnail((1350, 700), Image.ANTIALIAS)
+			image = ImageOps.fit(image, (400, 315), Image.ANTIALIAS)
+			image.save(self.image.path)
 
 
 class News(models.Model):
@@ -141,11 +143,26 @@ class News(models.Model):
 	title = models.CharField(max_length=300, blank=False)
 	content = models.TextField(blank=False)
 	story_headline = models.TextField(blank=True)
-	
+	image = models.ImageField(blank=True, upload_to="news/")
+	image_credit = models.CharField(blank=True, max_length=300)
 	content_type =   models.ForeignKey(ContentType, on_delete=models.CASCADE, null=True)
 	object_id = models.PositiveIntegerField(null=True)
 	content_object=GenericForeignKey('content_type', 'object_id')
 
+
+	def get_absolute_image_url(self):
+		return os.path.join('/media/', self.image.url)
+	
+	def save(self, force_insert=False, force_update=False, *args, **kwargs):
+		super(News, self).save(force_insert, force_update, *args, **kwargs)
+		if self.image:
+			image = Image.open(self.image.path)
+			# image = image.resize((1350, 700), Image.ANTIALIAS)
+        	# image.thumbnail((1350, 700), Image.ANTIALIAS)
+			image = ImageOps.fit(image, (661, 661), Image.ANTIALIAS)
+			image.save(self.image.path)
+	
+	
 	def __str__(self):
 		return "{}-{} news".format(self.date, self.title)
 	
@@ -160,6 +177,13 @@ class Province(models.Model):
 	def __str__(self):
 		return self.name
 
+class District(models.Model):
+	name = models.CharField(max_length=300)
+	elected_women = models.IntegerField(default=0)
+	province = models.ForeignKey(Province, on_delete=models.CASCADE, verbose_name="प्रदेश", related_name="districts", null=True, blank=True)
+
+	def __str__(self):
+		return self.name
 
 class MahilaPratinidhiForm(models.Model):
 	district = models.ForeignKey(District, on_delete=models.CASCADE, related_name='district', verbose_name="जिल्ला")
@@ -184,11 +208,22 @@ class MahilaPratinidhiForm(models.Model):
 	image = models.ImageField(blank=True, upload_to='profile/', verbose_name="फोटो")
 	featured = models.BooleanField(default=False)
 	news = GenericRelation(News)
-	province = models.ForeignKey(Province, on_delete=models.CASCADE, verbose_name="प्रदेश", default=1)
+	province = models.ForeignKey(Province, on_delete=models.CASCADE, verbose_name="प्रदेश", related_name="mahilapratinidhiform", default=1)
  
 
 	def __str__(self):
 		return "{} फारम".format(self.district.name)
+	
+	def save(self, force_insert=False, force_update=False, *args, **kwargs):
+		
+		super(MahilaPratinidhiForm, self).save(force_insert, force_update, *args, **kwargs)
+		
+		if self.image:
+			image = Image.open(self.image.path)
+    	    # image = image.resize((1350, 700), Image.ANTIALIAS)
+    	    # image.thumbnail((1350, 700), Image.ANTIALIAS)
+			image = ImageOps.fit(image, (400, 315), Image.ANTIALIAS)
+			image.save(self.image.path)
 
 
 class ProvinceMahilaPratinidhiForm(CommonShavaFields):
@@ -223,5 +258,16 @@ class BackgroundImage(models.Model):
 	def get_absolute_image_url(self):
 		return os.path.join('/media/', self.image.url)
 
+	def save(self, force_insert=False, force_update=False, *args, **kwargs):
+		
+		super(BackgroundImage, self).save(force_insert, force_update, *args, **kwargs)
+		
+		if self.image:
+			image = Image.open(self.image.path)
+            # image = image.resize((1350, 700), Image.ANTIALIAS)
+            # image.thumbnail((1350, 700), Image.ANTIALIAS)
+			image = ImageOps.fit(image, (1920, 1080), Image.ANTIALIAS)
+			
+			image.save(self.image.path)
 
 

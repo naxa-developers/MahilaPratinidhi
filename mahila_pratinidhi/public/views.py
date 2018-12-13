@@ -13,10 +13,11 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.template.loader import render_to_string
 from .tokens import account_activation_token
 from django.contrib.auth.models import User
-from django.core.mail import EmailMessage
 import json
 from django.core.mail import EmailMessage
 from itertools import chain
+from datetime import timedelta
+from django.utils import timezone
 
 from django.shortcuts import render
 from django.db.models import Q
@@ -26,11 +27,12 @@ from django.db.models import Q
 class Index(TemplateView):
 
     def get(self, request, *args, **kwargs):
-        local_featured = MahilaPratinidhiForm.objects.filter(featured='True')[:1]
+        # local_featured = MahilaPratinidhiForm.objects.filter(featured='True')[:1]
         national_featured = RastriyaShava.objects.filter(featured='True')[:1]
         pratinidhi_featured = PratinidhiShava.objects.filter(featured='True')[:1]
         provincial_featured = ProvinceMahilaPratinidhiForm.objects.filter(featured='True')[:1]
-        featured_data = [local_featured, national_featured, pratinidhi_featured, provincial_featured]
+        # featured_data = [local_featured, national_featured, pratinidhi_featured, provincial_featured]
+        featured_data = [national_featured, pratinidhi_featured, provincial_featured]
         news = News.objects.all()
 
         images = BackgroundImage.objects.all()
@@ -86,7 +88,7 @@ def activate(request, uidb64, token):
         user.is_active = True
         user.save()
         login(request, user)
-        return HttpResponse('Thank you for your email confirmation. Now you can login your account.')
+        return HttpResponseRedirect('/signup/')
     else:
         return HttpResponse('Activation link is invalid!')
 
@@ -100,28 +102,41 @@ class ExploreView(TemplateView):
 
 
     def get(self, request, *args, **kwargs):
-        names = []
-        district = District.objects.all()
+        names = {}
+        name_list = []
+        # district = District.objects.all()
         rastriyas = RastriyaShava.objects.all()
         pratinidhis = PratinidhiShava.objects.all()
         provinces = Province.objects.all()
 
         province_names = ProvinceMahilaPratinidhiForm.objects.all()
-        local_names = MahilaPratinidhiForm.objects.all()
+        # local_names = MahilaPratinidhiForm.objects.all()
 
         object_list = list(chain(rastriyas, pratinidhis, province_names))
 
         for lists in object_list:
+            try:
+                names['name']=lists.english_name
+            except:
+                names['name'] = lists.name
 
-            names.append(lists.english_name)
+            names['id']=lists.pk
+            names['models']=lists.__class__.__name__
+            try:
+                names['province_id']=lists.province_id
+                # names['district']=lists.district_id
 
-        for lists in local_names:
-            names.append(lists.name)
+            except:
+                pass
+            name_list.append(dict(names))
 
-        json_list = json.dumps(names)
+        # for lists in local_names:
+        #     names.append(lists.name)
+        json_list = json.dumps(name_list)
+        # print(json_list)
 
         clicked = self.kwargs.get('clicked')
-        return render(request, self.template_name, {'districts':district, 'rastriyas':rastriyas,
+        return render(request, self.template_name, {'rastriyas':rastriyas,
         'pratinidhis':pratinidhis, 'provinces':provinces, 'clicked':clicked, 'names':json_list})
 
 
@@ -129,9 +144,32 @@ class MahilaPratinidhiView(TemplateView):
     template_name = 'public/lists.html'
 
     def get(self, request, *args, **kwargs):
+        names = {}
+        name_list = []
+        district = District.objects.all()
+
+        local_names = MahilaPratinidhiForm.objects.filter(district_id=self.kwargs.get('district_id'))
+
+        for lists in local_names:
+            try:
+                names['name'] = lists.english_name
+            except:
+                names['name'] = lists.name
+
+            names['id'] = lists.pk
+            names['models'] = lists.__class__.__name__
+            try:
+                names['district'] = lists.district_id
+
+            except:
+                pass
+            name_list.append(dict(names))
+
+        json_list = json.dumps(name_list)
+
         forms = MahilaPratinidhiForm.objects.filter(district_id=self.kwargs.get('district_id'))
         district_id = self.kwargs.get('district_id')
-        return render(request, self.template_name, {'forms':forms, 'district_id':district_id})
+        return render(request, self.template_name, {'forms':forms, 'district_id':district_id, 'districts':district, 'names':json_list})
 
 
 class LocalMahilaPratinidhiDetail(DetailView):
@@ -146,9 +184,31 @@ class ProvinceView(ListView):
     template_name = "public/lists.html"
     
     def get(self, request, *args, **kwargs):
+        names = {}
+        name_list = []
+        provinces = Province.objects.all()
+
+        province_names = ProvinceMahilaPratinidhiForm.objects.filter(province_id=self.kwargs.get('province_id'))
+
+        for lists in province_names:
+            try:
+                names['name'] = lists.english_name
+            except:
+                names['name'] = lists.name
+
+            names['id'] = lists.pk
+            names['models'] = lists.__class__.__name__
+            try:
+                names['province_id'] = lists.province_id
+
+            except:
+                pass
+            name_list.append(dict(names))
+        json_list = json.dumps(name_list)
+        clicked = self.kwargs.get('clicked')
         forms = ProvinceMahilaPratinidhiForm.objects.filter(province_id=self.kwargs.get('province_id'))
         province_id = self.kwargs.get('province_id')
-        return render(request, self.template_name, {'forms': forms, 'province_id':province_id})
+        return render(request, self.template_name, {'forms': forms, 'province_id':province_id, 'provinces':provinces, 'names':json_list, 'clicked':clicked})
 
 
 class ProvincialMahilaPratinidhiDetail(DetailView):
@@ -156,6 +216,25 @@ class ProvincialMahilaPratinidhiDetail(DetailView):
 
     def get(self, request, *args, **kwargs):
         form = ProvinceMahilaPratinidhiForm.objects.get(id=self.kwargs.get('pk'))
+        return render(request, self.template_name, {'form':form})
+
+
+class MahilaDetail(DetailView):
+    template_name = 'public/detail.html'
+
+    def get(self, request, *args, **kwargs):
+        if RastriyaShava.objects.filter(id=self.kwargs.get('pk')):
+            form = RastriyaShava.objects.get(id=self.kwargs.get('pk'))
+
+        elif PratinidhiShava.objects.filter(id=self.kwargs.get('pk')):
+            form = PratinidhiShava.objects.get(id=self.kwargs.get('pk'))
+
+        elif ProvinceMahilaPratinidhiForm.objects.filter(id=self.kwargs.get('pk')):
+            form = ProvinceMahilaPratinidhiForm.objects.get(id=self.kwargs.get('pk'))
+
+        else:
+            form = MahilaPratinidhiForm.objects.get(id=self.kwargs.get('pk'))
+        
         return render(request, self.template_name, {'form':form})
 
 
@@ -180,51 +259,53 @@ class DataVisualize(TemplateView):
 
 
     def get(self, request, *args, **kwargs):
-        local = MahilaPratinidhiForm.objects.all()
+        # local = MahilaPratinidhiForm.objects.all()
         national = RastriyaShava.objects.all()
         pratinidhi = PratinidhiShava.objects.all()
         provincial = ProvinceMahilaPratinidhiForm.objects.all()
-        total = local.count() + national.count() + pratinidhi.count() + provincial.count()
+        # total = local.count() + national.count() + pratinidhi.count() + provincial.count()
+        total = national.count() + pratinidhi.count() + provincial.count()
+
 
         married = 0
         graduate = 0
         direct = 0
 
-        for mahila in local:
-            if mahila.marital_status == 'Married' or mahila.marital_status == 'विवाहित':
-                married = married + 1
+        # for mahila in local:
+        #     if mahila.marital_status == 'Married' or mahila.marital_status == 'विवाहित':
+        #         married = married + 1
             
-            if mahila.educational_qualification == 'Graduate' or 'स्नातक' in mahila.educational_qualification:
-                graduate = graduate + 1
+        #     if mahila.educational_qualification == 'Graduate' or 'स्नातक' in mahila.educational_qualification:
+        #         graduate = graduate + 1
             
         for mahila in national:
             if mahila.marital_status == 'Married' or mahila.marital_status == 'विवाहित':
                 married = married + 1
             
-            if mahila.educational_qualification == 'Graduate' or 'स्नातक' in mahila.educational_qualification:
+            if mahila.educational_qualification == 'Graduate':
                 graduate = graduate + 1
             
-            if mahila.nirwachit_prakriya == 'Directly Elected' or mahila.nirwachit_prakriya == 'निर्वाचित':
+            if mahila.nirwachit_prakriya == 'Directly Elected':
                 direct = direct + 1
             
         for mahila in pratinidhi:
             if mahila.marital_status == 'Married' or mahila.marital_status == 'विवाहित':
                 married = married + 1
             
-            if mahila.educational_qualification == 'Graduate' or 'स्नातक' in mahila.educational_qualification:
+            if mahila.educational_qualification == 'Graduate':
                 graduate = graduate + 1
             
-            if mahila.nirwachit_prakriya == 'Directly Elected' or mahila.nirwachit_prakriya == 'निर्वाचित':
+            if mahila.nirwachit_prakriya == 'Directly Elected':
                 direct = direct + 1
         
         for mahila in provincial:
             if mahila.marital_status == 'Married' or mahila.marital_status == 'विवाहित':
                 married = married + 1
             
-            if mahila.educational_qualification == 'Graduate' or 'स्नातक' in mahila.educational_qualification:
+            if mahila.educational_qualification == 'Graduate':
                 graduate = graduate + 1
             
-            if mahila.nirwachit_prakriya == 'Directly Elected' or mahila.nirwachit_prakriya == 'निर्वाचित':
+            if mahila.nirwachit_prakriya == 'Directly Elected':
                 direct = direct + 1
 
         return render(request, self.template_name, {'total':total, 'married':married, 'graduate':graduate, 'direct':direct})
@@ -235,8 +316,13 @@ class NewsView(TemplateView):
 
     def get(self, request, *args, **kwargs):
         news = News.objects.get(id=self.kwargs.get('pk'))
-        latest_news = News.objects.latest()
-        print(latest_news)
+
+        #for latest news list
+        some_day_last_week = timezone.now().date() - timedelta(days=7)
+        monday_of_last_week = some_day_last_week - timedelta(days=(some_day_last_week.isocalendar()[2] - 1))
+        monday_of_this_week = monday_of_last_week + timedelta(days=7)
+        latest_news = News.objects.filter(date__gte=monday_of_last_week)
+        
         return render(request, self.template_name, {'news':news, 'latest_news': latest_news})
 
 
@@ -255,18 +341,47 @@ def read_view(request, ):
 class Detail(TemplateView):
     template_name = 'public/lists.html'
 
-class callRequestView(TemplateView):
-    template_name = 'login.html'
 
-    def get(self, request, *args, **kwargs):
-        try:
-            if request.user.is_authenticated():
-                email = EmailMessage('Call Request', 'This user has made the call request.',
-                                         to=['admin@example.com'], from_email=request.user.email)
-                email.send()
-        except:
-            print("Please login first!")
-        return render(request, self.template_name)
+def callRequestView(request, *args, **kwargs):
+    if RastriyaShava.objects.get(pk=kwargs.get('pk')):
+        mahila = RastriyaShava.objects.get(pk=kwargs.get('pk'))
+
+    elif PratinidhiShava.objects.get(pk=kwargs.get('pk')):
+        mahila = PratinidhiShava.objects.get(pk=kwargs.get('pk'))
+
+    elif ProvinceMahilaPratinidhiForm.objects.get(pk=kwargs.get('pk')):
+        mahila = ProvinceMahilaPratinidhiForm.objects.get(pk=kwargs.get('pk'))
+
+    else:
+        mahila = MahilaPratinidhiForm.objects.get(pk=kwargs.get('pk'))
+
+
+    if request.user.is_authenticated:
+        email = EmailMessage('Call Request', request.user.username+"has made call request to "+ mahila.name ,
+                                         to=['akshya.shrestha7402@gmail.com'])
+        email.send()
+        return HttpResponseRedirect('/explore/general')
+    else:
+        print("Please login first!")
+        return render(request, "login.html")
+
+
+
+
+# class NameAutocomplete(autocomplete.Select2QuerySetView):
+#     def get_queryset(self):
+#         qs = RastriyaShava.objects.all()
+#
+#         if self.q:
+#             qs = qs.filter(english_name_istartswith=self.q)
+#
+#         return qs
+
+
+
+
+
+
 
 # class SearchDetail(DetailView):
 #     template_name = 'public/detail.html'
@@ -293,6 +408,7 @@ class callRequestView(TemplateView):
 
 #         if national is not None:
 #             return render(self.request, self.template_name, {'forms': model})
+
 
 # def searchposts(request):
 #     if request.method == 'GET':

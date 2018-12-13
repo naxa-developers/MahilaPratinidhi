@@ -21,7 +21,7 @@
                     {% if form.image %}
                     <img src="{{MEDIA_URL}} {{form.image.url}}" alt="profileImage">
                     {% else %}
-                    <img src="{% static 'public/image/mahilalogo.png' %}" style="width: 500px;height: 500px;" alt="profileImage">
+                    <img src="{% static 'public/image/pro1.jpg' %}" alt="profileImage">
                     {% endif %}
                 </div>
 
@@ -32,7 +32,12 @@
                     <div class="detail">
                         <div class="detailTitles">
                             <p class="pheader">
-                                <span class="Ptitle"> {{ form.english_name|title }}</span>
+                                <span class="Ptitle"> {% if form.english_name %}
+                                    {{ form.english_name|title }}
+                                    {% else %}
+                                    {{ form.name|title }}
+                                    {% endif %}
+                                </span>
                                 <span class="flag">
                                     <img src="{% static 'public/image/partyflag.png' %}" alt="">
                                 </span>
@@ -126,7 +131,7 @@
                                         </span>
 
                                         <span class="contactIfo">
-                                            <a href="https://www.facebook.com/{{form.social_networking_medium}}">Find on Social Media</a>
+                                            <a href="https://www.facebook.com/{{form.social_networking_medium}}" target="_blank">Find on Social Media</a>
                                         </span>
                                     </div>
                                     {% endif %}
@@ -291,7 +296,7 @@
                 <div class="col-xl-3 col-lg-4 col-md-6 reveal" data-sr-id="12" style="visibility: visible; opacity: 1; transition: opacity 0.4s cubic-bezier(0.5, 0, 0, 1) 0.05s;">
                     <a href="{% url 'public:news' news.pk %}">
                     <div class="pImageholder prelative">
-                        <img src="{% static 'public/image/p1.jpg' %}" alt="user">
+                        <img src="{% static 'public/image/p1.jpg' %}" class="cropNews" alt="user">
                         <div class="holderOverlay"></div>
                         <div class="content">
                             <div class="tags"> {{ form.name }} in News</div>
