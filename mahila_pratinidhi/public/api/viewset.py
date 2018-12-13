@@ -11,7 +11,8 @@ from itertools import chain
 from rest_framework.decorators import api_view
 from rest_framework.viewsets import ModelViewSet, ReadOnlyModelViewSet
 from rest_framework.views import APIView
-from .serializers import RastriyaShavaSerializer, ProvinceSerializer, LocalMahilaSerializer, PratinidhiShavaSerializer, AgeSerializers, DistrictsSerializer
+from .serializers import RastriyaShavaSerializer, ProvinceSerializer, LocalMahilaSerializer, \
+PratinidhiShavaSerializer, AgeSerializers, DistrictsSerializer, HlcitSerializer
 from core.models import RastriyaShava, PratinidhiShava, ProvinceMahilaPratinidhiForm, MahilaPratinidhiForm, Province, District
 from django.db.models import Avg, Count, Sum
 
@@ -1308,4 +1309,11 @@ class DistrictsViewSet(ReadOnlyModelViewSet):
         province_query = self.request.query_params.get('province_id', None)
         if province_query is not None:
             queryset = queryset.filter(province=province_query)
+        return queryset
+
+class HlcitViewSet(ReadOnlyModelViewSet):
+    serializer_class = HlcitSerializer
+
+    def get_queryset(self, *args, **kwargs):
+        queryset = RastriyaShava.objects.values('name').filter(hlcit_code=self.kwargs['hlcit'])
         return queryset

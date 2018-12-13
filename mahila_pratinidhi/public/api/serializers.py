@@ -82,3 +82,9 @@ class DistrictsSerializer(serializers.ModelSerializer):
         exclude = ('elected_women', )
 
 
+class HlcitSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = RastriyaShava
+        fields = ('name', )
+
