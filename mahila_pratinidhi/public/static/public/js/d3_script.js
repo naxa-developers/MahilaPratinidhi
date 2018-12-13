@@ -1,8 +1,11 @@
 var base_url="http://mahilapratinidhi.naxa.com.np";
 // var base_url="http://localhost:8000";
+
+
 $(".dataVariable").on("click",function(){
 
   var variable = $(this).text().toLowerCase().replace(" ","_");
+
   $.get(base_url+'/api/'+ variable +'/',function(data){
 
 

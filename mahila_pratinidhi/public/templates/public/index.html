@@ -14,6 +14,10 @@
   <link rel="stylesheet" href="https://cdn.klokantech.com/mapbox-gl-js/v0.43.0/mapbox-gl.css" />
 
   <script src= "{% static 'public/js/leaflet.ajax.min.js' %}" ></script>
+  <script src= "https://unpkg.com/leaflet.markercluster@1.4.1/dist/" ></script>
+  <script src= "{% static 'public/js/leaflet.markercluster.js' %}" ></script>
+  <link rel="stylesheet" href="{% static 'public/css/MarkerCluster.css'%}" />
+  <link rel="stylesheet" href="{% static 'public/css/MarkerCluster.Default.css'%}" />
 
 
 
@@ -36,7 +40,7 @@
           /* border: 1px solid white; */
           /* width:auto !important; */
           font-size: 12px;
-          background:orange;
+          background:rgba(110, 204, 57, 1);
           border:5px solid rgba(255,255,255,0.5);
           color:black;
           font-weight:bold;
@@ -96,7 +100,7 @@
                     </div>
                 </div>
                 <div class="province">
-                    <span id="selectedValue">Provience</span>
+                    <span id="selectedValue">province</span>
                     <span class="circlefilter">
                         <i class=" show arrow fa fa-angle-down"></i>
                         <i class="close fa fa-times"></i>
@@ -107,10 +111,15 @@
                             <div class="">
                                 <label for="" class="st">State</label>
                                 <select class="sel1" name="" id="">
-                                    <option value="national">NATIONAL</option>
-                                    <option value="federal">FEDERAL</option>
-                                    <option value="provincial">PROVINCIAL</option>
-                                    <option value="local">LOCAL</option>
+                                  <option value="">Provinces</option>
+                                    <option value="">Province 1</option>
+                                    <option value="">Province 2</option>
+                                    <option value="">Province 3</option>
+                                    <option value="">Province 4</option>
+                                    <option value="">Province 5</option>
+                                    <option value="">Province 6</option>
+                                    <option value="">Province 7</option>
+
                                 </select>
                             </div>
                             <div class="">
@@ -172,11 +181,11 @@
                                 <div class="text">PROVINCIAL ASSEMBLY
                                 </div>
                             </li>
-                            <!--<li>-->
-                                <!--<img src="{% static 'public/image/government.svg' %}" alt="">-->
-                                <!--<div class="text">LOCAL LEVEL GOVERNMENT-->
-                                <!--</div>-->
-                            <!--</li>-->
+                            <!-- <li id="local-all">
+                                <img src="{% static 'public/image/government.svg' %}" alt="">
+                                <div class="text">LOCAL LEVEL GOVERNMENT
+                                </div>
+                            </li> -->
                         </ul>
                         <div class="text-center">
                             <button class="btn btn-round revbtn tbtn mtb50"> MAP VISUALIZATION
@@ -380,6 +389,9 @@
                     scrollTop: ro.top-100
                 }, 800);
                 $(".selectOverlay").toggleClass("active");
+
+                $(".selectOverlay").css("z-index","401");
+
               $(".circlefilter ").toggleClass("circleActive");
                 return false;
    });
@@ -422,7 +434,7 @@
             });
 
             function reset() {
-                $("#selectedValue").text("Select Provience");
+                $("#selectedValue").text("Select Province");
                 first = "";
                 second = "";
                 third = "";

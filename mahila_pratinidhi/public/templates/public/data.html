@@ -16,6 +16,10 @@
     shape-rendering: crispEdges;
   }
 
+  .buttons{
+    color:blue;
+  }
+
 
 
   .simple-bar{
@@ -165,10 +169,10 @@ text.simple-label {
                                     </div>
                                     <ul class="nav nav-pills widthScrol">
                                         <li class="active">
-                                            <a href="#" class="dataVariable" data-toggle="tab">Ethnicity</a>
+                                            <a href="#" class="dataVariable" data-toggle="tab">Age</a>
                                         </li>
                                         <li>
-                                            <a href="#" class="dataVariable" data-toggle="tab">Age</a>
+                                            <a href="#" class="dataVariable" data-toggle="tab">Ethnicity</a>
                                         </li>
                                         <li>
                                             <a href="#" class="dataVariable" data-toggle="tab">Mother Tongue</a>
@@ -330,6 +334,7 @@ text.simple-label {
                 }
             });
         </script>
+        <script type= "text/babel" src="{% static 'public/js/saveSvgAsPng.js' %} "></script>
         <script type= "text/babel" src="{% static 'public/js/bar.js' %} "></script>
         <script type= "text/babel" src="{% static 'public/js/stacked.js' %} "></script>
         <script type= "text/babel" src="{% static 'public/js/d3_app.js' %} "></script>
