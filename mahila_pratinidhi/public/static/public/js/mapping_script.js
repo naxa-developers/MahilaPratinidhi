@@ -74,6 +74,11 @@ var customOptions =
     'autoClose': false
     }
 
+    function locateUser() {
+        this.map.locate({setView : true});
+    }
+
+
 function update_popup(data){
   customPopup = "National:"+data[0]+"<br/>Federal:"+data[1]+"<br/>Provincial:"+data[2]+"<br/>Local:"+data[3]+"<br/>";
 
@@ -120,17 +125,32 @@ return marker_content[xx];
 
 
 function zoomToFeature(e){
-
+ var properties_object = e.target.feature.properties;
   total_instance = get_total_instance(e);
   map.fitBounds(e.target.getBounds(),{padding:[25,25]});
-  if(last_layer[0]){
-      map.removeLayer(last_layer[0]);
-      last_layer.pop();
+
+if(Object.keys(properties_object).length=="1"){
+
+  if(last_layer.length){
+    last_layer.map(function(layer){
+      map.removeLayer(layer);
+    });
+      last_layer=[];
 
   }
 
+}
+if(Object.keys(properties_object).length=="8"){
 
- var properties_object = e.target.feature.properties;
+
+    if(last_layer[1]){
+        map.removeLayer(last_layer[1]);
+        last_layer.pop();
+
+    }
+
+}
+
 
 
  if(Object.keys(properties_object).length=="1"){
@@ -181,8 +201,6 @@ function returnSum(value){
 
 function onEachFeature(feature,layer){
 
-  console.log("feature",feature);
-  console.log("layer",layer);
 
 
   Choropleth(feature,layer);
@@ -220,7 +238,7 @@ function circular_marker(center,number,name){
 
       // you can set .my-div-icon styles in CSS
       var marker= L.marker(center, {icon: myIcon}).addTo(map);
-      console.log("marker",marker)
+
 
       marker_array.push(marker);
           //.bindPopup('divIcon CSS3 popup. <br> Supposed to be easily stylable.');
@@ -244,6 +262,12 @@ function get_name(feature){
   else if (Object.keys(properties_object).length=="8"){
     var xx = feature.properties['FIRST_DIST'].charAt(0).toUpperCase()+feature.properties['FIRST_DIST'].slice(1).toLowerCase();
   }
+
+  else if (Object.keys(properties_object).length=="10"){
+    var xx = feature.properties['FIRST_GaPa'].charAt(0).toUpperCase()+feature.properties['FIRST_GaPa'].slice(1).toLowerCase();
+  }
+
+
   return xx;
 
 }
@@ -279,12 +303,18 @@ function getColor(d) {
 function Choropleth(feature,layer){
 
   var properties_object = feature.properties;
+
   if(Object.keys(properties_object).length=="1"){
     var xx = "Province "+ feature.properties.Province;
   }
 
   else if (Object.keys(properties_object).length=="8"){
     var xx = feature.properties['FIRST_DIST'].charAt(0).toUpperCase()+feature.properties['FIRST_DIST'].slice(1).toLowerCase();
+  }
+
+  else if (Object.keys(properties_object).length=="10"){
+    var xx = feature.properties['FIRST_GaPa'].charAt(0).toUpperCase()+feature.properties['FIRST_GaPa'].slice(1).toLowerCase();
+    return false;
   }
 
 
@@ -344,7 +374,7 @@ function percentage(array){
 
 $("#national-all").on('click',function(){
 
-console.log(marker_array);
+//console.log(marker_array);
 marker_content =data_summary_all['national'][0];
 for( var i=0; i< marker_array.length;i++){
   if(marker_array[i]._icon == null){
@@ -366,7 +396,7 @@ for( var i=0; i< marker_array.length;i++){
 });
 
 $("#federal-all").on('click',function(){
-console.log(marker_array);
+//console.log(marker_array);
 marker_content =data_summary_all['federal'][0];
 
 for( var i=0; i< marker_array.length;i++){
@@ -388,13 +418,13 @@ else{
 });
 
 $("#provincial-all").on('click',function(){
-console.log(marker_array);
+//console.log(marker_array);
 marker_content =data_summary_all['provincial'][0];
 for( var i=0; i< marker_array.length;i++){
   if(marker_array[i]._icon == null){
   }
   else{
-    console.log(marker_array[i]._icon);
+    //console.log(marker_array[i]._icon);
     var key = marker_array[i]._icon.firstChild.id;
     var marker_value = marker_content[key.replace("_"," ")]
     if(marker_value == null){
@@ -409,13 +439,13 @@ for( var i=0; i< marker_array.length;i++){
 });
 
 $("#local-all").on('click',function(){
-console.log(marker_array);
+//console.log(marker_array);
 marker_content =data_summary_all['local'][0];
 for( var i=0; i< marker_array.length;i++){
   if(marker_array[i]._icon == null){
   }
   else {
-    console.log(marker_array[i]._icon);
+    //console.log(marker_array[i]._icon);
 
     var key = marker_array[i]._icon.firstChild.id;
     var marker_value = marker_content[key.replace("_"," ")];
