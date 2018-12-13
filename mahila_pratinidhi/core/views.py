@@ -94,6 +94,67 @@ class RastriyaShavaUloadView(UserPassesTestMixin, TemplateView):
 		return self.request.user.is_superuser
 
 
+# def rastriya_shava_file_upload(request):
+# 	import pandas as pd
+# 	try:
+# 		request_files = request.FILES.getlist('file')
+# 		files = [pd.read_excel(filename).fillna(value='') for filename in request_files]
+# 		print(files)
+# 		for df in files:
+# 			total = df['नाम'].count()
+# 			for row in range(0, total):
+# 				# import ipdb; ipdb.set_trace()
+
+# 				obj, created =RastriyaShava.objects.get_or_create(
+# 					#province=Province.objects.get(name=Province.objects.get(name=df['Province'][0])),
+# 					name=df['नाम'][row],
+# 					english_name=df['English Name'][row],
+# 					date_of_birth=df['जन्ममिती'][row])
+					
+# 				obj.age=df['उमेर'][row]
+# 				obj.mothers_name=df['आमाको नाम'][row]
+# 				obj.fathers_name=df['बाबुको नाम'][row]
+# 				obj.marital_status=df['बैवाहिक स्थिति'][row]
+# 				obj.husbands_name=df['श्रीमानको नाम'][row]
+# 				obj.caste=df['जातियता'][row]
+# 				obj.mother_tongue=df['मातृभाषा'][row]
+# 				obj.educational_qualification=df['औपचारिक शैक्षिक योग्यता'][row]
+# 				obj.subject=df['बिषय'][row]
+# 				obj.permanent_address=df['ठेगाना (स्थायी) :  जिल्ला'][row]
+# 				obj.permanent_gapa_napa=df['गाउँपालिका/नगरपालिका/उप-महानगरपालिका/महानगरपालिका'][row]
+# 				obj.permanent_ward_no=df['वडा नं'][row]
+# 				obj.permanent_tole=df['टोल'][row]
+# 				obj.temporary_address=df['ठेगाना (अस्थायी) जिल्ला'][row]
+# 				obj.temporary_gapa_napa=df['गाउँपालिका/नगरपालिका/उप-महानगरपालिका/महानगरपालिका '][row]
+# 				obj.temporary_ward_no=df['वडा नं'][row]
+# 				obj.temporary_tole=df['टोल'][row]
+# 				obj.mobile=df['मोवाइल'][row]
+# 				obj.contact_number=df['सम्पर्क नं'][row]
+# 				obj.email=df['इमेल'][row]
+# 				obj.social_networking_medium=df['सामाजिक सन्जालका माध्यम (छ भने):'][row]
+# 				obj.nirwachit_prakriya=df['निर्वाचित प्रक्रिया'][row]
+# 				obj.nirwachit_padh=df['निर्वाचित पद'][row]
+# 				obj.pichidiyeko_chhetra_ho_hoina=df['पिछडिएको क्षेत्र हो कि होइन'][row]
+# 				obj.nirwachit_chhetrako_bibaran=df['निर्वाचित क्षेत्रको विवरण'][row]
+# 				obj.nirwachit_vayeko_chhetra_aafno_thegana=df['निर्वाचित भएको क्षेत्र आफ्नो अस्थायी/ स्थायी ठेगाना भन्दा फरक'][row]
+# 				obj.party_name=df['पार्टीको विवरण: पार्टीको नाम'][row]
+# 				obj.party_joined_date=df['पाटींमा संलग्न भएको मिति'][row]
+# 				obj.pramukh_jimmewari=df['प्रमुख जिम्मेवारी'][row]
+# 				obj.nirwachit_chetra_pratiko_pratibadhata=df['निर्वाचित क्षेत्र प्रतिको प्रतिबद्धता'][row]
+# 				obj.aaja_vanda_agadi_chunab_ladnu_vayeko_chha=df['आज भन्दा अघि चुनाब लड्नुभएको छ?'][row]
+# 				obj.prapta_maat_sankhya=df['प्राप्त मत संख्या'][row]
+# 				obj.samlagna_sang_sastha_samuha=df['सलग्न संघ, सस्था , समूह'][row]
+# 				obj.samitima_vumika=df['समितिमा पद'][row]
+# 				obj.samlagna_samsadiya_samiti=df['संलग्न समिति'][row]
+# 				obj.save()
+# 		messages.success(request, 'Successfully loaded data from files')
+# 		return HttpResponseRedirect('/cms/rastriya-shava-upload')
+# 	except Exception as e:
+# 		print(e)
+# 		messages.error(request, "File Format not supported")
+# 		return HttpResponseRedirect('/cms/rastriya-shava-upload')
+
+
 def rastriya_shava_file_upload(request):
 	import pandas as pd
 	try:
@@ -101,58 +162,99 @@ def rastriya_shava_file_upload(request):
 		files = [pd.read_excel(filename).fillna(value='') for filename in request_files]
 		print(files)
 		for df in files:
-			total = df['नाम'].count()
-			for row in range(0, total):
+			total = df['Name_EN'].count()
+			for row in range(1, total+1):
 				# import ipdb; ipdb.set_trace()
 
 				obj, created =RastriyaShava.objects.get_or_create(
-					#province=Province.objects.get(name=Province.objects.get(name=df['Province'][0])),
-					name=df['नाम'][row],
-					english_name=df['English Name'][row],
-					date_of_birth=df['जन्ममिती'][row])
-					
-				obj.age=df['उमेर'][row]
-				obj.mothers_name=df['आमाको नाम'][row]
-				obj.fathers_name=df['बाबुको नाम'][row]
-				obj.marital_status=df['बैवाहिक स्थिति'][row]
-				obj.husbands_name=df['श्रीमानको नाम'][row]
-				obj.caste=df['जातियता'][row]
-				obj.mother_tongue=df['मातृभाषा'][row]
-				obj.educational_qualification=df['औपचारिक शैक्षिक योग्यता'][row]
-				obj.subject=df['बिषय'][row]
-				obj.permanent_address=df['ठेगाना (स्थायी) :  जिल्ला'][row]
-				obj.permanent_gapa_napa=df['गाउँपालिका/नगरपालिका/उप-महानगरपालिका/महानगरपालिका'][row]
-				obj.permanent_ward_no=df['वडा नं'][row]
-				obj.permanent_tole=df['टोल'][row]
-				obj.temporary_address=df['ठेगाना (अस्थायी) जिल्ला'][row]
-				obj.temporary_gapa_napa=df['गाउँपालिका/नगरपालिका/उप-महानगरपालिका/महानगरपालिका '][row]
-				obj.temporary_ward_no=df['वडा नं'][row]
-				obj.temporary_tole=df['टोल'][row]
-				obj.mobile=df['मोवाइल'][row]
-				obj.contact_number=df['सम्पर्क नं'][row]
-				obj.email=df['इमेल'][row]
-				obj.social_networking_medium=df['सामाजिक सन्जालका माध्यम (छ भने):'][row]
-				obj.nirwachit_prakriya=df['निर्वाचित प्रक्रिया'][row]
-				obj.nirwachit_padh=df['निर्वाचित पद'][row]
-				obj.pichidiyeko_chhetra_ho_hoina=df['पिछडिएको क्षेत्र हो कि होइन'][row]
-				obj.nirwachit_chhetrako_bibaran=df['निर्वाचित क्षेत्रको विवरण'][row]
-				obj.nirwachit_vayeko_chhetra_aafno_thegana=df['निर्वाचित भएको क्षेत्र आफ्नो अस्थायी/ स्थायी ठेगाना भन्दा फरक'][row]
-				obj.party_name=df['पार्टीको विवरण: पार्टीको नाम'][row]
-				obj.party_joined_date=df['पाटींमा संलग्न भएको मिति'][row]
-				obj.pramukh_jimmewari=df['प्रमुख जिम्मेवारी'][row]
-				obj.nirwachit_chetra_pratiko_pratibadhata=df['निर्वाचित क्षेत्र प्रतिको प्रतिबद्धता'][row]
-				obj.aaja_vanda_agadi_chunab_ladnu_vayeko_chha=df['आज भन्दा अघि चुनाब लड्नुभएको छ?'][row]
-				obj.prapta_maat_sankhya=df['प्राप्त मत संख्या'][row]
-				obj.samlagna_sang_sastha_samuha=df['सलग्न संघ, सस्था , समूह'][row]
-				obj.samitima_vumika=df['समितिमा पद'][row]
-				obj.samlagna_samsadiya_samiti=df['संलग्न समिति'][row]
+					province=Province.objects.get(name=df['Province'][row]),
+					name=df['Name_NE'][row],
+					english_name=df['Name_EN'][row],
+					date_of_birth=df['Date of Birth_NE'][row])
+				
+				if df['Age_EN'][row]:
+					obj.age=df['Age_EN'][row]
+				else:
+					obj.age=None	
+				if df['Age_NE'][row]:
+					obj.age_ne_NP=df['Age_NE'][row]
+				else:
+					obj.age_ne_NP=None			
+				# obj.age_ne_NP=int(df['Age_NE'][row])
+				obj.mothers_name=df["Mother's.Name_EN"][row]
+				obj.mothers_name_ne_NP=df["Mother's.Name_NE"][row]
+				obj.fathers_name=df["Father's.Name_EN"][row]
+				obj.fathers_name_ne_NP=df["Father's.Name_NE"][row]
+				obj.marital_status=df['Maritial.Status_EN'][row]
+				obj.marital_status_ne_NP=df['Maritial.Status_NE'][row]
+				obj.husbands_name=df["Spouse's.Name_EN"][row]
+				obj.husbands_name_ne_NP=df["Spouse's.Name_NE"][row]
+				obj.caste=df['Ethnicity_EN'][row]
+				obj.caste_ne_NP=df['Ethnicity_NE'][row]
+				obj.mother_tongue=df['Mother.Tongue_EN'][row]
+				obj.mother_tongue_ne_NP=df['Mother.Tongue_NE'][row]
+				obj.educational_qualification=df['Formal.Education_EN'][row]
+				obj.educational_qualification_ne_NP=df['Formal.Education_NE'][row]
+				obj.subject=df['Degree.Name_EN'][row]
+				obj.subject_ne_NP=df['Degree.Name_NE'][row]
+				obj.permanent_address=df['Address (Permanent: District)_EN'][row]
+				obj.permanent_address_ne_NP=df['Address (Permanent: District)_NE'][row]
+				obj.permanent_gapa_napa=df['Village / Municipality / Sub-Metropolitan Municipality_EN'][row]
+				obj.permanent_gapa_napa_ne_NP=df['Village / Municipality / Sub-Metropolitan Municipality_NE'][row]
+				obj.permanent_ward_no=df['Ward_EN'][row]
+				obj.permanent_ward_no_ne_NP=df['Ward_NE'][row]
+				obj.permanent_tole=df['Street_EN'][row]
+				obj.permanent_tole_ne_NP=df['Street_NE'][row]
+				obj.temporary_address=df['Address (Temporary: District)_EN'][row]
+				obj.temporary_address_ne_NP=df['Address (Temporary: District)_NE'][row]
+				obj.temporary_gapa_napa=df['Temporary_Village / Municipality / Sub-Metropolitan Municipality_EN'][row]
+				obj.temporary_gapa_napa_ne_NP=df['Temporary_Village / Municipality / Sub-Metropolitan Municipality_NE'][row]
+				obj.temporary_ward_no=df['Temporary_Ward_EN'][row]
+				obj.temporary_ward_no_ne_NP=df['Temporary_Ward_NE'][row]
+				obj.temporary_tole=df['Temporary_Street_EN'][row]
+				obj.temporary_tole_ne_NP=df['Temporary_Street_NE'][row]
+				obj.mobile=df['Mobile_EN'][row]
+				obj.mobile_ne_NP=df['Mobile_NE'][row]
+				obj.contact_number=df['Contact.No_EN'][row]
+				obj.contact_number_ne_NP=df['Contact.No_EN'][row]
+				obj.email=df['Email'][row]
+				obj.social_networking_medium=df['Social Media_EN'][row]
+				obj.social_networking_medium_ne_NP=df['Social Media_EN'][row]
+				obj.nirwachit_prakriya=df['Election.Type_EN'][row]
+				obj.nirwachit_prakriya_ne_NP=df['Election.Type_NE'][row]
+				obj.nirwachit_padh=df['Elected.Post_EN'][row]
+				obj.nirwachit_padh_ne_NP=df['Elected.Post_NE'][row]
+				obj.pichidiyeko_chhetra_ho_hoina=df['Is your area listed in Government of Nepal’s backward area?_EN'][row]
+				obj.pichidiyeko_chhetra_ho_hoina_ne_NP=df['Is your area listed in Government of Nepal’s backward area?_NE'][row]
+				obj.nirwachit_chhetrako_bibaran=df['Description of Elected Area_EN'][row]
+				obj.nirwachit_chhetrako_bibaran_ne_NP=df['Description of Elected Area_NE'][row]
+				obj.nirwachit_vayeko_chhetra_aafno_thegana=df['Is the elected constituency different than the address of the representative (Yes/No)?_EN'][row]
+				obj.nirwachit_vayeko_chhetra_aafno_thegana_ne_NP=df['Is the elected constituency different than the address of the representative (Yes/No)?_NE'][row]
+				obj.party_name=df['Name.of.Party_EN'][row]
+				obj.party_name_ne_NP=df['Name.of.Party_NE'][row]
+				obj.party_joined_date=df['Date.of.affiliation.with.Party_EN'][row]
+				obj.party_joined_date_ne_NP=df['Date.of.affiliation.with.Party_NE'][row]
+				obj.pramukh_jimmewari=df['Major.Respnsibility_EN'][row]
+				obj.pramukh_jimmewari_ne_NP=df['Major.Respnsibility_NE'][row]
+				obj.nirwachit_chetra_pratiko_pratibadhata=df['Political.Commitment_EN'][row]
+				obj.nirwachit_chetra_pratiko_pratibadhata_ne_NP=df['Political.Commitment_NE'][row]
+				obj.aaja_vanda_agadi_chunab_ladnu_vayeko_chha=df['Have.you.participated.in.an.election.before?_EN'][row]
+				obj.aaja_vanda_agadi_chunab_ladnu_vayeko_chha_ne_NP=df['Have.you.participated.in.an.election.before?_NE'][row]
+				obj.prapta_maat_sankhya=df['Number.of.votes.received_EN'][row]
+				obj.prapta_maat_sankhya_ne_NP=df['Number.of.votes.received_NE'][row]
+				obj.samlagna_sang_sastha_samuha=df['Details.of.the.recent.union, organization, group.you.are.engaged.with?_EN'][row]
+				obj.samlagna_sang_sastha_samuha_ne_NP=df['Details.of.the.recent.union, organization, group.you.are.engaged.with?_NE'][row]
+				obj.samitima_vumika=df['Role.in.organization_EN'][row]
+				obj.samitima_vumika_ne_NP=df['Role.in.organization_NE'][row]
+				# obj.samlagna_samsadiya_samiti=df['संलग्न समिति'][row]
 				obj.save()
 		messages.success(request, 'Successfully loaded data from files')
 		return HttpResponseRedirect('/cms/rastriya-shava-upload')
 	except Exception as e:
-		print(e)
+		print(e.__class__.__name__ + " " + str(e))
 		messages.error(request, "File Format not supported")
 		return HttpResponseRedirect('/cms/rastriya-shava-upload')
+
 
 class PratinidhiShavaDashboardView(LoginRequiredMixin, UserPassesTestMixin, TemplateView):
 	template_name = 'core/pratinidhi_shava_mahila_pratinidhi_form_dashboard.html'
@@ -224,6 +326,66 @@ class PratinidhiShavaUloadView(UserPassesTestMixin, TemplateView):
 		return self.request.user.is_superuser
 
 
+# def pratinidhi_shava_file_upload(request):
+# 	import pandas as pd
+# 	try:
+# 		request_files = request.FILES.getlist('file')
+# 		files = [pd.read_excel(filename).fillna(value='') for filename in request_files]
+# 		print(files)
+# 		for df in files:
+# 			total = df['नाम'].count()
+# 			for row in range(0, total):
+
+# 				obj, created=PratinidhiShava.objects.get_or_create(
+# 					#province=Province.objects.get(name=Province.objects.get(name=df['Province'][0])),
+# 					name=df['नाम'][row],
+# 					english_name=df['English Name'][row],
+# 					date_of_birth=df['जन्ममिती'][row])
+
+# 				obj.age=df['उमेर'][row]
+# 				obj.mothers_name=df['आमाको नाम'][row]
+# 				obj.fathers_name=df['बाबुको नाम'][row]
+# 				obj.marital_status=df['बैवाहिक स्थिति'][row]
+# 				obj.husbands_name=df['श्रीमानको नाम'][row]
+# 				obj.caste=df['जातियता'][row]
+# 				obj.mother_tongue=df['मातृभाषा'][row]
+# 				obj.educational_qualification=df['औपचारिक शैक्षिक योग्यता'][row]
+# 				obj.subject=df['बिषय'][row]
+# 				obj.permanent_address=df['ठेगाना (स्थायी) :  जिल्ला'][row]
+# 				obj.permanent_gapa_napa=df['गाउँपालिका/नगरपालिका/उप-महानगरपालिका/महानगरपालिका'][row]
+# 				obj.permanent_ward_no=df['वडा नं'][row]
+# 				obj.permanent_tole=df['टोल'][row]
+# 				obj.temporary_address=df['ठेगाना (अस्थायी) जिल्ला'][row]
+# 				obj.temporary_gapa_napa=df['गाउँपालिका/नगरपालिका/उप-महानगरपालिका/महानगरपालिका '][row]
+# 				obj.emporary_ward_no=df['वडा नं'][row]
+# 				obj.temporary_tole=df['टोल'][row]
+# 				obj.mobile=df['मोवाइल'][row]
+# 				obj.contact_number=df['सम्पर्क नं'][row]
+# 				obj.email=df['इमेल'][row]
+# 				obj.social_networking_medium=df['सामाजिक सन्जालका माध्यम (छ भने):'][row]
+# 				obj.nirwachit_prakriya=df['निर्वाचित प्रक्रिया'][row]
+# 				obj.nirwachit_padh=df['निर्वाचित पद'][row]
+# 				obj.pichidiyeko_chhetra_ho_hoina=df['पिछडिएको क्षेत्र हो कि होइन'][row]
+# 				obj.nirwachit_chhetrako_bibaran=df['निर्वाचित क्षेत्रको विवरण'][row]
+# 				obj.nirwachit_vayeko_chhetra_aafno_thegana=df['निर्वाचित भएको क्षेत्र आफ्नो अस्थायी/ स्थायी ठेगाना भन्दा फरक'][row]
+# 				obj.party_name=df['पार्टीको विवरण: पार्टीको नाम'][row]
+# 				obj.party_joined_date=df['पाटींमा संलग्न भएको मिति'][row]
+# 				obj.pramukh_jimmewari=df['प्रमुख जिम्मेवारी'][row]
+# 				obj.nirwachit_chetra_pratiko_pratibadhata=df['निर्वाचित क्षेत्र प्रतिको प्रतिबद्धता'][row]
+# 				obj.aaja_vanda_agadi_chunab_ladnu_vayeko_chha=df['आज भन्दा अघि चुनाब लड्नुभएको छ?'][row]
+# 				obj.prapta_maat_sankhya=df['प्राप्त मत संख्या'][row]
+# 				obj.samlagna_sang_sastha_samuha=df['सलग्न संघ, सस्था , समूह'][row]
+# 				obj.samitima_vumika=df['समितिमा भूमिका'][row]
+# 				obj.samlagna_samsadiya_samiti=df['संलग्न संसदीय समिति'][row]
+# 				obj.save()
+# 		messages.success(request, 'Successfully loaded data from files')
+# 		return HttpResponseRedirect('/cms/pratinidhi-shava-upload')
+# 	except Exception as e:
+# 		print(e)
+# 		messages.error(request, "File Format not supported")
+# 		return HttpResponseRedirect('/cms/pratinidhi-shava-upload')
+
+
 def pratinidhi_shava_file_upload(request):
 	import pandas as pd
 	try:
@@ -231,58 +393,97 @@ def pratinidhi_shava_file_upload(request):
 		files = [pd.read_excel(filename).fillna(value='') for filename in request_files]
 		print(files)
 		for df in files:
-			total = df['नाम'].count()
-			for row in range(0, total):
+			total = df['Name_EN'].count()
+			for row in range(1, total+1):
+				# import ipdb; ipdb.set_trace()
 
-				obj, created=PratinidhiShava.objects.get_or_create(
-					#province=Province.objects.get(name=Province.objects.get(name=df['Province'][0])),
-					name=df['नाम'][row],
-					english_name=df['English Name'][row],
-					date_of_birth=df['जन्ममिती'][row])
-
-				obj.age=df['उमेर'][row]
-				obj.mothers_name=df['आमाको नाम'][row]
-				obj.fathers_name=df['बाबुको नाम'][row]
-				obj.marital_status=df['बैवाहिक स्थिति'][row]
-				obj.husbands_name=df['श्रीमानको नाम'][row]
-				obj.caste=df['जातियता'][row]
-				obj.mother_tongue=df['मातृभाषा'][row]
-				obj.educational_qualification=df['औपचारिक शैक्षिक योग्यता'][row]
-				obj.subject=df['बिषय'][row]
-				obj.permanent_address=df['ठेगाना (स्थायी) :  जिल्ला'][row]
-				obj.permanent_gapa_napa=df['गाउँपालिका/नगरपालिका/उप-महानगरपालिका/महानगरपालिका'][row]
-				obj.permanent_ward_no=df['वडा नं'][row]
-				obj.permanent_tole=df['टोल'][row]
-				obj.temporary_address=df['ठेगाना (अस्थायी) जिल्ला'][row]
-				obj.temporary_gapa_napa=df['गाउँपालिका/नगरपालिका/उप-महानगरपालिका/महानगरपालिका '][row]
-				obj.emporary_ward_no=df['वडा नं'][row]
-				obj.temporary_tole=df['टोल'][row]
-				obj.mobile=df['मोवाइल'][row]
-				obj.contact_number=df['सम्पर्क नं'][row]
-				obj.email=df['इमेल'][row]
-				obj.social_networking_medium=df['सामाजिक सन्जालका माध्यम (छ भने):'][row]
-				obj.nirwachit_prakriya=df['निर्वाचित प्रक्रिया'][row]
-				obj.nirwachit_padh=df['निर्वाचित पद'][row]
-				obj.pichidiyeko_chhetra_ho_hoina=df['पिछडिएको क्षेत्र हो कि होइन'][row]
-				obj.nirwachit_chhetrako_bibaran=df['निर्वाचित क्षेत्रको विवरण'][row]
-				obj.nirwachit_vayeko_chhetra_aafno_thegana=df['निर्वाचित भएको क्षेत्र आफ्नो अस्थायी/ स्थायी ठेगाना भन्दा फरक'][row]
-				obj.party_name=df['पार्टीको विवरण: पार्टीको नाम'][row]
-				obj.party_joined_date=df['पाटींमा संलग्न भएको मिति'][row]
-				obj.pramukh_jimmewari=df['प्रमुख जिम्मेवारी'][row]
-				obj.nirwachit_chetra_pratiko_pratibadhata=df['निर्वाचित क्षेत्र प्रतिको प्रतिबद्धता'][row]
-				obj.aaja_vanda_agadi_chunab_ladnu_vayeko_chha=df['आज भन्दा अघि चुनाब लड्नुभएको छ?'][row]
-				obj.prapta_maat_sankhya=df['प्राप्त मत संख्या'][row]
-				obj.samlagna_sang_sastha_samuha=df['सलग्न संघ, सस्था , समूह'][row]
-				obj.samitima_vumika=df['समितिमा भूमिका'][row]
-				obj.samlagna_samsadiya_samiti=df['संलग्न संसदीय समिति'][row]
+				obj, created =PratinidhiShava.objects.get_or_create(
+					province=Province.objects.get(name=df['Province'][row]),
+					name=df['Name_NE'][row],
+					english_name=df['Name_EN'][row],
+					date_of_birth=str(df['Date of Birth_NE'][row])[:10])
+				
+				if df['Age_EN'][row]:
+					obj.age=df['Age_EN'][row]
+				else:
+					obj.age=None	
+				if df['Age_NE'][row]:
+					obj.age_ne_NP=df['Age_NE'][row]
+				else:
+					obj.age_ne_NP=None			
+				# obj.age_ne_NP=int(df['Age_NE'][row])
+				obj.mothers_name=df["Mother's.Name_EN"][row]
+				obj.mothers_name_ne_NP=df["Mother's.Name_NE"][row]
+				obj.fathers_name=df["Father's.Name_EN"][row]
+				obj.fathers_name_ne_NP=df["Father's.Name_NE"][row]
+				obj.marital_status=df['Maritial.Status_EN'][row]
+				obj.marital_status_ne_NP=df['Maritial.Status_NE'][row]
+				obj.husbands_name=df["Spouse's.Name_EN"][row]
+				obj.husbands_name_ne_NP=df["Spouse's.Name_NE"][row]
+				obj.caste=df['Ethnicity_EN'][row]
+				obj.caste_ne_NP=df['Ethnicity_NE'][row]
+				obj.mother_tongue=df['Mother.Tongue_EN'][row]
+				obj.mother_tongue_ne_NP=df['Mother.Tongue_NE'][row]
+				obj.educational_qualification=df['Formal.Education_EN'][row]
+				obj.educational_qualification_ne_NP=df['Formal.Education_NE'][row]
+				obj.subject=df['Degree.Name_EN'][row]
+				obj.subject_ne_NP=df['Degree.Name_NE'][row]
+				obj.permanent_address=df['Address (Permanent: District)_EN'][row]
+				obj.permanent_address_ne_NP=df['Address (Permanent: District)_NE'][row]
+				obj.permanent_gapa_napa=df['Village / Municipality / Sub-Metropolitan Municipality_EN'][row]
+				obj.permanent_gapa_napa_ne_NP=df['Village / Municipality / Sub-Metropolitan Municipality_NE'][row]
+				obj.permanent_ward_no=df['Ward_EN'][row]
+				obj.permanent_ward_no_ne_NP=df['Ward_NE'][row]
+				obj.permanent_tole=df['Street_EN'][row]
+				obj.permanent_tole_ne_NP=df['Street_NE'][row]
+				obj.temporary_address=df['Address (Temporary: District)_EN'][row]
+				obj.temporary_address_ne_NP=df['Address (Temporary: District)_NE'][row]
+				obj.temporary_gapa_napa=df['Temporary_Village / Municipality / Sub-Metropolitan Municipality_EN'][row]
+				obj.temporary_gapa_napa_ne_NP=df['Temporary_Village / Municipality / Sub-Metropolitan Municipality_NE'][row]
+				obj.temporary_ward_no=df['Temporary_Ward_EN'][row]
+				obj.temporary_ward_no_ne_NP=df['Temporary_Ward_NE'][row]
+				obj.temporary_tole=df['Temporary_Street_EN'][row]
+				obj.temporary_tole_ne_NP=df['Temporary_Street_NE'][row]
+				obj.mobile=df['Mobile_EN'][row]
+				obj.mobile_ne_NP=df['Mobile_NE'][row]
+				obj.contact_number=df['Contact.No_EN'][row]
+				obj.contact_number_ne_NP=df['Contact.No_EN'][row]
+				obj.email=df['Email'][row]
+				obj.social_networking_medium=df['Social Media_EN'][row]
+				obj.social_networking_medium_ne_NP=df['Social Media_EN'][row]
+				obj.nirwachit_prakriya=df['Election.Type_EN'][row]
+				obj.nirwachit_prakriya_ne_NP=df['Election.Type_NE'][row]
+				obj.nirwachit_padh=df['Elected.Post_EN'][row]
+				obj.nirwachit_padh_ne_NP=df['Elected.Post_NE'][row]
+				obj.pichidiyeko_chhetra_ho_hoina=df['Is your area listed in Government of Nepal’s backward area?_EN'][row]
+				obj.pichidiyeko_chhetra_ho_hoina_ne_NP=df['Is your area listed in Government of Nepal’s backward area?_NE'][row]
+				obj.nirwachit_chhetrako_bibaran=df['Description of Elected Area_EN'][row]
+				obj.nirwachit_chhetrako_bibaran_ne_NP=df['Description of Elected Area_NE'][row]
+				obj.nirwachit_vayeko_chhetra_aafno_thegana=df['Is the elected constituency different than the address of the representative (Yes/No)?_EN'][row]
+				obj.nirwachit_vayeko_chhetra_aafno_thegana_ne_NP=df['Is the elected constituency different than the address of the representative (Yes/No)?_NE'][row]
+				obj.party_name=df['Name.of.Party_EN'][row]
+				obj.party_name_ne_NP=df['Name.of.Party_NE'][row]
+				obj.party_joined_date=df['Date.of.affiliation.with.Party_EN'][row]
+				obj.party_joined_date_ne_NP=df['Date.of.affiliation.with.Party_NE'][row]
+				obj.pramukh_jimmewari=df['Major.Respnsibility_EN'][row]
+				obj.pramukh_jimmewari_ne_NP=df['Major.Respnsibility_NE'][row]
+				obj.nirwachit_chetra_pratiko_pratibadhata=df['Political.Commitment_EN'][row]
+				obj.nirwachit_chetra_pratiko_pratibadhata_ne_NP=df['Political.Commitment_NE'][row]
+				obj.aaja_vanda_agadi_chunab_ladnu_vayeko_chha=df['Have.you.participated.in.an.election.before?_EN'][row]
+				obj.aaja_vanda_agadi_chunab_ladnu_vayeko_chha_ne_NP=df['Have.you.participated.in.an.election.before?_NE'][row]
+				obj.prapta_maat_sankhya=df['Number.of.votes.received_EN'][row]
+				obj.prapta_maat_sankhya_ne_NP=df['Number.of.votes.received_NE'][row]
+				obj.samlagna_sang_sastha_samuha=df['Details.of.the.recent.union, organization, group.you.are.engaged.with?_EN'][row]
+				obj.samlagna_sang_sastha_samuha_ne_NP=df['Details.of.the.recent.union, organization, group.you.are.engaged.with?_NE'][row]
+				obj.samitima_vumika=df['Role.in.organization_EN'][row]
+				obj.samitima_vumika_ne_NP=df['Role.in.organization_NE'][row]
 				obj.save()
 		messages.success(request, 'Successfully loaded data from files')
-		return HttpResponseRedirect('/cms/pratinidhi-shava-upload')
+		return HttpResponseRedirect('/cms/pratinidhi-shava-file-upload')
 	except Exception as e:
-		print(e)
+		print(e.__class__.__name__ + " " + str(e))
 		messages.error(request, "File Format not supported")
-		return HttpResponseRedirect('/cms/pratinidhi-shava-upload')
-
+		return HttpResponseRedirect('/cms/pratinidhi-shava-file-upload')
 
 
 
@@ -620,62 +821,151 @@ class ProvinceUloadView(UserPassesTestMixin, TemplateView):
 		return context
 
 
+# def province_file_upload(request):
+# 	import pandas as pd
+
+# 	try:
+# 		request_files = request.FILES.getlist('file')
+# 		files = [pd.read_excel(filename).fillna(value='') for filename in request_files]
+
+# 		for df in files:
+# 			total = df['नाम'].count()
+
+# 			for row in range(0, total):
+
+# 				obj, created = ProvinceMahilaPratinidhiForm.objects.get_or_create(
+# 					province=Province.objects.get(name=Province.objects.get(name=df['Province'][0])),
+# 					name=df['नाम'][row],
+# 					english_name=df['English Name'][row],
+# 					date_of_birth=df['जन्ममिती'][row])
+
+# 				obj.age=df['उमेर'][row]
+# 				obj.mothers_name=df['आमाको नाम'][row]
+# 				obj.fathers_name=df['बाबुको नाम'][row]
+# 				obj.marital_status=df['बैवाहिक स्थिति'][row]
+# 				obj.husbands_name=df['श्रीमानको नाम'][row]
+# 				obj.caste=df['जातियता'][row]
+# 				obj.mother_tongue=df['मातृभाषा'][row]
+# 				obj.educational_qualification=df['औपचारिक शैक्षिक योग्यता'][row]
+# 				obj.subject=df['बिषय'][row]
+# 				obj.permanent_address=df['ठेगाना (स्थायी) :  जिल्ला'][row]
+# 				obj.permanent_gapa_napa=df['गाउँपालिका/नगरपालिका/उप-महानगरपालिका/महानगरपालिका'][row]
+# 				obj.permanent_ward_no=df['वडा नं'][row]
+# 				obj.permanent_tole=df['टोल'][row]
+# 				obj.temporary_address=df['ठेगाना (अस्थायी) जिल्ला'][row]
+# 				obj.temporary_gapa_napa=df['गाउँपालिका/नगरपालिका/उप-महानगरपालिका/महानगरपालिका '][row]
+# 				obj.temporary_ward_no=df['वडा नं'][row]
+# 				obj.temporary_tole=df['टोल'][row]
+# 				obj.mobile=df['मोवाइल'][row]
+# 				obj.contact_number=df['सम्पर्क नं'][row]
+# 				obj.email=df['इमेल'][row]
+# 				obj.social_networking_medium=df['सामाजिक सन्जालका माध्यम (छ भने):'][row]
+# 				obj.nirwachit_prakriya=df['निर्वाचित प्रक्रिया'][row]
+# 				obj.nirwachit_padh=df['निर्वाचित पद'][row]
+# 				obj.pichidiyeko_chhetra_ho_hoina=df['पिछडिएको क्षेत्र हो कि होइन'][row]
+# 				obj.nirwachit_chhetrako_bibaran=df['निर्वाचित क्षेत्रको विवरण'][row]
+# 				obj.nirwachit_vayeko_chhetra_aafno_thegana=df['निर्वाचित भएको क्षेत्र आफ्नो अस्थायी/ स्थायी ठेगाना भन्दा फरक'][row]
+# 				obj.party_name=df['पार्टीको विवरण: पार्टीको नाम'][row]
+# 				obj.party_joined_date=df['पाटींमा संलग्न भएको मिति'][row]
+# 				obj.pramukh_jimmewari=df['प्रमुख जिम्मेवारी'][row]
+# 				obj.nirwachit_chetra_pratiko_pratibadhata=df['निर्वाचित क्षेत्र प्रतिको प्रतिबद्धता'][row]
+# 				obj.aaja_vanda_agadi_chunab_ladnu_vayeko_chha=df['आज भन्दा अघि चुनाब लड्नुभएको छ?'][row]
+# 				obj.prapta_maat_sankhya=df['प्राप्त मत संख्या'][row]
+# 				obj.samlagna_sang_sastha_samuha=df['सलग्न संघ, सस्था , समूह'][row]
+# 				obj.save()
+# 		messages.success(request, 'Successfully loaded data from files')
+# 		return HttpResponseRedirect('/cms/province-upload')
+# 	except KeyError as e:
+# 		print(e)
+# 		messages.error(request, "File Format not supported")
+# 		return HttpResponseRedirect('/cms/province-upload')
+
+
 def province_file_upload(request):
 	import pandas as pd
-
 	try:
 		request_files = request.FILES.getlist('file')
 		files = [pd.read_excel(filename).fillna(value='') for filename in request_files]
-
 		for df in files:
-			total = df['नाम'].count()
-
-			for row in range(0, total):
-
-				obj, created = ProvinceMahilaPratinidhiForm.objects.get_or_create(
-					province=Province.objects.get(name=Province.objects.get(name=df['Province'][0])),
-					name=df['नाम'][row],
-					english_name=df['English Name'][row],
-					date_of_birth=df['जन्ममिती'][row])
-
-				obj.age=df['उमेर'][row]
-				obj.mothers_name=df['आमाको नाम'][row]
-				obj.fathers_name=df['बाबुको नाम'][row]
-				obj.marital_status=df['बैवाहिक स्थिति'][row]
-				obj.husbands_name=df['श्रीमानको नाम'][row]
-				obj.caste=df['जातियता'][row]
-				obj.mother_tongue=df['मातृभाषा'][row]
-				obj.educational_qualification=df['औपचारिक शैक्षिक योग्यता'][row]
-				obj.subject=df['बिषय'][row]
-				obj.permanent_address=df['ठेगाना (स्थायी) :  जिल्ला'][row]
-				obj.permanent_gapa_napa=df['गाउँपालिका/नगरपालिका/उप-महानगरपालिका/महानगरपालिका'][row]
-				obj.permanent_ward_no=df['वडा नं'][row]
-				obj.permanent_tole=df['टोल'][row]
-				obj.temporary_address=df['ठेगाना (अस्थायी) जिल्ला'][row]
-				obj.temporary_gapa_napa=df['गाउँपालिका/नगरपालिका/उप-महानगरपालिका/महानगरपालिका '][row]
-				obj.temporary_ward_no=df['वडा नं'][row]
-				obj.temporary_tole=df['टोल'][row]
-				obj.mobile=df['मोवाइल'][row]
-				obj.contact_number=df['सम्पर्क नं'][row]
-				obj.email=df['इमेल'][row]
-				obj.social_networking_medium=df['सामाजिक सन्जालका माध्यम (छ भने):'][row]
-				obj.nirwachit_prakriya=df['निर्वाचित प्रक्रिया'][row]
-				obj.nirwachit_padh=df['निर्वाचित पद'][row]
-				obj.pichidiyeko_chhetra_ho_hoina=df['पिछडिएको क्षेत्र हो कि होइन'][row]
-				obj.nirwachit_chhetrako_bibaran=df['निर्वाचित क्षेत्रको विवरण'][row]
-				obj.nirwachit_vayeko_chhetra_aafno_thegana=df['निर्वाचित भएको क्षेत्र आफ्नो अस्थायी/ स्थायी ठेगाना भन्दा फरक'][row]
-				obj.party_name=df['पार्टीको विवरण: पार्टीको नाम'][row]
-				obj.party_joined_date=df['पाटींमा संलग्न भएको मिति'][row]
-				obj.pramukh_jimmewari=df['प्रमुख जिम्मेवारी'][row]
-				obj.nirwachit_chetra_pratiko_pratibadhata=df['निर्वाचित क्षेत्र प्रतिको प्रतिबद्धता'][row]
-				obj.aaja_vanda_agadi_chunab_ladnu_vayeko_chha=df['आज भन्दा अघि चुनाब लड्नुभएको छ?'][row]
-				obj.prapta_maat_sankhya=df['प्राप्त मत संख्या'][row]
-				obj.samlagna_sang_sastha_samuha=df['सलग्न संघ, सस्था , समूह'][row]
+			total = df['Name_EN'].count()
+			for row in range(1, total+1):
+				obj, created=ProvinceMahilaPratinidhiForm.objects.get_or_create(
+					province=Province.objects.get(name=df['Province'][1]),
+					name=df['Name_NE'][row],
+					english_name=df['Name_EN'][row],
+					date_of_birth=str(df['Date of Birth_NE'][row])[:10])
+				
+				obj.age=df['Age_EN'][row]
+				obj.age_ne_NP=df['Age_NE'][row]
+				obj.mothers_name=df["Mother's.Name_EN"][row]
+				obj.mothers_name_ne_NP=df["Mother's.Name_NE"][row]
+				obj.fathers_name=df["Father's.Name_EN"][row]
+				obj.fathers_name_ne_NP=df["Father's.Name_NE"][row]
+				obj.marital_status=df['Maritial.Status_EN'][row]
+				obj.marital_status_ne_NP=df['Maritial.Status_NE'][row]
+				obj.husbands_name=df["Spouse's.Name_EN"][row]
+				obj.husbands_name_ne_NP=df["Spouse's.Name_NE"][row]
+				obj.caste=df['Ethnicity_EN'][row]
+				obj.caste_ne_NP=df['Ethnicity_NE'][row]
+				obj.mother_tongue=df['Mother.Tongue_EN'][row]
+				obj.mother_tongue_ne_NP=df['Mother.Tongue_NE'][row]
+				obj.educational_qualification=df['Formal.Education_EN'][row]
+				obj.educational_qualification_ne_NP=df['Formal.Education_NE'][row]
+				obj.subject=df['Degree.Name_EN'][row]
+				obj.subject_ne_NP=df['Degree.Name_NE'][row]
+				obj.permanent_address=df['Address (Permanent: District)_EN'][row]
+				obj.permanent_address_ne_NP=df['Address (Permanent: District)_NE'][row]
+				obj.permanent_gapa_napa=df['Village / Municipality / Sub-Metropolitan Municipality_EN'][row]
+				obj.permanent_gapa_napa_ne_NP=df['Village / Municipality / Sub-Metropolitan Municipality_NE'][row]
+				obj.permanent_ward_no=df['Ward_EN'][row]
+				obj.permanent_ward_no_ne_NP=df['Ward_NE'][row]
+				obj.permanent_tole=df['Street_EN'][row]
+				obj.permanent_tole_ne_NP=df['Street_NE'][row]
+				obj.temporary_address=df['Address (Temporary: District)_EN'][row]
+				obj.temporary_address_ne_NP=df['Address (Temporary: District)_NE'][row]
+				obj.temporary_gapa_napa=df['Temporary_Village / Municipality / Sub-Metropolitan Municipality_EN'][row]
+				obj.temporary_gapa_napa_ne_NP=df['Temporary_Village / Municipality / Sub-Metropolitan Municipality_NE'][row]
+				obj.temporary_ward_no=df['Temporary_Ward_EN'][row]
+				obj.temporary_ward_no_ne_NP=df['Temporary_Ward_NE'][row]
+				obj.temporary_tole=df['Temporary_Street_EN'][row]
+				obj.temporary_tole_ne_NP=df['Temporary_Street_NE'][row]
+				obj.mobile=df['Mobile_EN'][row]
+				obj.mobile_ne_NP=df['Mobile_NE'][row]
+				obj.contact_number=df['Contact.No_EN'][row]
+				obj.contact_number_ne_NP=df['Contact.No_EN'][row]
+				obj.email=df['Email'][row]
+				obj.social_networking_medium=df['Social Media_EN'][row]
+				obj.nirwachit_prakriya=df['Election.Type_EN'][row]
+				obj.nirwachit_prakriya_ne_NP=df['Election.Type_NE'][row]
+				obj.nirwachit_padh=df['Elected.Post_EN'][row]
+				obj.nirwachit_padh_ne_NP=df['Elected.Post_NE'][row]
+				obj.pichidiyeko_chhetra_ho_hoina=df['Is your area listed in Government of Nepal’s backward area?_EN'][row]
+				obj.pichidiyeko_chhetra_ho_hoina_ne_NP=df['Is your area listed in Government of Nepal’s backward area?_NE'][row]
+				obj.nirwachit_chhetrako_bibaran=df['Description of Elected Area_EN'][row]
+				obj.nirwachit_chhetrako_bibaran_ne_NP=df['Description of Elected Area_NE'][row]
+				obj.nirwachit_vayeko_chhetra_aafno_thegana=df['Is the elected constituency different than the address of the representative (Yes/No)?_EN'][row]
+				obj.nirwachit_vayeko_chhetra_aafno_thegana_ne_NP=df['Is the elected constituency different than the address of the representative (Yes/No)?_NE'][row]
+				obj.party_name=df['Name.of.Party_EN'][row]
+				obj.party_name_ne_NP=df['Name.of.Party_NE'][row]
+				obj.party_joined_date=df['Date.of.affiliation.with.Party_EN'][row]
+				obj.party_joined_date_ne_NP=df['Date.of.affiliation.with.Party_NE'][row]
+				obj.pramukh_jimmewari=df['Major.Respnsibility_EN'][row]
+				obj.pramukh_jimmewari_ne_NP=df['Major.Respnsibility_NE'][row]
+				obj.nirwachit_chetra_pratiko_pratibadhata=df['Political.Commitment_EN'][row]
+				obj.nirwachit_chetra_pratiko_pratibadhata_ne_NP=df['Political.Commitment_NE'][row]
+				obj.aaja_vanda_agadi_chunab_ladnu_vayeko_chha=df['Have.you.participated.in.an.election.before?_EN'][row]
+				obj.aaja_vanda_agadi_chunab_ladnu_vayeko_chha_ne_NP=df['Have.you.participated.in.an.election.before?_NE'][row]
+				obj.prapta_maat_sankhya=df['Number.of.votes.received_EN'][row]
+				obj.prapta_maat_sankhya_ne_NP=df['Number.of.votes.received_NE'][row]
+				obj.samlagna_sang_sastha_samuha=df['Details.of.the.recent.union, organization, group.you.are.engaged.with?_EN'][row]
+				obj.samlagna_sang_sastha_samuha_ne_NP=df['Details.of.the.recent.union, organization, group.you.are.engaged.with?_NE'][row]
+				obj.samitima_vumika=df['Role.in.organization_EN'][row]
+				obj.samitima_vumika_ne_NP=df['Role.in.organization_NE'][row]
 				obj.save()
 		messages.success(request, 'Successfully loaded data from files')
 		return HttpResponseRedirect('/cms/province-upload')
-	except KeyError as e:
-		print(e)
+	except Exception as e:
+		print(e.__class__.__name__ + " " + str(e))
 		messages.error(request, "File Format not supported")
 		return HttpResponseRedirect('/cms/province-upload')
 
