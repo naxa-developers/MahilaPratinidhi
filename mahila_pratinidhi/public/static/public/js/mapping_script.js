@@ -206,10 +206,16 @@ function returnSum(value){
 
 }
 
+function BindFunction(feature,layer){
+
+  layer.bindTooltip(get_name(feature));
+
+}
+
+
 function onEachFeature(feature,layer){
 
-
-
+  BindFunction(feature,layer);
   Choropleth(feature,layer);
   circular_marker(get_center(feature,layer),get_number(feature),get_name(feature),feature);
   //layer.bindPopup(customPopup,customOptions);

@@ -1,6 +1,9 @@
 //alert("pasyo");
 //var base_url="http://mahilapratinidhi.naxa.com.np";
 var base_url="http://localhost:8000";
+
+
+
 $.get(base_url+'/api/age/',function(data){
 
 
