@@ -19,6 +19,11 @@
   <link rel="stylesheet" href="{% static 'public/css/MarkerCluster.css'%}" />
   <link rel="stylesheet" href="{% static 'public/css/MarkerCluster.Default.css'%}" />
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.24.0/babel.js"></script>
+  <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+
+
 
 
 <body>
@@ -27,7 +32,8 @@
                  * element that contains the map. */
 
         #mapid {
-            height: 100%;
+            height: 100vh;
+            width: 70vw;
         }
         .custom-icon .leaflet-popup-tip,
         .custom-icon .leaflet-popup-content-wrapper {
@@ -163,7 +169,7 @@
     <section>
         <div class="container-fluid">
             <div class="row">
-                <div class="mapTab">
+                <div class="mapTab" >
                     <div class="tabs">
                         <ul class="tabHolder">
                             <li id="national-all">
@@ -193,11 +199,16 @@
                             </button>
                         </div>
                     </div>
+
                     <div class="mapHolder grow redbg">
                         <div id="mapid"></div>
-
+                        <div id="react-container">
+                        </div>
+                        
                     </div>
+
                 </div>
+
             </div>
 
         </div>
@@ -507,6 +518,7 @@
     </script>
 
     <!-- for geolocation of user -->
-    <script src={% static 'public/js/mapping_script.js'%}></script>
+    <script type="text/babel" src={% static 'public/js/popup.js'%}></script>
+    <script type="text/babel" src={% static 'public/js/mapping_script.js'%}></script>
 
      {% endblock %}

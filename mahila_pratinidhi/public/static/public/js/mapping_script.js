@@ -25,7 +25,7 @@ var gl = L.mapboxGL({
        style: 'https://maps.tilehosting.com/c/163bd208-a4f1-4885-8b97-416ac0b47d00/styles/darkmatter_upen/style.json?key=SWfpfQVfURyYQrAEj6J3'
      });
 
-baseMaps = {
+var baseMaps = {
     //"Street View": street_view,
     "OSM": OSM,
     "blackwhite":OpenStreetMap_BlackAndWhite,
@@ -62,7 +62,7 @@ fetchapi();
 
 
 
-var total_instance = 12004;
+var total_instance = 300;
 
 
 var customPopup = "National:<br/>Federal:<br/>Provincial:<br/>Local:<br/>";
@@ -169,6 +169,13 @@ if(Object.keys(properties_object).length=="8"){
 
  }
 else if (Object.keys(properties_object).length=="10"){
+
+  ReactDOM.render(
+    <div>
+    <Popup />
+    </div>,
+    document.getElementById("react-container")
+  )
   return false
 
 }
@@ -351,7 +358,6 @@ function Choropleth(feature,layer){
 
  var frequency = marker_content[xx];
  var percentage = (frequency*100)/total_instance;
-
   var color= getColor(percentage);
   layer.setStyle({fillColor :color});
 

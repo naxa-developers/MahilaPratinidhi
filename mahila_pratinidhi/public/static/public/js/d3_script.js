@@ -1,7 +1,7 @@
-var base_url="http://mahilapratinidhi.naxa.com.np";
-// var base_url="http://localhost:8000";
+//var base_url="http://mahilapratinidhi.naxa.com.np";
+ var base_url="http://localhost:8000";
 
-
+alert(base_url+'/api/age/');
 $.get(base_url+'/api/age/',function(data){
 
 
@@ -22,7 +22,8 @@ $.get(base_url+'/api/age/',function(data){
 
 $(".dataVariable").on("click",function(){
 
-  var variable = $(this).text().toLowerCase().replace(" ","_");
+  var variable = $(this).attr('data-value').toLowerCase().replace(" ","_");
+  alert(base_url+'/api/'+ variable +'/');
 
   $.get(base_url+'/api/'+ variable +'/',function(data){
 

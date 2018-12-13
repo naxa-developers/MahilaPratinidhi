@@ -53,7 +53,7 @@ console.log("sampleafterdlt",sample);
           var yAxis0 = d3.svg.axis()
             .scale(yScale)
             .orient("left")
-            .ticks(0)
+            .ticks(5)
             .tickSize(-width, 0, 0)
             .tickFormat( function(d) { return d } );
 
