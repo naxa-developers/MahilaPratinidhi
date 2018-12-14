@@ -22,7 +22,7 @@ class StackedChart extends React.Component{
 
     if (dataName== "party"){
 
-        var legend_array =["Nepal Communist Party","Nepali Congress","Federal Socialist Forum, Nepal",
+        var legend_array =["Communist Party of Nepal","Nepali Congress","Federal Socialist Forum",
         "Rastriya Janata Party Nepal"];
         var count = 0;
     }
@@ -31,6 +31,13 @@ class StackedChart extends React.Component{
 
         var legend_array= ["1","2","3","4","5","6","7"];
         count =1;
+    }
+
+    else if (dataName== "vs") {
+
+        var legend_array= ["province", "federal", "national"];
+        count =2;
+
     }
 
 

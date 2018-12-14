@@ -23,7 +23,6 @@ $.get(base_url+'/api/age/',function(data){
 $(".dataVariable").on("click",function(){
 
   var variable = $(this).attr('data-value').toLowerCase().replace(" ","_");
-  alert(base_url+'/api/'+ variable +'/');
 
   $.get(base_url+'/api/'+ variable +'/',function(data){
 
@@ -36,6 +35,7 @@ ReactDOM.unmountComponentAtNode(document.getElementById("react-container"));
       <ChartBox data_pass={[{'title':variable,'data-type':'0','dataName':'total','data':data['total']}]} />
       <ChartBox data_pass={[{'title':variable +" vs Party",'data-type':'1','dataName':'party','data':data['party']}]} />
       <ChartBox data_pass={[{'title':variable +" vs Province",'data-type':'1','dataName':'provincial','data':data['provincial']}]} />
+
       </div>,
       document.getElementById("react-container")
     )
@@ -43,3 +43,7 @@ ReactDOM.unmountComponentAtNode(document.getElementById("react-container"));
 
 
 });
+
+
+
+//       <ChartBox data_pass={[{'title':variable +" vs Province vs fed vs loc",'data-type':'1','dataName':'vs','data':data['nationalvsfederalvsprovincial']}]} />

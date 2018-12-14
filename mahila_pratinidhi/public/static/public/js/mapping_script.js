@@ -85,10 +85,11 @@ function update_popup(data){
 }
 
 function highlightFeature(e){
-  layer= e.target;
-  var province=layer.feature.properties.Province;
+  console.log("xtty");
+  var layer= e.target;
   layer.setStyle({
     weight:4,
+
 
   });
 }
@@ -125,8 +126,8 @@ return marker_content[xx];
 
 
 function zoomToFeature(e){
- var properties_object = e.target.feature.properties;
 
+ var properties_object = e.target.feature.properties;
 
   total_instance = get_total_instance(e);
   map.fitBounds(e.target.getBounds(),{padding:[25,25]});
@@ -141,17 +142,26 @@ if(Object.keys(properties_object).length=="1"){
       last_layer=[];
 
   }
+  for (var i=0;i<marker_array.length;i++){
+    marker_array[i].removeFrom(map);
+  }
+
 
 }
 
 if(Object.keys(properties_object).length=="8"){
 
-
     if(last_layer[1]){
         map.removeLayer(last_layer[1]);
         last_layer.pop();
 
+
     }
+
+    for (var i=0;i<marker_array.length;i++){
+      marker_array[i].removeFrom(map);
+    }
+
 
 }
 
@@ -160,45 +170,64 @@ if(Object.keys(properties_object).length=="8"){
  if(Object.keys(properties_object).length=="1"){
    var division = "province";
    var prodric= properties_object.Province;
+   var layer_inside = L.geoJson.ajax(base_url+'/api/geojson/'+ division +'/'+ prodric,
+             {onEachFeature:onEachFeature,
+               style: { color: "white",
+                        weight:2,
+                        fillColor:"grey",
+
+                        fillOpacity:1}}
+             );
+
+
+                layer_inside.addTo(map);
+                last_layer.push(layer_inside);
+
+
 
  }
 
  else if (Object.keys(properties_object).length=="8"){
+   console.log("markers",marker_array)
    var division = "municipality";
-   var prodric= properties_object['FIRST_DIST'].charAt(0).toUpperCase() +  properties_object['FIRST_DIST'].slice(1).toLowerCase();
+   var dric= properties_object['FIRST_DIST'].toLowerCase();
+   var muni_layers = L.layerGroup().addTo(map);
+   
+
+   $.each(muni._layers,function(key,value){
+     if(value.feature.properties.DISTRICT.toLowerCase()=== dric){
+       var geo = value.feature;
+       var muni_layer= L.geoJson(geo,{onEachFeature:onEachFeature_second,
+         style: { color: "white",
+                  weight:2,
+                  fillColor:"grey",
+                  fillOpacity:"0.6"
+                  }
+                });
+       muni_layers.addLayer(muni_layer);
+      }
+
+   });
+   console.log("markers",marker_array)
+
+
+   last_layer.push(muni_layers);
+
 
  }
+
 else if (Object.keys(properties_object).length=="10"){
 
-  ReactDOM.render(
-    <div>
-    <Popup />
-    </div>,
-    document.getElementById("react-container")
-  )
+  return false
+
+}
+else if (Object.keys(properties_object).length=="11"){
+
   return false
 
 }
 
-  for (var i=0;i<marker_array.length;i++){
-    marker_array[i].removeFrom(map);
-  }
 
-
-  var layer_inside = L.geoJson.ajax(base_url+'/api/geojson/'+ division +'/'+ prodric,
-            {onEachFeature:onEachFeature,
-              style: { color: "white",
-                       weight:2,
-                       fillColor:"grey",
-
-                       fillOpacity:1}}
-            );
-
-
-
-
-   layer_inside.addTo(map);
-   last_layer.push(layer_inside);
 
 }
 
@@ -219,6 +248,18 @@ function BindFunction(feature,layer){
 
 }
 
+function onEachFeature_second(feature,layer){
+  BindFunction(feature,layer);
+  circular_marker(get_center(feature,layer),get_number(feature),get_code(feature),feature);
+  layer.on({
+    mouseover: highlightFeature,
+    mouseout: resetHighlight,
+    click:zoomToFeature
+  })
+
+
+}
+
 
 function onEachFeature(feature,layer){
 
@@ -226,12 +267,7 @@ function onEachFeature(feature,layer){
   Choropleth(feature,layer);
   circular_marker(get_center(feature,layer),get_number(feature),get_name(feature),feature);
   //layer.bindPopup(customPopup,customOptions);
-  layer.on('mouseover', function (e) {
-              this.openPopup();
-          });
-  layer.on('mouseout', function (e) {
-              this.closePopup();
-          });
+
   layer.on({
     mouseover: highlightFeature,
     mouseout: resetHighlight,
@@ -255,11 +291,8 @@ function circular_marker(center,number,name,feature){
 
       });
 
-
       // you can set .my-div-icon styles in CSS
-      if (Object.keys(feature.properties).length=="10"){
-
-
+      if (Object.keys(feature.properties).length=="11"){
 
                 var marker_cluster = L.markerClusterGroup();
                 for(let i=0;i<number;i++){
@@ -289,9 +322,20 @@ function get_center(feature,layer){
 
 }
 
+function get_code(feature){
+  var properties_object = feature.properties;
+  if (Object.keys(properties_object).length=="11"){
+   var xx = feature.properties['HLCIT_CODE'];
+ }
+
+return xx;
+}
+
 function get_name(feature){
 
+
   var properties_object = feature.properties;
+
   if(Object.keys(properties_object).length=="1"){
     var xx = "Province "+ feature.properties.Province;
 
@@ -305,6 +349,9 @@ function get_name(feature){
     var xx = feature.properties['FIRST_GaPa'].charAt(0).toUpperCase()+feature.properties['FIRST_GaPa'].slice(1).toLowerCase();
   }
 
+    else if (Object.keys(properties_object).length=="11"){
+      var xx = feature.properties['HLCIT_CODE'].charAt(0).toUpperCase()+feature.properties['LU_Name'].slice(1).toLowerCase();
+    }
 
   return xx;
 
@@ -312,7 +359,13 @@ function get_name(feature){
 
 function get_number(feature){
 
-var xx = get_name(feature);
+  var properties_object = feature.properties;
+  if (Object.keys(properties_object).length=="11"){
+    var xx = get_code(feature)
+  }
+else{
+  var xx = get_name(feature);
+}
 
   var number = marker_content[xx];
 
@@ -379,7 +432,18 @@ var country =L.geoJson.ajax(base_url+'/api/geojson/country',
           }).addTo(map);
 
 
+var muni =L.geoJson.ajax('https://dfid.naxa.com.np/core/geojson/municipalities/',
+                              {
+                               style: { color: "white",
+                                        weight:2,
+                                        fillColor:"grey",
+                                        fillOpacity:"0.6"
 
+                                        }
+                              });
+
+
+console.log("muni",muni);
   //
   // var center_for_markers = [ [27.244862521497282,87.2314453125],
   // [26.941659545381516,85.67138671875], [27.751607687549384,85.352783203125],
@@ -434,7 +498,7 @@ for( var i=0; i< marker_array.length;i++){
 
 $("#federal-all").on('click',function(){
 //console.log(marker_array);
-marker_content =data_summary_all['federal'][0];
+  marker_content =data_summary_all['federal'][0];
 
 for( var i=0; i< marker_array.length;i++){
   if(marker_array[i]._icon == null){
@@ -511,4 +575,4 @@ for( var i=0; i< marker_array.length;i++){
 //     -90 + 180 * Math.random(),
 //     -180 + 360 * Math.random()
 //   ];
-// }
+// }last_layer

@@ -18,9 +18,6 @@ handleClick= function(e){
 
 render (){
       let bar;
-      if(this.props.data_pass[0]['data']=="1"){
-        bar = <StackedChart data={[{'data':this.props.data_pass[0]['data'],'dataName':this.props.data_pass[0]['dataName']}]}  />;
-      }
 
 
       if(this.props.data_pass[0]['data-type']=="1"){
@@ -31,7 +28,12 @@ render (){
         bar = <SimpleBar data={[{'data':this.props.data_pass[0]['data'],'dataName':this.props.data_pass[0]['dataName']}]}  />;
       }
 
-      console.log("render"+this.props.data_pass[0]);
+
+      else if(this.props.data_pass[0]['data-type']=="2"){
+              bar = <PieChart data={[{'data':this.props.data_pass[0]['data'],'dataName':this.props.data_pass[0]['dataName']}]}  />;
+            }
+
+
 
 
 
