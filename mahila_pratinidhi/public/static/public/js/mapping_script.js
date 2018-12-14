@@ -192,18 +192,29 @@ if(Object.keys(properties_object).length=="8"){
    var division = "municipality";
    var dric= properties_object['FIRST_DIST'].toLowerCase();
    var muni_layers = L.layerGroup().addTo(map);
-   
+
 
    $.each(muni._layers,function(key,value){
      if(value.feature.properties.DISTRICT.toLowerCase()=== dric){
        var geo = value.feature;
+       var code = value.feature.properties['HLCIT_CODE'];
+       var popup_content ="<strong>Mahilapratinidhi</strong><br>"+ value.feature.properties['HLCIT_CODE'];
+
+       $.get(base_url+"/api/hlcit"+ code ,function(data){
+
+
+
+
+       })
+
+
        var muni_layer= L.geoJson(geo,{onEachFeature:onEachFeature_second,
          style: { color: "white",
                   weight:2,
                   fillColor:"grey",
                   fillOpacity:"0.6"
                   }
-                });
+                }).bindPopup(popup_content);
        muni_layers.addLayer(muni_layer);
       }
 

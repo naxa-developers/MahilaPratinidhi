@@ -1,13 +1,13 @@
-class SimpleBar extends React.Component{
+class HorizontalBar extends React.Component{
   constructor(props){
     super(props)
-    this.simpleBar = this.simpleBar.bind(this);
+    this.horizontalBar = this.horizontalBar.bind(this);
 
   }
 
   componentDidMount(){
     //alert("component did mont")
-    this.simpleBar(this.props.data[0].data);
+    this.horizontalBar(this.props.data[0].data);
 
   }
 
@@ -19,10 +19,7 @@ class SimpleBar extends React.Component{
 
   }
 
-  simpleBar(sample){
-console.log("sample",sample);
-
-console.log("sampleafterdlt",sample);
+  horizontalBar(sample){
     var value_value = sample.map((s)=> +s.total);
     console.log("value_value",value_value);
 
@@ -40,12 +37,12 @@ console.log("sampleafterdlt",sample);
     const chart = svg.append('g')
       .attr('transform', "translate(" + margin0.left + "," + margin0.top + ")");
 
-      const xScale = d3.scale.ordinal()
+      const yScale = d3.scale.ordinal()
       .rangeRoundBands([0, width],0.1)
       .domain(sample.map((s) => s.label))
       ;
 
-        const yScale = d3.scale.linear()
+        const xScale = d3.scale.linear()
           .domain([0, max_value])
           .range([height, 0]);
 
@@ -74,7 +71,7 @@ console.log("sampleafterdlt",sample);
 
         chart.selectAll(".x-axis text")
        .attr("transform", function(d) {
-          return "translate(" + this.getBBox().height*-2 + "," + this.getBBox().height*1.7 + ")rotate(-45)";
+          return "translate(" + this.getBBox().height*-2 + "," + this.getBBox().height + ")rotate(-45)";
       });
 
     const barGroups = chart.selectAll()

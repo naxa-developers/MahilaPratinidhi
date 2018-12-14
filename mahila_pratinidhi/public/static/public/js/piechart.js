@@ -6,8 +6,8 @@ class PieChart extends React.Component{
   }
 
   componentDidMount(){
-    alert("x")
-    console.log(this.props.data[0].data);
+
+    console.log("dataaa",this.props.data[0].data);
 
     this.piechart(this.props.data[0].data);
 
@@ -15,11 +15,14 @@ class PieChart extends React.Component{
 
   piechart(data){
 
-    const pie =d3.pie()
-      .sort(null)
-      .value(d => d.value)
+    var margin = {top: 20, right: 170, bottom: 50, left: 30};
+var color =["#69131a","#e86c75","#faa2ad","#ac779d","#4b1b31" ,"#f441a6","#f44141"];
+    var width = 700 - margin.left - margin.right,
+        height = 350 - margin.top - margin.bottom;
 
-  const arcs = pie(data);
+
+    var pieGenerator = d3.layout.pie();
+  var arcs = pieGenerator([1,2,3]);
 
   const svg = d3.selectAll(".pie-chart")
       .attr("text-anchor", "middle")
@@ -31,7 +34,7 @@ class PieChart extends React.Component{
   g.selectAll("path")
     .data(arcs)
     .enter().append("path")
-      .attr("fill", d => color(d.data.name))
+      .attr("fill", (d,k) => color[k])
       .attr("stroke", "white")
       .attr("d", arc)
     .append("title")

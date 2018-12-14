@@ -30,7 +30,7 @@ render (){
 
 
       else if(this.props.data_pass[0]['data-type']=="2"){
-              bar = <PieChart data={[{'data':this.props.data_pass[0]['data'],'dataName':this.props.data_pass[0]['dataName']}]}  />;
+              bar = <HorizontalBar data={[{'data':this.props.data_pass[0]['data'],'dataName':this.props.data_pass[0]['dataName']}]}  />;
             }
 
 
