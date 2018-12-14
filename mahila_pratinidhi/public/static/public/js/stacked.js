@@ -172,7 +172,7 @@ class StackedChart extends React.Component{
       .attr("dy", ".35em")
       .style("text-anchor", "start")
       .style("fill","white")
-      .style("font-size","small")
+      .style("font-size","x-small")
       .text(function(d, i) {
         switch (i) {
           case 0: return legend_array[0];

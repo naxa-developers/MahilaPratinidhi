@@ -1,6 +1,6 @@
 //alert("pasyo");
-var base_url="http://mahilapratinidhi.naxa.com.np";
-// var base_url="http://localhost:8000";
+//var base_url="http://mahilapratinidhi.naxa.com.np";
+ var base_url="http://localhost:8000";
 var map =L.map('mapid',{minZoom: 7,maxZoom: 11,zoomSnap:0.3}).setView([27,85],7);
 
 var OSM = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -287,7 +287,7 @@ function onEachFeature(feature,layer){
 }
 
 function circular_marker(center,number,name,feature){
-      if (number){ }
+      if (number){  }
       else{
         number=4;
       }
@@ -361,7 +361,7 @@ function get_name(feature){
   }
 
     else if (Object.keys(properties_object).length=="11"){
-      var xx = feature.properties['HLCIT_CODE'].charAt(0).toUpperCase()+feature.properties['LU_Name'].slice(1).toLowerCase();
+      var xx = feature.properties['LU_Name'].charAt(0).toUpperCase()+feature.properties['LU_Name'].slice(1).toLowerCase();
     }
 
   return xx;
@@ -373,6 +373,10 @@ function get_number(feature){
   var properties_object = feature.properties;
   if (Object.keys(properties_object).length=="11"){
     var xx = get_code(feature)
+    if(xx== "524 1 02 4 003"){
+      console.log(marker_content);
+    }
+
   }
 else{
   var xx = get_name(feature);
