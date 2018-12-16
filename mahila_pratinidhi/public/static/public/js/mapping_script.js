@@ -1,6 +1,6 @@
 //alert("pasyo");
-//var base_url="http://mahilapratinidhi.naxa.com.np";
- var base_url="http://localhost:8000";
+var base_url="http://mahilapratinidhi.naxa.com.np";
+ //var base_url="http://localhost:8000";
 var map =L.map('mapid',{minZoom: 7,maxZoom: 13,zoomSnap:0.3}).setView([28,84],7);
 
 var OSM = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -188,17 +188,17 @@ if(Object.keys(properties_object).length=="8"){
 
      if(value.feature.properties.DISTRICT.toLowerCase()=== dric){
        var geo = value.feature;
-       var code = value.feature.properties['HLCIT_CODE'];
+       var hlcit = value.feature.properties['HLCIT_CODE'];
        var profile_link ="http://localhost:8000/detail/national/172/";
-       var popup_content ="<div><strong>Mahilapratinidhi</strong></div><br><br>";
+       var popup_content ="<div style='overflow-y:scroll;'><strong>Mahilapratinidhi</strong></div><br><br>";
 
 
-       $.get(base_url+"/api/hlcit/"+ code ,function(data){
+       $.get(base_url+"/api/hlcit/"+ hlcit ,function(data){
          var females = data;
          for(let i =0;i<females.length;i++){
            var model = (females[i]['model']=="province") ? females[i]['model'] +"/" + hlcit.slice(7,8)  : females[i]['model'];
            var detail = (females[i]['model']=="province") ? "explore" : "detail";
-           popup_content += "<h5><a href='"+ base_url+ "/"+ detail + "/" + model + "/" + females[i]['id'] + "/" +  "'>"+ females[i]['name'] + "</a></h5><br>"
+           popup_content += "<h6><a href='"+ base_url+ "/"+ detail + "/" + model + "/" + females[i]['id']  +  "'>"+ females[i]['name'] + "</a></h6><br>"
 
          }
 
@@ -294,7 +294,7 @@ if(number){
     var popup_content = "";
     var model = (females[i]['model']=="province") ? females[i]['model'] +"/" + hlcit.slice(7,8)  : females[i]['model'];
     var detail = (females[i]['model']=="province") ? "explore" : "detail";
-    popup_content += "<a href='"+ base_url+"/"+ detail+ "/" + model + "/" + females[i]['id'] + "/" +  "'>" + females[i]['name'] + "</a>"
+    popup_content += "<a href='"+ base_url+"/"+ detail+ "/" + model + "/" + females[i]['id'] +  "'>" + females[i]['name'] + "</a>"
     marker_cluster.addLayer(L.marker(center).bindPopup(popup_content));
   }
 
@@ -605,7 +605,6 @@ function getLocation(){
           marker_array[i].removeFrom(map);
         }
         var hlcit =(value.feature.properties['HLCIT_CODE']);
-        alert(hlcit);
         $.get(base_url+'/api/hlcit/'+hlcit, function(data){
 
           var females=data;
