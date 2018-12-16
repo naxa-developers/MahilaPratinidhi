@@ -14,6 +14,15 @@
   <link rel="stylesheet" href="https://cdn.klokantech.com/mapbox-gl-js/v0.43.0/mapbox-gl.css" />
 
   <script src= "{% static 'public/js/leaflet.ajax.min.js' %}" ></script>
+  <script src= "https://unpkg.com/leaflet.markercluster@1.4.1/dist/" ></script>
+  <script src= "{% static 'public/js/leaflet.markercluster.js' %}" ></script>
+  <link rel="stylesheet" href="{% static 'public/css/MarkerCluster.css'%}" />
+  <link rel="stylesheet" href="{% static 'public/css/MarkerCluster.Default.css'%}" />
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.24.0/babel.js"></script>
+  <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+
 
 
 
@@ -23,7 +32,8 @@
                  * element that contains the map. */
 
         #mapid {
-            height: 100%;
+            height: 100vh;
+            width: 70vw;
         }
         .custom-icon .leaflet-popup-tip,
         .custom-icon .leaflet-popup-content-wrapper {
@@ -36,17 +46,26 @@
           /* border: 1px solid white; */
           /* width:auto !important; */
           font-size: 12px;
-          background:orange;
+          background:rgba(110, 204, 57, 1);
           border:5px solid rgba(255,255,255,0.5);
           color:black;
           font-weight:bold;
           text-align:center;
           border-radius:50%;
           line-height:30px;
-          padding-top:6px;
+          padding-top:2px;
 
         }
 
+#react-container {
+  position:fixed;
+  right:30px;
+  top:50px;
+  background:white;
+  color:black;
+  z-index:402;
+
+}
 
         /* Optional: Makes the sample page fill the window. */
 
@@ -57,6 +76,8 @@
             padding: 0;
         }
     </style>
+    <div id="react-container">
+    </div>
     <section class="topHeroImg">
         <div class="heroOverlay"></div>
         <header>
@@ -92,11 +113,11 @@
             <div class="selectHolder ">
                 <div class="leader">
                     <div class="leaderWrp">
-                        <input type="text" placeHolder="CHECK YOUR LEADER AROUND" class="leaderSearch">
+                        <input type="text" id="local_leader" placeHolder="CHECK YOUR LEADER AROUND" class="leaderSearch">
                     </div>
                 </div>
                 <div class="province">
-                    <span id="selectedValue">Provience</span>
+                    <span id="selectedValue">province</span>
                     <span class="circlefilter">
                         <i class=" show arrow fa fa-angle-down"></i>
                         <i class="close fa fa-times"></i>
@@ -107,10 +128,15 @@
                             <div class="">
                                 <label for="" class="st">State</label>
                                 <select class="sel1" name="" id="">
-                                    <option value="national">NATIONAL</option>
-                                    <option value="federal">FEDERAL</option>
-                                    <option value="provincial">PROVINCIAL</option>
-                                    <option value="local">LOCAL</option>
+                                  <option value="">Provinces</option>
+                                    <option value="">Province 1</option>
+                                    <option value="">Province 2</option>
+                                    <option value="">Province 3</option>
+                                    <option value="">Province 4</option>
+                                    <option value="">Province 5</option>
+                                    <option value="">Province 6</option>
+                                    <option value="">Province 7</option>
+
                                 </select>
                             </div>
                             <div class="">
@@ -154,7 +180,7 @@
     <section>
         <div class="container-fluid">
             <div class="row">
-                <div class="mapTab">
+                <div class="mapTab" >
                     <div class="tabs">
                         <ul class="tabHolder">
                             <li id="national-all">
@@ -172,11 +198,11 @@
                                 <div class="text">PROVINCIAL ASSEMBLY
                                 </div>
                             </li>
-                            <!--<li>-->
-                                <!--<img src="{% static 'public/image/government.svg' %}" alt="">-->
-                                <!--<div class="text">LOCAL LEVEL GOVERNMENT-->
-                                <!--</div>-->
-                            <!--</li>-->
+                            <!-- <li id="local-all">
+                                <img src="{% static 'public/image/government.svg' %}" alt="">
+                                <div class="text">LOCAL LEVEL GOVERNMENT
+                                </div>
+                            </li> -->
                         </ul>
                         <div class="text-center">
                             <button class="btn btn-round revbtn tbtn mtb50"> MAP VISUALIZATION
@@ -184,11 +210,15 @@
                             </button>
                         </div>
                     </div>
+
                     <div class="mapHolder grow redbg">
                         <div id="mapid"></div>
 
+
                     </div>
+
                 </div>
+
             </div>
 
         </div>
@@ -395,6 +425,9 @@
                     scrollTop: ro.top-100
                 }, 800);
                 $(".selectOverlay").toggleClass("active");
+
+                $(".selectOverlay").css("z-index","401");
+
               $(".circlefilter ").toggleClass("circleActive");
                 return false;
    });
@@ -437,7 +470,7 @@
             });
 
             function reset() {
-                $("#selectedValue").text("Select Provience");
+                $("#selectedValue").text("Select Province");
                 first = "";
                 second = "";
                 third = "";
@@ -510,6 +543,7 @@
     </script>
 
     <!-- for geolocation of user -->
-    <script src={% static 'public/js/mapping_script.js'%}></script>
+    <script type="text/babel" src={% static 'public/js/popup.js'%}></script>
+    <script type="text/babel" src={% static 'public/js/mapping_script.js'%}></script>
 
      {% endblock %}

@@ -4,16 +4,22 @@ class ChartBox extends React.Component {
     this.state ={
       checked : true
     };
-    this.handleCheck = this.handleCheck.bind(this)
+    this.handleClick = this.handleClick.bind(this)
   }
 
 
-  handleCheck= () => this.setState({checked : !this.state.checked});
+
+handleClick= function(e){
+
+  saveSvgAsPng($(e.target).closest(".row").find("svg")[0], "diagram.png",{backgroundColor:"hsl(50, 33%, 25%)",scale:1});
+};
 
 
 
-    render (){
+render (){
       let bar;
+
+
       if(this.props.data_pass[0]['data-type']=="1"){
         bar = <StackedChart data={[{'data':this.props.data_pass[0]['data'],'dataName':this.props.data_pass[0]['dataName']}]}  />;
       }
@@ -22,7 +28,17 @@ class ChartBox extends React.Component {
         bar = <SimpleBar data={[{'data':this.props.data_pass[0]['data'],'dataName':this.props.data_pass[0]['dataName']}]}  />;
       }
 
-      console.log("render"+this.props.data_pass[0]);
+
+      else if(this.props.data_pass[0]['data-type']=="2"){
+              bar = <HorizontalBar data={[{'data':this.props.data_pass[0]['data'],'dataName':this.props.data_pass[0]['dataName']}]}  />;
+            }
+
+    else if(this.props.data_pass[0]['data-type']=="10"){
+                    bar = <Kernel data={[{'data':this.props.data_pass[0]['data'],'dataName':this.props.data_pass[0]['dataName']}]}  />;
+                  }
+
+
+
 
 
 
@@ -34,11 +50,11 @@ class ChartBox extends React.Component {
     className="gtext"> Lorem ipsum dolor sit amet, consectetur adipiscing
     elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
     Consequat ac felis donec et odio. Natoque penatibus et magnis dis
-    parturient montes nascetur </p> <div className="icons"> <a href=""> <i
-    className="fa fa-facebook-f"></i> </a> <a href=""> <i className="fa
-    fa-twitter"></i> </a> <a href=""> <i className="fa fa-linkedin-in"></i>
-    </a> <a className="l5" href=""> <i className="fa fa-download"></i> </a>
-    <a href=""> <i className="fa fa-share-alt"></i> </a> </div> </div>
+    parturient montes nascetur </p> <div className="icons"> <a href="#"> <i
+    className="fa fa-facebook-f"></i> </a> <a href="#"> <i className="fa
+    fa-twitter"></i> </a> <a href="#"> <i className="fa fa-linkedin-in"></i>
+    </a> <span className="buttons" onClick={(e)=>this.handleClick(e)}> <i className="fa fa-download"></i> </span>
+    <a href="#"> <i className="fa fa-share-alt"></i> </a> </div> </div>
     <div className="col-md-8 graphHolder">{bar}</div>
 
     </div> </div>
