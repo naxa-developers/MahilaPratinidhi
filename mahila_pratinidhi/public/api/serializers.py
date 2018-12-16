@@ -81,10 +81,54 @@ class DistrictsSerializer(serializers.ModelSerializer):
         model = District
         exclude = ('elected_women', )
 
+class RastriyaSerialiser(serializers.ModelSerializer):
+    class_name = serializers.SerializerMethodField()
 
-class HlcitSerializer(serializers.ModelSerializer):
+    def get_class_name(self, obj):
+        return obj.__class__.__name__
 
     class Meta:
         model = RastriyaShava
-        fields = ('name', )
+        fields = ('id', 'english_name', 'class_name')
+
+
+class PratinidhiSerializer(serializers.ModelSerializer):
+    class_name = serializers.SerializerMethodField()
+
+    def get_class_name(self, obj):
+        return obj.__class__.__name__
+
+    class Meta:
+        model = PratinidhiShava
+        fields = ('id', 'english_name', 'class_name')
+
+
+class ProvinceSerializer(serializers.ModelSerializer):
+    class_name = serializers.SerializerMethodField()
+
+    def get_class_name(self, obj):
+        return obj.__class__.__name__
+
+    class Meta:
+        model = ProvinceMahilaPratinidhiForm
+        fields = ('id', 'english_name', 'class_name')
+
+
+class HlcitSerializer(serializers.Serializer):
+    class_name = serializers.SerializerMethodField()
+    id = serializers.SerializerMethodField()
+    name = serializers.SerializerMethodField()
+
+    class Meta:
+        fields = ('id', 'name', 'class_name')
+
+    def get_name(self, obj):
+        return obj.name
+
+    def get_id(slef,obj):
+        return obj.id
+
+    def get_class_name(self, obj):
+        return obj.__class__.__name__
+
 

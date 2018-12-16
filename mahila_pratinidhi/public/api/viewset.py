@@ -1446,5 +1446,10 @@ class HlcitViewSet(ReadOnlyModelViewSet):
     serializer_class = HlcitSerializer
 
     def get_queryset(self, *args, **kwargs):
-        queryset = RastriyaShava.objects.values('name').filter(hlcit_code=self.kwargs['hlcit'])
+        queryset = chain(
+            RastriyaShava.objects.filter(hlcit_code=self.kwargs['hlcit']),
+            PratinidhiShava.objects.filter(hlcit_code=self.kwargs['hlcit']),
+            ProvinceMahilaPratinidhiForm.objects.filter(hlcit_code=self.kwargs['hlcit'])
+        )
+            
         return queryset
