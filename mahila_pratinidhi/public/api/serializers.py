@@ -103,5 +103,8 @@ class HlcitSerializer(serializers.Serializer):
 
         elif obj.__class__.__name__ == 'PratinidhiShava':
             return 'federal'
+        
+        elif obj.__class__.__name__ == 'ProvinceMahilaPratinidhiForm':
+            return 'provincial'
 
 
