@@ -209,14 +209,14 @@ class MapViewSet(views.APIView):
                     federal_dict[item['name']] = item['total']
 
         federal_district = PratinidhiShava.objects.values('permanent_address').\
-        annotate(total_address=Count('permanent_address'))
+        annotate(total=Count('permanent_address'))
 
         federal_district_code = PratinidhiShava.objects.values('hlcit_code').\
-        annotate(total_address=Count('hlcit_code'))
+        annotate(total=Count('hlcit_code'))
 
         for item in federal_district:
             if item['permanent_address']:
-                federal_dict[item['permanent_address']] = item['total_address']
+                federal_dict[item['permanent_address']] = item['total']
         
         for item in federal_district_code:
             if item['hlcit_code']:
@@ -280,7 +280,7 @@ class MapViewSet(views.APIView):
         # 
         # local_list.append(local_dict)
 
-        # map_api['provincial'] = local_list
+        # map_api['local'] = local_list
 
 
         return Response(map_api)
