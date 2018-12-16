@@ -33,6 +33,11 @@ render (){
               bar = <HorizontalBar data={[{'data':this.props.data_pass[0]['data'],'dataName':this.props.data_pass[0]['dataName']}]}  />;
             }
 
+    else if(this.props.data_pass[0]['data-type']=="10"){
+                    bar = <Kernel data={[{'data':this.props.data_pass[0]['data'],'dataName':this.props.data_pass[0]['dataName']}]}  />;
+                  }
+
+
 
 
 

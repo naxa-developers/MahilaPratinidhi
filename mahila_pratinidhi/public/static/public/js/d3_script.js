@@ -6,6 +6,7 @@ $.get(base_url+'/api/age/',function(data){
 
     ReactDOM.render(
         <div>
+        <ChartBox data_pass={[{'title':'age','data-type':'10','dataName':'total','data':data['total']}]} />
         <ChartBox data_pass={[{'title':'age','data-type':'0','dataName':'total','data':data['total']}]} />
         <ChartBox data_pass={[{'title':'age' +" vs Party",'data-type':'1','dataName':'party','data':data['party']}]} />
         <ChartBox data_pass={[{'title':'age' +" vs Province",'data-type':'1','dataName':'provincial','data':data['provincial']}]} />

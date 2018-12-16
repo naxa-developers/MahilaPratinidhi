@@ -287,7 +287,7 @@ function onEachFeature(feature,layer){
   })
 }
 
-function ward_leader(number,females){
+function ward_leader(number,center,females){
 
   var marker_cluster = L.markerClusterGroup();
   for(let i=0;i<number;i++){
@@ -602,7 +602,8 @@ function getLocation(){
         for (var i=0;i<marker_array.length;i++){
           marker_array[i].removeFrom(map);
         }
-        ward_leader(value.feature,females);
+        var females=[];
+        ward_leader(get_number(value.feature),get_center(value,value),females);
 
 
     }
