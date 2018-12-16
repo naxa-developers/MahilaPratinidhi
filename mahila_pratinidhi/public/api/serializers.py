@@ -82,9 +82,29 @@ class DistrictsSerializer(serializers.ModelSerializer):
         exclude = ('elected_women', )
 
 
-class HlcitSerializer(serializers.ModelSerializer):
+class HlcitSerializer(serializers.Serializer):
+    model = serializers.SerializerMethodField()
+    id = serializers.SerializerMethodField()
+    name = serializers.SerializerMethodField()
 
     class Meta:
-        model = RastriyaShava
-        fields = ('name', )
+        fields = ('id', 'name', 'model')
+
+    def get_name(self, obj):
+        return obj.name
+
+    def get_id(slef,obj):
+        return obj.id
+
+    def get_model(self, obj):
+
+        if obj.__class__.__name__ == 'RastriyaShava':
+            return 'national'
+
+        elif obj.__class__.__name__ == 'PratinidhiShava':
+            return 'federal'
+        
+        elif obj.__class__.__name__ == 'ProvinceMahilaPratinidhiForm':
+            return 'provincial'
+
 

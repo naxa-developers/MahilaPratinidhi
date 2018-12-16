@@ -280,7 +280,7 @@ class MapViewSet(views.APIView):
         #
         # local_list.append(local_dict)
 
-        # map_api['provincial'] = local_list
+        # map_api['local'] = local_list
 
 
         return Response(map_api)
@@ -1446,5 +1446,15 @@ class HlcitViewSet(ReadOnlyModelViewSet):
     serializer_class = HlcitSerializer
 
     def get_queryset(self, *args, **kwargs):
+<<<<<<< HEAD
         queryset = RastriyaShava.objects.values('name').filter(hlcit_code=self.kwargs['hlcit'])
         return queryset
+=======
+        queryset = chain(
+            RastriyaShava.objects.filter(hlcit_code=self.kwargs['hlcit']),
+            PratinidhiShava.objects.filter(hlcit_code=self.kwargs['hlcit']),
+            ProvinceMahilaPratinidhiForm.objects.filter(hlcit_code=self.kwargs['hlcit'])
+        )
+
+        return queryset
+>>>>>>> 4349dd61ed79cc70585b286d9c30661739602e37
