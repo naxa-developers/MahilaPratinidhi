@@ -301,6 +301,13 @@ class AgeViewSet(views.APIView):
         # for total age groups
         ages = list(chain(rastriya_age, pratinidhi_age, provincial_age))
 
+        total_age_list = []
+        for age in ages:
+            if age['age']:
+                total_age_list.append(int(float(age['age'])))
+
+        total_ages['all'] = total_age_list
+
         lists = 20
         while lists < 100:
             sub_ranges = []
@@ -931,6 +938,14 @@ class PoliticalEngagementViewSet(views.APIView):
 
         # for total years
         years = list(chain(rastriya_political_year, pratinidhi_political_year, provincial_political_year))
+        
+        total_year_list = []
+
+        for year in years:
+            if year['party_joined_date']:
+                total_year_list.append(2075 - int(float(year['party_joined_date'])))
+
+        total_years['all'] = total_year_list
 
         lists = 1
         while lists < 70:

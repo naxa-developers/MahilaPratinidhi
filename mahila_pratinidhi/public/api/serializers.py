@@ -87,7 +87,7 @@ class HlcitSerializer(serializers.Serializer):
         fields = ('id', 'name', 'model')
 
     def get_name(self, obj):
-        return obj.name
+        return obj.english_name
 
     def get_id(slef,obj):
         return obj.id
@@ -98,9 +98,9 @@ class HlcitSerializer(serializers.Serializer):
             return 'national'
 
         elif obj.__class__.__name__ == 'PratinidhiShava':
-            return 'federal'
+            return 'pratinidhi'
         
         elif obj.__class__.__name__ == 'ProvinceMahilaPratinidhiForm':
-            return 'provincial'
+            return 'province'
 
 
