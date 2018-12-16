@@ -11,7 +11,7 @@
 <style>
   .stacked-bar {
     height: 500px;
-    font: 10px sans-serif;
+    font: 6px sans-serif;
     text: white;
     shape-rendering: crispEdges;
   }
@@ -51,7 +51,7 @@ text.simple-label {
 
 
   .simple-rect {
-  fill: skyblue;
+  fill: #7cb5ec;
 }
 
 
@@ -73,7 +73,13 @@ text.simple-label {
 
   .tick{
     fill:white;
-    font-size:small
+    font-size:xx-small
+  }
+
+  .kernelLine{
+    color:red;
+    stroke:#b71c1c;
+    fill:#c95555;
   }
 
 
@@ -169,31 +175,31 @@ text.simple-label {
                                     </div>
                                     <ul class="nav nav-pills widthScrol">
                                         <li class="active">
-                                            <a href="#" class="dataVariable" data-toggle="tab">Age</a>
+                                            <a href="#" class="dataVariable" data-toggle="tab" data-value="age">Age</a>
                                         </li>
                                         <li>
-                                            <a href="#" class="dataVariable" data-toggle="tab">Ethnicity</a>
+                                            <a href="#" class="dataVariable" data-toggle="tab" data-value="ethnicity" >Ethnicity</a>
                                         </li>
                                         <li>
-                                            <a href="#" class="dataVariable" data-toggle="tab">Mother Tongue</a>
+                                            <a href="#" class="dataVariable" data-toggle="tab" data-value="mother_tongue">Mother Tongue</a>
                                         </li>
                                         <li>
-                                            <a href="#" class="dataVariable" data-toggle="tab">Education</a>
+                                            <a href="#" class="dataVariable" data-toggle="tab" data-value="Education">Education</a>
                                         </li>
                                         <li>
-                                            <a href="#" class="dataVariable" data-toggle="tab">Election Type</a>
+                                            <a href="#" class="dataVariable" data-toggle="tab" data-value="election_type">Election Type</a>
                                         </li>
                                         <li>
-                                            <a href="#" class="dataVariable" data-toggle="tab">Party</a>
+                                            <a href="#" class="dataVariable" data-toggle="tab" data-value="party">Party</a>
                                         </li>
                                         <li>
-                                            <a href="#" class="dataVariable" data-toggle="tab">Years in Political Engagement</a>
+                                            <a href="#" class="dataVariable" data-toggle="tab" data-value="">Years in Political Engagement</a>
                                         </li>
                                         <li>
-                                            <a href="#" class="dataVariable" data-toggle="tab">Political Commitment</a>
+                                            <a href="#" class="dataVariable" data-toggle="tab" data-value="political_commitment">Political Commitment</a>
                                         </li>
                                         <li>
-                                            <a href="#" class="dataVariable" data-toggle="tab">Have you ever stood in an election before? </a>
+                                            <a href="#" class="dataVariable" data-toggle="tab" data-value="election_experience">Have you ever stood in an election before? </a>
                                         </li>
 
                                     </ul>
@@ -336,6 +342,8 @@ text.simple-label {
         </script>
         <script type= "text/babel" src="{% static 'public/js/saveSvgAsPng.js' %} "></script>
         <script type= "text/babel" src="{% static 'public/js/bar.js' %} "></script>
+        <script type= "text/babel" src="{% static 'public/js/kernel.js' %} "></script>
+
         <script type= "text/babel" src="{% static 'public/js/stacked.js' %} "></script>
         <script type= "text/babel" src="{% static 'public/js/d3_app.js' %} "></script>
         <script type= "text/babel" src ="{% static 'public/js/d3_script.js' %}" ></script>

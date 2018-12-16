@@ -17,12 +17,12 @@ class StackedChart extends React.Component{
     this.stackedChart(nextProps.data[0].data,nextProps.data[0].dataName);
   }
 
-  stackedChart(data,dataName){
+  stackedChart(data,dataName,variable_colors){
 
 
     if (dataName== "party"){
 
-        var legend_array =["Nepal Communist Party","Nepali Congress","Federal Socialist Forum, Nepal",
+        var legend_array =["Communist Party of Nepal","Nepali Congress","Federal Socialist Forum",
         "Rastriya Janata Party Nepal"];
         var count = 0;
     }
@@ -31,6 +31,13 @@ class StackedChart extends React.Component{
 
         var legend_array= ["1","2","3","4","5","6","7"];
         count =1;
+    }
+
+    else if (dataName== "vs") {
+
+        var legend_array= ["province", "federal", "national"];
+        count =2;
+
     }
 
 
@@ -71,6 +78,9 @@ class StackedChart extends React.Component{
       .range([height, 0]);
 
     var colors = [	 "#69131a","#e86c75","#faa2ad","#ac779d","#4b1b31" ,"#f441a6","#f44141"];
+    var default_colors =["#ff6367","#98b000","#00cc7a","#00a5f9","#fb00f6","#f441a6","#f44141"];
+
+    var colors = variable_colors || default_colors;
 
 
     // Define and draw axes
@@ -165,7 +175,7 @@ class StackedChart extends React.Component{
       .attr("dy", ".35em")
       .style("text-anchor", "start")
       .style("fill","white")
-      .style("font-size","small")
+      .style("font-size","xx-small")
       .text(function(d, i) {
         switch (i) {
           case 0: return legend_array[0];
