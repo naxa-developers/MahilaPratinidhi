@@ -34,11 +34,7 @@ class MapSerializers(serializers.ListSerializer):
 
 
 class AgeSerializers(serializers.ListSerializer):
-    total_age = serializers.ListField()
-    provinces_average_age = serializers.ListField()
-    province = serializers.ListField()
-    nationale = serializers.ListField()
-    federal= serializers.ListField()
+    age = serializers.DictField()
 
 
 class EthnicitySerializers(serializers.ListSerializer):

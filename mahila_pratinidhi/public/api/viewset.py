@@ -349,7 +349,6 @@ class AgeViewSet(views.APIView):
         total_ages['provincial'] = province_age
 
         # for ages per party
-        age_list = list(chain(provincial_age, pratinidhi_age))
 
         party_age = []
         for age_range in ranges:
@@ -357,7 +356,7 @@ class AgeViewSet(views.APIView):
             count = 0
             r = range(age_range[0], age_range[1])
             age_dict["label"] = str(age_range[0]) + "-" + str(age_range[1])
-            for age in age_list:
+            for age in ages:
                 if age['age']:
                     if int(float(age['age'])) in r:
                         count = count + 1
@@ -367,6 +366,37 @@ class AgeViewSet(views.APIView):
 
         total_ages['party'] = party_age
 
+        #for age range on basis of national, federal and province
+        vs = []
+        for age_range in ranges:
+            vs_dict = {}
+            vs_list = []
+            r = range(age_range[0], age_range[1])
+            vs_dict["label"] = str(age_range[0]) + "-" + str(age_range[1])
+
+            for item in rastriya_age:
+                if item['age']:
+                    if int(float(item['age'])) in r:
+                        vs_list.append('national')
+            
+            for item in pratinidhi_age:
+                if item['age']:
+                    if int(float(item['age'])) in r:
+                        vs_list.append('federal')
+            
+            for item in provincial_age:
+                if item['age']:
+                    if int(float(item['age'])) in r:
+                        vs_list.append('province')
+            
+            total_arrays = np.array(np.unique(vs_list, return_counts=True)).T
+
+            for total in total_arrays:
+                vs_dict[total[0]] = total[1]
+            
+            vs.append(dict(vs_dict))
+
+        total_ages['nationalvsfederalvsprovincial'] = vs
 
         return Response(total_ages)
 
@@ -593,7 +623,7 @@ class MotherTongueViewSet(views.APIView):
         total_mother_tongue['party'] = party_language
 
         #for mother tongue on basis of nation, federal and province
-        vs_language = []
+        vs_language = []/
         for language in language_set:
             vs_dict = {}
             vs_dict['label'] = language
@@ -966,9 +996,37 @@ class PoliticalEngagementViewSet(views.APIView):
 
         total_years['party'] = party_year
 
-        #for years of national vs province vs federal
-        
+        #for political engagement on basis of national, federal and province
+        vs = []
+        for year_range in ranges:
+            vs_dict = {}
+            vs_list = []
+            r = range(year_range[0], year_range[1])
+            vs_dict["label"] = str(year_range[0]) + "-" + str(year_range[1])
 
+            for item in rastriya_political_year:
+                if item['party_joined_date']:
+                    if(2075 - int(float(item['party_joined_date']))) in r:
+                        vs_list.append('national')
+            
+            for item in pratinidhi_political_year:
+                if item['party_joined_date']:
+                    if(2075 - int(float(item['party_joined_date']))) in r:
+                        vs_list.append('federal')
+            
+            for item in provincial_political_year:
+                if item['party_joined_date']:
+                    if(2075 - int(float(item['party_joined_date']))) in r:
+                        vs_list.append('province')
+            
+            total_arrays = np.array(np.unique(vs_list, return_counts=True)).T
+
+            for total in total_arrays:
+                vs_dict[total[0]] = total[1]
+            
+            vs.append(dict(vs_dict))
+
+        total_years['nationalvsfederalvsprovincial'] = vs
 
         return Response(total_years)
 
@@ -1428,6 +1486,36 @@ class CommitmentViewSet(views.APIView):
 
         total_commitment_dict['party'] = party_political_commitment_list
 
+
+        vs = []
+        for commitment in commitment_set:
+            vs_dict = {}
+            vs_dict['label'] = commitment
+            vs_list = []
+
+            for item in national_political_commitment:
+                for i in item['nirwachit_chetra_pratiko_pratibadhata'].split(","):
+                    if i.title().strip(" ") in commitment:
+                        vs_list.append('national')
+            
+            for item in federal_political_commitment:
+                for i in item['nirwachit_chetra_pratiko_pratibadhata'].split(","):
+                    if i.title().strip(" ") in commitment:
+                        vs_list.append('federal')
+            
+            for item in province_political_commitment:
+                for i in item['nirwachit_chetra_pratiko_pratibadhata'].split(","):
+                    if i.title().strip(" ") in commitment:
+                        vs_list.append('province')
+            
+            total_arrays = np.array(np.unique(vs_list, return_counts=True)).T
+
+            for total in total_arrays:
+                vs_dict[total[0]] = total[1]
+            
+            vs.append(dict(vs_dict))
+
+        total_commitment_dict['nationalvsfederalvsprovincial'] = vs
 
         return Response(total_commitment_dict)
 
