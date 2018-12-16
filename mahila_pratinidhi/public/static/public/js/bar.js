@@ -41,7 +41,7 @@ console.log("sampleafterdlt",sample);
       .attr('transform', "translate(" + margin0.left + "," + margin0.top + ")");
 
       const xScale = d3.scale.ordinal()
-      .rangeRoundBands([0, width],0.1)
+      .rangeRoundBands([0, width])
       .domain(sample.map((s) => s.label))
       ;
 
@@ -97,9 +97,7 @@ console.log("sampleafterdlt",sample);
           .transition()
           .duration(300)
           .attr('opacity', 0.6)
-          .attr('x', (a) => xScale(a.label) - 5)
-          .attr('width', xScale.rangeBand() + 10)
-
+          
         const y = yScale(actual.total)
 
         line = chart.append('line')

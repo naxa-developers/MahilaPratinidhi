@@ -1,7 +1,7 @@
 //alert("pasyo");
 //var base_url="http://mahilapratinidhi.naxa.com.np";
  var base_url="http://localhost:8000";
-var map =L.map('mapid',{minZoom: 7,maxZoom: 11,zoomSnap:0.3}).setView([27,85],7);
+var map =L.map('mapid',{minZoom: 7,maxZoom: 13,zoomSnap:0.3}).setView([28,84],7);
 
 var OSM = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
   attribution: '&copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
@@ -198,8 +198,8 @@ if(Object.keys(properties_object).length=="8"){
      if(value.feature.properties.DISTRICT.toLowerCase()=== dric){
        var geo = value.feature;
        var code = value.feature.properties['HLCIT_CODE'];
-       var popup_content ="<strong>Mahilapratinidhi</strong><br>"+ value.feature.properties['HLCIT_CODE'];
-
+       var profile_link ="http://localhost:8000/detail/national/172/";
+       var popup_content ="<strong>Mahilapratinidhi</strong><br>"+ "<a href='"+ profile_link +  "'>"+ value.feature.properties['HLCIT_CODE'] + "</a>";
        $.get(base_url+"/api/hlcit"+ code ,function(data){
 
 
@@ -275,6 +275,7 @@ function onEachFeature_second(feature,layer){
 function onEachFeature(feature,layer){
 
   BindFunction(feature,layer);
+
   Choropleth(feature,layer);
   circular_marker(get_center(feature,layer),get_number(feature),get_name(feature),feature);
   //layer.bindPopup(customPopup,customOptions);
@@ -286,10 +287,22 @@ function onEachFeature(feature,layer){
   })
 }
 
+function ward_leader(number,females){
+
+  var marker_cluster = L.markerClusterGroup();
+  for(let i=0;i<number;i++){
+    marker_cluster.addLayer(L.marker(center).bindPopup("Mahila Prathinidhi"));
+  }
+
+  map.addLayer(marker_cluster);
+marker_array.push(marker_cluster);
+
+}
+
 function circular_marker(center,number,name,feature){
       if (number){  }
       else{
-        number=4;
+        number=0;
       }
 
       var name = name.replace(" ","_");
@@ -297,7 +310,7 @@ function circular_marker(center,number,name,feature){
 
       var myIcon = L.divIcon({
           className:'my-div-icon'+ ' ' + name,
-          iconSize: new L.Point(50, 50),
+          iconSize: new L.Point(40, 40),
           html: '<p id='+ name +'>'+ number + '<p>',
 
       });
@@ -574,6 +587,67 @@ for( var i=0; i< marker_array.length;i++){
 
 
 });
+
+function getLocation(){
+  navigator.geolocation.getCurrentPosition(function(location) {
+  var latlng = new L.LatLng(location.coords.latitude, location.coords.longitude);
+  console.log("country",country);
+  $.each(muni._layers, function(key,value){
+      if(value._bounds.contains(latlng)== true){
+        var munici =(value.feature.properties['HLCIT_CODE']);
+        var geo = value.feature;
+        var muni_layer =L.geoJson(geo,{}).addTo(map);
+        last_layer.push(muni_layer);
+        map.setView([location.coords.latitude, location.coords.longitude], 13);
+        for (var i=0;i<marker_array.length;i++){
+          marker_array[i].removeFrom(map);
+        }
+        ward_leader(value.feature,females);
+
+
+    }
+});
+
+
+//
+//   $.each(country._layers, function(key,value){
+//     if(value._bounds.contains(latlng)== true){
+//       alert("true");
+//       var state =(value.feature.properties.Province);
+//       alert(state);
+//       var districts = L.geoJson.ajax(base_url+'/api/geojson/province/'+ state);
+//       console.log("districts",districts)
+//       districts.on("data:loaded",function(){
+//         $.each(districts._layers, function(key,value){
+//
+//           if(value._bounds.contains(latlng)== true){
+//             alert("district vetayo");
+//             var district =value.feature.properties["FIRST_DIST"];
+//             console.log("muni",muni);
+//             $.each(muni._layers, function(key,value){
+//                     if(value.feature.properties["DISTRICT"]== district){
+//                       alert("vitrai pasyo")
+//                       alert(value.feature.properties["LU_Name"]);
+//                     }
+//                   });
+//         }
+//     });
+//
+//   });
+//
+//   }
+// });
+
+
+
+});
+}
+$("#local_leader").on('click',function(){
+
+  var latlng = getLocation();
+
+
+})
 
 
 // var myRenderer = L.canvas({ padding: 0.5 });
