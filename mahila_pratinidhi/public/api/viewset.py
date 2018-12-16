@@ -11,11 +11,13 @@ from itertools import chain
 from rest_framework.decorators import api_view
 from rest_framework.viewsets import ModelViewSet, ReadOnlyModelViewSet
 from rest_framework.views import APIView
-from .serializers import RastriyaShavaSerializer, ProvinceSerializer, LocalMahilaSerializer, PratinidhiShavaSerializer, AgeSerializers, DistrictsSerializer
+from .serializers import RastriyaShavaSerializer, ProvinceSerializer, LocalMahilaSerializer, \
+PratinidhiShavaSerializer, AgeSerializers, DistrictsSerializer, HlcitSerializer
 from core.models import RastriyaShava, PratinidhiShava, ProvinceMahilaPratinidhiForm, MahilaPratinidhiForm, Province, District
 from django.db.models import Avg, Count, Sum
 
 import numpy as np
+import re
 
 @api_view(['GET'])
 def country_geojson(request):
@@ -95,7 +97,8 @@ class MapViewSet(views.APIView):
                 totals.append(item['name'])
         
         total_arrays = np.array(np.unique(totals, return_counts=True)).T
-        
+
+
         for total in total_arrays:
             total_dict[total[0]] = int(total[1])
         
@@ -122,7 +125,7 @@ class MapViewSet(views.APIView):
         #         totals.append(item['name'])
         
         total_arrays = np.array(np.unique(totals, return_counts=True)).T
-        
+
         for total in total_arrays:
             total_dict[total[0]] = int(total[1])
         
@@ -184,19 +187,19 @@ class MapViewSet(views.APIView):
         #for local lists
         # local_list = []
         # local_dict = {}
-        #
+
         # local_province = Province.objects.values('name').annotate(total=Count('mahilapratinidhiform'))
-        #
-        # for item in provincial_province:
-        #     provincial_dict[item['name']] = item['total']
-        #
-        # provincial_district = ProvinceMahilaPratinidhiForm.objects.values('permanent_address').annotate(total=Count('permanent_address'))
-        #
-        # for item in provincial_district:
-        #     provincial_dict[item['permanent_address']] = item['total']
-        # provincial_list.append(provincial_dict)
-        #
-        # map_api['provincial'] = provincial_list
+
+        # for item in local_province:
+        #     local_dict[item['name']] = item['total']
+
+        # local_district = ProvinceMahilaPratinidhiForm.objects.values('address').annotate(total=Count('address'))
+
+        # for item in local_district:
+        #     local_dict[item['address']] = item['total']
+        # local_list.append(local_dict)
+
+        # map_api['provincial'] = local_list
 
 
         return Response(map_api)
@@ -234,8 +237,9 @@ class AgeViewSet(views.APIView):
         for age_range in ranges:
             r = range(age_range[0], age_range[1])
             for age in ages:
-                if age['age'] in r:
-                    range_list.append(str(age_range[0]) + "-" + str(age_range[1]))
+                if age['age']:
+                    if int(float(age['age'])) in r:
+                        range_list.append(str(age_range[0]) + "-" + str(age_range[1]))
 
         total_arrays = np.array(np.unique(range_list, return_counts=True)).T
         age_dict = {}
@@ -254,9 +258,10 @@ class AgeViewSet(views.APIView):
             r = range(age_range[0], age_range[1])
             age_dict["label"] = str(age_range[0]) + "-" + str(age_range[1])
             for age in provincial_age:
-                if age['age'] in r:
-                    count = count + 1
-                    age_dict[age['province_id']] = count + 1
+                if age['age']:
+                    if int(float(age['age'])) in r:
+                        count = count + 1
+                        age_dict[age['province_id']] = count + 1
 
             province_age.append(dict(age_dict))
 
@@ -272,9 +277,10 @@ class AgeViewSet(views.APIView):
             r = range(age_range[0], age_range[1])
             age_dict["label"] = str(age_range[0]) + "-" + str(age_range[1])
             for age in age_list:
-                if age['age'] in r:
-                    count = count + 1
-                    age_dict[age['party_name']] = count + 1
+                if age['age']:
+                    if int(float(age['age'])) in r:
+                        count = count + 1
+                        age_dict[age['party_name']] = count + 1
 
             party_age.append(dict(age_dict))
 
@@ -297,11 +303,13 @@ class EthnicityViewSet(views.APIView):
         #for total ethnicities
         pratinidhi_caste = PratinidhiShava.objects.all()
         provincial_caste = ProvinceMahilaPratinidhiForm.objects.all()
+        national_caste = RastriyaShava.objects.all()
 
-        castes = list(chain(pratinidhi_caste, provincial_caste))
+        castes = list(chain(pratinidhi_caste, provincial_caste, national_caste))
         totals = []
         for caste in castes:
-            totals.append(caste.caste)
+            if caste.caste:
+                totals.append(caste.caste)
 
         total_arrays = np.array(np.unique(totals, return_counts=True)).T
 
@@ -318,8 +326,9 @@ class EthnicityViewSet(views.APIView):
         .annotate(total=Count('caste'))
         castes = []
         for provinces in province_caste:
-            caste = provinces['caste']
-            castes.append(caste)
+            if provinces['caste']:
+                caste = provinces['caste']
+                castes.append(caste)
 
         caste_set = set(castes)
 
@@ -330,7 +339,7 @@ class EthnicityViewSet(views.APIView):
             province_dict = {}
             province_dict['label'] = caste
             for item in province_caste:
-                if caste in item['caste']:
+                if caste == item['caste']:
                     if str(item['province_id']) in province_dict:
                         province_dict[str(item['province_id'])] = province_dict[str(item['province_id'])] + item['total']
                     else:
@@ -346,13 +355,16 @@ class EthnicityViewSet(views.APIView):
         .annotate(total=Count('caste'))
         pratinidhi_party_caste = PratinidhiShava.objects.values('party_name', 'caste').distinct()\
         .annotate(total=Count('caste'))
+        national_party_caste = RastriyaShava.objects.values('party_name', 'caste').distinct()\
+        .annotate(total=Count('caste'))
 
-        party_caste = list(chain(province_party_caste, pratinidhi_party_caste))
+        party_caste = list(chain(province_party_caste, pratinidhi_party_caste, national_party_caste))
 
         castes = []
         for item in party_caste:
-            caste = item['caste']
-            castes.append(caste)
+            if item['caste']:
+                caste = item['caste']
+                castes.append(caste)
 
         caste_set = set(castes)
 
@@ -362,7 +374,7 @@ class EthnicityViewSet(views.APIView):
             party_dict = {}
             party_dict['label'] = caste
             for item in party_caste:
-                if caste in item['caste']:
+                if caste == item['caste']:
                     if item['party_name'] in party_dict:
                         party_dict[item['party_name']] = party_dict[item['party_name']] + item['total']
                     else:
@@ -371,6 +383,37 @@ class EthnicityViewSet(views.APIView):
             party_ethinicity.append(dict(party_dict))
 
         total_ethnicity['party'] = party_ethinicity
+
+        #for ethnicities on basis of nation, federal and province
+        vs_ethnicity = []
+        for caste in caste_set:
+            vs_dict = {}
+            vs_dict['label'] = caste
+
+            for item in province_party_caste:
+                if caste == item['caste']:
+                    if 'province' in vs_dict:
+                        vs_dict["province"] = vs_dict['province'] + item['total']
+                    else:
+                        vs_dict['province'] = item['total']
+            
+            for item in pratinidhi_party_caste:
+                if caste == item['caste']:
+                    if 'federal' in vs_dict:
+                        vs_dict["federal"] = vs_dict['federal'] + item['total']
+                    else:
+                        vs_dict['federal'] = item['total']
+
+            for item in national_party_caste:
+                if caste == item['caste']:
+                    if 'national' in vs_dict:
+                        vs_dict["national"] = vs_dict['national'] + item['total']
+                    else:
+                        vs_dict['national'] = item['total']
+            
+            vs_ethnicity.append(dict(vs_dict))
+                    
+        total_ethnicity['nationalvsfederalvsprovincial'] = vs_ethnicity
 
         return Response(total_ethnicity)
 
@@ -386,11 +429,13 @@ class MotherTongueViewSet(views.APIView):
         #for total mother_tongues
         pratinidhi_lang = PratinidhiShava.objects.all()
         provincial_lang = ProvinceMahilaPratinidhiForm.objects.all()
+        national_lang = RastriyaShava.objects.all()
 
-        languages = list(chain(pratinidhi_lang, provincial_lang))
+        languages = list(chain(pratinidhi_lang, provincial_lang, national_lang))
         totals = []
         for language in languages:
-            totals.append(language.mother_tongue)
+            if language.mother_tongue:
+                totals.append(language.mother_tongue)
 
         total_arrays = np.array(np.unique(totals, return_counts=True)).T
 
@@ -406,9 +451,11 @@ class MotherTongueViewSet(views.APIView):
         province_mother_tongue = ProvinceMahilaPratinidhiForm.objects.values('province_id', 'mother_tongue')\
         .distinct().annotate(total=Count('mother_tongue'))
         languages = []
+        
         for language in province_mother_tongue:
-            lang = language['mother_tongue']
-            languages.append(lang)
+            if language['mother_tongue']:
+                lang = language['mother_tongue']
+                languages.append(lang)
 
         language_set = set(languages)
 
@@ -419,7 +466,7 @@ class MotherTongueViewSet(views.APIView):
             province_dict = {}
             province_dict['label'] = language
             for item in province_mother_tongue:
-                if language in item['mother_tongue']:
+                if language == item['mother_tongue']:
                     if str(item['province_id']) in province_dict:
                         province_dict[str(item['province_id'])] = province_dict[str(item['province_id'])] + item['total']
                     else:
@@ -435,13 +482,16 @@ class MotherTongueViewSet(views.APIView):
         .distinct().annotate(total=Count('mother_tongue'))
         pratinidhi_party_lang = PratinidhiShava.objects.values('party_name', 'mother_tongue')\
         .distinct().annotate(total=Count('mother_tongue'))
+        national_party_lang = RastriyaShava.objects.values('party_name', 'mother_tongue')\
+        .distinct().annotate(total=Count('mother_tongue'))
 
-        party_lang = list(chain(province_party_lang, pratinidhi_party_lang))
+        party_lang = list(chain(province_party_lang, pratinidhi_party_lang, national_party_lang))
 
         languages = []
         for item in party_lang:
-            lang = item['mother_tongue']
-            languages.append(lang)
+            if item['mother_tongue']:
+                lang = item['mother_tongue']
+                languages.append(lang)
 
         language_set = set(languages)
 
@@ -451,7 +501,7 @@ class MotherTongueViewSet(views.APIView):
             party_dict = {}
             party_dict['label'] = language
             for item in party_lang:
-                if language in item['mother_tongue']:
+                if language == item['mother_tongue']:
                     if item['party_name'] in party_dict:
                         party_dict[item['party_name']] = party_dict[item['party_name']] + item['total']
                     else:
@@ -461,7 +511,41 @@ class MotherTongueViewSet(views.APIView):
 
         total_mother_tongue['party'] = party_language
 
+        #for mother tongue on basis of nation, federal and province
+        vs_language = []
+        for language in language_set:
+            vs_dict = {}
+            vs_dict['label'] = language
+
+            for item in province_party_lang:
+                if language == item['mother_tongue']:
+                    if "province" in vs_dict:
+                        vs_dict['province'] = vs_dict['province'] + item['total']
+                    else:
+                        vs_dict["province"] = item['total']
+            
+
+            for item in pratinidhi_party_lang:
+                if language == item['mother_tongue']:
+                    if "federal" in vs_dict:
+                        vs_dict['federal'] = vs_dict['federal'] + item['total']
+                    else:
+                        vs_dict["federal"] = item['total']
+
+            for item in national_party_lang:
+                if language == item['mother_tongue']:
+                    if "national" in vs_dict:
+                        vs_dict['national'] = vs_dict['national'] + item['total']
+                    else:
+                        vs_dict["national"] = item['total']
+            
+            vs_language.append(dict(vs_dict))
+                    
+        total_mother_tongue['nationalvsfederalvsprovincial'] = vs_language
+
+
         return Response(total_mother_tongue)
+
 
 class EducationViewSet(views.APIView):
 
@@ -474,11 +558,13 @@ class EducationViewSet(views.APIView):
         #for total educational qualification
         pratinidhi_education = PratinidhiShava.objects.all()
         provincial_education = ProvinceMahilaPratinidhiForm.objects.all()
+        national_education = RastriyaShava.objects.all()
 
-        educations = list(chain(pratinidhi_education, provincial_education))
+        educations = list(chain(pratinidhi_education, provincial_education, national_education))
         totals = []
         for education in educations:
-            totals.append(education.educational_qualification)
+            if education.educational_qualification:
+                totals.append(education.educational_qualification)
 
         total_arrays = np.array(np.unique(totals, return_counts=True)).T
 
@@ -494,9 +580,11 @@ class EducationViewSet(views.APIView):
         province_education = ProvinceMahilaPratinidhiForm.objects.values('province_id', 'educational_qualification')\
         .distinct().annotate(total=Count('educational_qualification'))
         educations = []
+
         for education in province_education:
-            edu = education['educational_qualification']
-            educations.append(edu)
+            if education['educational_qualification']:
+                edu = education['educational_qualification']
+                educations.append(edu)
 
         education_set = set(educations)
 
@@ -507,7 +595,7 @@ class EducationViewSet(views.APIView):
             province_dict = {}
             province_dict['label'] = education
             for item in province_education:
-                if education in item['educational_qualification']:
+                if education == item['educational_qualification']:
                     if str(item['province_id']) in province_dict:
                         province_dict[item['province_id']] = province_dict[item['province_id']] + item['total']
                     else:
@@ -523,14 +611,17 @@ class EducationViewSet(views.APIView):
         .distinct().annotate(total=Count('educational_qualification'))
         pratinidhi_party_edu = PratinidhiShava.objects.values('party_name', 'educational_qualification')\
         .distinct().annotate(total=Count('educational_qualification'))
+        national_party_edu = RastriyaShava.objects.values('party_name', 'educational_qualification')\
+        .distinct().annotate(total=Count('educational_qualification'))
 
-        party_edu = list(chain(province_party_edu, pratinidhi_party_edu))
+        party_edu = list(chain(province_party_edu, pratinidhi_party_edu, national_party_edu))
 
         educations = []
         for item in party_edu:
-            edu = item['educational_qualification']
-            educations.append(edu)
-
+            if item['educational_qualification']:
+                edu = item['educational_qualification']
+                educations.append(edu)
+        
         education_set = set(educations)
 
         party_education=[]
@@ -539,16 +630,51 @@ class EducationViewSet(views.APIView):
             party_dict = {}
             party_dict['label'] = education
             for item in party_edu:
-                if education in item['educational_qualification']:
-                    if item['party_name'] in party_dict:
-                        party_dict[item['party_name']] = party_dict[item['party_name']] + item['total']
-                    else:
-                        party_dict[item['party_name']] = item['total']
+                if item['educational_qualification'] is not None:
+                    if education == item['educational_qualification']:
+                        if item['party_name'] in party_dict:
+                            party_dict[item['party_name']] = party_dict[item['party_name']] + item['total']
+                        else:
+                            party_dict[item['party_name']] = item['total']
 
             party_education.append(dict(party_dict))
 
         total_education['party'] = party_education
 
+        #for education on basis of nation, federal and province
+        vs_education = []
+        for education in education_set:
+            vs_dict = {}
+            vs_dict['label'] = education
+
+            for item in province_party_edu:
+                if education == item['educational_qualification']:
+                    if "province" in vs_dict:
+                        vs_dict['province'] = vs_dict['province'] + item['total']
+                    else:
+                        vs_dict["province"] = item['total']
+            
+
+            for item in pratinidhi_party_edu:
+                if education == item['educational_qualification']:
+                    if "federal" in vs_dict:
+                        vs_dict['federal'] = vs_dict['federal'] + item['total']
+                    else:
+                        vs_dict["federal"] = item['total']
+
+            for item in national_party_edu:
+                if item['educational_qualification']:
+                    if education == item['educational_qualification']:
+                        if "national" in vs_dict:
+                            vs_dict['national'] = vs_dict['national'] + item['total']
+                        else:
+                            vs_dict["national"] = item['total']
+            
+            vs_education.append(dict(vs_dict))
+                    
+        total_education['nationalvsfederalvsprovincial'] = vs_education
+
+        
         return Response(total_education)
 
 
@@ -560,14 +686,16 @@ class ElectionTypeViewSet(views.APIView):
         data = []
         election_type={}
 
-        #for total educational qualification
+        #for total election type
         pratinidhi = PratinidhiShava.objects.all()
         provincial = ProvinceMahilaPratinidhiForm.objects.all()
+        national = RastriyaShava.objects.all()
 
-        election_types = list(chain(pratinidhi, provincial))
+        election_types = list(chain(pratinidhi, provincial, national))
         totals = []
         for election in election_types:
-            totals.append(election.nirwachit_prakriya)
+            if election.nirwachit_prakriya:
+                totals.append(election.nirwachit_prakriya.title().strip(" "))
 
         total_arrays = np.array(np.unique(totals, return_counts=True)).T
 
@@ -579,13 +707,14 @@ class ElectionTypeViewSet(views.APIView):
 
         total_election_type['total'] = data
 
-        #for educational qualification on basis of provinces
+        #for election type on basis of provinces
         province_election = ProvinceMahilaPratinidhiForm.objects.values('province_id', 'nirwachit_prakriya')\
         .distinct().annotate(total=Count('nirwachit_prakriya'))
         election_types = []
         for election in province_election:
-            elec = election['nirwachit_prakriya']
-            election_types.append(elec)
+            if election['nirwachit_prakriya']:
+                elec = election['nirwachit_prakriya'].title().strip(" ")
+                election_types.append(elec)
 
         election_set = set(election_types)
 
@@ -607,18 +736,21 @@ class ElectionTypeViewSet(views.APIView):
 
         total_election_type['provincial'] = province_elect
 
-        #for ethnicities on basis of political parties
+        #for election type on basis of political parties
         province_party_election = ProvinceMahilaPratinidhiForm.objects.values('party_name', 'nirwachit_prakriya')\
         .distinct().annotate(total=Count('nirwachit_prakriya'))
         pratinidhi_party_election = PratinidhiShava.objects.values('party_name', 'nirwachit_prakriya')\
         .distinct().annotate(total=Count('nirwachit_prakriya'))
+        national_party_election = RastriyaShava.objects.values('party_name', 'nirwachit_prakriya')\
+        .distinct().annotate(total=Count('nirwachit_prakriya'))
 
-        party_election = list(chain(province_party_election, pratinidhi_party_election))
+        party_election = list(chain(province_party_election, pratinidhi_party_election, national_party_election))
 
         elections = []
         for item in party_election:
-            elect = item['nirwachit_prakriya']
-            elections.append(elect)
+            if item['nirwachit_prakriya']:
+                elect = item['nirwachit_prakriya'].title().strip(" ")
+                elections.append(elect)
 
         election_set = set(elections)
 
@@ -637,6 +769,39 @@ class ElectionTypeViewSet(views.APIView):
             party_elections.append(dict(party_dict))
 
         total_election_type['party'] = party_elections
+
+
+        #for election type on basis of nation, federal and province
+        vs_election = []
+        for election in election_set:
+            vs_dict = {}
+            vs_dict['label'] = election
+
+            for item in province_party_election:
+                if election == item['nirwachit_prakriya']:
+                    if "province" in vs_dict:
+                        vs_dict['province'] = vs_dict['province'] + item['total']
+                    else:
+                        vs_dict["province"] = item['total']
+            
+
+            for item in pratinidhi_party_election:
+                if election == item['nirwachit_prakriya']:
+                    if "federal" in vs_dict:
+                        vs_dict['federal'] = vs_dict['federal'] + item['total']
+                    else:
+                        vs_dict["federal"] = item['total']
+
+            for item in national_party_election:
+                if election == item['nirwachit_prakriya']:
+                    if "national" in vs_dict:
+                        vs_dict['national'] = vs_dict['national'] + item['total']
+                    else:
+                        vs_dict["national"] = item['total']
+            
+            vs_election.append(dict(vs_dict))
+                    
+        total_election_type['nationalvsfederalvsprovincial'] = vs_election
 
         return Response(total_election_type)
 
@@ -678,14 +843,16 @@ class MaritalStatusViewSet(views.APIView):
         data_list = []
         maritalstatus_dict = {}
 
-        #for total educational qualification
+        #for marital status qualification
         pratinidhi = PratinidhiShava.objects.all()
         provincial = ProvinceMahilaPratinidhiForm.objects.all()
+        national = RastriyaShava.objects.all()
 
-        maritalstatus_list = list(chain(pratinidhi, provincial))
+        maritalstatus_list = list(chain(pratinidhi, provincial, national))
         totals = []
         for marital in maritalstatus_list:
-            totals.append(marital.marital_status)
+            if marital.marital_status:
+                totals.append(marital.marital_status)
 
         total_arrays = np.array(np.unique(totals, return_counts=True)).T
 
@@ -697,13 +864,14 @@ class MaritalStatusViewSet(views.APIView):
 
         total_maritalstatus_dict['total'] = data_list
 
-        #for educational qualification on basis of provinces
+        #for marital status on basis of provinces
         province_maritalstatus = ProvinceMahilaPratinidhiForm.objects.values('province_id', 'marital_status')\
         .distinct().annotate(total=Count('marital_status'))
         marital_status_list = []
         for marital in province_maritalstatus:
-            maritals = marital['marital_status']
-            marital_status_list.append(maritals)
+            if marital['marital_status']:
+                maritals = marital['marital_status']
+                marital_status_list.append(maritals)
 
         marital_status_set = set(marital_status_list)
 
@@ -714,7 +882,7 @@ class MaritalStatusViewSet(views.APIView):
             province_dict = {}
             province_dict['label'] = marital
             for item in province_maritalstatus:
-                if marital in item['marital_status']:
+                if marital == item['marital_status']:
                     if str(item['province_id']) in province_dict:
                         province_dict[item['province_id']] = province_dict[item['province_id']] + item['total']
                     else:
@@ -725,18 +893,21 @@ class MaritalStatusViewSet(views.APIView):
 
         total_maritalstatus_dict['provincial'] = province_marital_list
 
-        #for ethnicities on basis of political parties
+        #for marital status on basis of political parties
         province_party_marital = ProvinceMahilaPratinidhiForm.objects.values('party_name', 'marital_status')\
         .distinct().annotate(total=Count('marital_status'))
         pratinidhi_party_marital = PratinidhiShava.objects.values('party_name', 'marital_status')\
         .distinct().annotate(total=Count('marital_status'))
+        national_party_marital = RastriyaShava.objects.values('party_name', 'marital_status')\
+        .distinct().annotate(total=Count('marital_status'))
 
-        party_marital =  list(chain(province_party_marital, pratinidhi_party_marital))
+        party_marital =  list(chain(province_party_marital, pratinidhi_party_marital, national_party_marital))
 
         marital_list = []
         for item in party_marital:
-            marital = item['marital_status']
-            marital_list.append(marital)
+            if item['marital_status']:
+                marital = item['marital_status']
+                marital_list.append(marital)
 
         marital_set = set(marital_list)
 
@@ -746,7 +917,7 @@ class MaritalStatusViewSet(views.APIView):
             party_dict = {}
             party_dict['label'] = m
             for item in party_marital:
-                if m in item['marital_status']:
+                if m == item['marital_status']:
                     if item['party_name'] in party_dict:
                         party_dict[item['party_name']] = party_dict[item['party_name']] + item['total']
                     else:
@@ -755,6 +926,38 @@ class MaritalStatusViewSet(views.APIView):
             party_marital_list.append(dict(party_dict))
 
         total_maritalstatus_dict['party'] = party_marital_list
+
+
+        #for election type on basis of nation, federal and province
+        vs_marital = []
+        for marital in marital_set:
+            vs_dict = {}
+            vs_dict['label'] = marital
+
+            for item in province_party_marital:
+                if marital == item['marital_status']:
+                    if "province" in vs_dict:
+                        vs_dict['province'] = vs_dict['province'] + item['total']
+                    else:
+                        vs_dict["province"] = item['total']
+
+            for item in pratinidhi_party_marital:
+                if marital == item['marital_status']:
+                    if "federal" in vs_dict:
+                        vs_dict['federal'] = vs_dict['federal'] + item['total']
+                    else:
+                        vs_dict["federal"] = item['total']
+
+            for item in national_party_marital:
+                if marital == item['marital_status']:
+                    if "national" in vs_dict:
+                        vs_dict['national'] = vs_dict['national'] + item['total']
+                    else:
+                        vs_dict["national"] = item['total']
+
+            vs_marital.append(dict(vs_dict))
+                    
+        total_maritalstatus_dict['nationalvsfederalvsprovincial'] = vs_marital
 
         return Response(total_maritalstatus_dict)
 
@@ -769,11 +972,13 @@ class ElectionParticipate(views.APIView):
         #for total educational qualification
         pratinidhi = PratinidhiShava.objects.all()
         provincial = ProvinceMahilaPratinidhiForm.objects.all()
+        national = RastriyaShava.objects.all()
 
-        election_before_list = list(chain(pratinidhi, provincial))
+        election_before_list = list(chain(pratinidhi, provincial, national))
         totals = []
         for elect in election_before_list:
-            totals.append(elect.aaja_vanda_agadi_chunab_ladnu_vayeko_chha)
+            if elect.aaja_vanda_agadi_chunab_ladnu_vayeko_chha:
+                totals.append(elect.aaja_vanda_agadi_chunab_ladnu_vayeko_chha)
 
         total_arrays = np.array(np.unique(totals, return_counts=True)).T
 
@@ -785,13 +990,14 @@ class ElectionParticipate(views.APIView):
 
         total_election_before_dict['total'] = data_list
 
-        #for educational qualification on basis of provinces
+        #for election experience on basis of provinces
         province_election_before = ProvinceMahilaPratinidhiForm.objects.values('province_id', 'aaja_vanda_agadi_chunab_ladnu_vayeko_chha')\
         .distinct().annotate(total=Count('aaja_vanda_agadi_chunab_ladnu_vayeko_chha'))
         election_before_list = []
         for election_before in province_election_before:
-            elections = election_before['aaja_vanda_agadi_chunab_ladnu_vayeko_chha']
-            election_before_list.append(elections)
+            if election_before['aaja_vanda_agadi_chunab_ladnu_vayeko_chha']:
+                elections = election_before['aaja_vanda_agadi_chunab_ladnu_vayeko_chha']
+                election_before_list.append(elections)
 
         election_before_set = set(election_before_list)
 
@@ -813,22 +1019,26 @@ class ElectionParticipate(views.APIView):
 
         total_election_before_dict['provincial'] = province_election_before_list
 
-        #for ethnicities on basis of political parties
+        #for election experience on basis of political parties
         province_party_election_before = ProvinceMahilaPratinidhiForm.objects\
         .values('party_name', 'aaja_vanda_agadi_chunab_ladnu_vayeko_chha')\
         .distinct().annotate(total=Count('aaja_vanda_agadi_chunab_ladnu_vayeko_chha'))
         pratinidhi_party_election_before = PratinidhiShava.objects\
         .values('party_name', 'aaja_vanda_agadi_chunab_ladnu_vayeko_chha')\
         .distinct().annotate(total=Count('aaja_vanda_agadi_chunab_ladnu_vayeko_chha'))
+        national_party_election_before = RastriyaShava.objects\
+        .values('party_name', 'aaja_vanda_agadi_chunab_ladnu_vayeko_chha')\
+        .distinct().annotate(total=Count('aaja_vanda_agadi_chunab_ladnu_vayeko_chha'))
 
         party_election_before_list =  list(
             chain(
-                province_party_election_before, pratinidhi_party_election_before))
+                province_party_election_before, pratinidhi_party_election_before, national_party_election_before))
 
         election_before_list = []
         for item in party_election_before_list:
-            election_before = item['aaja_vanda_agadi_chunab_ladnu_vayeko_chha']
-            election_before_list.append(election_before)
+            if item['aaja_vanda_agadi_chunab_ladnu_vayeko_chha']:
+                election_before = item['aaja_vanda_agadi_chunab_ladnu_vayeko_chha']
+                election_before_list.append(election_before)
 
         election_before_set = set(election_before_list)
 
@@ -838,15 +1048,50 @@ class ElectionParticipate(views.APIView):
             party_dict = {}
             party_dict['label'] = m
             for item in party_election_before_list:
-                if m in item['aaja_vanda_agadi_chunab_ladnu_vayeko_chha']:
-                    if item['party_name'] in party_dict:
-                        party_dict[item['party_name']] = party_dict[item['party_name']] + item['total']
-                    else:
-                        party_dict[item['party_name']] = item['total']
+                if item['aaja_vanda_agadi_chunab_ladnu_vayeko_chha']:
+                    if m in item['aaja_vanda_agadi_chunab_ladnu_vayeko_chha']:
+                        if item['party_name'] in party_dict:
+                            party_dict[item['party_name']] = party_dict[item['party_name']] + item['total']
+                        else:
+                            party_dict[item['party_name']] = item['total']
 
             party_election_before.append(dict(party_dict))
 
         total_election_before_dict['party'] = party_election_before
+        
+        #for election experience on basis of nation, federal and province
+        vs_election_before = []
+        for elections in election_before_set:
+            vs_dict = {}
+            vs_dict['label'] = elections
+
+            for item in province_party_election_before:
+                if item['aaja_vanda_agadi_chunab_ladnu_vayeko_chha']:
+                    if elections == item['aaja_vanda_agadi_chunab_ladnu_vayeko_chha']:
+                        if "province" in vs_dict:
+                            vs_dict['province'] = vs_dict['province'] + item['total']
+                        else:
+                            vs_dict["province"] = item['total']
+
+            for item in pratinidhi_party_election_before:
+                if item['aaja_vanda_agadi_chunab_ladnu_vayeko_chha']:
+                    if elections == item['aaja_vanda_agadi_chunab_ladnu_vayeko_chha']:
+                        if "federal" in vs_dict:
+                            vs_dict['federal'] = vs_dict['federal'] + item['total']
+                        else:
+                            vs_dict["federal"] = item['total']
+            
+            for item in national_party_election_before:
+                if item['aaja_vanda_agadi_chunab_ladnu_vayeko_chha']:
+                    if elections == item['aaja_vanda_agadi_chunab_ladnu_vayeko_chha']:
+                        if 'national' in vs_dict:
+                            vs_dict['national'] = vs_dict['national'] + item['total']
+                        else:
+                            vs_dict['national'] = item['total']
+
+            vs_election_before.append(dict(vs_dict))
+                    
+        total_election_before_dict['nationalvsfederalvsprovincial'] = vs_election_before
 
         return Response(total_election_before_dict)
 
@@ -862,11 +1107,13 @@ class PartyViewSet(views.APIView):
         #for total educational qualification
         pratinidhi = PratinidhiShava.objects.all()
         provincial = ProvinceMahilaPratinidhiForm.objects.all()
+        national = RastriyaShava.objects.all()
 
-        party_list = list(chain(pratinidhi, provincial))
+        party_list = list(chain(pratinidhi, provincial, national))
         totals = []
         for party in party_list:
-            totals.append(party.party_name)
+            if party.party_name:
+                totals.append(party.party_name)
 
         total_arrays = np.array(np.unique(totals, return_counts=True)).T
 
@@ -877,13 +1124,15 @@ class PartyViewSet(views.APIView):
             data_list.append(dict(party_dict))
 
         total_party_dict['total'] = data_list
-
+        
+        #for parties on basis of provinces
         province_party = ProvinceMahilaPratinidhiForm.objects.values('province_id', 'party_name')\
         .distinct().annotate(total=Count('party_name'))
         party_list = []
         for party in province_party:
-            parties = party['party_name']
-            party_list.append(parties)
+            if party['party_name']:
+                parties = party['party_name']
+                party_list.append(parties)
 
         party_set = set(party_list)
 
@@ -905,7 +1154,152 @@ class PartyViewSet(views.APIView):
 
         total_party_dict['provincial'] = province_party_list
 
+        #for parties on basis of nation, federal and province
+        province_party = ProvinceMahilaPratinidhiForm.objects\
+        .values('party_name')\
+        .distinct().annotate(total=Count('party_name'))
+        pratinidhi_party = PratinidhiShava.objects\
+        .values('party_name')\
+        .distinct().annotate(total=Count('party_name'))
+        national_party = RastriyaShava.objects\
+        .values('party_name')\
+        .distinct().annotate(total=Count('party_name'))
+
+
+        vs_party = []
+        for party in party_set:
+            vs_dict = {}
+            vs_dict['label'] = party
+
+            for item in province_party:
+                if item['party_name']:
+                    if party == item['party_name']:
+                        if "province" in vs_dict:
+                            vs_dict['province'] = vs_dict['province'] + item['total']
+                        else:
+                            vs_dict["province"] = item['total']
+
+            for item in pratinidhi_party:
+                if item['party_name']:
+                    if party == item['party_name']:
+                        if "federal" in vs_dict:
+                            vs_dict['federal'] = vs_dict['federal'] + item['total']
+                        else:
+                            vs_dict["federal"] = item['total']
+            
+            for item in national_party:
+                if item['party_name']:
+                    if party == item['party_name']:
+                        if 'national' in vs_dict:
+                            vs_dict['national'] = vs_dict['national'] + item['total']
+                        else:
+                            vs_dict['national'] = item['total']
+
+            vs_party.append(dict(vs_dict))
+                    
+        total_party_dict['nationalvsfederalvsprovincial'] = vs_party
+
         return Response(total_party_dict)
+
+
+class CommitmentViewSet(views.APIView):
+
+    def get(self, request):
+        
+        commitment_dict = {}
+        data_list = []
+        total_commitment_dict = {}
+
+        #for total political commitment
+
+        #fetch each commitments for national, pratinidhi and provincial
+        national_commitments = RastriyaShava.objects.values('nirwachit_chetra_pratiko_pratibadhata')
+        pratinidhi_commitments = PratinidhiShava.objects.values('nirwachit_chetra_pratiko_pratibadhata')
+        province_commitments = ProvinceMahilaPratinidhiForm.objects.values('nirwachit_chetra_pratiko_pratibadhata')
+
+        commitment_lists = list(chain(national_commitments, pratinidhi_commitments, province_commitments))
+        commitment_set = ()
+        commitments_list = []
+        
+
+        for commitment in commitment_lists:
+            for item in commitment['nirwachit_chetra_pratiko_pratibadhata'].split(","):
+                if item:
+                    item = item.strip(" ")
+                    commitments_list.append(item.title())
+
+        commitment_set = set(commitments_list)
+        
+        totals = []
+
+        for item in commitments_list:
+            if item in commitment_set:
+                totals.append(item)
+        
+        total_arrays = np.array(np.unique(totals, return_counts=True)).T
+
+        for total in total_arrays:
+            commitment_dict['label'] = total[0]
+            commitment_dict['total'] = total[1]
+
+            data_list.append(dict(commitment_dict))
+
+        total_commitment_dict['total'] = data_list
+
+        #for political commitment on basis of province
+        province_political_commitment = ProvinceMahilaPratinidhiForm.objects.values(
+            'province_id', 'nirwachit_chetra_pratiko_pratibadhata'
+            )
+        
+        province_political_commitment_list = []
+
+        for commitment in commitment_set:
+            province_dict = {}
+            province_dict['label'] = commitment
+            for item in province_political_commitment:
+                for i in item['nirwachit_chetra_pratiko_pratibadhata'].split(","):
+                    if i.title().strip(" ") in commitment:
+                        if str(item['province_id']) in province_dict:
+                            province_dict[str(item['province_id'])] = province_dict[str(item['province_id'])] + 1
+                        else:
+                            province_dict[str(item['province_id'])] = 1
+            
+            province_political_commitment_list.append(dict(province_dict))
+
+        total_commitment_dict['provincial'] = province_political_commitment_list
+
+        #for political commitments on basis of party
+        province_political_commitment = ProvinceMahilaPratinidhiForm.objects.values(
+            'party_name', 'nirwachit_chetra_pratiko_pratibadhata'
+            )
+        national_political_commitment = RastriyaShava.objects.values(
+            'party_name', 'nirwachit_chetra_pratiko_pratibadhata'
+            )        
+        federal_political_commitment = PratinidhiShava.objects.values(
+            'party_name', 'nirwachit_chetra_pratiko_pratibadhata'
+            )        
+
+        list_commitment = list(chain(province_political_commitment, national_political_commitment, federal_political_commitment))
+        party_political_commitment_list = []
+
+        for commitment in commitment_set:
+            party_dict = {}
+            party_dict['label'] = commitment
+            for item in list_commitment:
+                for i in item['nirwachit_chetra_pratiko_pratibadhata'].split(","):
+                    if i.title().strip(" ") in commitment:
+                        if item['party_name']:
+                            if item['party_name'] in party_dict:
+                                party_dict[item['party_name']] = party_dict[item['party_name']] + 1
+                            else:
+                                party_dict[item['party_name']] = 1
+            
+            party_political_commitment_list.append(dict(party_dict))
+
+        total_commitment_dict['party'] = party_political_commitment_list
+
+
+        return Response(total_commitment_dict)
 
 
 class DistrictsViewSet(ReadOnlyModelViewSet):
@@ -917,3 +1311,31 @@ class DistrictsViewSet(ReadOnlyModelViewSet):
         if province_query is not None:
             queryset = queryset.filter(province=province_query)
         return queryset
+
+class HlcitViewSet(ReadOnlyModelViewSet):
+    serializer_class = HlcitSerializer
+
+    def get_queryset(self, *args, **kwargs):
+        names = {}
+        n = []
+        rastriya_names = RastriyaShava.objects.values('english_name', 'id').filter(hlcit_code=self.kwargs['hlcit'])
+        province_names = ProvinceMahilaPratinidhiForm.objects.values('english_name', 'id').filter(hlcit_code=self.kwargs['hlcit'])
+        federal_names = PratinidhiShava.objects.values('english_name', 'id').filter(hlcit_code=self.kwargs['hlcit'])
+        # m = rastriya_names.__class.__name
+        # import ipdb
+        # ipdb.set_trace()
+        all_names = list(chain(rastriya_names, province_names, federal_names))
+        for nama in all_names:
+            names['name'] = nama['english_name']
+            names['id'] = nama['id']
+            names['model'] = "hello"
+            n.append(dict(names))
+
+
+
+        return n
+
+
+    # def get(self, *args, **kwargs):
+    #     details_dict = {}
+

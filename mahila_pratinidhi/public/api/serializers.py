@@ -71,9 +71,20 @@ class ElectionExperienceSerializers(serializers.ListSerializer):
 class PartySerializers(serializers.ListSerializer):
     party = serializers.DictField()
 
+
+class CommitmentSerializers(serializers.ListSerializer):
+    commitment = serializers.DictField()
+
+
 class DistrictsSerializer(serializers.ModelSerializer):
     class Meta:
         model = District
         exclude = ('elected_women', )
 
+
+class HlcitSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = RastriyaShava
+        fields = ('id','name', )
 
