@@ -65,24 +65,13 @@ fetchapi();
 var total_instance = 300;
 
 
-var customPopup = "National:<br/>Federal:<br/>Provincial:<br/>Local:<br/>";
-var customOptions =
-    {
-    'maxWidth': '1000',
-    'className' : 'custom-icon',
-    'closeButton': false,
-    'autoClose': false
-    }
+
 
     function locateUser() {
         this.map.locate({setView : true});
     }
 
 
-function update_popup(data){
-  customPopup = "National:"+data[0]+"<br/>Federal:"+data[1]+"<br/>Provincial:"+data[2]+"<br/>Local:"+data[3]+"<br/>";
-
-}
 
 function highlightFeature(e){
   console.log("xtty");
@@ -195,34 +184,43 @@ if(Object.keys(properties_object).length=="8"){
 
 
    $.each(muni._layers,function(key,value){
+
+
      if(value.feature.properties.DISTRICT.toLowerCase()=== dric){
        var geo = value.feature;
        var code = value.feature.properties['HLCIT_CODE'];
        var profile_link ="http://localhost:8000/detail/national/172/";
-       var popup_content ="<strong>Mahilapratinidhi</strong><br>"+ "<a href='"+ profile_link +  "'>"+ value.feature.properties['HLCIT_CODE'] + "</a>";
-       $.get(base_url+"/api/hlcit"+ code ,function(data){
+       var popup_content ="<div><strong>Mahilapratinidhi</strong></div><br><br>";
 
 
+       $.get(base_url+"/api/hlcit/"+ code ,function(data){
+         var females = data;
+         for(let i =0;i<females.length;i++){
+           var model = (females[i]['model']=="province") ? females[i]['model'] +"/" + hlcit.slice(7,8)  : females[i]['model'];
+           var detail = (females[i]['model']=="province") ? "explore" : "detail";
+           popup_content += "<h5><a href='"+ base_url+ "/"+ detail + "/" + model + "/" + females[i]['id'] + "/" +  "'>"+ females[i]['name'] + "</a></h5><br>"
 
+         }
 
-       })
+                var muni_layer= L.geoJson(geo,{onEachFeature:onEachFeature_second,
+                  style: { color: "white",
+                           weight:2,
+                           fillColor:"grey",
+                           fillOpacity:"0.6"
+                           }
+                         }).bindPopup(popup_content);
 
+                muni_layers.addLayer(muni_layer);
 
-       var muni_layer= L.geoJson(geo,{onEachFeature:onEachFeature_second,
-         style: { color: "white",
-                  weight:2,
-                  fillColor:"grey",
-                  fillOpacity:"0.6"
-                  }
-                }).bindPopup(popup_content);
-       muni_layers.addLayer(muni_layer);
+       });
+
       }
 
+
+
    });
-   console.log("markers",marker_array)
-
-
    last_layer.push(muni_layers);
+
 
 
  }
@@ -287,16 +285,23 @@ function onEachFeature(feature,layer){
   })
 }
 
-function ward_leader(number,center,females){
+function ward_leader(number,center,females,hlcit){
 
+if(number){
   var marker_cluster = L.markerClusterGroup();
+
   for(let i=0;i<number;i++){
-    marker_cluster.addLayer(L.marker(center).bindPopup("Mahila Prathinidhi"));
+    var popup_content = "";
+    var model = (females[i]['model']=="province") ? females[i]['model'] +"/" + hlcit.slice(7,8)  : females[i]['model'];
+    var detail = (females[i]['model']=="province") ? "explore" : "detail";
+    popup_content += "<a href='"+ base_url+"/"+ detail+ "/" + model + "/" + females[i]['id'] + "/" +  "'>" + females[i]['name'] + "</a>"
+    marker_cluster.addLayer(L.marker(center).bindPopup(popup_content));
   }
 
-  map.addLayer(marker_cluster);
+map.addLayer(marker_cluster);
 marker_array.push(marker_cluster);
 
+}
 }
 
 function circular_marker(center,number,name,feature){
@@ -318,16 +323,13 @@ function circular_marker(center,number,name,feature){
       // you can set .my-div-icon styles in CSS
       if (Object.keys(feature.properties).length=="11"){
 
-                var marker_cluster = L.markerClusterGroup();
-                for(let i=0;i<number;i++){
-                  marker_cluster.addLayer(L.marker(center).bindPopup("Mahila Prathinidhi"));
-                }
 
-                map.addLayer(marker_cluster);
-              marker_array.push(marker_cluster);
+        $.get(base_url+'/api/hlcit/'+name.replace("_"," "), function(data){
+                var females =data;
+                ward_leader(number,center,females,name.replace("_"," "))
 
-    }
-
+    });
+}
       else{
 
 
@@ -336,8 +338,8 @@ function circular_marker(center,number,name,feature){
 
     }
 
+  }
                 //.bindPopup('divIcon CSS3 popup. <br> Supposed to be easily stylable.');
-}
 
 function get_center(feature,layer){
 
@@ -353,6 +355,7 @@ function get_code(feature){
  }
 
 return xx;
+
 }
 
 function get_name(feature){
@@ -594,7 +597,6 @@ function getLocation(){
   console.log("country",country);
   $.each(muni._layers, function(key,value){
       if(value._bounds.contains(latlng)== true){
-        var munici =(value.feature.properties['HLCIT_CODE']);
         var geo = value.feature;
         var muni_layer =L.geoJson(geo,{}).addTo(map);
         last_layer.push(muni_layer);
@@ -602,8 +604,16 @@ function getLocation(){
         for (var i=0;i<marker_array.length;i++){
           marker_array[i].removeFrom(map);
         }
-        var females=[];
-        ward_leader(get_number(value.feature),get_center(value,value),females);
+        var hlcit =(value.feature.properties['HLCIT_CODE']);
+        alert(hlcit);
+        $.get(base_url+'/api/hlcit/'+hlcit, function(data){
+
+          var females=data;
+          ward_leader(get_number(value.feature),get_center(value,value),females,hlcit);
+
+        })
+
+
 
 
     }

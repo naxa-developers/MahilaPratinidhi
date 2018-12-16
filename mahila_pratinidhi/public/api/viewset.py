@@ -623,7 +623,7 @@ class MotherTongueViewSet(views.APIView):
         total_mother_tongue['party'] = party_language
 
         #for mother tongue on basis of nation, federal and province
-        vs_language = []/
+        vs_language = []
         for language in language_set:
             vs_dict = {}
             vs_dict['label'] = language
