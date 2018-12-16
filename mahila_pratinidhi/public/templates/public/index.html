@@ -276,8 +276,23 @@
                     <div class="col-md-4 flexHolder">
                         <div class="buttons">
                             <div class="socialIcons">
-                                <i class="fa fa-facebook-f"></i>
-                                <i class="fa fa-twitter"></i>
+                                    {% if form.social_networking_medium is not empty %}
+                                    <div class="shareInfo">
+                                        <span class="ihs">
+                                            <i class="fa fa-facebook mr5 ">
+
+                                            </i>
+                                            <i class="fa  fa-twitter ">
+
+                                            </i>
+                                        </span>
+
+                                        <span class="contactIfo">
+                                            <a href="https://www.facebook.com/{{form.social_networking_medium}}" target="_blank">Find on Social Media</a>
+                                        </span>
+                                    </div>
+                                    {% endif %}
+                                <!--<i class="fa fa-twitter"></i>-->
                                 <i class="fa fa-phone"></i>
                                 <i class="fa fa-envelope"></i>
                             </div>

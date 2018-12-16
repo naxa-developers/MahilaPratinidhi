@@ -125,6 +125,8 @@ class CommonShavaFields(models.Model):
 	status = models.BooleanField(choices=BOOL_CHOICES, default=False, verbose_name="स्थिति")
 	image = models.ImageField(blank=True, null=True, upload_to='provinceProfile/', verbose_name="फोटो")
 	featured = models.BooleanField(default=False)
+	hlcit_code = models.CharField(max_length=20, null=True)
+
 	class Meta:
 		abstract = True
 	
@@ -209,7 +211,8 @@ class MahilaPratinidhiForm(models.Model):
 	featured = models.BooleanField(default=False)
 	news = GenericRelation(News)
 	province = models.ForeignKey(Province, on_delete=models.CASCADE, verbose_name="प्रदेश", related_name="mahilapratinidhiform", default=1)
- 
+	hlcit_code = models.CharField(max_length=20, null=True)
+
 
 	def __str__(self):
 		return "{} फारम".format(self.district.name)

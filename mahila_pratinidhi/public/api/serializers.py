@@ -34,11 +34,7 @@ class MapSerializers(serializers.ListSerializer):
 
 
 class AgeSerializers(serializers.ListSerializer):
-    total_age = serializers.ListField()
-    provinces_average_age = serializers.ListField()
-    province = serializers.ListField()
-    nationale = serializers.ListField()
-    federal= serializers.ListField()
+    age = serializers.DictField()
 
 
 class EthnicitySerializers(serializers.ListSerializer):
@@ -71,9 +67,40 @@ class ElectionExperienceSerializers(serializers.ListSerializer):
 class PartySerializers(serializers.ListSerializer):
     party = serializers.DictField()
 
+
+class CommitmentSerializers(serializers.ListSerializer):
+    commitment = serializers.DictField()
+
+
 class DistrictsSerializer(serializers.ModelSerializer):
     class Meta:
         model = District
         exclude = ('elected_women', )
+
+
+class HlcitSerializer(serializers.Serializer):
+    model = serializers.SerializerMethodField()
+    id = serializers.SerializerMethodField()
+    name = serializers.SerializerMethodField()
+
+    class Meta:
+        fields = ('id', 'name', 'model')
+
+    def get_name(self, obj):
+        return obj.english_name
+
+    def get_id(slef,obj):
+        return obj.id
+
+    def get_model(self, obj):
+
+        if obj.__class__.__name__ == 'RastriyaShava':
+            return 'national'
+
+        elif obj.__class__.__name__ == 'PratinidhiShava':
+            return 'pratinidhi'
+        
+        elif obj.__class__.__name__ == 'ProvinceMahilaPratinidhiForm':
+            return 'province'
 
 

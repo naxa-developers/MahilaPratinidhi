@@ -428,7 +428,7 @@ margin-top:-50px;}
     }
     .deteilbg{background:#231D51;top:0;left: 0;bottom: 0;right: 0;position: absolute;z-index: 10;}
      .date,.dname,.dlocation{position: relative; z-index: 12;}
-     .dname,.dlocation{padding-right:20px;}
+     .dname,.dlocation{padding-right:20px; min-height: 48px;}
      .bottom{
         position: absolute;
         bottom: -35px;
@@ -685,7 +685,7 @@ background:rgba(255,255,255,0.02);padding:30px;}
                     z-index: -1;
 
                 }
-                .selectOverlay.active{height:170px;z-index: 10;}
+                .selectOverlay.active{height:170px;z-index: 401;}
                 .selectList{display: flex;justify-content: space-around;}
                 .circlefilter{height: 26px;
                     width: 26px;
