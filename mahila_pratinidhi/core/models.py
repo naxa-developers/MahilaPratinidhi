@@ -136,7 +136,7 @@ class CommonShavaFields(models.Model):
 			image = Image.open(self.image.path)
 			# image = image.resize((1350, 700), Image.ANTIALIAS)
 			# image.thumbnail((1350, 700), Image.ANTIALIAS)
-			image = ImageOps.fit(image, (400, 315), Image.ANTIALIAS)
+			image = ImageOps.fit(image, (854, 1062), Image.ANTIALIAS)
 			image.save(self.image.path)
 
 
@@ -225,7 +225,7 @@ class MahilaPratinidhiForm(models.Model):
 			image = Image.open(self.image.path)
     	    # image = image.resize((1350, 700), Image.ANTIALIAS)
     	    # image.thumbnail((1350, 700), Image.ANTIALIAS)
-			image = ImageOps.fit(image, (400, 315), Image.ANTIALIAS)
+			image = ImageOps.fit(image, (854, 1062), Image.ANTIALIAS)
 			image.save(self.image.path)
 
 

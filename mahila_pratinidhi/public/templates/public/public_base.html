@@ -274,38 +274,48 @@ left: 18px;
 <script src="{% static 'public/js/jquery.min.js' %}"></script>
 <script src="{% static 'public/js/bootstrap.min.js' %}"></script>
 <script type="text/javascript" src="{% static 'public/js/slick.min.js' %}"></script>
-<script src="{% static 'public/js/all.js' %}"></script>
+<script src="{% static 'public/js/newscript.js' %}"></script>
+<!-- <script src="{% static 'public/js/all.js' %}"></script> -->
 <!--<script src="{% static 'public/js/typeahead.js' %}"></script>-->
 <script src="https://unpkg.com/scrollreveal/dist/scrollreveal.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/typeahead.js/0.9.0/typeahead.min.js"></script>
+
 <script>
+
         $(document).ready(function () {
-                    $(".menuIcon").click(function () {
 
-                        $(".menu").addClass("menuOn");
-                        $("body").addClass("overflowHidden");
+            $(".menuIcon").click(function () {
 
-                    });
-                    $(".menuheader .fa.fa-times").click(function () {
+                $(".menu").addClass("menuOn");
+                $("body").addClass("overflowHidden");
 
-                        $(".menu").removeClass("menuOn");
-                        $("body").removeClass("overflowHidden");
-                    });
-                    $("#news_link").click(function () {
-                        $(".menu").removeClass("menuOn");
-                        $("body").removeClass("overflowHidden");
-                    });
-                    $("#featured_link").click(function () {
-                        $(".menu").removeClass("menuOn");
-                        $("body").removeClass("overflowHidden");
-                    });
-                    $("#maps_link").click(function () {
-                        $(".menu").removeClass("menuOn");
-                        $("body").removeClass("overflowHidden");
-                    });
+            });
+            $(".menuheader .fa.fa-times").click(function () {
 
-                });
-            </script> 
+                $(".menu").removeClass("menuOn");
+                $("body").removeClass("overflowHidden");
+            });
+
+            $('.slider').slick({
+                autoplay: true,
+                dots: true,
+                arrows: false
+
+
+            });
+            ScrollReveal().reveal('.reveal');
+
+            ScrollReveal().reveal('.reveal', {
+                delay: 50,
+                duration: 40,
+                viewFactor: 0.5,
+                reset: false
+            });
+
+
+
+        });
+    </script>
             {% block scripts %} 
             {% endblock %}
 
