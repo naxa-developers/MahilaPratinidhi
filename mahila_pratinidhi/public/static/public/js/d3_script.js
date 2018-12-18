@@ -1,5 +1,5 @@
-//var base_url="http://mahilapratinidhi.naxa.com.np";
- var base_url="http://localhost:8000";
+var base_url="http://mahilapratinidhi.naxa.com.np";
+ //var base_url="http://localhost:8000";
 
 var chart_type ={ 'age':['kernel','stacked','stacked','stacked'] ,
                   'ethnicity':['bar','stacked','stacked','stacked'] ,
