@@ -37,6 +37,11 @@ render (){
                     bar = <Kernel data={[{'data':this.props.data_pass[0]['data'],'dataName':this.props.data_pass[0]['dataName']}]}  />;
                   }
 
+    else if(this.props.data_pass[0]['data-type']=="hstacked"){
+    
+                                  bar = <HStackedChart data={[{'data':this.props.data_pass[0]['data'],'dataName':this.props.data_pass[0]['dataName']}]}  />;
+                                }
+
         else{
 
           bar ="No Visualization"
