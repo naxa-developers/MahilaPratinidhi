@@ -175,15 +175,19 @@
 
     </div>
 
-
-
     <section>
         <div class="container-fluid">
             <div class="row">
-                <div class="mapTab" >
-                    <div class="tabs">
+                <div class="mapTab">
+                    <div class="tabs icons">
+                        <div class="btnholder">
+                            <i class="  show fa fa-arrow-right"></i>
+
+                            <i class="  fa fa-arrow-left"></i>
+
+                        </div>
                         <ul class="tabHolder">
-                            <li id="national-all">
+                            <li class="active" id="national-all">
                                 <img src="{% static 'public/image/city-hall.svg' %}" alt="">
                                 <div class="text">NATIONAL ASSEMBLY
                                 </div>
@@ -203,40 +207,45 @@
                                 <div class="text">LOCAL LEVEL GOVERNMENT
                                 </div>
                             </li> -->
+                            <li class="showhidelist show">
+                                <a href="#4b" data-toggle="tab">
+
+                                    <i class="fa fa-map-marker hm "></i>
+                                </a>
+                            </li>
+
                         </ul>
                         <div class="text-center">
-                            <button class="btn btn-round revbtn tbtn mtb50"> MAP VISUALIZATION
+                            <button class="btn btn-round revbtn tbtn mtb50 "> MAP VISUALIZATION
                                 <i class="fa fa-arrow-right arow"></i>
                             </button>
                         </div>
                     </div>
-
                     <div class="mapHolder grow redbg">
                         <div id="mapid"></div>
 
 
                     </div>
-
                 </div>
-
             </div>
 
         </div>
 
     </section>
-    <section class="pratinidhi sectionPadding" id="featured">
-        <div class="container topC">
 
-            <p class="sTitle header mb80 reveal">FEATURED MAHILA PRATINIDHI 2018</p>
-
-            <div class="slider reveal">
-                {% for datas in featured_data %} {% for data in datas %}
-                <div>
+    <section class="pratinidhi sectionPadding">
+            <div class="container topC">
+    
+                <p class="sTitle header mb80 reveal">FEATURED MAHILA PRATINIDHI 2018</p>
+    
+                <div class="slider reveal">
+                    {% for datas in featured_data %} {% for data in datas %}
+                    <div>
                     <div class="row align-items-md-center">
                         {% if data.image %}
                         <div class="col-md-4">
                                 <div class="imageHolder">
-                                    <img src="{{ MEDIA_URL }} {{ data.image.url }}" class="cropFeatured" alt="">
+                                    <img src="{{ MEDIA_URL }} {{ data.image.url }}" alt="">
                                 </div>
                         </div>
                         {% else %}
@@ -274,9 +283,10 @@
 
                             </div>
                             <div>
+                                {% if data.party_joined_date %}
                                 <span class="first"> Political Involvement:</span>
                                 <span class="value"> Since {{ data.party_joined_date|slice:":4" }} Bs</span>
-
+                                {% endif %}
                             </div>
                             <div>
                                 <span class="first"> Address:</span>
@@ -334,8 +344,6 @@
         </div>
 
     </section>
-
-
 
     <section class="dataSection sectionPadding" id="data">
         <div class="container reveal">
