@@ -30,12 +30,18 @@ render (){
 
 
       else if(this.props.data_pass[0]['data-type']=="hbar"){
-              bar = <HorizontalBar data={[{'data':this.props.data_pass[0]['data'],'dataName':this.props.data_pass[0]['dataName']}]}  />;
+              bar = <HBar data={[{'data':this.props.data_pass[0]['data'],'dataName':this.props.data_pass[0]['dataName']}]}  />;
             }
 
     else if(this.props.data_pass[0]['data-type']=="kernel"){
                     bar = <Kernel data={[{'data':this.props.data_pass[0]['data'],'dataName':this.props.data_pass[0]['dataName']}]}  />;
                   }
+
+        else{
+
+          bar ="No Visualization"
+
+          }
 
 
 

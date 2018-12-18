@@ -24,19 +24,19 @@ class StackedChart extends React.Component{
 
         var legend_array =["Communist Party of Nepal","Nepali Congress","Federal Socialist Forum",
         "Rastriya Janata Party Nepal"];
-        var count = 0;
+        var count = 2;
     }
 
     else if(dataName== "provincial") {
 
         var legend_array= ["1","2","3","4","5","6","7"];
-        count =1;
+        count =0;
     }
 
     else if (dataName== "vs") {
 
         var legend_array= ["province", "federal", "national"];
-        count =2;
+        count =1;
 
     }
 
@@ -59,14 +59,13 @@ class StackedChart extends React.Component{
 
 //["redDelicious", "mcintosh", "oranges", "pears"]
     // Transpose the data into layers
+
+
     var dataset = d3.layout.stack()(legend_array.map(function(fruit) {
       return data.map(function(d) {
         return {x: d.label, y: +d[fruit]};
       });
     }));
-
-    console.log("dataset",dataset);
-
 
     // Set x, y and colors
     var x = d3.scale.ordinal()

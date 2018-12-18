@@ -33,7 +33,7 @@
 
         #mapid {
             height: 100vh;
-            width: 70vw;
+
         }
         .custom-icon .leaflet-popup-tip,
         .custom-icon .leaflet-popup-content-wrapper {
@@ -235,9 +235,9 @@
 
     <section class="pratinidhi sectionPadding">
             <div class="container topC">
-    
+
                 <p class="sTitle header mb80 reveal">FEATURED MAHILA PRATINIDHI 2018</p>
-    
+
                 <div class="slider reveal">
                     {% for datas in featured_data %} {% for data in datas %}
                     <div>
@@ -434,7 +434,6 @@
                 }, 800);
                 $(".selectOverlay").toggleClass("active");
 
-                $(".selectOverlay").css("z-index","401");
 
               $(".circlefilter ").toggleClass("circleActive");
                 return false;

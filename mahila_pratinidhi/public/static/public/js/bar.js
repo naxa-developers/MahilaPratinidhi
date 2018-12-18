@@ -20,6 +20,12 @@ class SimpleBar extends React.Component{
   }
 
   simpleBar(sample){
+
+    var sample = sample.sort(function (a, b) {
+        return d3.descending(+a.total, +b.total);
+    })
+
+
 console.log("sample",sample);
 
 console.log("sampleafterdlt",sample);
@@ -97,7 +103,7 @@ console.log("sampleafterdlt",sample);
           .transition()
           .duration(300)
           .attr('opacity', 0.6)
-          
+
         const y = yScale(actual.total)
 
         line = chart.append('line')

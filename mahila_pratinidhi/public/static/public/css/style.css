@@ -662,7 +662,7 @@ background:rgba(255,255,255,0.02);padding:30px;}
                 margin-bottom: 15px;
                 text-transform: uppercase;
                 color: #fff!important;
-           
+
                 font-size: 28px;
                 display: block;
             }
@@ -686,7 +686,7 @@ background:rgba(255,255,255,0.02);padding:30px;}
                     z-index: -1;
 
                 }
-                .selectOverlay.active{height:170px;z-index: 401;}
+                .selectOverlay.active{height:170px;z-index: 501;}
                 .selectList{display: flex;justify-content: space-around;}
                 .circlefilter{height: 26px;
                     width: 26px;
@@ -783,7 +783,7 @@ background:rgba(255,255,255,0.02);padding:30px;}
            .tabs{position: relative;}
            .btnholder{position: absolute;
             border-bottom-right-radius: 4px;
-            z-index: 10;
+            z-index: 403;
             width: 40px;
             height: 40px;
             right: -40px;
@@ -802,7 +802,7 @@ background:rgba(255,255,255,0.02);padding:30px;}
              .tbtn{display:none;}
              .showhidelist{display:none!important;}
              .showhidelist.show{display:flex!important;}
-             
+
              .tbtn.show{display:inline-block;}
              .mapTab .tabHolder{margin-bottom:0;}
              .btnholder i.fa{color:#616161;}
@@ -812,23 +812,23 @@ background:rgba(255,255,255,0.02);padding:30px;}
                 .dettext2{
                     top: 240px;
                     left: 236px;
-                
+
                 }
 
                 .dettext3{
                     top: 160px;
                     left: 449px;
-                
+
                 }
                 .dettext4{
                     top: 230px;
                     right: 247px;
-                
+
                 }
                 .dettext5{
                     top: 407px;
                     right: 120px;
-                
+
                 }
 .slikinside .slick-slide{padding:10px; margin:10px; ;height:200px;display:flex!important;align-items: center;justify-content: center;color:#fff;padding:0 20px;}
 

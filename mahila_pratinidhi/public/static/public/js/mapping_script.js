@@ -1,7 +1,7 @@
 //alert("pasyo");
 var base_url="http://mahilapratinidhi.naxa.com.np";
 //  var base_url="http://localhost:8000";
-var map =L.map('mapid',{minZoom: 7,maxZoom: 13,zoomSnap:0.3}).setView([28,84],7);
+var map =L.map('mapid',{minZoom: 7,maxZoom: 13,zoomSnap:0.1, zoomControl:false}).setView([28.5,84],7.4);
 
 var OSM = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
   attribution: '&copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
@@ -190,7 +190,7 @@ if(Object.keys(properties_object).length=="8"){
        var geo = value.feature;
        var hlcit = value.feature.properties['HLCIT_CODE'];
        var profile_link ="http://localhost:8000/detail/national/172/";
-       var popup_content ="<div style='overflow-y:scroll;'><strong>Mahilapratinidhi</strong></div><br><br>";
+       var popup_content ="<div style='overflow-y:scroll;height:150px;'><strong>"+ value.feature.properties['LU_Name']+" "+ value.feature.properties['LU_Type'] + "</strong><br><br>";
 
 
        $.get(base_url+"/api/hlcit/"+ hlcit ,function(data){
@@ -198,7 +198,12 @@ if(Object.keys(properties_object).length=="8"){
          for(let i =0;i<females.length;i++){
            var model = (females[i]['model']=="province") ? females[i]['model'] +"/" + hlcit.slice(7,8)  : females[i]['model'];
            var detail = (females[i]['model']=="province") ? "explore" : "detail";
-           popup_content += "<h6><a href='"+ base_url+ "/"+ detail + "/" + model + "/" + females[i]['id']  +  "'>"+ females[i]['name'] + "</a></h6><br>"
+           popup_content += "<h6><a href='"+ base_url+ "/"+ detail + "/" + model + "/" + females[i]['id']  +  "'>"+ females[i]['name'] + "</a></h6>";
+           popup_content += "<div>"+ (females[i]['model'] != 'pratinidhi')? females[i]['model']:'federal'  +"</div><br>"
+           if(i==females.length-1){
+             popup_content +="</div>"
+
+           }
 
          }
 

@@ -26,7 +26,7 @@ class Kernel extends React.Component{
  var faithfulData = sample || faithfulData;
 
 
-    var margin = {top: 20, right: 30, bottom: 30, left: 40},
+    var margin = {top: 20, right: 30, bottom: 50, left: 40},
         width = 650 - margin.left - margin.right,
         height = 350 - margin.top - margin.bottom;
 

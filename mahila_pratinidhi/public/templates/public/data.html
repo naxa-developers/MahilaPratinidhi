@@ -82,6 +82,15 @@ text.simple-label {
     fill:#c95555;
   }
 
+  .hbarrect{
+    fill:#7cb5ec;
+  }
+
+  .labeltop{
+    stroke: white;
+    font-size:12px;;
+  }
+
 
 
 </style>
@@ -193,7 +202,7 @@ text.simple-label {
                                             <a href="#" class="dataVariable" data-toggle="tab" data-value="party">Party</a>
                                         </li>
                                         <li>
-                                            <a href="#" class="dataVariable" data-toggle="tab" data-value="">Years in Political Engagement</a>
+                                            <a href="#" class="dataVariable" data-toggle="tab" data-value="political_engagement">Years in Political Engagement</a>
                                         </li>
                                         <li>
                                             <a href="#" class="dataVariable" data-toggle="tab" data-value="political_commitment">Political Commitment</a>
@@ -229,7 +238,7 @@ text.simple-label {
 
                 <div class="col dtitle1">
                     <div class="gtitle">
-                        <p class="innerp"> POLITICAL ENGAGEMENT</p>
+                        <p id ="innervariable" class="innerp"> Age</p>
                     </div>
                 </div>
                 <div class="col dcontent">
@@ -345,6 +354,7 @@ text.simple-label {
         <script type= "text/babel" src="{% static 'public/js/kernel.js' %} "></script>
 
         <script type= "text/babel" src="{% static 'public/js/stacked.js' %} "></script>
+        <script type= "text/babel" src="{% static 'public/js/hbar.js' %} "></script>
         <script type= "text/babel" src="{% static 'public/js/d3_app.js' %} "></script>
         <script type= "text/babel" src ="{% static 'public/js/d3_script.js' %}" ></script>
 
