@@ -28,7 +28,9 @@ class Command(BaseCommand):
             for province in province_district.keys():
                 for district in province_district.values():
                     for district_name in district:
-                        print(district_name)
+                        # print(district_name)
+                        # import ipdb;
+                        # ipdb.set_trace()
                         dist = District.objects.get(name=district_name)
                         if dist:
                             District.objects.filter(name=dist).update(province=Province.objects.get(name=province))

@@ -43,128 +43,128 @@
 
                                     नाम: <span style="font-family: Preeti; font-size: 17px">{{ object.name }}</span><br>
                                     English Name: {{ object.english_name }}<br>
-                                    जन्ममिती: <span style="font-family: Preeti; font-size: 17px">{{ object.date_of_birth }}</span><br>
-                                    उमेर: <span style="font-family: Preeti; font-size: 17px">{{ object.age }}</span><br>
-                                    आमाको नाम: <span style="font-family: Preeti; font-size: 17px">{{ object.mothers_name }}</span><br>
-                                    बाबुको नाम: <span style="font-family: Preeti; font-size: 17px">{{ object.fathers_name }}</span><br>
+                                    जन्ममिती: <span style="font-family: Preeti; font-size: 17px">{{ object.date_of_birth_ne_NP }}</span><br>
+                                    उमेर: <span style="font-family: Preeti; font-size: 17px">{{ object.age_ne_NP }}</span><br>
+                                    आमाको नाम: <span style="font-family: Preeti; font-size: 17px">{{ object.mothers_name_ne_NP }}</span><br>
+                                    बाबुको नाम: <span style="font-family: Preeti; font-size: 17px">{{ object.fathers_name_ne_NP }}</span><br>
                                     बैवाहिक स्थिति:
-                                    {% if object.updated_marital_status %}
+                                    {% if object.updated_marital_status_ne_NP %}
 
                                         <span
-                                            style="font-family: Preeti; font-size: 17px">{{ object.updated_marital_status }}</span><br>
+                                            style="font-family: Preeti; font-size: 17px">{{ object.updated_marital_status_ne_NP }}</span><br>
                                         {% else %}
                                             <span
-                                            style="font-family: Preeti; font-size: 17px">{{ object.marital_status }}</span><br>
+                                            style="font-family: Preeti; font-size: 17px">{{ object.marital_status_ne_NP }}</span><br>
                                     {% endif %}
-                                    श्रीमानको नाम: <span style="font-family: Preeti; font-size: 17px">{{ object.husbands_name }}</span><br>
+                                    श्रीमानको नाम: <span style="font-family: Preeti; font-size: 17px">{{ object.husbands_name_ne_NP }}</span><br>
                                     जातियता:
-                                    {% if object.updated_caste %}
+                                    {% if object.updated_caste_ne_NP %}
 
                                         <span
-                                            style="font-family: Preeti; font-size: 17px">{{ object.updated_caste }}</span><br>
+                                            style="font-family: Preeti; font-size: 17px">{{ object.updated_caste_ne_NP }}</span><br>
                                         {%  else %}
 
                                         <span
-                                            style="font-family: Preeti; font-size: 17px">{{ object.caste }}</span><br>
+                                            style="font-family: Preeti; font-size: 17px">{{ object.caste_ne_NP }}</span><br>
                                     {% endif %}
                                     मातृभाषा:
-                                    {% if object.updated_mother_tongue %}
+                                    {% if object.updated_mother_tongue_ne_NP %}
 
                                         <span
-                                            style="font-family: Preeti; font-size: 17px">{{ object.updated_mother_tongue }}</span><br>
+                                            style="font-family: Preeti; font-size: 17px">{{ object.updated_mother_tongue_ne_NP }}</span><br>
                                         {% else %}
                                             <span
-                                            style="font-family: Preeti; font-size: 17px">{{ object.mother_tongue }}</span><br>
+                                            style="font-family: Preeti; font-size: 17px">{{ object.mother_tongue_ne_NP }}</span><br>
                                     {% endif %}
                                     औपचारिक शैक्षिक योग्यता:
-                                    {% if object.updated_educational_qualification %}
+                                    {% if object.updated_educational_qualification_ne_NP %}
 
                                         <span
-                                            style="font-family: Preeti; font-size: 17px">{{ object.updated_educational_qualification }}</span><br>
+                                            style="font-family: Preeti; font-size: 17px">{{ object.updated_educational_qualification_ne_NP }}</span><br>
                                         {% else %}
                                          <span
-                                            style="font-family: Preeti; font-size: 17px">{{ object.educational_qualification }}</span><br>
+                                            style="font-family: Preeti; font-size: 17px">{{ object.educational_qualification_ne_NP }}</span><br>
                                     {% endif %}
                                     बिषय: <span
-                                        style="font-family: Preeti; font-size: 17px">{{ object.subject }}</span><br>
+                                        style="font-family: Preeti; font-size: 17px">{{ object.subject_ne_NP }}</span><br>
                                     ठेगाना(स्थायी): जिल्ला: <span
-                                        style="font-family: Preeti; font-size: 17px">{{ object.permanent_address }}</span><br>
+                                        style="font-family: Preeti; font-size: 17px">{{ object.permanent_address_ne_NP }}</span><br>
                                     गाउँपालिका/नगरपालिका/उप-महानगरपालिका/महानगरपालिका: <span
-                                        style="font-family: Preeti; font-size: 17px">{{ object.permanent_gapa_napa }}</span><br>
+                                        style="font-family: Preeti; font-size: 17px">{{ object.permanent_gapa_napa_ne_NP }}</span><br>
                                     वडा नं: {{ object.permanent_ward_no }}<br>
                                     टोल: <span
-                                        style="font-family: Preeti; font-size: 17px">{{ object.permanent_tole }}</span><br>
+                                        style="font-family: Preeti; font-size: 17px">{{ object.permanent_tole_ne_NP }}</span><br>
                                     ठेगाना(अस्थायी): जिल्ला: <span
-                                        style="font-family: Preeti; font-size: 17px">{{ object.temporary_address }}</span><br>
+                                        style="font-family: Preeti; font-size: 17px">{{ object.temporary_address_ne_NP }}</span><br>
                                     गाउँपालिका/नगरपालिका/उप-महानगरपालिका/महानगरपालिका: <span
-                                        style="font-family: Preeti; font-size: 17px">{{ object.temporary_gapa_napa }}</span><br>
+                                        style="font-family: Preeti; font-size: 17px">{{ object.temporary_gapa_napa_ne_NP }}</span><br>
                                     वडा नं: {{ object.temporary_ward_no }}<br>
                                     टोल: <span
-                                        style="font-family: Preeti; font-size: 17px">{{ object.temporary_tole }}</span><br>
-                                    मोवाइल: <span>{{ object.mobile }}</span><br>
-                                    सम्पर्क न.: <span>{{ object.contact_number }}</span><br>
+                                        style="font-family: Preeti; font-size: 17px">{{ object.temporary_tole_ne_NP }}</span><br>
+                                    मोवाइल: <span>{{ object.mobile_ne_NP }}</span><br>
+                                    सम्पर्क न.: <span>{{ object.contact_number_ne_NP }}</span><br>
                                     इ-मेल: {{ object.email }}<br>
-                                    सामाजिक सन्जालका माध्यम(छ भने):: <span>{{ object.social_networking_medium }}</span><br>
+                                    सामाजिक सन्जालका माध्यम(छ भने):: <span>{{ object.social_networking_medium_ne_NP }}</span><br>
                                     निर्वाचित प्रक्रिया:
-                                    {% if object.updated_nirwachit_prakriya %}
+                                    {% if object.updated_nirwachit_prakriya_ne_NP %}
 
                                         <span
-                                            style="font-family: Preeti; font-size: 17px">{{ object.updated_nirwachit_prakriya }}</span><br>
+                                            style="font-family: Preeti; font-size: 17px">{{ object.updated_nirwachit_prakriya_ne_NP }}</span><br>
                                         {% else %}
                                             <span
-                                            style="font-family: Preeti; font-size: 17px">{{ object.nirwachit_prakriya }}</span><br>
+                                            style="font-family: Preeti; font-size: 17px">{{ object.nirwachit_prakriya_ne_NP }}</span><br>
                                     {% endif %}
                                     निर्वाचित पद:
-                                    {% if object.updated_nirwachit_padh %}
+                                    {% if object.updated_nirwachit_padh_ne_NP %}
 
                                         <span
-                                            style="font-family: Preeti; font-size: 17px">{{ object.updated_nirwachit_padh }}</span><br>
+                                            style="font-family: Preeti; font-size: 17px">{{ object.updated_nirwachit_padh_ne_NP }}</span><br>
                                         {% else %}
                                             <span
-                                            style="font-family: Preeti; font-size: 17px">{{ object.nirwachit_padh }}</span><br>
+                                            style="font-family: Preeti; font-size: 17px">{{ object.nirwachit_padh_ne_NP }}</span><br>
                                     {% endif %}
                                     पिछडिएको क्षेत्र हो कि होइन:
-                                    {% if object.updated_pichidiyeko_chhetra_ho_hoina %}
+                                    {% if object.updated_pichidiyeko_chhetra_ho_hoina_ne_NP %}
 
                                         <span
-                                            style="font-family: Preeti; font-size: 17px">{{ object.updated_pichidiyeko_chhetra_ho_hoina }}</span><br>
+                                            style="font-family: Preeti; font-size: 17px">{{ object.updated_pichidiyeko_chhetra_ho_hoina_ne_NP }}</span><br>
                                         {% else %}
                                             <span
-                                            style="font-family: Preeti; font-size: 17px">{{ object.pichidiyeko_chhetra_ho_hoina }}</span><br>
+                                            style="font-family: Preeti; font-size: 17px">{{ object.pichidiyeko_chhetra_ho_hoina_ne_NP }}</span><br>
                                     {% endif %}
                                     निर्वाचित क्षेत्रको विवरण: <span
-                                        style="font-family: Preeti; font-size: 17px">{{ object.nirwachit_chhetrako_bibaran }}</span><br>
+                                        style="font-family: Preeti; font-size: 17px">{{ object.nirwachit_chhetrako_bibaran_ne_NP }}</span><br>
                                     निर्वाचित भएको क्षेत्र आफ्नो अस्थायी/ स्थायी ठेगाना भन्दा फरक:
-                                    {% if object.updated_nirwachit_vayeko_chhetra_aafno_thegana %}
+                                    {% if object.updated_nirwachit_vayeko_chhetra_aafno_thegana_ne_NP %}
 
                                         <span
-                                            style="font-family: Preeti; font-size: 17px">{{ object.updated_nirwachit_vayeko_chhetra_aafno_thegana }}</span><br>
+                                            style="font-family: Preeti; font-size: 17px">{{ object.updated_nirwachit_vayeko_chhetra_aafno_thegana_ne_NP }}</span><br>
                                         {% else %}
                                             <span
-                                            style="font-family: Preeti; font-size: 17px">{{ object.nirwachit_vayeko_chhetra_aafno_thegana }}</span><br>
+                                            style="font-family: Preeti; font-size: 17px">{{ object.nirwachit_vayeko_chhetra_aafno_thegana_ne_NP }}</span><br>
                                     {% endif %}
                                     पार्टीको नाम: <span
-                                        style="font-family: Preeti; font-size: 17px">{{ object.party_name }}</span><br>
-                                    पार्टीमा संलग्न भएको मिति: <span>{{ object.party_joined_date }}</span><br>
+                                        style="font-family: Preeti; font-size: 17px">{{ object.party_name_ne_NP }}</span><br>
+                                    पार्टीमा संलग्न भएको मिति: <span>{{ object.party_joined_date_ne_NP }}</span><br>
                                     प्रमुख जिम्मेवारी: <span
-                                        style="font-family: Preeti; font-size: 17px">{{ object.pramukh_jimmewari }}</span><br>
+                                        style="font-family: Preeti; font-size: 17px">{{ object.pramukh_jimmewari_ne_NP }}</span><br>
                                     निर्वाचित क्षेत्र प्रतिको प्रतिबध्धता: <span
-                                        style="font-family: Preeti; font-size: 17px">{{ object.nirwachit_chetra_pratiko_pratibadhata }}</span><br>
+                                        style="font-family: Preeti; font-size: 17px">{{ object.nirwachit_chetra_pratiko_pratibadhata_ne_NP }}</span><br>
                                     आज भन्दा अघि चुनाब लड्नुभएको छ?:
-                                    {% if object.updated_aaja_vanda_agadi_chunab_ladnu_vayeko_chha %}
+                                    {% if object.updated_aaja_vanda_agadi_chunab_ladnu_vayeko_chha_ne_NP %}
 
                                         <span
-                                            style="font-family: Preeti; font-size: 17px">{{ object.updated_aaja_vanda_agadi_chunab_ladnu_vayeko_chha }}</span><br>
+                                            style="font-family: Preeti; font-size: 17px">{{ object.updated_aaja_vanda_agadi_chunab_ladnu_vayeko_chha_ne_NP }}</span><br>
                                         {% else %}
                                             <span
-                                            style="font-family: Preeti; font-size: 17px">{{ object.aaja_vanda_agadi_chunab_ladnu_vayeko_chha }}</span><br>
+                                            style="font-family: Preeti; font-size: 17px">{{ object.aaja_vanda_agadi_chunab_ladnu_vayeko_chha_ne_NP }}</span><br>
                                     {% endif %}
                                     प्राप्त मत संख्या: <span
-                                        style="font-family: Preeti; font-size: 17px">{{ object.prapta_maat_sankhya }}</span><br>
+                                        style="font-family: Preeti; font-size: 17px">{{ object.prapta_maat_sankhya_ne_NP }}</span><br>
                                     सलग्न संघ, सस्था , समूह: <span
-                                        style="font-family: Preeti; font-size: 17px">{{ object.samlagna_sang_sastha_samuha }}</span><br>
-                                    समितिमा भूमिका: <span style="font-family: Preeti; font-size: 17px">{{ object.samitima_vumika }}</span><br>
-                                    संलग्न संसदीय समिति: <span style="font-family: Preeti; font-size: 17px">{{ object.samlagna_samsadiya_samiti }}</span><br>
+                                        style="font-family: Preeti; font-size: 17px">{{ object.samlagna_sang_sastha_samuha_ne_NP }}</span><br>
+                                    समितिमा भूमिका: <span style="font-family: Preeti; font-size: 17px">{{ object.samitima_vumika_ne_NP }}</span><br>
+                                    संलग्न संसदीय समिति: <span style="font-family: Preeti; font-size: 17px">{{ object.samlagna_samsadiya_samiti_ne_NP }}</span><br>
                                     </p>
 
                                 </div>
