@@ -1,15 +1,19 @@
-var base_url="http://mahilapratinidhi.naxa.com.np";
- //var base_url="http://localhost:8000";
+//var base_url="http://mahilapratinidhi.naxa.com.np";
+ var base_url="http://localhost:8000";
+
+
+
+
 
 $.get(base_url+'/api/age/',function(data){
 
 
     ReactDOM.render(
         <div>
-        <ChartBox data_pass={[{'title':'age','data-type':'10','dataName':'total','data':data['total']}]} />
-        <ChartBox data_pass={[{'title':'age','data-type':'0','dataName':'total','data':data['total']}]} />
-        <ChartBox data_pass={[{'title':'age' +" vs Party",'data-type':'1','dataName':'party','data':data['party']}]} />
-        <ChartBox data_pass={[{'title':'age' +" vs Province",'data-type':'1','dataName':'provincial','data':data['provincial']}]} />
+        <ChartBox data_pass={[{'title':'age','data-type':'kernel','dataName':'total','data':data['all']}]} />
+        <ChartBox data_pass={[{'title':'age','data-type':'bar','dataName':'total','data':data['total']}]} />
+        <ChartBox data_pass={[{'title':'age' +" vs Party",'data-type':'stacked','dataName':'party','data':data['party']}]} />
+        <ChartBox data_pass={[{'title':'age' +" vs Province",'data-type':'stacked','dataName':'provincial','data':data['provincial']}]} />
 
         </div>,
         document.getElementById("react-container")

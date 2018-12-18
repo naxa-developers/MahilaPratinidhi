@@ -253,7 +253,7 @@ function returnSum(value){
 
 function BindFunction(feature,layer){
 
-  layer.bindTooltip(get_name(feature));
+  layer.bindTooltip(get_name(feature),{sticky:true});
 
 }
 

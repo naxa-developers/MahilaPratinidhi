@@ -20,20 +20,20 @@ render (){
       let bar;
 
 
-      if(this.props.data_pass[0]['data-type']=="1"){
+      if(this.props.data_pass[0]['data-type']=="stacked"){
         bar = <StackedChart data={[{'data':this.props.data_pass[0]['data'],'dataName':this.props.data_pass[0]['dataName']}]}  />;
       }
 
-      else if(this.props.data_pass[0]['data-type']=="0"){
+      else if(this.props.data_pass[0]['data-type']=="bar"){
         bar = <SimpleBar data={[{'data':this.props.data_pass[0]['data'],'dataName':this.props.data_pass[0]['dataName']}]}  />;
       }
 
 
-      else if(this.props.data_pass[0]['data-type']=="2"){
+      else if(this.props.data_pass[0]['data-type']=="hbar"){
               bar = <HorizontalBar data={[{'data':this.props.data_pass[0]['data'],'dataName':this.props.data_pass[0]['dataName']}]}  />;
             }
 
-    else if(this.props.data_pass[0]['data-type']=="10"){
+    else if(this.props.data_pass[0]['data-type']=="kernel"){
                     bar = <Kernel data={[{'data':this.props.data_pass[0]['data'],'dataName':this.props.data_pass[0]['dataName']}]}  />;
                   }
 
