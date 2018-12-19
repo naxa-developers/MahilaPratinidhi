@@ -39,7 +39,7 @@
                                     {% endif %}
                                 </span>
                                 <span class="flag">
-                                    <img src="{% static 'public/image/partyflag.png' %}" alt="">
+                                    <img src="{% static 'public/image/'|add:form.party_name|space_to_underscore|add:'.png' %}" alt="">
                                 </span>
                             </p>
                             <p class="personalInfoHeader">
@@ -158,7 +158,7 @@
                                     {{ form.address }}
                                     {% else %}
                                     {{ form.permanent_address }},
-                                    <br/> {{ form.permanent_gapa_napa }} Ma. Na. Pa., Ward no. {{ form.permanent_ward_no }}
+                                    <br/> {{ form.permanent_gapa_napa }}, {{ form.permanent_ward_no|slice:":2" }}
                                     {% endif %}
                                 </div>
                             </div>
@@ -168,8 +168,8 @@
                                     Current Address:
                                 </div>
                                 <div class="placeaddress">
-                                    {{ form.temporary_address }}
-                                    <br/> {{ form.temporary_gapa_napa }} Ma. Na. Pa., Ward no. {{ form.temporary_ward_no }}
+                                    {{ form.temporary_address }}, 
+                                    <br/> {{ form.temporary_gapa_napa }}, {{ form.temporary_ward_no|slice:":2" }}
                             </div>
                             {% endif %}
                         </div>
