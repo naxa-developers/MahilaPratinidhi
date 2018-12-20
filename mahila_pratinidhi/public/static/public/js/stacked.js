@@ -42,7 +42,9 @@ class StackedChart extends React.Component{
 
 
 
-  var margin = {top: 20, right: 170, bottom: 50, left: 30};
+  var margin = {top: 20, right: 170, bottom: 20, left: 30};
+
+
 
   var width = 700 - margin.left - margin.right,
       height = 350 - margin.top - margin.bottom;
@@ -50,8 +52,8 @@ class StackedChart extends React.Component{
   var svg = d3.selectAll(".stacked-bar").filter(function(d,i){
     return i === count;
   })
-    .attr("width", width + margin.left + margin.right)
-    .attr("height", height + margin.top + margin.bottom)
+    .attr("width", width)
+    .attr("height", height)
     .append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
@@ -108,7 +110,7 @@ class StackedChart extends React.Component{
 
       svg.selectAll(".x-axis text")
      .attr("transform", function(d) {
-        return "translate(" + this.getBBox().height*-2 + "," + this.getBBox().height + ")rotate(-35)";
+        return "translate(" + this.getBBox().height*-2 + "," + this.getBBox().height*1.7 + ")rotate(-25)";
     });
 
     // Create groups for each series, rects for each segment

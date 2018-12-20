@@ -1,7 +1,43 @@
 //alert("pasyo");
 var base_url="http://mahilapratinidhi.naxa.com.np";
 //  var base_url="http://localhost:8000";
-var map =L.map('mapid',{minZoom: 7,maxZoom: 13,zoomSnap:0.1, zoomControl:false}).setView([28.5,84],7.4);
+
+var map_height = screen.height - parseInt($("#find").css('height'));
+map_height =map_height -126;
+$("#mapid").css("height",map_height+"px");
+
+
+var map =L.map('mapid',{minZoom: 7,maxZoom: 13,zoomSnap:0.1, zoomControl:false,scrollWheelZoom: false}).setView([28.5,84],7.2);
+map.on('click', function() {
+  map.scrollWheelZoom.enable();
+
+  });
+
+L.control.zoom({
+     position:'topright'
+}).addTo(map);
+
+
+var info = L.control();
+//info.options ={ positon: 'topleft'};
+info.onAdd = function (map) {
+				this._div = L.DomUtil.create('div', 'info'); // create a div with a class "info"
+				info._div.innerHTML="<button id='refresh-button' class='btn btn-default'>refresh </button> ";
+				return this._div;
+			};
+
+			// method that we will use to update the control based on feature properties passed
+//
+// info.onClick = function (e) {
+//       e.preventDefault();
+// e.stopPropagation()
+//   		alert(x);
+//       };
+
+$(".button-action").on('click',function(){
+  alert("x");
+})
+
 
 var OSM = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
   attribution: '&copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
@@ -28,13 +64,68 @@ var gl = L.mapboxGL({
 var baseMaps = {
     //"Street View": street_view,
     "OSM": OSM,
-    "blackwhite":OpenStreetMap_BlackAndWhite,
+    "Black&White":OpenStreetMap_BlackAndWhite,
     "dark":Thunderforest_TransportDark,
-    "Empty" : L.tileLayer(''),
-    "gl":gl
+    //"Empty" : L.tileLayer(''),
+    //"gl":gl
 };
 L.control.layers(baseMaps).addTo(map);
 
+
+var ourCustomControl = L.Control.extend({
+
+  options: {
+    position: 'topright'
+    //control position - allowed: 'topleft', 'topright', 'bottomleft', 'bottomright'
+  },
+
+  onAdd: function (map) {
+    var container = L.DomUtil.create('div', 'leaflet-bar leaflet-control leaflet-control-custom');
+    container.style.backgroundColor = 'white';
+    container.style.width = '40px';
+    container.style.height = '38px';
+    container.style.padding = '2px';
+    container.style.backgroundColor = 'white';
+
+    container.style.backgroundSize = "30px 30px";
+    var imgnode = document.createElement("img");
+    imgnode.src = refresh_url;
+
+    container.appendChild(imgnode);
+
+    container.onclick = function(){
+
+      for(var i =0; i<marker_array.length;i++){
+        marker_array[i].removeFrom(map);
+      }
+
+      for(var i =0; i<last_layer.length;i++){
+        last_layer[i].removeFrom(map);
+
+      }
+      last_layer =[];
+
+
+      map.setView([28.5,84],7.2);
+      console.log("country",country);
+      marker_content = data_summary_all["all"][0]
+
+
+ $.each(country._layers,function(key,value){
+
+   circular_marker(get_center(value.feature,value),get_number(value.feature),get_name(value.feature),value.feature);
+
+
+ })
+    }
+
+
+    return container;
+  },
+
+});
+
+map.addControl(new ourCustomControl());
 
 
 console.log("baseurlcheck",base_url+'/api/maps/');
@@ -121,7 +212,6 @@ function zoomToFeature(e){
   total_instance = get_total_instance(e);
   map.fitBounds(e.target.getBounds(),{padding:[25,25]});
 
-
 if(Object.keys(properties_object).length=="1"){
 
   if(last_layer.length){
@@ -134,6 +224,8 @@ if(Object.keys(properties_object).length=="1"){
   for (var i=0;i<marker_array.length;i++){
     marker_array[i].removeFrom(map);
   }
+
+  //country.setStyle({fillOpacity:"0.4"}) 
 
 
 }
@@ -190,7 +282,7 @@ if(Object.keys(properties_object).length=="8"){
        var geo = value.feature;
        var hlcit = value.feature.properties['HLCIT_CODE'];
        var profile_link ="http://localhost:8000/detail/national/172/";
-       var popup_content ="<div style='overflow-y:scroll;height:150px;'><strong>"+ value.feature.properties['LU_Name']+" "+ value.feature.properties['LU_Type'] + "</strong><br><br>";
+       var popup_content ="<div style='overflow-y:scroll;height:150px;'><h7><strong>"+ value.feature.properties['LU_Name']+" "+ value.feature.properties['LU_Type'] + "</strong></h7><br><br>";
 
 
        $.get(base_url+"/api/hlcit/"+ hlcit ,function(data){
@@ -347,7 +439,6 @@ function circular_marker(center,number,name,feature){
                 //.bindPopup('divIcon CSS3 popup. <br> Supposed to be easily stylable.');
 
 function get_center(feature,layer){
-
   var center =(layer.getBounds().getCenter());
   return center;
 
@@ -466,6 +557,7 @@ var country =L.geoJson.ajax(base_url+'/api/geojson/country',
 
                     }
           }).addTo(map);
+
 
 
 var muni =L.geoJson.ajax('https://dfid.naxa.com.np/core/geojson/municipalities/',
@@ -664,6 +756,73 @@ $("#local_leader").on('click',function(){
 
 })
 
+function filter_options(options,idname){
+
+
+
+					var selectBox = document.getElementById(idname);
+					selectBox.innerHTML= "<option>"+ "Select" + "</option>" ;
+					for(var i = 0, l = options.length; i < l; i++){
+						  var option = options[i];
+						  selectBox.options.add( new Option(option.name, option.id) );
+
+					}
+}
+
+$("#leader-province").on('change',function(){
+    var myvalue = (this.value).toString();
+    $.get(base_url + '/api/districts/?province_id='+ myvalue, function(data){
+      filter_options(data,"leader-district");
+    })
+
+})
+
+$("#leader-district").on('change',function(){
+
+  //needs to change
+    var myvalue = (this.value).toString();
+    $.get(base_url + '/api/districts/?province_id='+ myvalue, function(data){
+      filter_options(data,"leader-district");
+    })
+
+});
+
+
+$('#apply-filter').on('click', function(){
+
+
+});
+
+
+$('#clear-filter').on('click', function(){
+
+  for(var i =0; i<marker_array.length;i++){
+    marker_array[i].removeFrom(map);
+  }
+
+  for(var i =0; i<last_layer.length;i++){
+    last_layer[i].removeFrom(map);
+
+  }
+  last_layer =[];
+
+
+  map.setView([28.5,84],7.2);
+  console.log("country",country);
+  marker_content = data_summary_all["all"][0]
+
+
+$.each(country._layers,function(key,value){
+
+circular_marker(get_center(value.feature,value),get_number(value.feature),get_name(value.feature),value.feature);
+
+
+});
+
+
+
+
+})
 
 // var myRenderer = L.canvas({ padding: 0.5 });
 //

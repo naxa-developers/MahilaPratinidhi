@@ -837,3 +837,8 @@ div.slikinside [data-slick-index="1"]{ background:#ccc669!important;   }
 div.slikinside [data-slick-index="2"]{ background:#6d68ad!important;  }
 .div.slikinside [data-slick-index="3"]{ background:#604b3b!important;   }
 div.slikinside [data-slick-index="4"]{ background:#2e282d!important}
+
+.graphHolder{
+  min-height: 400px;
+  width:100%;
+}

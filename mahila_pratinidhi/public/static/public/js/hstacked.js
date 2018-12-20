@@ -19,6 +19,14 @@ class HStackedChart extends React.Component{
 
   hstackedChart(data,dataName,variable_colors){
 
+    console.log("rawdata",data)
+
+     data = data.sort(function (a, b) {
+       console.log("a",a);
+       console.log("b",b);
+         //return d3.ascending(+a.total, +b.total);
+     });
+
 
     if (dataName== "party"){
 
@@ -43,12 +51,14 @@ class HStackedChart extends React.Component{
 
 
 
-  var margin = {top: 20, right: 170, bottom: 50, left: 30};
+  var margin = {top: 20, right: 170, bottom: 50, left: 130};
 
   var width = 700 - margin.left - margin.right,
-      height = 350 - margin.top - margin.bottom;
+      height = 550 - margin.top - margin.bottom;
 
-  var svg = d3.select(".hstacked-bar")
+  var svg = d3.selectAll(".hstacked-bar").filter(function(d,i){
+    return i === count;
+  })
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
     .append("g")
@@ -66,6 +76,8 @@ class HStackedChart extends React.Component{
       });
     }));
 
+    console.log("datasetttt",dataset)
+
     var y = d3.scale.ordinal()
       .domain(dataset[0].map(function(d) { return d.x; }))
       .rangeRoundBands([10, height-10], 0.02);
@@ -73,6 +85,9 @@ class HStackedChart extends React.Component{
       var yAxis = d3.svg.axis()
         .scale(y)
         .orient("left")
+        .tickPadding([0.6])
+
+
 
         svg.append("g")
           .attr("class", "y axis")
@@ -80,12 +95,21 @@ class HStackedChart extends React.Component{
 
     var x = d3.scale.linear()
       .domain([0, d3.max(dataset, function(d) {  return d3.max(d, function(d) { return d.y0 + d.y; });  })])
-      .range([width, 0]);
+      .range([0,width]);
 
       var xAxis = d3.svg.axis()
         .scale(x)
         .orient("bottom")
-        .tickPadding([0.4])
+        .ticks(6)
+        .tickSize(-height, 0, 0)
+        .tickFormat( function(d) { return d } );
+
+
+        svg.append("g")
+          .attr("class", "x-axis")
+          .attr("transform", "translate(0," + height + ")")
+          .call(xAxis);
+
 
 
     var colors = [	 "#69131a","#e86c75","#faa2ad","#ac779d","#4b1b31" ,"#f441a6","#f44141"];
@@ -93,14 +117,57 @@ class HStackedChart extends React.Component{
 
     var colors = variable_colors || default_colors;
 
+    var groups = svg.selectAll("g.cost")
+      .data(dataset)
+      .enter().append("g")
+      .attr("class", "cost")
+      .style("fill", function(d, i) { return colors[i]; });
 
-    // Define and draw axes
 
-      //.tickFormat(d3.time.format("%Y"));
+      var rect = groups.selectAll("rect")
+        .data(function(d) { return d; })
+        .enter()
+        .append("rect")
+        .attr("y", function(d) { return y(d.x); })
+        .attr("x", function(d) { return x(d.y0); })
+        .attr("width", function(d) { return  x(d.y0 + d.y) -x(d.y0) ; })
+        .attr("height", y.rangeBand())
 
 
+        var legend = svg.selectAll(".legend")
+          .data(colors.slice(0,legend_array.length))
+          .enter().append("g")
+          .attr("class", "legend")
+          .attr("transform", function(d, i) { return "translate(30," + i * 19 + ")"; });
 
-    // Prep the tooltip bits, initial display is hidden
+        legend.append("rect")
+          .attr("x", width - 18)
+          .attr("width", 18)
+          .attr("height", 18)
+          .style("fill", function(d, i) {return colors.slice()[i];});
+
+        legend.append("text")
+          .attr("x", width + 5)
+          .attr("y", 9)
+          .attr("dy", ".35em")
+          .style("text-anchor", "start")
+          .style("fill","white")
+          .style("font-size","xx-small")
+          .text(function(d, i) {
+            switch (i) {
+              case 0: return legend_array[0];
+              case 1: return legend_array[1];
+              case 2: return legend_array[2];
+              case 3: return legend_array[3];
+              case 4: return legend_array[4];
+              case 5: return legend_array[5];
+              case 6: return legend_array[6];
+              case 7: return legend_array[7];
+
+            }
+          });
+
+
 
   } //end of function
 

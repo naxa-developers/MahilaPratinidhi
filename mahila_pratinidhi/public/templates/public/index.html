@@ -32,7 +32,6 @@
                  * element that contains the map. */
 
         #mapid {
-            height: 100vh;
 
         }
         .custom-icon .leaflet-popup-tip,
@@ -117,7 +116,7 @@
                     </div>
                 </div>
                 <div class="province">
-                    <span id="selectedValue">province</span>
+                    <span id="selectedValue">Search your leader</span>
                     <span class="circlefilter">
                         <i class=" show arrow fa fa-angle-down"></i>
                         <i class="close fa fa-times"></i>
@@ -127,34 +126,34 @@
                         <div class="selectList">
                             <div class="">
                                 <label for="" class="st">State</label>
-                                <select class="sel1" name="" id="">
+                                <select class="sel1" name="" id="leader-province">
                                   <option value="">Provinces</option>
-                                    <option value="">Province 1</option>
-                                    <option value="">Province 2</option>
-                                    <option value="">Province 3</option>
-                                    <option value="">Province 4</option>
-                                    <option value="">Province 5</option>
-                                    <option value="">Province 6</option>
-                                    <option value="">Province 7</option>
+                                    <option value="1">Province 1</option>
+                                    <option value="2">Province 2</option>
+                                    <option value="3">Province 3</option>
+                                    <option value="4">Province 4</option>
+                                    <option value="5">Province 5</option>
+                                    <option value="6">Province 6</option>
+                                    <option value="7">Province 7</option>
 
                                 </select>
                             </div>
                             <div class="">
                                 <label for="" class="st">District</label>
-                                <select class="sel2" name="" id="">
-                                    <option value="national">NATIONAL</option>
+                                <select class="sel2" name="" id="leader-district">
+                                    <!-- <option value="national">NATIONAL</option>
                                     <option value="federal">FEDERAL</option>
                                     <option value="provincial">PROVINCIAL</option>
-                                    <option value="local">LOCAL</option>
+                                    <option value="local">LOCAL</option> -->
                                 </select>
                             </div>
                             <div class="">
                                 <label for="" class="st">Municipality</label>
-                                <select class="sel3" name="" id="">
-                                    <option value="national">NATIONAL</option>
+                                <select class="sel3" name="" id="leader-municipality">
+                                    <!-- <option value="national">NATIONAL</option>
                                     <option value="federal">FEDERAL</option>
                                     <option value="provincial">PROVINCIAL</option>
-                                    <option value="local">LOCAL</option>
+                                    <option value="local">LOCAL</option> -->
                                 </select>
                             </div>
 
@@ -162,7 +161,7 @@
                         <div class="row">
                             <div class="col-md-12 fullclick">
                                 <button class="popbtn btn-primary firstBtn apply"> Apply</button>
-                                <button class="popbtn btn-primary reset"> Clear</button>
+                                <button class="popbtn btn-primary reset" id="clear-filter"> Clear</button>
 
                             </div>
                         </div>
@@ -188,17 +187,17 @@
                         </div>
                         <ul class="tabHolder">
                             <li class="active" id="national-all">
-                                <img src="{% static 'public/image/city-hall.svg' %}" alt="">
+                                <img src="{% static 'public/image/city-hall.png' %}" alt="">
                                 <div class="text">NATIONAL ASSEMBLY
                                 </div>
                             </li>
                             <li id="federal-all">
-                                <img src="{% static 'public/image/elementary-school.svg' %}" alt="">
+                                <img src="{% static 'public/image/elementary-school.png' %}" alt="">
                                 <div class="text">FEDERAL PARLIAMENT
                                 </div>
                             </li>
                             <li id="provincial-all">
-                                <img src="{% static 'public/image/parliament.svg' %}" alt="">
+                                <img src="{% static 'public/image/parliament.png' %}" alt="">
                                 <div class="text">PROVINCIAL ASSEMBLY
                                 </div>
                             </li>
@@ -223,6 +222,7 @@
                     </div>
                     <div class="mapHolder grow redbg">
                         <div id="mapid"></div>
+
 
 
                     </div>
@@ -404,14 +404,16 @@
 
 
 
-    {% endblock %} {% block scripts %}
-    <script>
+    {% endblock %}
+     {% block scripts %}
 
-
+    <script type="text/babel" >
+      var refresh_url = "{% static 'public/image/refresh.png' %}";
 
     </script>
 
     <script>
+
 
         $(document).ready(function () {
 
@@ -548,6 +550,7 @@
             };
         }
     </script>
+
 
     <!-- for geolocation of user -->
     <script type="text/babel" src={% static 'public/js/popup.js'%}></script>

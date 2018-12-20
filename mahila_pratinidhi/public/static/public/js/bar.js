@@ -80,7 +80,7 @@ console.log("sampleafterdlt",sample);
 
         chart.selectAll(".x-axis text")
        .attr("transform", function(d) {
-          return "translate(" + this.getBBox().height*-2 + "," + this.getBBox().height*1.7 + ")rotate(-45)";
+          return "translate(" + this.getBBox().height*-2 + "," + this.getBBox().height*1.7 + ")rotate(-25)";
       });
 
     const barGroups = chart.selectAll()

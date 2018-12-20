@@ -1,30 +1,37 @@
 //var base_url="http://localhost:8000";
 var base_url="http://mahilapratinidhi.naxa.com.np";
 
+
+
+
+
+
+
 var chart_type ={
-                  'age':['kernel','hstacked','stacked','stacked'] ,
+                  'age':['kernel','stacked','stacked','stacked'] ,
                   'ethnicity':['bar','stacked','stacked','stacked'] ,
-                  'mother_tongue':['hbar','stacked','stacked','stacked'] ,
+                  'mother_tongue':['hbar','hstacked','hstacked','hstacked'] ,
                   'education':['bar','stacked','stacked','stacked'] ,
                   'election_type':['bar','stacked','stacked','stacked'] ,
-                  'party':['hbar','','',''] ,
+                  'party':['hbar','hstacked','hstacked','hstacked'] ,
                   'political_engagement':['kernel','stacked','stacked','stacked'],
-                  'political_commitment':['hbar','stacked','stacked','stacked'] ,
+                  'political_commitment':['hbar','hstacked','hstacked','hstacked'] ,
                   'election_experience':['bar','stacked','stacked','stacked']
 
 }
 
 
 
-$.get(base_url+'/api/age/',function(data){
+$.get(base_url+'/api/education/',function(data){
 
 
     ReactDOM.render(
         <div>
-        <ChartBox data_pass={[{'title':'age','data-type':chart_type['age'][0],'dataName':'total','data':(chart_type['age'][0]=="kernel")?data['all'] : data['total']}]} />
-        <ChartBox data_pass={[{'title':'age' +" vs Province",'data-type':chart_type['age'][2],'dataName':'provincial','data':data['provincial']}]} />
-        <ChartBox data_pass={[{'title':'age' +" vs Province vs federal vs national",'data-type':chart_type['age'][3],'dataName':'vs','data':data['nationalvsfederalvsprovincial']}]} />
-        <ChartBox data_pass={[{'title':'age' +" vs Party",'data-type':chart_type['age'][1],'dataName':'party','data':data['party']}]} />
+        <ChartBox data_pass={[{'title':'education','data-type':chart_type['education'][0],'dataName':'total','data':(chart_type['education'][0]=="kernel")?data['all'] : data['total']}]} />
+        <ChartBox data_pass={[{'title':'education' +" vs Province",'data-type':chart_type['education'][2],'dataName':'provincial','data':data['provincial']}]} />
+        <ChartBox data_pass={[{'title':'education' +" vs Province vs federal vs national",'data-type':chart_type['education'][3],'dataName':'vs','data':data['nationalvsfederalvsprovincial']}]} />
+        <ChartBox data_pass={[{'title':'education' +" vs Party",'data-type':chart_type['education'][1],'dataName':'party','data':data['party']}]} />
+
         </div>,
         document.getElementById("react-container")
       )

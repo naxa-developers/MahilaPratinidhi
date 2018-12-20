@@ -10,7 +10,8 @@
 
 <style>
   .stacked-bar {
-    height: 500px;
+    height: 450px;
+    width:100%;
     font: 6px sans-serif;
     text: white;
     shape-rendering: crispEdges;
@@ -23,8 +24,8 @@
 
 
   .simple-bar{
-    height: 600px;
-    width:650px;
+    height: 450px;
+    width:100%;
     fill:white;
 
 
@@ -88,13 +89,56 @@ text.simple-label {
 
   .labeltop{
     stroke: white;
-    font-size:12px;;
+    font-size:9px;;
+  }
+
+  .d3modal{
+    display: none;
+    position:fixed;
+    z-index:1;
+    padding-top:100px;
+    left:0
+    top:0;
+    width:100%;
+    height:100%;
+    overflow: auto;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0,0.4);
+
+  }
+
+  .d3modal-content{
+    margin: auto;
+    padding:20px;
+    border: 1px solid #888;
+    width:30%;
+    background-color: skyblue;
+  }
+
+  .d3close{
+    color: black;
+    margin-top:-17px;
+    float:right;
+    font-size: 28px;
+    font-weight: bold;
   }
 
 
 
 </style>
 <body>
+  <div id ="d3modal" class="d3modal">
+    <div class="d3modal-content">
+      <span class="d3close" onClick="(function(){
+        $('#d3modal').hide();
+
+    return false;
+})();"> &times;</span>
+
+      <h5> Save Data as :</h5>
+      <span><button class="btn" id="d3csv"> CSV/Excel</button> <button id="d3png" class="btn"> Image(.png)</button></span>
+    </div>
+  </div>
     <header>
         <div class="navigation innerPage">
             <div class="container-fluid">
@@ -183,18 +227,14 @@ text.simple-label {
                                         <i class="fa fa-angle-left"></i>
                                     </div>
                                     <ul class="nav nav-pills widthScrol">
-                                        <li class="active">
-                                            <a href="#" class="dataVariable" data-toggle="tab" data-value="age">Age</a>
-                                        </li>
+                                      <li class="active">
+                                          <a href="#" class="dataVariable" data-toggle="tab" data-value="Education">Education</a>
+                                      </li>
+
                                         <li>
                                             <a href="#" class="dataVariable" data-toggle="tab" data-value="ethnicity" >Ethnicity</a>
                                         </li>
-                                        <li>
-                                            <a href="#" class="dataVariable" data-toggle="tab" data-value="mother_tongue">Mother Tongue</a>
-                                        </li>
-                                        <li>
-                                            <a href="#" class="dataVariable" data-toggle="tab" data-value="Education">Education</a>
-                                        </li>
+
                                         <li>
                                             <a href="#" class="dataVariable" data-toggle="tab" data-value="election_type">Election Type</a>
                                         </li>
@@ -202,13 +242,21 @@ text.simple-label {
                                             <a href="#" class="dataVariable" data-toggle="tab" data-value="party">Party</a>
                                         </li>
                                         <li>
-                                            <a href="#" class="dataVariable" data-toggle="tab" data-value="political_engagement">Years in Political Engagement</a>
+                                            <a href="#" class="dataVariable" data-toggle="tab" data-value="election_experience">Have you ever stood in an election before? </a>
                                         </li>
+
+                                        <li>
+                                            <a href="#" class="dataVariable" data-toggle="tab" data-value="age">Age</a>
+                                        </li>
+                                        <li>
+                                            <a href="#" class="dataVariable" data-toggle="tab" data-value="mother_tongue">Mother Tongue</a>
+                                        </li>
+
                                         <li>
                                             <a href="#" class="dataVariable" data-toggle="tab" data-value="political_commitment">Political Commitment</a>
                                         </li>
                                         <li>
-                                            <a href="#" class="dataVariable" data-toggle="tab" data-value="election_experience">Have you ever stood in an election before? </a>
+                                            <a href="#" class="dataVariable" data-toggle="tab" data-value="political_engagement">Years in Political Engagement</a>
                                         </li>
 
                                     </ul>
@@ -238,7 +286,7 @@ text.simple-label {
 
                 <div class="col dtitle1">
                     <div class="gtitle">
-                        <p id ="innervariable" class="innerp"> Age</p>
+                        <p id ="innervariable" class="innerp"> Education</p>
                     </div>
                 </div>
                 <div class="col dcontent">
