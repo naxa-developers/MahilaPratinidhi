@@ -70,6 +70,7 @@
                                                 <a href="{% url 'core:rastriya_shava_detail' form.pk %}"
                                                    class="org-item-wrap">
                                                     <h5 style="font-family: Preeti; font-size: 20px; font-weight: normal">{{ form.name }}</h5><br>
+                                                    <h5 style="font-size: 20px; font-weight: normal">{{ form.english_name }}</h5><br>
                                                     <span style="font-family: Preeti; font-size: 16px; font-weight: normal">{{ form.temporary_tole }}</span><br>
 
                                                     {% if form.status is False %}

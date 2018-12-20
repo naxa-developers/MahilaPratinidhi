@@ -82,9 +82,20 @@ class DistrictsSerializer(serializers.ModelSerializer):
         exclude = ('elected_women', )
 
 
-class HlcitSerializer(serializers.ModelSerializer):
+class HlcitSerializer(serializers.Serializer):
+    class_name = serializers.SerializerMethodField()
+    id = serializers.SerializerMethodField()
+    name = serializers.SerializerMethodField()
 
     class Meta:
-        model = RastriyaShava
-        fields = ('id','name', )
+        fields = ('id', 'name', 'class_name')
+
+    def get_name(self, obj):
+        return obj.name
+
+    def get_id(slef,obj):
+        return obj.id
+
+    def get_class_name(self, obj):
+        return obj.__class__.__name__
 
