@@ -1,5 +1,4 @@
 from django.shortcuts import render
-from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import UserPassesTestMixin
@@ -18,6 +17,8 @@ from django.core.mail import EmailMessage
 from itertools import chain
 from datetime import timedelta
 from django.utils import timezone
+from django.db.models import Count
+from django.template import RequestContext
 
 from django.shortcuts import render
 from django.db.models import Q
@@ -105,8 +106,8 @@ class ExploreView(TemplateView):
         names = {}
         name_list = []
         # district = District.objects.all()
-        rastriyas = RastriyaShava.objects.all()
-        pratinidhis = PratinidhiShava.objects.all()
+        rastriyas = RastriyaShava.objects.all().order_by('english_name')
+        pratinidhis = PratinidhiShava.objects.all().order_by('english_name')
         provinces = Province.objects.all()
 
         province_names = ProvinceMahilaPratinidhiForm.objects.all()
@@ -167,7 +168,7 @@ class MahilaPratinidhiView(TemplateView):
 
         json_list = json.dumps(name_list)
 
-        forms = MahilaPratinidhiForm.objects.filter(district_id=self.kwargs.get('district_id'))
+        forms = MahilaPratinidhiForm.objects.filter(district_id=self.kwargs.get('district_id')).order_by('english_name')
         district_id = self.kwargs.get('district_id')
         return render(request, self.template_name, {'forms':forms, 'district_id':district_id, 'districts':district, 'names':json_list})
 
@@ -188,9 +189,18 @@ class ProvinceView(ListView):
         name_list = []
         provinces = Province.objects.all()
 
-        province_names = ProvinceMahilaPratinidhiForm.objects.filter(province_id=self.kwargs.get('province_id'))
+        if self.request.GET.get('party'):
+            forms = ProvinceMahilaPratinidhiForm.objects.filter(
+                province_id=self.kwargs.get('province_id'),
+                party_name=self.request.GET.get('party')
+                ).order_by('english_name')
+        
+        else:
+            forms = ProvinceMahilaPratinidhiForm.objects.filter(
+                province_id=self.kwargs.get('province_id')
+                ).order_by('english_name')
 
-        for lists in province_names:
+        for lists in forms:
             try:
                 names['name'] = lists.english_name
             except:
@@ -206,10 +216,18 @@ class ProvinceView(ListView):
             name_list.append(dict(names))
         json_list = json.dumps(name_list)
         clicked = self.kwargs.get('clicked')
-        forms = ProvinceMahilaPratinidhiForm.objects.filter(province_id=self.kwargs.get('province_id'))
         province_id = self.kwargs.get('province_id')
-        return render(request, self.template_name, {'forms': forms, 'province_id':province_id, 'provinces':provinces, 'names':json_list, 'clicked':clicked})
-
+        districts = District.objects.all().order_by('name')
+        parties = ProvinceMahilaPratinidhiForm.objects.values('party_name').annotate(Count('party_name')).order_by('party_name')[1:]
+        return render(request, self.template_name, {
+            'forms': forms, 
+            'parties':parties, 
+            'district':districts, 
+            'province_id':province_id, 
+            'provinces':provinces, 
+            'names':json_list, 
+            'clicked':clicked
+            })       
 
 class ProvincialMahilaPratinidhiDetail(DetailView):
     template_name = 'public/detail.html'
@@ -243,6 +261,7 @@ class RastriyaMahilaDetail(TemplateView):
 
     def get(self, request, *args, **kwargs):
         form = RastriyaShava.objects.get(id=self.kwargs.get('pk'))
+        votes = form
         return render(request, self.template_name, {'form':form})
 
 

@@ -14,14 +14,22 @@
 </header>
     <div class="sectionTop darkbgl">
         <div class="container">
+            <form method="GET" action="." id="filters">
             <div class="selectHolder list">
-
+                    <div class="province">
+                        <select name="party" id="party">
+                            {% for item in parties %}
+                            {% if item %}
+                            <option value="{{ item.id }}">{{ item.party_name }}</option>
+                            {% endif %}
+                            {% endfor %}
+                        </select>
+                    </div>
                 <div class="province ">
-                    <select name="" id="">
-                        <option value="volvo">FIRST</option>
-                        <option value="saab">SECOND</option>
-                        <option value="mercedes">THIRD</option>
-
+                    <select name="districts" id="districts">
+                        {% for item in district %}
+                        <option value="{{ item.id }}">{{ item.name }}</option>
+                        {% endfor %}
                     </select>
                 </div>
                 <div class="province">
@@ -29,7 +37,6 @@
                         <option value="volvo">FIRST</option>
                         <option value="saab">SECOND</option>
                         <option value="mercedes">THIRD</option>
-
                     </select>
                 </div>
                 <div class="province">
@@ -37,22 +44,13 @@
                         <option value="volvo">FIRST</option>
                         <option value="saab">SECOND</option>
                         <option value="mercedes">THIRD</option>
-
                     </select>
                 </div>
-                <div class="province">
-                    <select name="" id="">
-                        <option value="volvo">FIRST</option>
-                        <option value="saab">SECOND</option>
-                        <option value="mercedes">THIRD</option>
-
-                    </select>
-                </div>
-
+                </form>
                 <div class="leader searchP">
                     <div class="leaderWrp ">
                         <div id="the-basics">
-                            <input class="typeahead" type="text" placeholder="CHECK YOUR LEADER AROUND">
+                            <input class="typeahead" type="text" placeholder="SEARCH YOUR LEADER HERE">
                          </div>
                         <!--<form type="get" action=".">-->
                                 <!--<input id="search_box" type="text" placeholder="CHECK YOUR LEADER AROUND" class="leaderSearch">-->
@@ -220,6 +218,8 @@
     <script type="text/javascript" src="{% static 'public/js/twitter.js' %}"></script>
 
     <script>
+        
+        // document.getElementById('party').submit();
         $(document).ready(function () {
             var substringMatcher = function(strs) {
               return function findMatches(q, cb) {

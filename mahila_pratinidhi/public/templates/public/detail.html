@@ -149,27 +149,41 @@
     
                                         </i>
                                     </div>
+                                    {% if form.permanent_address %}
                                     <div class="locationDetail bold">
                                         Permanent Address:
                                     </div>
                                 </div>
                                 <div class="placeaddress">
-                                    {% if form.address %}
-                                    {{ form.address }}
-                                    {% else %}
                                     {{ form.permanent_address }},
-                                    <br/> {{ form.permanent_gapa_napa }}, {{ form.permanent_ward_no|slice:":2" }}
-                                    {% endif %}
+                                    {% if form.permanent_gapa_napa %}
+                                    {{ form.permenent_gapa_napa }}
+                                    {% endif %} 
+                                    {{ form.permanent_ward_no|slice:":2" }}
                                 </div>
+                                {% endif %}
+                                {% if form.address %}
+                                <div class="locationDetail bold">
+                                        Permanent Address:
+                                    </div>
+                                </div>
+                                <div class="placeaddress">
+                                    {{ form.address }},
+                                </div>
+                                {% endif %}
                             </div>
+
                             {% if form.temporary_address %}
                             <div class="currentAddress flex">
                                 <div class="locationDetail bold">
                                     Current Address:
                                 </div>
                                 <div class="placeaddress">
-                                    {{ form.temporary_address }}, 
-                                    <br/> {{ form.temporary_gapa_napa }}, {{ form.temporary_ward_no|slice:":2" }}
+                                    {{ form.temporary_address }} 
+                                    {% if form.temporary_gapa_napa %}
+                                    ,{{ form.temporary_gapa_napa }}
+                                    {% endif %} 
+                                    {{ form.temporary_ward_no|slice:":2" }}
                             </div>
                             {% endif %}
                         </div>
