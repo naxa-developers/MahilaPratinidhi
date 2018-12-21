@@ -22,7 +22,7 @@ class Command(BaseCommand):
                     name=df['Name_NE'][row],
                     english_name = df['Name_EN'][row],
                     date_of_birth=df['Date of Birth_NE'][row]).\
-                    update(province=Province.objects.get(name=df['Province'][row])
+                    update(province=Province.objects.get(name=df['Province'][row]))
 
             print("successfully updated")
         except Exception as e:
