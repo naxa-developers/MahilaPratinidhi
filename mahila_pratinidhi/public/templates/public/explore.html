@@ -289,18 +289,22 @@
 
           for(var i=0; i<test.length; i++){
                 if(test[i].name== clicked && test[i].models== "ProvinceMahilaPratinidhiForm"){
-                location.href = "http://localhost:8000/explore/province/" + test[i].province_id + "/" +test[i].id;
+                // location.href = "http://localhost:8000/explore/province/" + test[i].province_id + "/" +test[i].id;
+                location.href = "http://mahilapratinidhi.naxa.com.np/explore/province/" + test[i].province_id + "/" +test[i].id;
                 }
                 else if (test[i].name== clicked && test[i].models== "RastriyaShava" ){
-                              location.href = "http://localhost:8000/detail/national/"+test[i].id;
+                    // location.href = "http://localhost:8000/detail/national/"+test[i].id;
+                    location.href = "http://mahilapratinidhi.naxa.com.np/detail/national/"+test[i].id;
                 console.log("normal");
                 }
                 else if (test[i].name== clicked && test[i].models== "PratinidhiShava" ){
                 console.log(test[i]);
-                              location.href = "http://localhost:8000/detail/pratinidhi/"+test[i].id;
+                // location.href = "http://localhost:8000/detail/pratinidhi/"+test[i].id;
+                location.href = "http://mahilapratinidhi.naxa.com.np/detail/pratinidhi/"+test[i].id;
                 }
                 else if (test[i].name== clicked && test[i].models== "MahilaPratinidhiForm" ){
-                              location.href = "http://localhost:8000/explore/district/" + test[i].district_id + "/" +test[i].id;
+                location.href = "http://localhost:8000/explore/district/" + test[i].district_id + "/" +test[i].id;
+                // location.href = "http://mahilapratinidhi.naxa.com.np/explore/district/" + test[i].district_id + "/" +test[i].id;
                 }
           }
         });

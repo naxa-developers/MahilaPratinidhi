@@ -1555,5 +1555,4 @@ class HlcitViewSet(ReadOnlyModelViewSet):
             PratinidhiShava.objects.filter(hlcit_code=self.kwargs['hlcit']),
             ProvinceMahilaPratinidhiForm.objects.filter(hlcit_code=self.kwargs['hlcit'])
         )
-
         return queryset

@@ -19,7 +19,7 @@ class MahilaPratinidhiFormForm(forms.ModelForm):
 		self.fields['address'].widget.attrs.update({'style': 'font-family: preeti; font-size:18px', 'class': 'form-control'})
 		self.fields['contact_number'].widget.attrs.update({'style': 'font-family: preeti; font-size:18px', 'class': 'form-control'})
 		self.fields['email'].widget.attrs.update({'class': 'form-control'})
-		self.fields['nirwachit_padh'].widget.attrs.update({'style': 'font-family: preeti; font-size:18px', 'class': 'form-control'})
+		self.fields['nirwachit_padh'].widget.attrs.update({'style': 'font-family: preeti; font-size:25px', 'class': 'form-control'})
 		self.fields['nirwachit_vdc_or_municipality_name'].widget.attrs.update({'style': 'font-family: preeti; font-size:18px','class': 'form-control'})
 		self.fields['party_name'].widget.attrs.update({'style': 'font-family: preeti; font-size:18px', 'class': 'form-control'})
 		self.fields['party_joined_date'].widget.attrs.update({'style': 'font-family: preeti; font-size:18px', 'class': 'form-control'})
@@ -37,7 +37,7 @@ class RastriyaShavaFormForm(forms.ModelForm):
 
 	class Meta:
 		model = RastriyaShava
-		exclude = ()
+		fields = '__all__'
 
 class PratinidhiShavaFormForm(forms.ModelForm):
 

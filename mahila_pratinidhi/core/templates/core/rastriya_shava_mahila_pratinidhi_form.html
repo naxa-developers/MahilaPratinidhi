@@ -16,7 +16,7 @@
                         <div class="col-md-12">
                             <div class="widget-info margin-top-large">
                                 <form class="form-horizontal" action="" enctype="multipart/form-data"
-                                      method="post">{% csrf_token %}
+                                      method="POST">{% csrf_token %}
                                     <div class="form-group">
 
                                         {{ form.name.label_tag }} {{ form.name }}<br>
@@ -117,6 +117,8 @@
                                         {{ form.samlagna_samsadiya_samiti.label_tag }} {{ form.samlagna_samsadiya_samiti }}<br>
                                         {{ form.status.label_tag }} {{ form.status }}<br>
                                         {{ form.image.label_tag }} {{ form.image }}<br>
+                                        {{ form.hlcit_code.label_tag }} {{ form.hlcit_code }} <br>
+                                        {{ form.featured.label_tag }} {{ form.featured }} <br>
 
 
                                     </div>
