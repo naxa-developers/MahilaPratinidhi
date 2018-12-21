@@ -21,9 +21,9 @@ class SimpleBar extends React.Component{
 
   simpleBar(sample){
 
-    var sample = sample.sort(function (a, b) {
-        return d3.descending(+a.total, +b.total);
-    })
+    // var sample = sample.sort(function (a, b) {
+    //     return d3.descending(+a.total, +b.total);
+    // })
 
 
 console.log("sample",sample);
@@ -38,7 +38,7 @@ console.log("sampleafterdlt",sample);
     const svg = d3.select('.simple-bar');
 
 
-    var margin0 = {top: 20, right: 40, bottom: 10, left: 10};
+    var margin0 = {top: 20, right: 40, bottom: 10, left: 30};
 
     const width = 650 -margin0.left-margin0.right;
     const height = 350 -margin0.top- margin0.bottom;
@@ -80,7 +80,7 @@ console.log("sampleafterdlt",sample);
 
         chart.selectAll(".x-axis text")
        .attr("transform", function(d) {
-          return "translate(" + this.getBBox().height*-2 + "," + this.getBBox().height*1.7 + ")rotate(-45)";
+          return "translate(" + this.getBBox().height*-2 + "," + this.getBBox().height*1.7 + ")rotate(-25)";
       });
 
     const barGroups = chart.selectAll()
