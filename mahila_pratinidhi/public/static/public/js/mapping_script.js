@@ -82,14 +82,17 @@ var ourCustomControl = L.Control.extend({
   onAdd: function (map) {
     var container = L.DomUtil.create('div', 'leaflet-bar leaflet-control leaflet-control-custom');
     container.style.backgroundColor = 'white';
-    container.style.width = '40px';
-    container.style.height = '38px';
-    container.style.padding = '2px';
+    container.style.width = '30px';
+    container.style.height = '30px';
+    container.style.padding = '0px';
     container.style.backgroundColor = 'white';
 
     container.style.backgroundSize = "30px 30px";
     var imgnode = document.createElement("img");
     imgnode.src = refresh_url;
+    imgnode.style.height ='25px';
+    imgnode.style.width ='25px';
+
 
     container.appendChild(imgnode);
 
@@ -130,6 +133,25 @@ map.addControl(new ourCustomControl());
 
 console.log("baseurlcheck",base_url+'/api/maps/');
 
+var marker_content = {"Province 1": 46,
+            "Province 2": 59,
+            "Province 3": 74,
+            "Province 4": 30,
+            "Province 5": 49,
+            "Province 6": 17,
+            "Province 7": 25,
+}
+
+
+var country =L.geoJson.ajax(base_url+'/api/geojson/country',
+          {onEachFeature:onEachFeature,
+           style: { color: "white",
+                    weight:2,
+                    fillColor:"grey",
+                    fillOpacity:"0.6"
+
+                    }
+          }).addTo(map);
 
 
 function fetchapi(){
@@ -150,6 +172,8 @@ function handleData(data) {
 }
 
 fetchapi();
+
+
 
 
 
@@ -225,7 +249,7 @@ if(Object.keys(properties_object).length=="1"){
     marker_array[i].removeFrom(map);
   }
 
-  //country.setStyle({fillOpacity:"0.4"}) 
+  //country.setStyle({fillOpacity:"0.4"})
 
 
 }
@@ -547,16 +571,6 @@ function Choropleth(feature,layer){
 
 
 
-
-var country =L.geoJson.ajax(base_url+'/api/geojson/country',
-          {onEachFeature:onEachFeature,
-           style: { color: "white",
-                    weight:2,
-                    fillColor:"grey",
-                    fillOpacity:"0.6"
-
-                    }
-          }).addTo(map);
 
 
 
