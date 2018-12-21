@@ -15,16 +15,15 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         df = pd.read_excel(sys.argv[3]).fillna(value='')
-        try:
-            total = df['Name_EN'].count()
-            for row in range(1, total+1):
-                national = RastriyaShava.objects.filter(
-                    name=df['Name_NE'][row],
-                    english_name = df['Name_EN'][row],
-                    date_of_birth=df['Date of Birth_NE'][row]).\
-                    update(province=Province.objects.get(name=df['Province'][row]))
+        total = df['Name_EN'].count()
+        # import ipdb
+        # ipdb.set_trace()
+        for row in range(1, 23):
+            national = RastriyaShava.objects.filter(
+                # name=df['Name_NE'][row],
+                # english_name = df['Name_EN'][row],
+                date_of_birth=df['Date of Birth_NE'][row]).\
+                update(province=Province.objects.get(name=df['Province'][row]))
 
-            print("successfully updated")
-        except Exception as e:
-            print(e)
+        print("successfully updated")
 
