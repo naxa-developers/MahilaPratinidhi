@@ -27,7 +27,7 @@ class Kernel extends React.Component{
 
 
     var margin = {top: 20, right: 30, bottom: 50, left: 40},
-        width = 650 - margin.left - margin.right,
+        width = 700 - margin.left - margin.right,
         height = 350 - margin.top - margin.bottom;
 
     var x = d3.scale.linear()

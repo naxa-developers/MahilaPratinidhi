@@ -38,7 +38,7 @@ console.log("sampleafterdlt",sample);
     const svg = d3.select('.simple-bar');
 
 
-    var margin0 = {top: 20, right: 40, bottom: 10, left: 10};
+    var margin0 = {top: 20, right: 40, bottom: 10, left: 30};
 
     const width = 650 -margin0.left-margin0.right;
     const height = 350 -margin0.top- margin0.bottom;
