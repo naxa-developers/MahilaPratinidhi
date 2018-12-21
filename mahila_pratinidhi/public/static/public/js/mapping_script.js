@@ -305,7 +305,7 @@ if(Object.keys(properties_object).length=="8"){
      if(value.feature.properties.DISTRICT.toLowerCase()=== dric){
        var geo = value.feature;
        var hlcit = value.feature.properties['HLCIT_CODE'];
-       var profile_link ="http://localhost:8000/detail/national/172/";
+       var profile_link =base_url+"/detail/national/172/";
        var popup_content ="<div style='overflow-y:scroll;height:150px;'><h7><strong>"+ value.feature.properties['LU_Name']+" "+ value.feature.properties['LU_Type'] + "</strong></h7><br><br>";
 
 
