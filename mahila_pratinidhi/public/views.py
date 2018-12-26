@@ -41,10 +41,10 @@ class Index(TemplateView):
         for item in images:
             img = item.get_absolute_image_url()
             image_list.append(img)
-        
+
         json_list = json.dumps(image_list)
 
-        return render(request, 'public/index.html', {'featured_data': featured_data, 'news':news, 
+        return render(request, 'public/index.html', {'featured_data': featured_data, 'news':news,
         'image_list':json_list})
 
 
@@ -75,7 +75,7 @@ def signup(request):
         else:
             signup_form = UserCreateForm()
         return render(request, 'login.html', {'form':signup_form})
-    
+
 
 
 def activate(request, uidb64, token):
@@ -182,7 +182,7 @@ class LocalMahilaPratinidhiDetail(DetailView):
 
 class ProvinceView(ListView):
     template_name = "public/lists.html"
-    
+
     def get(self, request, *args, **kwargs):
         names = {}
         name_list = []
@@ -234,7 +234,7 @@ class MahilaDetail(DetailView):
 
         else:
             form = MahilaPratinidhiForm.objects.get(id=self.kwargs.get('pk'))
-        
+
         return render(request, self.template_name, {'form':form})
 
 
@@ -274,42 +274,63 @@ class DataVisualize(TemplateView):
         # for mahila in local:
         #     if mahila.marital_status == 'Married' or mahila.marital_status == 'विवाहित':
         #         married = married + 1
-            
+
         #     if mahila.educational_qualification == 'Graduate' or 'स्नातक' in mahila.educational_qualification:
         #         graduate = graduate + 1
-            
+
         for mahila in national:
             if mahila.marital_status == 'Married' or mahila.marital_status == 'विवाहित':
                 married = married + 1
-            
+
             if mahila.educational_qualification == 'Graduate':
                 graduate = graduate + 1
-            
-            if mahila.nirwachit_prakriya == 'Directly Elected':
-                direct = direct + 1
-            
-        for mahila in pratinidhi:
-            if mahila.marital_status == 'Married' or mahila.marital_status == 'विवाहित':
-                married = married + 1
-            
-            if mahila.educational_qualification == 'Graduate':
-                graduate = graduate + 1
-            
-            if mahila.nirwachit_prakriya == 'Directly Elected':
-                direct = direct + 1
-        
-        for mahila in provincial:
-            if mahila.marital_status == 'Married' or mahila.marital_status == 'विवाहित':
-                married = married + 1
-            
-            if mahila.educational_qualification == 'Graduate':
-                graduate = graduate + 1
-            
+
             if mahila.nirwachit_prakriya == 'Directly Elected':
                 direct = direct + 1
 
-        return render(request, self.template_name, {'total':total, 'married':married, 'graduate':graduate, 'direct':direct})
-    
+        for mahila in pratinidhi:
+            if mahila.marital_status == 'Married' or mahila.marital_status == 'विवाहित':
+                married = married + 1
+
+            if mahila.educational_qualification == 'Graduate':
+                graduate = graduate + 1
+
+            if mahila.nirwachit_prakriya == 'Directly Elected':
+                direct = direct + 1
+
+        for mahila in provincial:
+            if mahila.marital_status == 'Married' or mahila.marital_status == 'विवाहित':
+                married = married + 1
+
+            if mahila.educational_qualification == 'Graduate':
+                graduate = graduate + 1
+
+            if mahila.nirwachit_prakriya == 'Directly Elected':
+                direct = direct + 1
+
+        content = DataVizContent.objects.all()
+        content_dict={}
+        content_list=[]
+
+        for item in content:
+            content_dict['variable_name']= item.variable_name
+            content_dict['main_content']= item.main_content
+            content_dict['content_variable']= item.content_variable
+            content_dict['content_province']= item.content_province
+            content_dict['content_province_vs_federal_vs_national']= item.content_province_vs_federal_vs_national
+            content_dict['content_party']= item.content_party
+
+        content_list.append(dict(content_dict))
+        json_list = json.dumps(content_list)
+
+
+
+
+
+
+
+        return render(request, self.template_name, {'total':total, 'married':married, 'graduate':graduate, 'direct':direct,'content':json_list})
+
 
 class NewsView(TemplateView):
     template_name = 'public/news-detail.html'
@@ -322,7 +343,7 @@ class NewsView(TemplateView):
         monday_of_last_week = some_day_last_week - timedelta(days=(some_day_last_week.isocalendar()[2] - 1))
         monday_of_this_week = monday_of_last_week + timedelta(days=7)
         latest_news = News.objects.filter(date__gte=monday_of_last_week)
-        
+
         return render(request, self.template_name, {'news':news, 'latest_news': latest_news})
 
 
@@ -331,7 +352,7 @@ def read_view(request, ):
         with open('C:/gitnaxa/work/Mahila-Pratinidhi/CV_Akshya_Kumar_Shrestha.pdf', 'rb') as pdf:
             response = HttpResponse(pdf.read(), content_type='application/pdf')
             response['Content-Disposition'] = 'filename=some_file.pdf'
-        
+
         return response
     except:
         msg = "There is no file"
@@ -437,4 +458,3 @@ def callRequestView(request, *args, **kwargs):
 
 #     else:
 #         return render(request, 'public/explore.html')
-

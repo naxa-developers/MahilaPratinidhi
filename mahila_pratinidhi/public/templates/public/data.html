@@ -4,7 +4,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.24.0/babel.js"></script>
 <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
 <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
-<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+<script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
 <!-- <script src="https://d3js.org/d3.v5.min.js"></script>  -->
 
 
@@ -134,6 +134,19 @@ text.simple-label {
 
 </style>
 <body>
+  <div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = 'https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v3.2';
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
   <div id ="d3modal" class="d3modal">
     <div class="d3modal-content">
       <span class="d3close" onClick="(function(){
@@ -171,7 +184,7 @@ text.simple-label {
                                 {{ total }}
                             </div>
                             <div class="text">
-                                <div class="bold">Total Female</div>
+                                <div class="bold">Total Female </div>
                                 <div class="lighter"> Representatives</div>
                             </div>
 
@@ -296,7 +309,7 @@ text.simple-label {
                         <p id ="innervariable" class="innerp"> Education</p>
                     </div>
                 </div>
-                <div class="col dcontent">
+                <div class="col dcontent" id="main_content_id">
                     Lorem ipsum, dolor sit amet consectetur adipisicing elit. Officiis nobis hic voluptatibus fugiat animi? Voluptates exercitationem
                     quam culpa nisi inventore laboriosam facere, unde, repudiandae consequuntur odio quas obcaecati nobis
                     animi ducimus nulla necessitatibus rem voluptatum ad expedita ut! Ratione officia consequatur cum ducimus
@@ -403,6 +416,12 @@ text.simple-label {
                     });
                 }
             });
+        </script>
+        <script>
+
+        data_content= {{content|safe}};
+        console.log("data_content",data_content);
+
         </script>
         <script type= "text/babel" src="{% static 'public/js/saveSvgAsPng.js' %} "></script>
         <script type= "text/babel" src="{% static 'public/js/bar.js' %} "></script>

@@ -46,10 +46,12 @@ def province_geojson(request, province_id):
 
 @api_view(['GET'])
 def gapanapa_geojson(request, district):
+    print(district)
 
     data = {}
     try:
-        with open('jsons/gapanapa/{}.geojson'.format(district)) as f:
+        with open('jsons/gapanapa/{}.geojson'.format(district.capitalize())) as f:
+            print(f)
             data = json.load(f)
     except:
         return Response(data, status=status.HTTP_404_NOT_FOUND)
@@ -938,7 +940,7 @@ class PoliticalEngagementViewSet(views.APIView):
 
         # for total years
         years = list(chain(rastriya_political_year, pratinidhi_political_year, provincial_political_year))
-        
+
         total_year_list = []
 
         for year in years:
