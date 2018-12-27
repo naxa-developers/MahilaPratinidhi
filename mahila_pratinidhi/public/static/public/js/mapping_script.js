@@ -13,10 +13,6 @@ map.on('click', function() {
 
   });
 
-L.control.zoom({
-     position:'topright'
-}).addTo(map);
-
 
 var info = L.control();
 //info.options ={ positon: 'topleft'};
@@ -70,6 +66,10 @@ var baseMaps = {
     //"gl":gl
 };
 L.control.layers(baseMaps).addTo(map);
+L.control.zoom({
+     position:'topright'
+}).addTo(map);
+
 
 
 var ourCustomControl = L.Control.extend({
