@@ -281,3 +281,6 @@ class DataVizContent(models.Model):
 	content_province =models.TextField()
 	content_province_vs_federal_vs_national =models.TextField()
 	content_party = models.TextField()
+
+	def __str__(self):
+		return self.variable_name

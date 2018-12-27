@@ -507,7 +507,9 @@ function circular_marker(center,number,name,feature){
       else{
 
 
-      let marker= L.marker(center, {icon: myIcon}).addTo(map);
+      let marker= L.marker(center, {icon: myIcon}).addTo(map).on('click',function(e){
+        console.log("event",e)
+      });
       marker_array.push(marker);
 
     }
