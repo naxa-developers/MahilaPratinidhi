@@ -90,7 +90,22 @@ class HBar extends React.Component{
                         .attr("x", 0)
                         .attr("width", function (d) {
                             return x(d.total);
-                        });
+                        })
+                        .on('mouseenter', function (actual, i) {
+
+                          d3.select(this)
+                            .transition()
+                            .duration(300)
+                            .attr('opacity', 0.6)
+                          })
+                      .on('mouseleave', function () {
+
+                              d3.select(this)
+                                .transition()
+                                .duration(300)
+                                .attr('opacity', 1)
+                            })
+
 
                     //add a value label to the right of each bar
                     bars.append("text")

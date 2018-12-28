@@ -131,7 +131,7 @@ class CommonShavaFields(models.Model):
 
 	class Meta:
 		abstract = True
-	
+
 	def save(self, force_insert=False, force_update=False, *args, **kwargs):
 		super(CommonShavaFields, self).save(force_insert, force_update, *args, **kwargs)
 		if self.image:
@@ -156,7 +156,7 @@ class News(models.Model):
 
 	def get_absolute_image_url(self):
 		return os.path.join('/media/', self.image.url)
-	
+
 	def save(self, force_insert=False, force_update=False, *args, **kwargs):
 		super(News, self).save(force_insert, force_update, *args, **kwargs)
 		if self.image:
@@ -165,11 +165,11 @@ class News(models.Model):
         	# image.thumbnail((1350, 700), Image.ANTIALIAS)
 			image = ImageOps.fit(image, (661, 661), Image.ANTIALIAS)
 			image.save(self.image.path)
-	
-	
+
+
 	def __str__(self):
 		return "{}-{} news".format(self.date, self.title)
-	
+
 	class Meta:
 		get_latest_by = ['date']
 
@@ -218,11 +218,11 @@ class MahilaPratinidhiForm(models.Model):
 
 	def __str__(self):
 		return "{} फारम".format(self.district.name)
-	
+
 	def save(self, force_insert=False, force_update=False, *args, **kwargs):
-		
+
 		super(MahilaPratinidhiForm, self).save(force_insert, force_update, *args, **kwargs)
-		
+
 		if self.image:
 			image = Image.open(self.image.path)
     	    # image = image.resize((1350, 700), Image.ANTIALIAS)
@@ -264,15 +264,15 @@ class BackgroundImage(models.Model):
 		return os.path.join('/media/', self.image.url)
 
 	def save(self, force_insert=False, force_update=False, *args, **kwargs):
-		
+
 		super(BackgroundImage, self).save(force_insert, force_update, *args, **kwargs)
-		
+
 		if self.image:
 			image = Image.open(self.image.path)
             # image = image.resize((1350, 700), Image.ANTIALIAS)
             # image.thumbnail((1350, 700), Image.ANTIALIAS)
 			image = ImageOps.fit(image, (1920, 1080), Image.ANTIALIAS)
-			
+
 			image.save(self.image.path)
 
 # @receiver(post_init, sender= RastriyaShava)
@@ -286,3 +286,13 @@ class BackgroundImage(models.Model):
 #         if instance._current_imagen_file != instance.imagen.path:
 #             instance._current_imagen_file.delete(save=False)
 
+class DataVizContent(models.Model):
+	variable_name = models.CharField(max_length= 50)
+	main_content = models.TextField()
+	content_variable = models.TextField()
+	content_province =models.TextField()
+	content_province_vs_federal_vs_national =models.TextField()
+	content_party = models.TextField()
+
+	def __str__(self):
+		return self.variable_name
