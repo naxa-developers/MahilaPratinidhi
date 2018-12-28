@@ -2,8 +2,8 @@
 var base_url="https://mahilapratinidhi.naxa.com.np";
 //var base_url="http://localhost:8000";
 
-var map_height = screen.height - parseInt($("#find").css('height'));
-map_height =map_height -126;
+var map_height = window.innerHeight - parseInt($("#find").css('height'));
+//map_height =map_height -126;
 $("#mapid").css("height",map_height+"px");
 
 
@@ -35,17 +35,17 @@ $(".button-action").on('click',function(){
 })
 
 
-var OSM = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-  attribution: '&copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
+var OSM = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  attribution: '&copy; <a href="https://openstreetmap.org">OpenStreetMap</a> contributors'
 });
 
-var OpenStreetMap_BlackAndWhite = L.tileLayer('http://{s}.tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png', {
+var OpenStreetMap_BlackAndWhite = L.tileLayer('https://{s}.tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png', {
 	maxZoom: 18,
-	attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+	attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
 }).addTo(map);
 
 var Thunderforest_TransportDark = L.tileLayer('https://{s}.tile.thunderforest.com/transport-dark/{z}/{x}/{y}.png?apikey={apikey}', {
-	attribution: '&copy; <a href="http://www.thunderforest.com/">Thunderforest</a>, &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+	attribution: '&copy; <a href="https://www.thunderforest.com/">Thunderforest</a>, &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
 	apikey: 'ddb2f354bd68480ebfa4ce3a9726c511',
 	maxZoom: 22
 });
@@ -209,10 +209,10 @@ function resetHighlight(e){
 var last_layer =[];
 var marker_array=[];
 
-function get_total_instance(e){
+function get_total_instance(feature){
 
 
-  var properties_object = e.target.feature.properties;
+  var properties_object = feature.properties;
 
   if(Object.keys(properties_object).length=="1"){
     var xx = "Province "+ properties_object.Province;
@@ -231,10 +231,26 @@ return marker_content[xx];
 
 function zoomToFeature(e){
 
- var properties_object = e.target.feature.properties;
+  console.log("eventorfeature",e);
 
+
+  if(e.target){
+
+     var properties_object = e.target.feature.properties;
+     total_instance = get_total_instance(e.target.feature);
+     map.fitBounds(e.target.getBounds(),{padding:[25,25]});
+
+
+}
+else{
+  var properties_object = e.properties;
   total_instance = get_total_instance(e);
-  map.fitBounds(e.target.getBounds(),{padding:[25,25]});
+  console.log("egfit",e)
+  map.fitBounds(layer.getBounds(),{padding:[25,25]});
+
+
+}
+
 
 if(Object.keys(properties_object).length=="1"){
 
@@ -508,7 +524,7 @@ function circular_marker(center,number,name,feature){
 
 
       let marker= L.marker(center, {icon: myIcon}).addTo(map).on('click',function(e){
-        console.log("event",e)
+        zoomToFeature(feature)
       });
       marker_array.push(marker);
 
