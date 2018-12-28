@@ -58,10 +58,10 @@ $(".dataVariable").on("click",function(){
 
   var variable = $(this).attr('data-value').toLowerCase().replace(" ","_");
   //insert static contents
-$("#innervariable")[0].innerText=variable.replace("_"," ");
+$("#innervariable")[0].innerText=variable;
   console.log("data_content",data_content)
   for(let i =0 ; i<data_content.length;i++){
-    if(data_content[i]["variable_name"].replace(" ","_")== variable){
+    if(data_content[i]["variable_name"]== variable){
       $("#main_content_id")[0].innerText=data_content[i]["main_content"];
       var content_variable= data_content[i]["content_variable"];
       var content_province= data_content[i]["content_province"];
