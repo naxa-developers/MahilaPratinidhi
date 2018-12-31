@@ -26,7 +26,7 @@
 
 
 
-<body>
+<body> age, ethnicity, mother tongue and education. Political variables include; political party, election type, years in political engagement and political commitment. When applicable, these variable have been cross sectioned int
     <style>
         /* Always set the map height explicitly to define the size of the div
                  * element that contains the map. */
@@ -107,16 +107,16 @@
     <div class="panelSearch " id="find">
         <div class="centeredSearch">
             <p class="searchHeader ">
-                REACH YOUR REPRESENTATIVE HERE!
+                FIND YOUR REPRESENTATIVES!
             </p>
             <div class="selectHolder ">
                 <div class="leader">
                     <div class="leaderWrp">
-                        <input type="text" id="local_leader" placeHolder="CHECK YOUR LEADER AROUND" class="leaderSearch">
+                        <input type="text" id="local_leader" placeHolder="The Leaders Around You" class="leaderSearch">
                     </div>
                 </div>
                 <div class="province">
-                    <span id="selectedValue">Search your leader</span>
+                    <span id="selectedValue">Search</span>
                     <span class="circlefilter">
                         <i class=" show arrow fa fa-angle-down"></i>
                         <i class="close fa fa-times"></i>
@@ -201,11 +201,11 @@
                                 <div class="text">PROVINCIAL ASSEMBLY
                                 </div>
                             </li>
-                            <!-- <li id="local-all">
+                            <li id="local-all">
                                 <img src="{% static 'public/image/government.svg' %}" alt="">
                                 <div class="text">LOCAL LEVEL GOVERNMENT
                                 </div>
-                            </li> -->
+                            </li>
                             <li class="showhidelist show">
                                 <a href="#4b" data-toggle="tab">
 
@@ -236,7 +236,7 @@
     <section class="pratinidhi sectionPadding">
             <div class="container topC">
 
-                <p class="sTitle header mb80 reveal">FEATURED MAHILA PRATINIDHI 2018</p>
+                <p class="sTitle header mb80 reveal">MAHILA PRATINIDHI IN THE SPOTLIGHT</p>
 
                 <div class="slider reveal">
                     {% for datas in featured_data %} {% for data in datas %}
@@ -349,11 +349,13 @@
         <div class="container reveal">
             <div class="row">
                 <div class="col-md-6">
-                    <p class="sTitle header mb80 reveal">HAMRO MAHILA PRATINIDHI IN DATA</p>
+                    <p class="sTitle header mb80 reveal">MAHILA PRATINIDHI IN DATA</p>
                     <p class="dataDetail reveal">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                        Consequat ac felis donec et odio. Natoque penatibus et magnis dis parturient montes nascetur ridiculus.
-                        Eget felis eget nunc lobortis mattis aliquam faucibus. Tortor at risus
+                      In order to understand the nuances, patterns and trends of women in Nepali politics, it is critical to identify the relationship between pertinent demographic, social and political variables. It is through analysis of quantitative data that sociocultural conclusions and inferences can drawn and utilised by the public for qualitative use.
+
+Through data collected from the most recent elections of Nepal, relevant information has been distilled and organized into the following graphs, plots and tables. Key social or demographic variables that have been examined include; age, ethnicity, mother tongue and education. Political variables include; political party, election type, years in political engagement and political commitment. When applicable, these variable have been cross sectioned into the three levels of government; Provincial, Federal and National.
+
+
 
                     </p>
                     <a href="{% url 'public:data_visualize' %}">
