@@ -647,6 +647,62 @@ class UloadView(UserPassesTestMixin, TemplateView):
 
 
 #for english and nepali file upload
+# def file_upload(request):
+# 	import pandas as pd
+#
+# 	try:
+#
+# 		request_files = request.FILES.getlist('file')
+# 		files = [pd.read_excel(filename).fillna(value='') for filename in request_files]
+# 		for df in files:
+# 			total = df['S.N'].count()
+#
+# 			for row in range(0, total):
+#
+# 				obj = MahilaPratinidhiForm.objects.create(
+# 					district=District.objects.get(name=request.POST.get('dist')),
+# 					name=df['Name_EN'][row],
+# 					age=df['Age_EN'][row])
+# 				obj.label = df['Label_EN'][row]
+# 				obj.label_ne_NP = df['Label_NE'][row]
+#
+# 				obj.name_ne_NP=df['Name_NE'][row]
+# 				obj.age_ne_NP=int(df['Age_NE'][row])
+# 				obj.marital_status=df['Maritial_Status_EN'][row]
+# 				obj.marital_status_ne_NP=df['Maritial_Status_NE'][row]
+# 				obj.educational_qualification=df['Educational_Status_EN'][row]
+# 				obj.educational_qualification_ne_NP=df['Educational_Status_NE'][row]
+# 				obj.caste=df['Ethnicity_EN'][row]
+# 				obj.caste_ne_NP=df['Ethnicity_NE'][row]
+# 				obj.address=df['Location_EN'][row]
+# 				obj.address_ne_NP=df['Location_NE'][row]
+# 				obj.contact_number=df['Contact_Number_EN'][row]
+# 				obj.contact_number_ne_NP=df['Contact_Number_NE'][row]
+# 				obj.email=df['Email_Address'][row]
+# 				obj.nirwachit_padh=df['Elected_Post_EN'][row]
+# 				obj.nirwachit_padh_ne_NP=df['Elected_Post_NE'][row]
+# 				obj.nirwachit_vdc_or_municipality_name=df['Name_of _Elected_region_EN'][row]
+# 				obj.nirwachit_vdc_or_municipality_name_ne_NP=df['Name_of _Elected_region_NE'][row]
+# 				obj.party_name=df['Name_of_Party_EN'][row]
+# 				obj.party_name_ne_NP=df['Name_of_Party_NE'][row]
+# 				obj.party_joined_date=df['Date_of_Affiliation_with_Party_EN'][row]
+# 				obj.party_joined_date_ne_NP=df['Date_of_Affiliation_with_Party_NE'][row]
+# 				obj.samlagna_sang_sastha_samuha=df['Affiliated_Institutions_En'][row]
+# 				obj.samlagna_sang_sastha_samuha_ne_NP=df['Affiliated_Institutions_NE'][row]
+# 				obj.nirwachit_chetra_pratiko_pratibadhata=df['Responsibilities_towards_elected_region_EN'][row]
+# 				obj.nirwachit_chetra_pratiko_pratibadhata_ne_NP=df['Responsibilities_towards_elected_region_NE'][row]
+# 				obj.province_id=int(df['PROVINCE'][row])
+#
+#
+# 				obj.save()
+# 		messages.success(request, 'Successfully loaded data from files')
+# 		return HttpResponseRedirect('/cms/upload')
+# 	except KeyError as e:
+# 		print(e)
+# 		messages.error(request, "File Format not supported")
+# 		return HttpResponseRedirect('/cms/upload')
+
+#updated nepali and english file_upload for local
 def file_upload(request):
 	import pandas as pd
 
@@ -658,40 +714,46 @@ def file_upload(request):
 			total = df['S.N'].count()
 
 			for row in range(0, total):
-
-				obj = MahilaPratinidhiForm.objects.create(
-					district=District.objects.get(name=request.POST.get('dist')),
+				# import ipdb
+				# ipdb.set_trace()
+				MahilaPratinidhiForm.objects.get_or_create(
+					district=District.objects.get(name=df['District'][0]),
 					name=df['Name_EN'][row],
-					age=df['Age_EN'][row])
-				obj.name_ne_NP=df['Name_NE'][row]
-				obj.age_ne_NP=int(df['Age_NE'][row])
-				obj.marital_status=df['Maritial_Status_EN'][row]
-				obj.marital_status_ne_NP=df['Maritial_Status_NE'][row]
-				obj.educational_qualification=df['Educational_Status_EN'][row]
-				obj.educational_qualification_ne_NP=df['Educational_Status_NE'][row]
-				obj.caste=df['Ethnicity_EN'][row]
-				obj.caste_ne_NP=df['Ethnicity_NE'][row]
-				obj.address=df['Location_EN'][row]
-				obj.address_ne_NP=df['Location_NE'][row]
-				obj.contact_number=df['Contact_Number_EN'][row]
-				obj.contact_number_ne_NP=df['Contact_Number_NE'][row]
-				obj.email=df['Email_Address'][row]
-				obj.nirwachit_padh=df['Elected_Post_EN'][row]
-				obj.nirwachit_padh_ne_NP=df['Elected_Post_NE'][row]
-				obj.nirwachit_vdc_or_municipality_name=df['Name_of _Elected_region_EN'][row]
-				obj.nirwachit_vdc_or_municipality_name_ne_NP=df['Name_of _Elected_region_NE'][row]
-				obj.party_name=df['Name_of_Party_EN'][row]
-				obj.party_name_ne_NP=df['Name_of_Party_NE'][row]
-				obj.party_joined_date=df['Date_of_Affiliation_with_Party_EN'][row]
-				obj.party_joined_date_ne_NP=df['Date_of_Affiliation_with_Party_NE'][row]
-				obj.samlagna_sang_sastha_samuha=df['Affiliated_Institutions_En'][row]
-				obj.samlagna_sang_sastha_samuha_ne_NP=df['Affiliated_Institutions_NE'][row]
-				obj.nirwachit_chetra_pratiko_pratibadhata=df['Responsibilities_towards_elected_region_EN'][row]
-				obj.nirwachit_chetra_pratiko_pratibadhata_ne_NP=df['Responsibilities_towards_elected_region_NE'][row]
-				obj.province_id=int(df['PROVINCE'][row])
-				
+					# age=df['Age_EN'][row],)
+				name_ne_NP = df['Name_NE'][row],
+				# age_ne_NP = int(df['Age_NE'][row],)
+				name_of_elected_region_ne_NP = df['Name.of.elected.region_NE'][row],
+				name_of_elected_region = df['Name.of.elected.region_EN'][row],
+				hlcit_code = df['HLCIT_CODE'][row],
+				nirwachit_padh_ne_NP = df['Elected.Post_NE'][row],
+				nirwachit_padh = df['Elected.Post_EN'][row],
+				ward = df['Ward_EN'][row],
+				marital_status_ne_NP = df['Maritial.Status_NE'][row],
+				marital_status = df['Maritial.Status_EN'][row],
+				educational_qualification_ne_NP = df['Education.Status_NE'][row],
+				educational_qualification = df['Education.Status_EN'][row],
+				caste_ne_NP = df['Ethnicity_NE'][row],
+				caste = df['Ethnicity_EN'][row],
+				contact_number = df['Contact.Number_EN'][row],
+				# contact_number_ne_NP = df['Contact_Number_NE'][row],
+				email = df['Email_EN'][row],
+				party_joined_date = df['Date.of.Affiliation.with.Party_EN'][row],
+				# party_joined_date_ne_NP = df['Date_of_Affiliation_with_Party_NE'][row],
+				samlagna_sang_sastha_samuha_ne_NP = df['Affiliated.Institutions_NE'][row],
+				samlagna_sang_sastha_samuha = df['Affiliated.Institutions_EN'][row],
+				nirwachit_chetra_pratiko_pratibadhata_ne_NP = df['Political.Commitment_NE'][row],
+				nirwachit_chetra_pratiko_pratibadhata = df['Political.Commitment_EN'][row],
+				party_name_ne_NP = df['Political.Party_NE'][row],
+				party_name = df['Political.Party_EN'][row],
+				prapta_maat_sankhya = df['Number.of.Votes.Received_EN'][row],
+				# prapta_maat_sankhya_ne_NP = df['Prapta_Mat_NE'][row],
+				fathers_name_ne_NP = df["Father's.Name_NE"][row],
+				fathers_name = df["Father's.Name_EN"][row],
+				mothers_name_ne_NP = df["Mother's.Name_NE"][row],
+				mothers_name = df["Mother's.Name_EN"][row],
+				dob = df['Date.of.birth_EN'][row])
+				# dob_ne_NP = df['DOB_NE'][row],
 
-				obj.save()
 		messages.success(request, 'Successfully loaded data from files')
 		return HttpResponseRedirect('/cms/upload')
 	except KeyError as e:
@@ -835,7 +897,7 @@ class ProvinceUloadView(UserPassesTestMixin, TemplateView):
 
 # 				obj, created = ProvinceMahilaPratinidhiForm.objects.get_or_create(
 # 					province=Province.objects.get(name=Province.objects.get(name=df['Province'][0])),
-# 					name=df['नाम'][row],
+# 					name=df['नाम'][row],,
 # 					english_name=df['English Name'][row],
 # 					date_of_birth=df['जन्ममिती'][row])
 

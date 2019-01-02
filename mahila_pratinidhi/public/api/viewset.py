@@ -476,7 +476,7 @@ class EthnicityViewSet(views.APIView):
         .annotate(total=Count('caste'))
         national_party_caste = RastriyaShava.objects.values('party_name', 'caste').distinct()\
         .annotate(total=Count('caste'))
-        local_party_caste = MahilaPratinidhiForm.objects.values('party_name', 'caste').distinct()/
+        local_party_caste = MahilaPratinidhiForm.objects.values('party_name', 'caste').distinct()\
         .annotate(total=Count('caste'))
 
         party_caste = list(chain(province_party_caste, pratinidhi_party_caste, national_party_caste, local_party_caste))
