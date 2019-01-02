@@ -14,10 +14,10 @@ var chart_type ={
                   'election_experience':['bar','stacked','stacked','stacked']
 
 }
- age, ethnicity, mother tongue and education. Political variables include; political party, election type, years in political engagement and political commitment. When applicable, these variable have been cross sectioned int
+
 for(let i =0 ; i<data_content.length;i++){
   if(data_content[i]["variable_name"] == "education"){
-    $("#main_content_id")[0].innerText=data_content[i]["main_content"];
+    // $("#main_content_id")[0].innerText=data_content[i]["main_content"];
     var content_variable= data_content[i]["content_variable"];
     var content_province= data_content[i]["content_province"];
     var content_province_vs_federal_vs_national= data_content[i]["content_province_vs_federal_vs_national"];
@@ -57,7 +57,7 @@ $("#innervariable")[0].innerText=variable.replace("_"," ");
   console.log("data_content",data_content)
   for(let i =0 ; i<data_content.length;i++){
     if(data_content[i]["variable_name"].replace(" ","_")== variable){
-      //$("#main_content_id")[0].innerText=data_content[i]["main_content"];
+      // $("#main_content_id")[0].innerText=data_content[i]["main_content"];
       var content_variable= data_content[i]["content_variable"];
       var content_province= data_content[i]["content_province"];
       var content_province_vs_federal_vs_national= data_content[i]["content_province_vs_federal_vs_national"];
