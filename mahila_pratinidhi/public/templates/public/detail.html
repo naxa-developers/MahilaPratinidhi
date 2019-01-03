@@ -52,7 +52,7 @@
                                     {% if form.age %}
                                     
                                     <span class="dtitle">Age:</span>
-                                    <span class="dvalue">{{ form.age }} Years</span>
+                                    <span class="dvalue">{{ form.age|slice:":2" }} Years</span>
                                     {% endif %}
                                 </div>
                                 <div>
