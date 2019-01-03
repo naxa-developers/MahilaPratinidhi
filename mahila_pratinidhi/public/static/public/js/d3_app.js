@@ -95,9 +95,9 @@ render (){
     <div className="col-md-4">  <p className="gheader"> {this.props.data_pass[0].title}  </p> <p
     className="gtext"> {content} </p> <div className="icons">
     <a target="_blank"
-    href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fmahilapratinidhi.naxa.com.np%2Fvisualize%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">
+    href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fmahilapratinidhi.naxa.com.np%2Fvisualize%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">
     <div style={{display:'inline'}} className="fb-share-button"
-    data-href="http://mahilapratinidhi.naxa.com.np/visualize/"
+    data-href="https://mahilapratinidhi.naxa.com.np/visualize/"
     data-layout="button_count" data-size="small"
     data-mobile-iframe="true">
     <i className="fa fa-facebook-f"></i>

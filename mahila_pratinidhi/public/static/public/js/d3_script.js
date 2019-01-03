@@ -1,11 +1,6 @@
 //var base_url="http://localhost:8000";
+console.log("dataupdated",data_content)
 var base_url="https://mahilapratinidhi.naxa.com.np";
-
-
-
-
-
-
 
 var chart_type ={
                   'age':['kernel','stacked','stacked','stacked'] ,
@@ -22,7 +17,7 @@ var chart_type ={
 
 for(let i =0 ; i<data_content.length;i++){
   if(data_content[i]["variable_name"] == "education"){
-    $("#main_content_id")[0].innerText=data_content[i]["main_content"];
+    // $("#main_content_id")[0].innerText=data_content[i]["main_content"];
     var content_variable= data_content[i]["content_variable"];
     var content_province= data_content[i]["content_province"];
     var content_province_vs_federal_vs_national= data_content[i]["content_province_vs_federal_vs_national"];
@@ -61,8 +56,8 @@ $(".dataVariable").on("click",function(){
 $("#innervariable")[0].innerText=variable;
   console.log("data_content",data_content)
   for(let i =0 ; i<data_content.length;i++){
-    if(data_content[i]["variable_name"]== variable){
-      $("#main_content_id")[0].innerText=data_content[i]["main_content"];
+    if(data_content[i]["variable_name"].replace(" ","_")== variable){
+      // $("#main_content_id")[0].innerText=data_content[i]["main_content"];
       var content_variable= data_content[i]["content_variable"];
       var content_province= data_content[i]["content_province"];
       var content_province_vs_federal_vs_national= data_content[i]["content_province_vs_federal_vs_national"];

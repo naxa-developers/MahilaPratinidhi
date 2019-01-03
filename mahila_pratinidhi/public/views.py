@@ -328,18 +328,23 @@ class DataVisualize(TemplateView):
                 direct = direct + 1
 
         content = DataVizContent.objects.all()
+        print('content_all',content)
+
         content_dict={}
         content_list=[]
 
         for item in content:
+
             content_dict['variable_name']= item.variable_name
             content_dict['main_content']= item.main_content
             content_dict['content_variable']= item.content_variable
             content_dict['content_province']= item.content_province
             content_dict['content_province_vs_federal_vs_national']= item.content_province_vs_federal_vs_national
             content_dict['content_party']= item.content_party
+            content_list.append(dict(content_dict))
 
-        content_list.append(dict(content_dict))
+
+
         json_list = json.dumps(content_list)
 
 
