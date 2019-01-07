@@ -45,7 +45,7 @@ d3png.onclick = function(){
   var s = new XMLSerializer().serializeToString($("svg")[0]);
   var encodedData = window.btoa(s);
   console.log(encodedData);
-  saveSvgAsPng($(needed).closest(".row").find("svg")[0], "diagram.png",{backgroundColor:"hsl(50, 33%, 25%)",scale:1});
+  saveSvgAsPng($(needed).closest(".row").find("svg")[0], "diagram.png",{backgroundColor:"hsl(50, 33%, 25%)",scale:"1"});
 
 }
 

@@ -8,8 +8,9 @@ $("#mapid").css("height",map_height+"px");
 
 
 var map =L.map('mapid',{minZoom: 7,maxZoom: 13,zoomSnap:0.1, zoomControl:false,scrollWheelZoom: false}).setView([28.5,84],7.2);
+
 map.on('click', function() {
-  map.scrollWheelZoom.enable();
+  //map.scrollWheelZoom.enable();
 
   });
 
@@ -36,12 +37,26 @@ $(".button-action").on('click',function(){
 
 
 var OSM = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-  attribution: '&copy; <a href="https://openstreetmap.org">OpenStreetMap</a> contributors'
+  attribution: '&copy; <a href="https://openstreetmap.org">OpenStreetMap</a> contributors',
+  opacity:0.5
+
+
+});
+
+var empty = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  attribution: '&copy; <a href="https://openstreetmap.org">OpenStreetMap</a> contributors',
+  opacity:0
+
 }).addTo(map);
+
+
 
 var OpenStreetMap_BlackAndWhite = L.tileLayer('//{s}.tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png', {
 	maxZoom: 18,
-	attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+	attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+  opacity:1
+
+
 });
 
 var Thunderforest_TransportDark = L.tileLayer('https://{s}.tile.thunderforest.com/transport-dark/{z}/{x}/{y}.png?apikey={apikey}', {
@@ -49,6 +64,9 @@ var Thunderforest_TransportDark = L.tileLayer('https://{s}.tile.thunderforest.co
 	apikey: 'ddb2f354bd68480ebfa4ce3a9726c511',
 	maxZoom: 22
 });
+
+
+
 
 
 var gl = L.mapboxGL({
@@ -61,10 +79,15 @@ var baseMaps = {
     //"Street View": street_view,
     "OSM": OSM,
     "Black&White":OpenStreetMap_BlackAndWhite,
-    "dark":Thunderforest_TransportDark,
+    // "dark":Thunderforest_TransportDark,
+    "none":empty
     //"Empty" : L.tileLayer(''),
     //"gl":gl
 };
+
+
+
+
 L.control.layers(baseMaps).addTo(map);
 L.control.zoom({
      position:'topright'
@@ -113,6 +136,7 @@ var ourCustomControl = L.Control.extend({
       console.log("country",country);
       marker_content = data_summary_all["all"][0]
 
+      country.setStyle({fillOpacity:"0.7"})
 
  $.each(country._layers,function(key,value){
 
@@ -130,6 +154,23 @@ var ourCustomControl = L.Control.extend({
 
 map.addControl(new ourCustomControl());
 
+
+$("#mapid").on("change","input.leaflet-control-layers-selector", function(){
+
+
+  if(map.hasLayer(empty)){
+    $("#mapid").css("background-color","#0f2842");
+
+
+  }
+
+  else{
+    $("#mapid").css("background-color","#dddddd");
+
+
+  }
+
+})
 
 console.log("baseurlcheck",base_url+'/api/maps/');
 //
@@ -170,11 +211,14 @@ var country =L.geoJson.ajax(base_url+'/api/geojson/country',
            style: { color: "white",
                     weight:2,
                     fillColor:"grey",
-                    fillOpacity:"0.6"
+                    fillOpacity:"0.7"
 
                     }
           }).addTo(map);
 
+country.on('data:loaded', function () {
+                $("#loading-id").find("h3").css("display","none");
+             });
 
 
 var total_instance = 300;
@@ -231,6 +275,8 @@ return marker_content[xx];
 
 function zoomToFeature(e){
 
+
+
   console.log("eventorfeature",e);
 
 
@@ -251,8 +297,20 @@ else{
 
 }
 
+if(last_layer[0]){
+  last_layer[0].setStyle({fillOpacity:"0.08"})
+
+}
+
+if(last_layer[1]){
+  last_layer[1].setStyle({fillOpacity:"0.08"})
+
+
+}
 
 if(Object.keys(properties_object).length=="1"){
+  $("#loading-id").find("h3").css("display","block");
+
 
   if(last_layer.length){
     last_layer.map(function(layer){
@@ -265,14 +323,19 @@ if(Object.keys(properties_object).length=="1"){
     marker_array[i].removeFrom(map);
   }
 
-  //country.setStyle({fillOpacity:"0.4"})
+  country.setStyle({fillOpacity:"0.08"})
 
 
 }
 
 if(Object.keys(properties_object).length=="8"){
+  $("#loading-id").find("h3").css("display","block");
+
 
     if(last_layer[1]){
+      console.log("districts",last_layer[0])
+
+
         map.removeLayer(last_layer[1]);
         last_layer.pop();
 
@@ -300,6 +363,11 @@ if(Object.keys(properties_object).length=="8"){
                         fillOpacity:1}}
              );
 
+layer_inside.on('data:loaded',function(){
+  $("#loading-id").find("h3").css("display","none");
+
+
+})
 
                 layer_inside.addTo(map);
                 last_layer.push(layer_inside);
@@ -322,7 +390,11 @@ if(Object.keys(properties_object).length=="8"){
 
                         fillOpacity:1}}
              );
+      layer_inside.on('data:loaded',function(){
+               $("#loading-id").find("h3").css("display","none");
 
+
+             })
 
                 layer_inside.addTo(map);
                 last_layer.push(layer_inside);
@@ -417,7 +489,7 @@ function BindFunction(feature,layer){
 function BindPopupFunction(feature,layer){
 
 
-    var hlcit = feature.properties['hlcit_code'];
+    var hlcit = feature.properties['hlcit_code'] || feature.properties['HLCIT_CODE'] ;
     var profile_link =base_url+"/detail/national/172/";
     var popup_content ="<div style='overflow-y:scroll;height:150px;'><h7><strong>"+ feature.properties['FIRST_GaPa']+" "+ feature.properties['FIRST_Type'] + "</strong></h7><br><br>";
 
@@ -542,7 +614,7 @@ function get_center(feature,layer){
 function get_code(feature){
   var properties_object = feature.properties;
   if (Object.keys(properties_object).length=="11"){
-   var xx = feature.properties['hlcit_code'];
+   var xx = feature.properties['hlcit_code'] || feature.properties['HLCIT_CODE'];
  }
 
 return xx;
@@ -697,7 +769,7 @@ for( var i=0; i< marker_array.length;i++){
     var key = marker_array[i]._icon.firstChild.id;
     var marker_value = marker_content[key.replace("_"," ")];
     if(marker_value == null){
-      marker_value = "xxx";
+      marker_value = "0";
     }
 
 
@@ -790,6 +862,7 @@ function getLocation(){
 
           var females=data;
           ward_leader(get_number(value.feature),get_center(value,value),females,hlcit);
+          BindPopupFunction(value.feature,muni_layer);
 
         })
 

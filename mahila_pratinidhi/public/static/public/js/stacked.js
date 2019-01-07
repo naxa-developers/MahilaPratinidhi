@@ -6,13 +6,13 @@ class StackedChart extends React.Component{
   }
 
   componentDidMount(){
-    //alert("component did mont" +this.props.data[0].dataName)
+    //alert("component did mont" +this.props.data[0].data)
     this.stackedChart(this.props.data[0].data, this.props.data[0].dataName);
 
   }
 
   componentWillReceiveProps(nextProps){
-    alert("component did receive");
+    //alert("component did receive");
     d3.selectAll('.stacked-bar').selectAll("*").remove();
     this.stackedChart(nextProps.data[0].data,nextProps.data[0].dataName);
   }
@@ -29,6 +29,7 @@ class StackedChart extends React.Component{
 
     else if(dataName== "provincial") {
 
+
         var legend_array= ["1","2","3","4","5","6","7"];
         count =0;
     }
@@ -42,11 +43,11 @@ class StackedChart extends React.Component{
 
 
 
-  var margin = {top: 20, right: 170, bottom: 20, left: 30};
+  var margin = {top: 20, right: 70, bottom: 20, left: 30};
 
 
 
-  var width = 700 - margin.left - margin.right,
+  var width = 650 - margin.left - margin.right,
       height = 350 - margin.top - margin.bottom;
 
   var svg = d3.selectAll(".stacked-bar").filter(function(d,i){

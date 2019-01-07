@@ -355,6 +355,15 @@ class DataVisualize(TemplateView):
 
         return render(request, self.template_name, {'total':total, 'married':married, 'graduate':graduate, 'direct':direct,'content':json_list})
 
+class VisualizeIndividual(TemplateView):
+    template_name='public/vizInd.html'
+
+    def get(self,request,*args,**kwargs):
+        data_var={}
+        data_var['one'] =self.kwargs.get('variable')
+        data_key=self.kwargs.get('key')
+        print(data_var)
+        return render(request, self.template_name, {'key':data_key, 'data_variable': json.dumps(data_var) })
 
 class NewsView(TemplateView):
     template_name = 'public/news-detail.html'
