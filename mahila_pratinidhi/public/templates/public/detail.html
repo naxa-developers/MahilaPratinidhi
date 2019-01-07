@@ -2,12 +2,13 @@
 {% load staticfiles %}
 {% block upper_content %}
 {% load filters %}
+
 <body>
     <header>
         <div class="navigation innerPage">
             <div class="container-fluid">
-{% endblock %}
-{% block lower_content %}
+                {% endblock %}
+                {% block lower_content %}
             </div>
         </div>
     </header>
@@ -28,7 +29,7 @@
 
                 <div class="personalDetail">
 
-                    
+
                     <div class="detail">
                         <div class="detailTitles">
                             <p class="pheader">
@@ -39,7 +40,8 @@
                                     {% endif %}
                                 </span>
                                 <span class="flag">
-                                    <img src="{% static 'public/image/'|add:form.party_name|space_to_underscore|add:'.png' %}" alt="">
+                                    <img src="{% static 'public/image/'|add:form.party_name|space_to_underscore|add:'.png' %}"
+                                        alt="">
                                 </span>
                             </p>
                             <p class="personalInfoHeader">
@@ -50,7 +52,7 @@
                             <div class="info">
                                 <div>
                                     {% if form.age %}
-                                    
+
                                     <span class="dtitle">Age:</span>
                                     <span class="dvalue">{{ form.age }} Years</span>
                                     {% endif %}
@@ -105,7 +107,7 @@
 
                                         </i>
                                         <span class="contactIfo"><a href="{% url 'public:pratinidhi_call_request' form.pk %}">
-                                            Call Request
+                                                Call Request
                                             </a>
                                         </span>
                                     </div>
@@ -131,7 +133,8 @@
                                         </span>
 
                                         <span class="contactIfo">
-                                            <a href="https://www.facebook.com/{{form.social_networking_medium}}" target="_blank">Find on Social Media</a>
+                                            <a href="https://www.facebook.com/{{form.social_networking_medium}}" target="_blank">Find
+                                                on Social Media</a>
                                         </span>
                                     </div>
                                     {% endif %}
@@ -142,55 +145,55 @@
 
                     </div>
                     <div class="personalDetilFooter">
-                            <div class="permanentAddress flex">
-                                <div class="placelbl flex aligncenter">
-                                    <div>
-                                        <i class="fa fa-map-marker">
-    
-                                        </i>
-                                    </div>
-                                    {% if form.permanent_address %}
-                                    <div class="locationDetail bold">
-                                        Permanent Address:
-                                    </div>
-                                </div>
-                                <div class="placeaddress">
-                                    {{ form.permanent_address }},
-                                    {% if form.permanent_gapa_napa %}
-                                    {{ form.permenent_gapa_napa }}
-                                    {% endif %} 
-                                    {{ form.permanent_ward_no|slice:":2" }}
-                                </div>
-                                {% endif %}
-                                {% if form.address %}
-                                <div class="locationDetail bold">
-                                        Permanent Address:
-                                    </div>
-                                </div>
-                                <div class="placeaddress">
-                                    {{ form.address }},
-                                </div>
-                                {% endif %}
-                            </div>
+                        <div class="permanentAddress flex">
+                            <div class="placelbl flex aligncenter">
+                                <div>
+                                    <i class="fa fa-map-marker">
 
-                            {% if form.temporary_address %}
-                            <div class="currentAddress flex">
-                                <div class="locationDetail bold">
-                                    Current Address:
+                                    </i>
                                 </div>
-                                <div class="placeaddress">
-                                    {{ form.temporary_address }} 
-                                    {% if form.temporary_gapa_napa %}
-                                    ,{{ form.temporary_gapa_napa }}
-                                    {% endif %} 
-                                    {{ form.temporary_ward_no|slice:":2" }}
+                                {% if form.permanent_address %}
+                                <div class="locationDetail bold">
+                                    Permanent Address:
+                                </div>
+                            </div>
+                            <div class="placeaddress">
+                                {{ form.permanent_address }},
+                                {% if form.permanent_gapa_napa %}
+                                {{ form.permenent_gapa_napa }}
+                                {% endif %}
+                                {{ form.permanent_ward_no|slice:":2" }}
                             </div>
                             {% endif %}
+                            {% if form.address %}
+                            <div class="locationDetail bold">
+                                Permanent Address:
+                            </div>
                         </div>
+                        <div class="placeaddress">
+                            {{ form.address }},
+                        </div>
+                        {% endif %}
                     </div>
 
+                    {% if form.temporary_address %}
+                    <div class="currentAddress flex">
+                        <div class="locationDetail bold">
+                            Current Address:
+                        </div>
+                        <div class="placeaddress">
+                            {{ form.temporary_address }}
+                            {% if form.temporary_gapa_napa %}
+                            ,{{ form.temporary_gapa_napa }}
+                            {% endif %}
+                            {{ form.temporary_ward_no|slice:":2" }}
+                        </div>
+                        {% endif %}
+                    </div>
                 </div>
+
             </div>
+        </div>
         </div>
 
 
@@ -199,10 +202,76 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-9">
+
+                    <div class="coverHeight"></div>
+
+
+
                     <div class="infographic">
-                        <img src="{% static 'public/image/detailimg1.png' %}" alt="">
+
+                        <img src="{% static 'public/image/detailimg5.png' %}" alt="">
+                        <div class=" abs dettext1">
+                            <span class="hang dates"> 2058</span>
+                            <span>Engaged in Naya Shakti Nepal from its inception</span>
+                        </div>
+                        <div class="abs dettext2">
+                            <span class="hang dates"> 2058</span>
+                            <span>Joined People’s Liberation Army</span>
+                        </div>
+                        <div class="abs dettext3">
+                            <span class="hang dates"> 2058</span>
+                            <span>All Nepal National Independent Students’ Union (Revolutionary)</span>
+
+                        </div>
+                        <div class="abs dettext4">
+                            <span class="hang dates"> 2058</span>
+                            <span> Joined Young Communist League, Nepal</span>
+                        </div>
+                        <div class=" abs dettext5">
+                            <span class="hang dates"> 2058</span>
+                            <span>Currently, Gandaki Province Member at Naya Shakti Nepal</span>
+                        </div>
+
+
+
                     </div>
+
+
+                    <div class="sliderHolderlist inlist">
+                        <p class="sTitle header ">Responsibilities </p>
+                        <div class="slikinside">
+                            <div>
+                                Engaged in Naya Shakti Nepal from its inception
+                            </div>
+                            <div>
+                                Joined People’s Liberation Army
+                            </div>
+                            <div>
+                                All Nepal National Independent Students’ Union (Revolutionary)
+                            </div>
+                            <div>
+                                Joined Young Communist League, Nepal
+                            </div>
+                            <div>
+                                Currently, Gandaki Province Member at Naya Shakti Nepal
+                            </div>
+
+                        </div>
+
+                    </div>
+
                 </div>
+
+
+
+
+
+
+
+
+
+
+
                 <div class="col-md-3 flex aligncenter column">
                     {% if form.nirwachit_prakriya %}
                     <div class="workSHolder">
@@ -263,24 +332,24 @@
             </div>
             <div class="row ptbi">
                 <div class="col-md-3 aligncenter justify-content-center titl">Political
-                    <br/>Commitments
+                    <br />Commitments
                 </div>
                 {% if form.nirwachit_chetra_pratiko_pratibadhata %}
                 {% with form.nirwachit_chetra_pratiko_pratibadhata|split:"," as jimmewaris %}
-                    {% for jimmewari in jimmewaris %}
-                    <div class="col-md-3">
-                        <div class="we relative">
-                            <div class="overLink"></div>
-                            <div class="weInner">
-                                {{ jimmewari }}
-                            </div>
+                {% for jimmewari in jimmewaris %}
+                <div class="col-md-3">
+                    <div class="we relative">
+                        <div class="overLink"></div>
+                        <div class="weInner">
+                            {{ jimmewari }}
                         </div>
-        
                     </div>
-                    {% endfor %}
+
+                </div>
+                {% endfor %}
                 {% endwith %}
                 {% endif %}
-                </div>
+            </div>
 
 
             {% if form.samlagna_sang_sastha_samuha %}
@@ -309,14 +378,14 @@
                 {% for news in form.news.all %}
                 <div class="col-xl-3 col-lg-4 col-md-6 reveal" data-sr-id="12" style="visibility: visible; opacity: 1; transition: opacity 0.4s cubic-bezier(0.5, 0, 0, 1) 0.05s;">
                     <a href="{% url 'public:news' news.pk %}">
-                    <div class="pImageholder prelative">
-                        <img src="{% static 'public/image/p1.jpg' %}" class="cropNews" alt="user">
-                        <div class="holderOverlay"></div>
-                        <div class="content">
-                            <div class="tags"> {{ form.name }} in News</div>
-                            <div class="pTitle">{{ news.title }}</div>
+                        <div class="pImageholder prelative">
+                            <img src="{% static 'public/image/p1.jpg' %}" class="cropNews" alt="user">
+                            <div class="holderOverlay"></div>
+                            <div class="content">
+                                <div class="tags"> {{ form.name }} in News</div>
+                                <div class="pTitle">{{ news.title }}</div>
+                            </div>
                         </div>
-                    </div>
                     </a>
                 </div>
                 {% endfor %}
@@ -326,8 +395,11 @@
 
 
     </section>
-{% endblock %}
-{% block scripts %}
+
+
+
+    {% endblock %}
+    {% block scripts %}
     <script>
         $(document).ready(function () {
 
@@ -342,8 +414,34 @@
                 $(".selectHolder.list").removeClass("activated")
 
             });
+
+
+
+            $('.slikinside').slick({
+                infinite: true,
+                slidesToShow: 3,
+                slidesToScroll: 3,
+                dots: true,
+                arrows: false,
+
+                responsive: [
+
+                    {
+                        breakpoint: 600,
+                        settings: {
+                            slidesToShow: 2,
+                            slidesToScroll: 2
+                        }
+                    },
+                    {
+                        breakpoint: 480,
+                        settings: {
+                            slidesToShow: 1,
+                            slidesToScroll: 1
+                        }
+                    }
+                ]
+            });
         });
-
-
     </script>
     {% endblock %}

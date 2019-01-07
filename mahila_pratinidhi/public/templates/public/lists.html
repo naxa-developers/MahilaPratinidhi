@@ -2,20 +2,21 @@
 {% load staticfiles %}
 {% block upper_content %}
 <link rel="stylesheet" href="{% static 'public/css/twitter.css' %}">
-<body>
-        <header>
-            <div class="navigation innerPage">
-                <div class="container-fluid">
-{% endblock %}
 
-{% block lower_content%}
-</div>
-</div>
-</header>
+<body>
+    <header>
+        <div class="navigation innerPage">
+            <div class="container-fluid">
+                {% endblock %}
+
+                {% block lower_content%}
+            </div>
+        </div>
+    </header>
     <div class="sectionTop darkbgl">
         <div class="container">
             <form method="GET" action="." id="filters">
-            <div class="selectHolder list">
+                <div class="selectHolder list">
                     <div class="province">
                         <select name="party" id="party">
                             {% for item in parties %}
@@ -25,177 +26,128 @@
                             {% endfor %}
                         </select>
                     </div>
-                <div class="province ">
-                    <select name="districts" id="districts">
-                        {% for item in district %}
-                        <option value="{{ item.id }}">{{ item.name }}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-                <div class="province">
-                    <select name="" id="">
-                        <option value="volvo">FIRST</option>
-                        <option value="saab">SECOND</option>
-                        <option value="mercedes">THIRD</option>
-                    </select>
-                </div>
-                <div class="province">
-                    <select name="" id="">
-                        <option value="volvo">FIRST</option>
-                        <option value="saab">SECOND</option>
-                        <option value="mercedes">THIRD</option>
-                    </select>
-                </div>
-                </form>
-                <div class="leader searchP">
-                    <div class="leaderWrp ">
-                        <div id="the-basics">
-                            <input class="typeahead" type="text" placeholder="SEARCH YOUR LEADER HERE">
-                         </div>
-                        <!--<form type="get" action=".">-->
-                                <!--<input id="search_box" type="text" placeholder="CHECK YOUR LEADER AROUND" class="leaderSearch">-->
-                                <!--&lt;!&ndash;<span><button id="search_submit" type="submit" class="moreBtn">Search</button></span>&ndash;&gt;-->
-                        <!--</form>-->
+                    <div class="province ">
+                        <select name="districts" id="districts">
+                            {% for item in district %}
+                            <option value="{{ item.id }}">{{ item.name }}</option>
+                            {% endfor %}
+                        </select>
                     </div>
-                </div>
-                <div class="closeBtn">
-                    <i class="fa fa-times"></i>
+                    <div class="province">
+                        <select name="" id="">
+                            <option value="volvo">FIRST</option>
+                            <option value="saab">SECOND</option>
+                            <option value="mercedes">THIRD</option>
+                        </select>
+                    </div>
+                    <div class="province">
+                        <select name="" id="">
+                            <option value="volvo">FIRST</option>
+                            <option value="saab">SECOND</option>
+                            <option value="mercedes">THIRD</option>
+                        </select>
+                    </div>
+            </form>
+            <div class="leader searchP">
+                <div class="leaderWrp exp ">
+                    <div id="the-basics">
+                        <input class="typeahead" type="text" placeholder="SEARCH YOUR LEADER HERE">
+                    </div>
+                    <!--<form type="get" action=".">-->
+                    <!--<input id="search_box" type="text" placeholder="CHECK YOUR LEADER AROUND" class="leaderSearch">-->
+                    <!--&lt;!&ndash;<span><button id="search_submit" type="submit" class="moreBtn">Search</button></span>&ndash;&gt;-->
+                    <!--</form>-->
                 </div>
             </div>
+            <div class="closeBtn">
+                <i class="fa fa-times"></i>
+            </div>
+        </div>
 
 
 
 
 
-            <ul class="nav nav-pills clickabletabs">
-                <li class=" ">
-                    <a href="#1a" data-toggle="tab" class="active">
-                        <div class="holder active">
-                            <img src="{% static 'public/image/grid.svg' %}" alt="">
-                        </div>
-
-                    </a>
-                </li>
-                <li>
-                    <a href="#1b" data-toggle="tab">
-                        <div class="holder ">
-                            <img src="{% static 'public/image/switch.svg' %}" alt="">
-                        </div>
-                    </a>
-
-                </li>
-                <li class="mla">
-                    <button class="filterBtn"> filter</button>
-                </li>
-
-            </ul>
-            <div class="tab-content clearfix">
-                <div class="tab-pane active" id="1a">
-                    <div class="pfofileItems">
-                        {% for form in forms %}
-                        <div class="pItem reveal">
-                            {% if district_id %}
-                            <a href="{% url 'public:local_mahila_detail' district_id form.pk %}">
-                            {% else %}
-                            <a href="{% url 'public:provincial_mahila_detail' province_id form.pk %}">
-                            {% endif %}
-                            <div class="inner">
-
-                                <div class="pimageHolder">
-                                    {% if form.image %}
-                                    <img src="{{ MEDIA_URL }} {{ form.image.url }}" alt="">
-                                    {% else %}
-                                    <img src="{% static 'public/image/mahilalogo.png' %}" alt="" >
-                                    {% endif %}
-                                    <div class="img"></div>
-
-                                    <div class="poverlay">
-
-                                    </div>
-                                    <div class="aroup"></div>
-                                </div>
-                                <div class="detailHolder">
-                                    <div class="deteilbg"></div>
-                                    <div class="date">
-                                        <div class="yrcnt">
-                                            {{ form.age|slice:":2" }}
-                                        </div>
-                                        <div class="dtl">
-                                            Years
-                                        </div>
-
-
-                                    </div>
-                                    <div class="dname">
-                                        {% if form.english_name %}
-                                            {{ form.english_name|upper }}
-                                        {% else %}
-                                            {{ form.name|upper }}
-                                        {% endif %}
-                                    </div>
-                                    <div class="dlocation">
-                                        {% if form.permanent_address %}
-                                            {{ form.permanent_address|title }}
-                                        {% else %}
-                                            {{ form.address|title }}
-                                        {% endif %}
-                                    </div>
-                                    <div class="bottom">
-                                        <i class="fa fa-arrow-right arow"></i>
-                                    </div>
-                                </div>
-
-                            </div>
-                            </a>
-                        </div>
-                        {% endfor %}
-                        <div class="btnwrp">
-                            <button class="moreBtn"> Show More</button>
-                        </div>
-
-
+        <ul class="nav nav-pills clickabletabs">
+            <li class=" ">
+                <a href="#1a" data-toggle="tab" class="active">
+                    <div class="holder active">
+                        <img src="{% static 'public/image/grid.svg' %}" alt="">
                     </div>
 
-                </div>
+                </a>
+            </li>
+            <li>
+                <a href="#1b" data-toggle="tab">
+                    <div class="holder ">
+                        <img src="{% static 'public/image/switch.svg' %}" alt="">
+                    </div>
+                </a>
 
-                <div class="tab-pane" id="1b">
+            </li>
+            <li class="mla">
+                <button class="filterBtn"> filter</button>
+            </li>
+
+        </ul>
+        <div class="tab-content clearfix">
+            <div class="tab-pane active" id="1a">
+                <div class="pfofileItems">
                     {% for form in forms %}
-                    <div class="gitem">
-                        <div class="imgwrpinner">
-                            <img src="{% static 'public/image/mahilalogo.png' %}" class="cropImg" alt="">
-                        </div>
-                        <div class="info">
-                            <div class="dname">
-                                {% if form.english_name %}
-                                    {{ form.english_name|upper }}
-                                {% else %}
-                                    {{ form.name|upper }}
-                                {% endif %}
-                            </div>
-                            <div class="dlocation">
-                                {% if form.permanent_address %}
-                                    {{ form.permanent_address|title }}
-                                {% else %}
-                                    {{ form.address|title }}
-                                {% endif %}
-                            </div>
-                        </div>
-                        <div class="dateinner mla">
-                            <div class="yrcnt">
-                                {{ form.age }}
-                            </div>
-                            <div class="dtl">
-                                Years
-                            </div>
-                        </div>
+                    <div class="pItem reveal">
                         {% if district_id %}
-                        <a class="btn stretchBtn" href="{% url 'public:local_mahila_detail' district_id form.id %}">
-                        {% else %}
-                        <a class="btn stretchBtn" href="{% url 'public:provincial_mahila_detail' province_id form.id %}">
-                        {% endif %}       
-                                <i class="fa  fa-arrow-right arow"></i>
-                        </a>
-                        
+                        <a href="{% url 'public:local_mahila_detail' district_id form.pk %}">
+                            {% else %}
+                            <a href="{% url 'public:provincial_mahila_detail' province_id form.pk %}">
+                                {% endif %}
+                                <div class="inner">
+
+                                    <div class="pimageHolder">
+                                        {% if form.image %}
+                                        <img src="{{ MEDIA_URL }} {{ form.image.url }}" alt="">
+                                        {% else %}
+                                        <img src="{% static 'public/image/mahilalogo.png' %}" alt="">
+                                        {% endif %}
+                                        <div class="img"></div>
+
+                                        <div class="poverlay">
+
+                                        </div>
+                                        <div class="aroup"></div>
+                                    </div>
+                                    <div class="detailHolder">
+                                        <div class="deteilbg"></div>
+                                        <div class="date">
+                                            <div class="yrcnt">
+                                                {{ form.age|slice:":2" }}
+                                            </div>
+                                            <div class="dtl">
+                                                Years
+                                            </div>
+
+
+                                        </div>
+                                        <div class="dname">
+                                            {% if form.english_name %}
+                                            {{ form.english_name|upper }}
+                                            {% else %}
+                                            {{ form.name|upper }}
+                                            {% endif %}
+                                        </div>
+                                        <div class="dlocation">
+                                            {% if form.permanent_address %}
+                                            {{ form.permanent_address|title }}
+                                            {% else %}
+                                            {{ form.address|title }}
+                                            {% endif %}
+                                        </div>
+                                        <div class="bottom">
+                                            <i class="fa fa-arrow-right arow"></i>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </a>
                     </div>
                     {% endfor %}
                     <div class="btnwrp">
@@ -203,48 +155,102 @@
                     </div>
 
 
+                </div>
 
+            </div>
+
+            <div class="tab-pane" id="1b">
+                {% for form in forms %}
+                <div class="gitem">
+                    <div class="imgwrpinner widthimg">
+                        <img src="{% static 'public/image/mahilalogo.png' %}" alt="">
+                    </div>
+                    <div class="info">
+                        <div class="dname">
+                            {% if form.english_name %}
+                            {{ form.english_name|upper }}
+                            {% else %}
+                            {{ form.name|upper }}
+                            {% endif %}
+                        </div>
+                        <div class="dlocation">
+                            {% if form.permanent_address %}
+                            {{ form.permanent_address|title }}
+                            {% else %}
+                            {{ form.address|title }}
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="dateinner mla">
+                        <div class="yrcnt">
+                            {{ form.age }}
+                        </div>
+                        <div class="dtl">
+                            Years
+                        </div>
+                    </div>
+                    {% if district_id %}
+                    <a class="btn stretchBtn" href="{% url 'public:local_mahila_detail' district_id form.id %}">
+                        {% else %}
+                        <a class="btn stretchBtn" href="{% url 'public:provincial_mahila_detail' province_id form.id %}">
+                            {% endif %}
+                            <i class="fa  fa-arrow-right arow"></i>
+                        </a>
+
+                </div>
+                {% endfor %}
+                <div class="btnwrp">
+                    <button class="moreBtn"> Show More</button>
                 </div>
 
 
+
             </div>
+
+
         </div>
     </div>
+    </div>
     {% endblock %}
-   
+
     {% block scripts %}
 
-        <script type="text/javascript" src="{% static 'public/js/jquery.js' %}"></script>
+    <script type="text/javascript" src="{% static 'public/js/jquery.js' %}"></script>
     <script type="text/javascript" src="{% static 'public/js/twitter.js' %}"></script>
 
     <script>
-        
         // document.getElementById('party').submit();
         $(document).ready(function () {
-            var substringMatcher = function(strs) {
-              return function findMatches(q, cb) {
-                var matches, substringRegex;
 
-                // an array that will be populated with substring matches
-                matches = [];
 
-                // regex used to determine if a string contains the substring `q`
-                substrRegex = new RegExp(q, 'i');
+            var substringMatcher = function (strs) {
+                return function findMatches(q, cb) {
+                    var matches, substringRegex;
 
-                // iterate through the pool of strings and for any string that
-                // contains the substring `q`, add it to the `matches` array
-                $.each(strs, function(i, str) {
-                  if (substrRegex.test(str)) {
-                    matches.push(str);
-                  }
-                });
+                    // an array that will be populated with substring matches
+                    matches = [];
 
-                cb(matches);
-              };
+                    // regex used to determine if a string contains the substring `q`
+                    substrRegex = new RegExp(q, 'i');
+
+                    // iterate through the pool of strings and for any string that
+                    // contains the substring `q`, add it to the `matches` array
+                    $.each(strs, function (i, str) {
+                        if (substrRegex.test(str)) {
+                            matches.push(str);
+                        }
+                    });
+
+                    cb(matches);
+                };
             };
-        var states=[]
-            var test = {{names|safe}};
-            for(var i=0; i<test.length; i++){
+            var states = []
+            var test = {
+                {
+                    names | safe
+                }
+            };
+            for (var i = 0; i < test.length; i++) {
                 states.push(test[i].name)
             }
             console.log(states);
@@ -253,38 +259,38 @@
             <!--var states= [-->
 
             $('#the-basics .typeahead').typeahead({
-              hint: true,
-              highlight: true,
-              minLength: 1
-            },
-            {
-              name: 'states',
-              source: substringMatcher(states)
-            }).on('typeahead:selected', function(event, selection) {
-                var clicked= this.value;
-            output =null;
-              // the second argument has the info you want
-              for(var i=0; i<test.length; i++){
-                    if(test[i].name== clicked && test[i].models== "ProvinceMahilaPratinidhiForm"){
-                    location.href = "http://localhost:8000/explore/province/" + test[i].province_id + "/" +test[i].id;
-                    }
-                    else if (test[i].name== clicked && test[i].models== "MahilaPratinidhiForm" ){
-                                  location.href = "http://localhost:8000/explore/district/" + test[i].district_id + "/" +test[i].id;
+                hint: true,
+                highlight: true,
+                minLength: 1
+            }, {
+                name: 'states',
+                source: substringMatcher(states)
+            }).on('typeahead:selected', function (event, selection) {
+                var clicked = this.value;
+                output = null;
+                // the second argument has the info you want
+                for (var i = 0; i < test.length; i++) {
+                    if (test[i].name == clicked && test[i].models == "ProvinceMahilaPratinidhiForm") {
+                        location.href = "http://localhost:8000/explore/province/" + test[i].province_id +
+                            "/" + test[i].id;
+                    } else if (test[i].name == clicked && test[i].models == "MahilaPratinidhiForm") {
+                        location.href = "http://localhost:8000/explore/district/" + test[i].district_id +
+                            "/" + test[i].id;
                     }
                 }
 
             });
 
-    console.log(names);
+            console.log(names);
             <!--$('.typeahead').typeahead({-->
             <!--}).on('typeahead:selected', function(event, selection) {-->
 
-              <!--// the second argument has the info you want-->
-              <!--alert(this.value);-->
+            <!--// the second argument has the info you want-->
+            <!--alert(this.value);-->
             <!--});-->
 
-    <!--$('input.typeahead').typeahead().on('typeahead:selected typeahead:autocompleted', function(e, datum) {-->
-                <!--console.log(this.value);-->
+            <!--$('input.typeahead').typeahead().on('typeahead:selected typeahead:autocompleted', function(e, datum) {-->
+            <!--console.log(this.value);-->
 
             <!--});-->
 
@@ -300,7 +306,5 @@
 
             });
         });
-
-
     </script>
-{% endblock %}
+    {% endblock %}
