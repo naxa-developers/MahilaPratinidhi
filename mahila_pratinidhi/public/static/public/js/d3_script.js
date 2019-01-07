@@ -38,7 +38,6 @@ $.get(base_url+'/api/education/',function(data){
         <ChartBox data_pass={[{'title':'education' +" vs Province",'content':content_province,'data-type':chart_type['education'][2],'dataName':'provincial','data':data['provincial']}]} />
         <ChartBox data_pass={[{'title':'education' +" vs Province vs federal vs national",'content':content_province_vs_federal_vs_national,'data-type':chart_type['education'][3],'dataName':'vs','data':data['nationalvsfederalvsprovincial']}]} />
         <ChartBox data_pass={[{'title':'education' +" vs Party",'content':content_party,'data-type':chart_type['education'][1],'dataName':'party','data':data['party']}]} />
-
         </div>,
         document.getElementById("react-container")
       )
@@ -53,7 +52,7 @@ $(".dataVariable").on("click",function(){
 
   var variable = $(this).attr('data-value').toLowerCase().replace(" ","_");
   //insert static contents
-$("#innervariable")[0].innerText=variable.replace("_"," ");
+// $("#innervariable")[0].innerText=variable.replace("_"," ");
   console.log("data_content",data_content)
   for(let i =0 ; i<data_content.length;i++){
     if(data_content[i]["variable_name"].replace(" ","_")== variable){

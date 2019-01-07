@@ -13,11 +13,11 @@ urlpatterns = [
 	path('', views.Index.as_view(), name="index"),
 	path('signup/', views.signup, name="signup"),
 	path('activate/<uidb64>/<token>', views.activate, name='activate'),
-	
-	
+
+
 	path('explore/<slug:clicked>', views.ExploreView.as_view(), name="explore"),
 	path('explore/district/<district_id>/', views.MahilaPratinidhiView.as_view(), name="explore_district"),
-	path('explore/district/<district_id>/<int:pk>/', views.LocalMahilaPratinidhiDetail.as_view(), 
+	path('explore/district/<district_id>/<int:pk>/', views.LocalMahilaPratinidhiDetail.as_view(),
 	name="local_mahila_detail"),
 	path('read/', views.read_view, name="read"),
 	path('explore/<explore_province>/', views.ProvinceView.as_view(), name="explore_province"),
@@ -32,6 +32,7 @@ urlpatterns = [
 	path('detail/pratinidhi/<int:pk>/call', views.callRequestView, name="pratinidhi_call_request"),
 
 	path('visualize/', views.DataVisualize.as_view(), name="data_visualize"),
+	path('visualize/<variable>/<key>',views.VisualizeIndividual.as_view(),name="visualize_individual"),
 
 	path('news/<int:pk>/', views.NewsView.as_view(), name="news"),
 
