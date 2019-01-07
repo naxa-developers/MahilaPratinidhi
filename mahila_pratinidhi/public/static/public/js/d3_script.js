@@ -34,10 +34,10 @@ $.get(base_url+'/api/education/',function(data){
 
     ReactDOM.render(
         <div>
-        <ChartBox data_pass={[{'title':'education','content':content_variable,'data-type':chart_type['education'][0],'dataName':'total','data':(chart_type['education'][0]=="kernel")?data['all'] : data['total']}]} />
-        <ChartBox data_pass={[{'title':'education' +" vs Province",'content':content_province,'data-type':chart_type['education'][2],'dataName':'provincial','data':data['provincial']}]} />
-        <ChartBox data_pass={[{'title':'education' +" vs Province vs federal vs national",'content':content_province_vs_federal_vs_national,'data-type':chart_type['education'][3],'dataName':'vs','data':data['nationalvsfederalvsprovincial']}]} />
-        <ChartBox data_pass={[{'title':'education' +" vs Party",'content':content_party,'data-type':chart_type['education'][1],'dataName':'party','data':data['party']}]} />
+        <ChartBox data_pass={[{'title':'education','content':content_variable,'data-type':chart_type['education'][0],'ind':'false','dataName':'total','data':(chart_type['education'][0]=="kernel")?data['all'] : data['total']}]} />
+        <ChartBox data_pass={[{'title':'education','content':content_province,'data-type':chart_type['education'][2],'ind':'false','dataName':'provincial','data':data['provincial']}]} />
+        <ChartBox data_pass={[{'title':'education','content':content_province_vs_federal_vs_national,'data-type':chart_type['education'][3],'ind':'false','dataName':'vs','data':data['nationalvsfederalvsprovincial']}]} />
+        <ChartBox data_pass={[{'title':'education','content':content_party,'data-type':chart_type['education'][1],'ind':'false','dataName':'party','data':data['party']}]} />
         </div>,
         document.getElementById("react-container")
       )
@@ -71,7 +71,7 @@ $(".dataVariable").on("click",function(){
   $.get(base_url+'/api/'+ variable +'/',function(data){
 
     if (data['party']){
-      var chart_party =   <ChartBox data_pass={[{'title':variable.replace("_"," ") +" vs Party",'content':content_party,'data-type':chart_type[variable][1],'dataName':'party','data':data['party']}]} />;
+      var chart_party =   <ChartBox data_pass={[{'title':variable.replace("_"," "),'content':content_party,'data-type':chart_type[variable][1],'dataName':'party','data':data['party']}]} />;
     }
     else{
       var chart_party = "";
@@ -83,8 +83,8 @@ ReactDOM.unmountComponentAtNode(document.getElementById("react-container"));
   ReactDOM.render(
       <div>
       <ChartBox data_pass={[{'title':variable.replace("_"," "),'content':content_variable,'data-type':chart_type[variable][0],'dataName':'total','data': (chart_type[variable][0]=="kernel")?data['all'] : data['total']}]} />
-      <ChartBox data_pass={[{'title':variable.replace("_"," ") +" vs Province",'content':content_province,'data-type':chart_type[variable][2],'dataName':'provincial','data':data['provincial']}]} />
-      <ChartBox data_pass={[{'title':variable.replace("_"," ") + " vs Province vs federal vs national",'content':content_province_vs_federal_vs_national,'data-type':chart_type[variable][3],'dataName':'vs','data':data['nationalvsfederalvsprovincial']}]} />
+      <ChartBox data_pass={[{'title':variable.replace("_"," "),'content':content_province,'data-type':chart_type[variable][2],'dataName':'provincial','data':data['provincial']}]} />
+      <ChartBox data_pass={[{'title':variable.replace("_"," "),'content':content_province_vs_federal_vs_national,'data-type':chart_type[variable][3],'dataName':'vs','data':data['nationalvsfederalvsprovincial']}]} />
       {chart_party}
       </div>,
       document.getElementById("react-container")

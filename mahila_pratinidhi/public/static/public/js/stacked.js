@@ -7,7 +7,7 @@ class StackedChart extends React.Component{
 
   componentDidMount(){
     //alert("component did mont" +this.props.data[0].data)
-    this.stackedChart(this.props.data[0].data, this.props.data[0].dataName);
+    this.stackedChart(this.props.data[0].data, this.props.data[0].dataName,this.props.data[0].ind);
 
   }
 
@@ -17,7 +17,7 @@ class StackedChart extends React.Component{
     this.stackedChart(nextProps.data[0].data,nextProps.data[0].dataName);
   }
 
-  stackedChart(data,dataName,variable_colors){
+  stackedChart(data,dataName,ind,variable_colors){
 
 
     if (dataName== "party"){
@@ -50,14 +50,28 @@ class StackedChart extends React.Component{
   var width = 650 - margin.left - margin.right,
       height = 350 - margin.top - margin.bottom;
 
+if(ind=='true'){
+
+  var svg = d3.selectAll(".stacked-bar")
+    .attr("width", width)
+    .attr("height", height)
+    .append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+
+}
+
+else {
   var svg = d3.selectAll(".stacked-bar").filter(function(d,i){
+
+
     return i === count;
   })
     .attr("width", width)
     .attr("height", height)
     .append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
+}
     //var parse = d3.time.format("%Y").parse;
 
 //["redDelicious", "mcintosh", "oranges", "pears"]
