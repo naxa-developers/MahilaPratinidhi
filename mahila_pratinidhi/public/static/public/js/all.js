@@ -1,4 +1,3 @@
-
 $(document).ready(function () {
     $('.slider').slick({
         autoplay: false,
