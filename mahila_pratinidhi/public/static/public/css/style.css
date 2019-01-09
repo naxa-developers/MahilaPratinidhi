@@ -211,18 +211,6 @@ p.searchHeader {
     outline: none;
 }
 
-.leader .leaderWrp::before {
-    content: "";
-    height: 26px;
-    width: 26px;
-    border-radius: 50%;
-    position: absolute;
-    top: 13px;
-    left: 12px;
-    z-index: 4;
-    border: 2px solid #F3C2FF;
-
-}
 
 .selectHolder input,
 .selectHolder select {
@@ -2286,6 +2274,45 @@ div.slikinside [data-slick-index="4"] {
     justify-content: center;
     width: 100%;
     left: 0;
+}
+
+button.cleader {
+    height: 51px;
+    border-radius: 25px;
+    top: 0px;
+    padding: 0 15px;
+    width: 100%;
+    outline: none;
+    box-shadow: none;
+    background: #be13e8;
+    transition: all 0.3s linear;
+    border: 2px solid #a80fce;
+    color: #fff;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.cleader span .cleader i {
+    opacity: 0.9;
+}
+
+
+
+.cleader i.fa-map-marker {
+    margin-right: 5px;
+    font-size: 24px;
+}
+
+.cleader i.fa-arrow-right {
+    margin-left: 10px;
+    font-size: 22px;
+}
+
+.cleader:hover {
+    background: #a80fce;
 }
 
 /* changed */

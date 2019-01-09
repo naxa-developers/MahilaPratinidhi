@@ -102,133 +102,139 @@
         </div>
 
     </section>
-    <div class="panelSearch " id="find">
-        <div class="centeredSearch">
-            <p class="searchHeader ">
-                REACH YOUR REPRESENTATIVE HERE!
-            </p>
-            <div class="selectHolder ">
-                <div class="leader">
-                    <div class="leaderWrp">
-                        <input type="text" id="local_leader" placeHolder="CHECK YOUR LEADER AROUND" class="leaderSearch">
+    <section class="scrollyfy">
+        <div class="panelSearch " id="find">
+            <div class="centeredSearch">
+                <p class="searchHeader ">
+                    REACH YOUR REPRESENTATIVE HERE!
+                </p>
+                <div class="selectHolder ">
+                    <div class="leader">
+                        <div class="leaderWrp">
+                            <button class="cleader" id="local_leader"> <i class="fa fa-map-marker"></i> <span>CHECK
+                                    YOUR
+                                    LEADER AROUND</span>
+                                <i class="fa fa-arrow-right"></i> </button>
+
+                        </div>
                     </div>
-                </div>
-                <div class="province">
-                    <span id="selectedValue">Search your leader</span>
-                    <span class="circlefilter">
-                        <i class=" show arrow fa fa-angle-down"></i>
-                        <i class="close fa fa-times"></i>
-                    </span>
+                    <div class="province">
+                        <span id="selectedValue">SEARCH YOUR LEADER</span>
+                        <span class="circlefilter">
+                            <i class=" show arrow fa fa-angle-down"></i>
+                            <i class="close fa fa-times"></i>
+                        </span>
 
-                    <div class="selectOverlay">
-                        <div class="selectList">
-                            <div class="">
-                                <label for="" class="st">State</label>
-                                <select class="sel1" name="" id="leader-province">
-                                    <option value="">Provinces</option>
-                                    <option value="1">Province 1</option>
-                                    <option value="2">Province 2</option>
-                                    <option value="3">Province 3</option>
-                                    <option value="4">Province 4</option>
-                                    <option value="5">Province 5</option>
-                                    <option value="6">Province 6</option>
-                                    <option value="7">Province 7</option>
+                        <div class="selectOverlay">
+                            <div class="selectList">
+                                <div class="">
+                                    <label for="" class="st">State</label>
+                                    <select class="sel1" name="" id="leader-province">
+                                        <option value="">Provinces</option>
+                                        <option value="1">Province 1</option>
+                                        <option value="2">Province 2</option>
+                                        <option value="3">Province 3</option>
+                                        <option value="4">Province 4</option>
+                                        <option value="5">Province 5</option>
+                                        <option value="6">Province 6</option>
+                                        <option value="7">Province 7</option>
 
-                                </select>
-                            </div>
-                            <div class="">
-                                <label for="" class="st">District</label>
-                                <select class="sel2" name="" id="leader-district">
-                                    <!-- <option value="national">NATIONAL</option>
+                                    </select>
+                                </div>
+                                <div class="">
+                                    <label for="" class="st">District</label>
+                                    <select class="sel2" name="" id="leader-district">
+                                        <!-- <option value="national">NATIONAL</option>
                                     <option value="federal">FEDERAL</option>
                                     <option value="provincial">PROVINCIAL</option>
                                     <option value="local">LOCAL</option> -->
-                                </select>
-                            </div>
-                            <div class="">
-                                <label for="" class="st">Municipality</label>
-                                <select class="sel3" name="" id="leader-municipality">
-                                    <!-- <option value="national">NATIONAL</option>
+                                    </select>
+                                </div>
+                                <div class="">
+                                    <label for="" class="st">Municipality</label>
+                                    <select class="sel3" name="" id="leader-municipality">
+                                        <!-- <option value="national">NATIONAL</option>
                                     <option value="federal">FEDERAL</option>
                                     <option value="provincial">PROVINCIAL</option>
                                     <option value="local">LOCAL</option> -->
-                                </select>
-                            </div>
-
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12 fullclick">
-                                <button class="popbtn btn-primary firstBtn apply"> Apply</button>
-                                <button class="popbtn btn-primary reset" id="clear-filter"> Clear</button>
+                                    </select>
+                                </div>
 
                             </div>
+                            <div class="row">
+                                <div class="col-md-12 fullclick">
+                                    <button class="popbtn btn-primary firstBtn apply"> Apply</button>
+                                    <button class="popbtn btn-primary reset" id="clear-filter"> Clear</button>
+
+                                </div>
+                            </div>
                         </div>
+
                     </div>
-
                 </div>
             </div>
+
+
         </div>
 
+        <section>
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="mapTab">
+                        <div class="tabs icons">
+                            <div class="btnholder">
+                                <i class="  show fa fa-arrow-right"></i>
 
-    </div>
+                                <i class="  fa fa-arrow-left"></i>
 
-    <section>
-        <div class="container-fluid">
-            <div class="row">
-                <div class="mapTab">
-                    <div class="tabs icons">
-                        <div class="btnholder">
-                            <i class="  show fa fa-arrow-right"></i>
-
-                            <i class="  fa fa-arrow-left"></i>
-
-                        </div>
-                        <ul class="tabHolder">
-                            <li class="active" id="national-all">
-                                <img src="{% static 'public/image/city-hall.png' %}" alt="">
-                                <div class="text">NATIONAL ASSEMBLY
-                                </div>
-                            </li>
-                            <li id="federal-all">
-                                <img src="{% static 'public/image/elementary-school.png' %}" alt="">
-                                <div class="text">FEDERAL PARLIAMENT
-                                </div>
-                            </li>
-                            <li id="provincial-all">
-                                <img src="{% static 'public/image/parliament.png' %}" alt="">
-                                <div class="text">PROVINCIAL ASSEMBLY
-                                </div>
-                            </li>
-                            <!-- <li id="local-all">
+                            </div>
+                            <ul class="tabHolder">
+                                <li class="active" id="national-all">
+                                    <img src="{% static 'public/image/city-hall.png' %}" alt="">
+                                    <div class="text">NATIONAL ASSEMBLY
+                                    </div>
+                                </li>
+                                <li id="federal-all">
+                                    <img src="{% static 'public/image/elementary-school.png' %}" alt="">
+                                    <div class="text">FEDERAL PARLIAMENT
+                                    </div>
+                                </li>
+                                <li id="provincial-all">
+                                    <img src="{% static 'public/image/parliament.png' %}" alt="">
+                                    <div class="text">PROVINCIAL ASSEMBLY
+                                    </div>
+                                </li>
+                                <!-- <li id="local-all">
                                 <img src="{% static 'public/image/government.svg' %}" alt="">
                                 <div class="text">LOCAL LEVEL GOVERNMENT
                                 </div>
                             </li> -->
-                            <li class="showhidelist show">
-                                <a href="#4b" data-toggle="tab">
+                                <li class="showhidelist show">
+                                    <a href="#4b" data-toggle="tab">
 
-                                    <i class="fa fa-map-marker hm "></i>
-                                </a>
-                            </li>
+                                        <i class="fa fa-map-marker hm "></i>
+                                    </a>
+                                </li>
 
-                        </ul>
-                        <div class="text-center">
-                            <button class="btn btn-round revbtn tbtn mtb50 "> MAP VISUALIZATION
-                                <i class="fa fa-arrow-right arow"></i>
-                            </button>
+                            </ul>
+                            <div class="text-center">
+                                <button class="btn btn-round revbtn tbtn mtb50 "> MAP VISUALIZATION
+                                    <i class="fa fa-arrow-right arow"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="mapHolder grow redbg">
+                            <div id="mapid"></div>
+
+
+
                         </div>
                     </div>
-                    <div class="mapHolder grow redbg">
-                        <div id="mapid"></div>
-
-
-
-                    </div>
                 </div>
+
             </div>
 
-        </div>
-
+        </section>
     </section>
 
     <section class="pratinidhi sectionPadding">
@@ -569,5 +575,6 @@
     <!-- for geolocation of user -->
     <script type="text/babel" src={% static 'public/js/popup.js' %}></script>
     <script type="text/babel" src={% static 'public/js/mapping_script.js' %}></script>
+
 
     {% endblock %}
