@@ -36,9 +36,9 @@ $(".button-action").on('click',function(){
 })
 
 
-var OSM = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+var OSM = L.tileLayer('//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
   attribution: '&copy; <a href="https://openstreetmap.org">OpenStreetMap</a> contributors',
-  opacity:0.5
+
 
 
 });
@@ -47,8 +47,13 @@ var empty = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
   attribution: '&copy; <a href="https://openstreetmap.org">OpenStreetMap</a> contributors',
   opacity:0
 
-}).addTo(map);
+});
 
+var Wikimedia = L.tileLayer('https://maps.wikimedia.org/osm-intl/{z}/{x}/{y}{r}.png', {
+	attribution: '<a href="https://wikimediafoundation.org/wiki/Maps_Terms_of_Use">Wikimedia</a>',
+	minZoom: 1,
+	maxZoom: 19
+});
 
 
 var OpenStreetMap_BlackAndWhite = L.tileLayer('//{s}.tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png', {
@@ -75,12 +80,40 @@ var gl = L.mapboxGL({
        style: 'https://maps.tilehosting.com/c/163bd208-a4f1-4885-8b97-416ac0b47d00/styles/darkmatter_upen/style.json?key=SWfpfQVfURyYQrAEj6J3'
      });
 
+
+     var NASAGIBS_ViirsEarthAtNight2012 = L.tileLayer('https://map1.vis.earthdata.nasa.gov/wmts-webmerc/VIIRS_CityLights_2012/default/{time}/{tilematrixset}{maxZoom}/{z}/{y}/{x}.{format}', {
+     	attribution: 'Imagery provided by services from the Global Imagery Browse Services (GIBS), operated by the NASA/GSFC/Earth Science Data and Information System (<a href="https://earthdata.nasa.gov">ESDIS</a>) with funding provided by NASA/HQ.',
+     	bounds: [[-85.0511287776, -179.999999975], [85.0511287776, 179.999999975]],
+     	minZoom: 1,
+     	maxZoom: 8,
+     	format: 'jpg',
+     	time: '',
+     	tilematrixset: 'GoogleMapsCompatible_Level'
+     });
+
+     var CartoDB_DarkMatter = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+	attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
+	subdomains: 'abcd',
+	maxZoom: 19
+});
+
+var CartoDB_DarkMatterNoLabels = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}{r}.png', {
+	attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
+	subdomains: 'abcd',
+	maxZoom: 19
+}).addTo(map);
+
 var baseMaps = {
     //"Street View": street_view,
     "OSM": OSM,
     "Black&White":OpenStreetMap_BlackAndWhite,
     // "dark":Thunderforest_TransportDark,
-    "none":empty
+    "none":empty,
+    "Wikimedia":Wikimedia,
+    // "NASAGIBS_ViirsEarthAtNight2012":NASAGIBS_ViirsEarthAtNight2012,
+    "CartoDB_DarkMatter":CartoDB_DarkMatter,
+    "CartoDB_DarkMatterNoLabels":CartoDB_DarkMatterNoLabels
+
     //"Empty" : L.tileLayer(''),
     //"gl":gl
 };
@@ -136,7 +169,7 @@ var ourCustomControl = L.Control.extend({
       console.log("country",country);
       marker_content = data_summary_all["all"][0]
 
-      country.setStyle({fillOpacity:"0.7"})
+      country.setStyle({fillOpacity:"0.1"})
 
  $.each(country._layers,function(key,value){
 
@@ -209,9 +242,9 @@ fetchapi();
 var country =L.geoJson.ajax(base_url+'/api/geojson/country',
           {onEachFeature:onEachFeature,
            style: { color: "white",
-                    weight:2,
-                    fillColor:"grey",
-                    fillOpacity:"0.7"
+                    weight:1,
+
+
 
                     }
           }).addTo(map);
@@ -236,7 +269,7 @@ function highlightFeature(e){
   console.log("xtty");
   var layer= e.target;
   layer.setStyle({
-    weight:4,
+    weight:3,
 
 
   });
@@ -244,7 +277,7 @@ function highlightFeature(e){
 
 function resetHighlight(e){
   e.target.setStyle({
-    weight:2,
+    weight:1,
 
   });
 }
@@ -358,9 +391,9 @@ if(Object.keys(properties_object).length=="8"){
              {onEachFeature:onEachFeature,
                style: { color: "white",
                         weight:2,
-                        fillColor:"grey",
 
-                        fillOpacity:1}}
+
+                        }}
              );
 
 layer_inside.on('data:loaded',function(){
@@ -386,9 +419,9 @@ layer_inside.on('data:loaded',function(){
                onEachFeature:onEachFeature_second,
                style: { color: "white",
                         weight:2,
-                        fillColor:"grey",
 
-                        fillOpacity:1}}
+
+                        }}
              );
       layer_inside.on('data:loaded',function(){
                $("#loading-id").find("h3").css("display","none");
@@ -705,7 +738,7 @@ function Choropleth(feature,layer){
  var frequency = marker_content[xx];
  var percentage = (frequency*100)/total_instance;
   var color= getColor(percentage);
-  layer.setStyle({fillColor :color});
+  layer.setStyle({fillColor :color,fillOpacity:0.4});
 
 
 
@@ -720,7 +753,6 @@ var muni =L.geoJson.ajax('https://dfid.naxa.com.np/core/geojson/municipalities/'
                               {
                                style: { color: "white",
                                         weight:2,
-                                        fillColor:"grey",
                                         fillOpacity:"0.6"
 
                                         }
