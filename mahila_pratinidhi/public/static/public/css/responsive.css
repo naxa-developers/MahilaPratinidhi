@@ -116,11 +116,6 @@
         margin: 35px 0;
     }
 
-    section.pratinidhi:after {
-        display: none;
-        ;
-    }
-
     .tabs {
         width: 400px;
     }
@@ -130,7 +125,7 @@
     }
 
     i.fa.hm {
-        font-size: 60px;
+        font-size: 40px;
 
     }
 
@@ -155,7 +150,8 @@
         height: 44px;
     }
 
-   .cleader, .province {
+    .cleader,
+    .province {
         height: 45px;
     }
 
@@ -492,7 +488,7 @@
     }
 
     i.fa.hm {
-        font-size: 50px;
+        font-size: 32px;
     }
 
     .topbg {

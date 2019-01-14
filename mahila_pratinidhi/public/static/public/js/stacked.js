@@ -6,18 +6,18 @@ class StackedChart extends React.Component{
   }
 
   componentDidMount(){
-    //alert("component did mont" +this.props.data[0].dataName)
-    this.stackedChart(this.props.data[0].data, this.props.data[0].dataName);
+    //alert("component did mont" +this.props.data[0].data)
+    this.stackedChart(this.props.data[0].data, this.props.data[0].dataName,this.props.data[0].ind);
 
   }
 
   componentWillReceiveProps(nextProps){
-    alert("component did receive");
+    //alert("component did receive");
     d3.selectAll('.stacked-bar').selectAll("*").remove();
     this.stackedChart(nextProps.data[0].data,nextProps.data[0].dataName);
   }
 
-  stackedChart(data,dataName,variable_colors){
+  stackedChart(data,dataName,ind,variable_colors){
 
 
     if (dataName== "party"){
@@ -28,6 +28,7 @@ class StackedChart extends React.Component{
     }
 
     else if(dataName== "provincial") {
+
 
         var legend_array= ["1","2","3","4","5","6","7"];
         count =0;
@@ -42,21 +43,35 @@ class StackedChart extends React.Component{
 
 
 
-  var margin = {top: 20, right: 170, bottom: 20, left: 30};
+  var margin = {top: 20, right: 70, bottom: 20, left: 30};
 
 
 
-  var width = 700 - margin.left - margin.right,
+  var width = 650 - margin.left - margin.right,
       height = 350 - margin.top - margin.bottom;
 
+if(ind=='true'){
+
+  var svg = d3.selectAll(".stacked-bar")
+    .attr("width", width)
+    .attr("height", height)
+    .append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+
+}
+
+else {
   var svg = d3.selectAll(".stacked-bar").filter(function(d,i){
+
+
     return i === count;
   })
     .attr("width", width)
     .attr("height", height)
     .append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
+}
     //var parse = d3.time.format("%Y").parse;
 
 //["redDelicious", "mcintosh", "oranges", "pears"]

@@ -28,8 +28,65 @@
     <style>
         /* Always set the map height explicitly to define the size of the div
                  * element that contains the map. */
+                 .lds-ellipsis {
+                   display: inline-block;
+                   position: relative;
+                   width: 64px;
+                   height: 41px;
+                 }
+                 .lds-ellipsis div {
+                   position: absolute;
+                   top: 27px;
+                   width: 11px;
+                   height: 11px;
+                   border-radius: 50%;
+                   background: 'red';
+                   animation-timing-function: cubic-bezier(0, 1, 1, 0);
+                 }
+                 .lds-ellipsis div:nth-child(1) {
+                   left: 6px;
+                   animation: lds-ellipsis1 0.6s infinite;
+                 }
+                 .lds-ellipsis div:nth-child(2) {
+                   left: 6px;
+                   animation: lds-ellipsis2 0.6s infinite;
+                 }
+                 .lds-ellipsis div:nth-child(3) {
+                   left: 26px;
+                   animation: lds-ellipsis2 0.6s infinite;
+                 }
+                 .lds-ellipsis div:nth-child(4) {
+                   left: 45px;
+                   animation: lds-ellipsis3 0.6s infinite;
+                 }
+                 @keyframes lds-ellipsis1 {
+                   0% {
+                     transform: scale(0);
+                   }
+                   100% {
+                     transform: scale(1);
+                   }
+                 }
+                 @keyframes lds-ellipsis3 {
+                   0% {
+                     transform: scale(1);
+                   }
+                   100% {
+                     transform: scale(0);
+                   }
+                 }
+                 @keyframes lds-ellipsis2 {
+                   0% {
+                     transform: translate(0, 0);
+                   }
+                   100% {
+                     transform: translate(19px, 0);
+                   }
+                 }
 
         #mapid {
+          positon:relative;
+          background-color:#0f2842;
 
         }
         .custom-icon .leaflet-popup-tip,
@@ -52,6 +109,9 @@
           line-height:30px;
           padding-top:2px;
 
+        }
+        .tabHolder li.activeclass {
+          background-color: #D3D3D3;
         }
 
 #react-container {
@@ -102,6 +162,7 @@
         </div>
 
     </section>
+
     <section class="scrollyfy">
         <div class="panelSearch " id="find">
             <div class="centeredSearch">
@@ -145,6 +206,8 @@
                                     <label for="" class="st">District</label>
                                     <select class="sel2" name="" id="leader-district">
                                         <!-- <option value="national">NATIONAL</option>
+
+   
                                     <option value="federal">FEDERAL</option>
                                     <option value="provincial">PROVINCIAL</option>
                                     <option value="local">LOCAL</option> -->
@@ -177,7 +240,7 @@
 
         </div>
 
-        <section>
+        <section class="imh">
             <div class="container-fluid">
                 <div class="row">
                     <div class="mapTab">
@@ -187,9 +250,10 @@
 
                                 <i class="  fa fa-arrow-left"></i>
 
+
                             </div>
                             <ul class="tabHolder">
-                                <li class="active" id="national-all">
+                                <li id="national-all">
                                     <img src="{% static 'public/image/city-hall.png' %}" alt="">
                                     <div class="text">NATIONAL ASSEMBLY
                                     </div>
@@ -204,15 +268,15 @@
                                     <div class="text">PROVINCIAL ASSEMBLY
                                     </div>
                                 </li>
-                                <!-- <li id="local-all">
-                                <img src="{% static 'public/image/government.svg' %}" alt="">
-                                <div class="text">LOCAL LEVEL GOVERNMENT
-                                </div>
-                            </li> -->
+                                <li id="local-all">
+                                    <img src="{% static 'public/image/government.svg' %}" alt="">
+                                    <div class="text">LOCAL LEVEL GOVERNMENT
+                                    </div>
+                                </li>
                                 <li class="showhidelist show">
                                     <a href="#4b" data-toggle="tab">
 
-                                        <i class="fa fa-map-marker hm "></i>
+                                        <i class="fa fa-map hm "></i>
                                     </a>
                                 </li>
 
@@ -224,12 +288,26 @@
                             </div>
                         </div>
                         <div class="mapHolder grow redbg">
-                            <div id="mapid"></div>
+                            <div id="mapid">
+                                <div id="loading-id" style="z-index:500;left:50%;top:50%;position:absolute;">
+                                    <h3>
+                                        <span>
+                                            <div class="lds-ellipsis">
+                                                <div style="background:green;"></div>
+                                                <div style="background:green;"></div>
+                                                <div style="background:green;"></div>
+                                                <div style="background:green;"></div>
+                                            </div>
+                                        </span>
+                                    </h3>
+                                </div>
 
+                            </div>
 
 
                         </div>
                     </div>
+
                 </div>
 
             </div>
@@ -240,7 +318,8 @@
     <section class="pratinidhi sectionPadding">
         <div class="container topC">
 
-            <p class="sTitle header mb80 reveal">FEATURED MAHILA PRATINIDHI 2018</p>
+            <p class="sTitle header mb80 reveal">MAHILA PRATINIDHI IN THE SPOTLIGHT</p>
+
 
             <div class="slider reveal">
                 {% for datas in featured_data %} {% for data in datas %}
@@ -354,13 +433,19 @@
         <div class="container reveal">
             <div class="row">
                 <div class="col-md-6">
-                    <p class="sTitle header mb80 reveal">HAMRO MAHILA PRATINIDHI IN DATA</p>
+                    <p class="sTitle header mb80 reveal">MAHILA PRATINIDHI IN DATA</p>
                     <p class="dataDetail reveal">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                        labore et dolore magna aliqua.
-                        Consequat ac felis donec et odio. Natoque penatibus et magnis dis parturient montes nascetur
-                        ridiculus.
-                        Eget felis eget nunc lobortis mattis aliquam faucibus. Tortor at risus
+                        n order to understand the nuances, patterns
+                        and trends of women in Nepali politics, it is critical to identify the relationship between
+                        pertinent demographic, social and political variables. It is through analysis of
+                        quantitative data that sociocultural conclusions and inferences can drawn and utilised by
+                        the public for qualitative use. Through data collected from the most recent elections of
+                        Nepal, relevant information has been distilled and organized into the following graphs,
+                        plots and tables. Key social or demographic variables that have been examined include; age,
+                        ethnicity, mother tongue and education. Political variables include; political party,
+                        election type, years in political engagement and political commitment. When applicable,
+                        these variable have been cross sectioned into the three levels of government; Provincial,
+                        Federal and National.
 
                     </p>
                     <a href="{% url 'public:data_visualize' %}">
@@ -428,14 +513,26 @@
 
             });
 
+
+
             function heroimgheight() {
                 var docHeight = $(window).height();
                 var searchpanelHeight = docHeight - $(".panelSearch").innerHeight();
                 $(".topHeroImg").height(searchpanelHeight);
             }
 
+
+ $(".tabHolder").on('click', 'li', function () {
+
+                    $(this).addClass('activeclass').siblings().removeClass('activeclass');
+
+                });
+
             $("#selectedValue").click(function () {
                 var ro = $("#selectedValue").offset();
+                
+               
+
 
                 $('html, body').animate({
                     scrollTop: ro.top - 100
@@ -549,26 +646,6 @@
 
 
         });
-    </script>
-
-
-    <script type="text/javascript">
-        var image_list = JSON.parse('{{ image_list|safe }}');
-        var images = new Array();
-        for (i = 0; i <= image_list.length; i++) {
-            images[i] = image_list[i];
-        }
-        var nextimage = 0;
-        doSlideshow();
-
-        function doSlideshow() {
-            if (nextimage >= images.length) {
-                nextimage = 0;
-            }
-            $('.topHeroImg').css('background', 'url("' + images[nextimage++] + '")') {
-                setTimeout(doSlideshow, 3000);
-            };
-        }
     </script>
 
 

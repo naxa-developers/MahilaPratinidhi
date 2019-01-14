@@ -5,9 +5,20 @@
 <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
 <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
 <script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
-<!-- <script src="https://d3js.org/d3.v5.min.js"></script>  -->
+<!-- <scripteducation/1 src="https://d3js.org/d3.v5.min.js"></script>  -->
 
 <style>
+    .row.centered{flex-wrap: nowrap;}
+    #scroltab .tabheading li {
+          min-width: initial;
+          width: auto;
+          flex-shrink: 0;
+      }
+
+      #scroltab .tabheading li a {
+          display: block;
+          width: 100%
+      }
   .stacked-bar {
     height: 450px;
     width:100%;
@@ -28,7 +39,7 @@
   }
 
   .buttons{
-    color:blue;
+    color:#4d5384;
   }
 
 
@@ -107,7 +118,7 @@ text.simple-label {
     position:fixed;
     z-index:1;
     padding-top:100px;
-    left:0
+    left:0;
     top:0;
     width:100%;
     height:100%;
@@ -136,9 +147,10 @@ text.simple-label {
 
 
 </style>
+
 <body>
-  <div id="fb-root"></div>
-<script>(function(d, s, id) {
+    <div id="fb-root"></div>
+    <script>(function(d, s, id) {
   var js, fjs = d.getElementsByTagName(s)[0];
   if (d.getElementById(id)) return;
   js = d.createElement(s); js.id = id;
@@ -150,23 +162,24 @@ text.simple-label {
 
 
 
-  <div id ="d3modal" class="d3modal">
-    <div class="d3modal-content">
-      <span class="d3close" onClick="(function(){
+    <div id="d3modal" class="d3modal">
+        <div class="d3modal-content">
+            <span class="d3close" onClick="(function(){
         $('#d3modal').hide();
 
     return false;
-})();"> &times;</span>
+})();">
+                &times;</span>
 
-      <h5> Save Data as :</h5>
-      <span><button class="btn" id="d3csv"> CSV/Excel</button> <button id="d3png" class="btn"> Image(.png)</button></span>
+            <h5> Save Data as :</h5>
+            <span><button class="btn" id="d3csv"> CSV/Excel</button> <button id="d3png" class="btn"> Image(.png)</button></span>
+        </div>
     </div>
-  </div>
     <header>
         <div class="navigation innerPage">
             <div class="container-fluid">
-{% endblock %}
-{% block lower_content %}
+                {% endblock %}
+                {% block lower_content %}
             </div>
         </div>
     </header>
@@ -227,7 +240,7 @@ text.simple-label {
 
                         </div>
                     </div>
-                    <img class="graph" src="{% static 'public/image/graph.png' %}" alt="">
+                    <!-- <img class="graph" src="{% static 'public/image/graph.png' %}" alt=""> -->
                 </div>
 
             </div>
@@ -236,110 +249,91 @@ text.simple-label {
         </div>
 
     </section>
+    <section>
+        <div class="col dtitle1">
+            <!-- <div class="gtitle">
+          <p id ="innervariable" class="innerp"> Education</p>
+      </div> -->
+        </div>
+        <div class="col dcontent" id="main_content_id">
+            <!-- dcontent -->
+            <br>
+            <br>
+            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Officiis nobis hic voluptatibus fugiat animi?
+            Voluptates exercitationem
+            quam culpa nisi inventore laboriosam facere, unde, repudiandae consequuntur odio quas obcaecati nobis
+            animi ducimus nulla necessitatibus rem voluptatum ad expedita ut! Ratione officia consequatur cum ducimus
+            excepturi iste, veritatis, corrupti quas natus nostrum libero saepe neque omnis vero architecto nam
+            delectus,
+            perspiciatis qui rem vitae labore! Officiis, tenetur nihil. Quae odio facere soluta quaerat nostrum velit
+            dicta nulla eius, tempore, quasi possimus quidem nemo. Ratione veniam laudantium illo pariatur placeat
+            veritatis, fuga est illum,
+        </div>
+
+
+    </section>
 
     <section class="all">
 
         <div class="container-fluid">
 
             <div class="tabHolder row centered">
-                    <div id="scroltab" class="container-fluid">
-                            <div class="scrolltabs">
-                                <div class="vVariables">Visualization Variables</div>
-                                <div class="tabheading">
-                                    <div class="scrolleft scrollicon">
-                                        <i class="fa fa-angle-left"></i>
-                                    </div>
-                                    <ul class="nav nav-pills widthScrol">
-                                      <li class="active">
-                                          <a href="#" class="dataVariable" data-toggle="tab" data-value="Education">Education</a>
-                                      </li>
-
-                                        <li>
-                                            <a href="#" class="dataVariable" data-toggle="tab" data-value="ethnicity" >Ethnicity</a>
-                                        </li>
-
-                                        <li>
-                                            <a href="#" class="dataVariable" data-toggle="tab" data-value="election_type">Election Type</a>
-                                        </li>
-                                        <li>
-                                            <a href="#" class="dataVariable" data-toggle="tab" data-value="party">Party</a>
-                                        </li>
-                                        <li>
-                                            <a href="#" class="dataVariable" data-toggle="tab" data-value="election_experience">Have you ever stood in an election before? </a>
-                                        </li>
-
-                                        <li>
-                                            <a href="#" class="dataVariable" data-toggle="tab" data-value="age">Age</a>
-                                        </li>
-                                        <li>
-                                            <a href="#" class="dataVariable" data-toggle="tab" data-value="mother_tongue">Mother Tongue</a>
-                                        </li>
-
-                                        <li>
-                                            <a href="#" class="dataVariable" data-toggle="tab" data-value="political_commitment">Political Commitment</a>
-                                        </li>
-                                        <li>
-                                            <a href="#" class="dataVariable" data-toggle="tab" data-value="political_engagement">Years in Political Engagement</a>
-                                        </li>
-
-                                    </ul>
-                                    <div class="scrollright scrollicon">
-                                        <i class="fa fa-angle-right"></i>
-                                    </div>
-                                </div>
+                <div id="scroltab" class="container-fluid">
+                    <div class="scrolltabs">
+                        <div class="vVariables">Visualization Variables</div>
+                        <div class="tabheading">
+                            <div class="scrolleft scrollicon">
+                                <i class="fa fa-angle-left"></i>
                             </div>
+                            <ul class="nav nav-pills widthScrol">
+                                <li class="active">
+                                    <a href="#" class="dataVariable" data-toggle="tab" data-value="Education">Education</a>
+                                </li>
 
-                            <div class="tab-content clearfix">
-                                <div class="tab-pane active" id="1a">
-                                    <h3>Content's background color is the same for the tab</h3>
-                                </div>
-                                <div class="tab-pane" id="2a">
-                                    <h3>We use the class nav-pills instead of nav-tabs which automatically creates a background color
-                                        for the tab</h3>
-                                </div>
-                                <div class="tab-pane" id="3a">
-                                    <h3>We applied clearfix to the tab-content to rid of the gap between the tab and the content</h3>
-                                </div>
-                                <div class="tab-pane" id="4a">
-                                    <h3>We use css to change the background color of the content to be equal to the tab</h3>
-                                </div>
+                                <li>
+                                    <a href="#" class="dataVariable" data-toggle="tab" data-value="ethnicity">Ethnicity</a>
+                                </li>
+
+                                <li>
+                                    <a href="#" class="dataVariable" data-toggle="tab" data-value="election_type">Election
+                                        Type</a>
+                                </li>
+                                <li>
+                                    <a href="#" class="dataVariable" data-toggle="tab" data-value="party">Party</a>
+                                </li>
+                                <li>
+                                    <a href="#" class="dataVariable" data-toggle="tab" data-value="election_experience">Have
+                                        you ever stood in an election before? </a>
+                                </li>
+
+                                <li>
+                                    <a href="#" class="dataVariable" data-toggle="tab" data-value="age">Age</a>
+                                </li>
+                                <li>
+                                    <a href="#" class="dataVariable" data-toggle="tab" data-value="mother_tongue">Mother
+                                        Tongue</a>
+                                </li>
+
+                                <li>
+                                    <a href="#" class="dataVariable" data-toggle="tab" data-value="political_commitment">Political
+                                        Commitment</a>
+                                </li>
+                                <li>
+                                    <a href="#" class="dataVariable" data-toggle="tab" data-value="political_engagement">Years
+                                        in Political Engagement</a>
+                                </li>
+
+                            </ul>
+                            <div class="scrollright scrollicon">
+                                <i class="fa fa-angle-right"></i>
                             </div>
                         </div>
-
-
-                <div class="col dtitle1">
-                    <div class="gtitle">
-                        <p id ="innervariable" class="innerp"> Education</p>
                     </div>
-                </div>
-                <div class="col dcontent" id="main_content_id">
-                    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Officiis nobis hic voluptatibus fugiat animi? Voluptates exercitationem
-                    quam culpa nisi inventore laboriosam facere, unde, repudiandae consequuntur odio quas obcaecati nobis
-                    animi ducimus nulla necessitatibus rem voluptatum ad expedita ut! Ratione officia consequatur cum ducimus
-                    excepturi iste, veritatis, corrupti quas natus nostrum libero saepe neque omnis vero architecto nam delectus,
-                    perspiciatis qui rem vitae labore! Officiis, tenetur nihil. Quae odio facere soluta quaerat nostrum velit
-                    dicta nulla eius, tempore, quasi possimus quidem nemo. Ratione veniam laudantium illo pariatur placeat
-                    veritatis, fuga est illum, minus dignissimos ullam sapiente dolores autem earum reiciendis iste harum
-                    consequatur, provident quae vero nihil repellat unde. Earum placeat veritatis rerum excepturi voluptatum,
-                    ex blanditiis quo labore quas dolorum, harum laboriosam inventore sunt! Facere hic dolores suscipit quibusdam
-                    reiciendis eius maiores ratione cumque dolor. Eveniet sunt illum excepturi sed nam dolore animi laborum
-                    quis asperiores commodi autem sint, repudiandae, vel nulla! Minima sunt provident maiores repudiandae
-                    accusantium. Maiores, eaque sapiente porro voluptates perferendis tempora nesciunt a ex qui. Dicta alias,
-                    incidunt v Lorem ipsum, dolor sit amet consectetur adipisicing elit. Officiis nobis hic voluptatibus
-                    fugiat animi? Voluptates exercitationem quam culpa nisi inventore laboriosam facere, unde, repudiandae
-                    consequuntur odio quas obcaecati nobis animi ducimus nulla necessitatibus rem voluptatum ad expedita
-                    ut! Ratione officia consequatur cum ducimus excepturi iste, veritatis, corrupti quas natus nostrum libero
-                    saepe neque omnis vero architecto nam delectus, perspiciatis qui rem vitae labore! Officiis, tenetur
-                    nihil. Quae odio facere soluta quaerat nostrum velit dicta nulla eius, tempore, quasi possimus quidem
-                    nemo. Ratione veniam laudantium illo pariatur placeat veritatis, fuga est illum, minus dignissimos ullam
-                    sapiente dolores autem earum reiciendis iste harum consequatur, provident quae vero nihil repellat unde.
-                    Earum placeat veritatis rerum excepturi voluptatum, ex blanditiis quo labore quas dolorum, harum laboriosam
-                    inventore sunt! Facere hic dolores suscipit quibusdam reiciendis eius maiores ratione cumque dolor. Eveniet
-                    sunt illum excepturi sed nam dolore animi laborum quis asperiores commodi autem sint, repudiandae, vel
-                    nulla! Minima sunt provident maiores repudiandae accusantium. Maiores, eaque sapiente porro voluptates
-                    perferendis tempora nesciunt a ex qui. Dicta alias, incidunt v
+
 
                 </div>
+
+
 
 
             </div>
@@ -365,75 +359,144 @@ text.simple-label {
     {% block scripts %}
     <script>
 
-            $(document).ready(function () {
+        // $(document).ready(function () {});
+
+                //
+                // $(window).resize(function () {
+                //     scrolltabs();
+                // });
+                // scrolltabs();
+                // function scrolltabs() {
+                //   var counter = 0;
+                //   var elementNumber = $(".widthScrol").children().length;
+                //
+                //
+                //   var elementWidth = elementNumber * 150;
+                //
+                //   var calcWidth = $(".widthScrol").innerWidth();
+                //   console.log(calcWidth);
+                //   var totalSlider = elementWidth - calcWidth;
+                //
+                //
+                //   var intotal = totalSlider / 160;
+                //   var n = Math.ceil(intotal);
+                //
+                // }
 
 
-                $(window).resize(function () {
-                    scrolltabs();
-                });
+// scroll logic
 
-                scrolltabs();
-                function scrolltabs() {
-                    var counter = 0;
-                    var elementNumber = $(".widthScrol").children().length;
+$(document).ready(function () {
 
+           var totalWidth = 0;
+           var widthAray = [];
+           var totalList = 0;
+           var count = 0;
 
-                    var elementWidth = elementNumber * 150;
+           $('#scroltab li').each(function (index) {
+               totalList++;
+               var widthofItem = parseInt($(this).innerWidth(), 10) + 10;
+               totalWidth = totalWidth + widthofItem;
+               widthAray.push(widthofItem);
+               // if (totalWidth <= $('.widthScrol').innerWidth()) {
+               //     count++
+               //
+               // }
+           });
 
-                    var calcWidth = $(".widthScrol").innerWidth();
-                    console.log(calcWidth);
-                    var totalSlider = elementWidth - calcWidth;
+console.log("widtharr",widthAray)
 
-
-                    var intotal = totalSlider / 160;
-                    var n = Math.ceil(intotal);
-
-
-                    $(".scrolleft").click(function () {
-
-                        if (counter != (-1 * n - 1)) {
-                            $(".widthScrol li ").animate({ left: '-=160' });
-                            counter--;
-                        }
-                    });
-
-                    $(".scrollright").click(function () {
-                        console.log(counter);
-                        if (counter < 1) {
-                            $(".widthScrol li ").animate({ left: '+=160' });
-                            counter++;
-                        }
-                    });
+           $(".scrollicon").click(function () {
+               //console.log(leftClick, click);
+               if (count>=0 && count<= widthAray.length){
 
 
-                    $(".filterBtn").click(function () {
+                 if($(this).hasClass("scrollright")){
+                   if (count>0){
+                     var add_width = widthAray[count]+5;
 
-                        $(".selectHolder.list").addClass("activated")
+                     $(".widthScrol li").animate({
 
-                    });
+                        left: '+=' + add_width
 
-                    $(".closeBtn").click(function () {
+                     });
+                     count--;
 
-                        $(".selectHolder.list").removeClass("activated")
+                   }
 
-                    });
-                }
-            });
+                 }
+
+                 if($(this).hasClass("scrolleft")){
+
+                   if (count< widthAray.length){
+                     var add_width =widthAray[count]+5;
+
+                     $(".widthScrol li").animate({
+                         left: '-=' + add_width
+
+                     });
+                     count++;
+
+                      }
+                 }
+               }
+
+           });
+
+
+
+
+});
+
+
+
+
+// scroll logic
+
+
+
+
+
+
+                    // $(".filterBtn").click(function () {
+                    //
+                    //     $(".selectHolder.list").addClass("activated")
+                    //
+                    // });
+                    //
+                    // $(".closeBtn").click(function () {
+                    //
+                    //     $(".selectHolder.list").removeClass("activated")
+                    //
+                    // });
+
+
         </script>
-        <script>
+    <script>
 
         data_content= {{content|safe}};
-        console.log("data_content",data_content);
+
+         // $(".filterBtn").click(function () {
+                    //
+                    //     $(".selectHolder.list").addClass("activated")
+                    //
+                    // });
+                    //
+                    // $(".closeBtn").click(function () {
+                    //
+                    //     $(".selectHolder.list").removeClass("activated")
+                    //
+                    // });ata_content);
 
         </script>
-        <script type= "text/babel" src="{% static 'public/js/saveSvgAsPng.js' %} "></script>
-        <script type= "text/babel" src="{% static 'public/js/bar.js' %} "></script>
-        <script type= "text/babel" src="{% static 'public/js/kernel.js' %} "></script>
-        <script type= "text/babel" src="{% static 'public/js/hstacked.js' %} "></script>
+    <script type="text/babel" src="{% static 'public/js/saveSvgAsPng.js' %} "></script>
+    <script type="text/babel" src="{% static 'public/js/bar.js' %} "></script>
+    <script type="text/babel" src="{% static 'public/js/kernel.js' %} "></script>
+    <script type="text/babel" src="{% static 'public/js/hstacked.js' %} "></script>
 
-        <script type= "text/babel" src="{% static 'public/js/stacked.js' %} "></script>
-        <script type= "text/babel" src="{% static 'public/js/hbar.js' %} "></script>
-        <script type= "text/babel" src="{% static 'public/js/d3_app.js' %} "></script>
-        <script type= "text/babel" src ="{% static 'public/js/d3_script.js' %}" ></script>
+    <script type="text/babel" src="{% static 'public/js/stacked.js' %} "></script>
+    <script type="text/babel" src="{% static 'public/js/hbar.js' %} "></script>
+    <script type="text/babel" src="{% static 'public/js/d3_app.js' %} "></script>
+    <script type="text/babel" src="{% static 'public/js/d3_script.js' %}"></script>
 
-{% endblock %}
+    {% endblock %}

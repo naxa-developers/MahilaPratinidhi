@@ -1,0 +1,215 @@
+{% extends 'public/public_base.html' %}
+{% load staticfiles %}
+{% block upper_content %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.24.0/babel.js"></script>
+<script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+<script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+<!-- <script src="https://d3js.org/d3.v5.min.js"></script>  -->
+
+<style>
+  .stacked-bar {
+    height: 450px;
+    width:100%;
+    font: 6px sans-serif;
+    text: white;
+    shape-rendering: crispEdges;
+  }
+
+.stacked-bar path{
+  display: none;
+}
+
+  .kernel{
+
+    height: 450px;
+    width:100%;
+
+  }
+
+  .buttons{
+    color:blue;
+  }
+
+
+
+  .simple-bar{
+    height: 450px;
+    width:100%;
+    fill:white;
+
+
+  }
+
+  text.simple-divergence {
+  font-size: 14px;
+  fill: #2F4A6D;
+}
+
+text.simple-value {
+  font-size: 12px;
+}
+
+text.simple-title {
+  font-size: 22px;
+  font-weight: 600;
+}
+
+text.simple-label {
+  font-size: 14px;
+  font-weight: 400;
+}
+
+
+  .simple-rect {
+  fill: #7cb5ec;
+}
+
+
+  .axis path,
+  .axis line {
+    fill: none;
+    stroke: red;
+
+  }
+
+  path.domain {
+    stroke: none;
+  }
+
+  .y .tick line {
+    stroke:grey;
+
+  }
+
+  .tick{
+    fill:white;
+    font-size:xx-small
+  }
+
+  .kernelLine{
+    color:red;
+    stroke:#b71c1c;
+    fill:#c95555;
+  }
+
+  .hbarrect{
+    fill:#7cb5ec;
+  }
+
+  .labeltop{
+    stroke: white;
+    font-size:9px;;
+  }
+
+</style>
+<header>
+    <div class="navigation innerPage">
+        <div class="container-fluid">
+{% endblock %}
+
+{% block lower_content %}
+            </div>
+        </div>
+    </header>
+
+    <section class="topbg">
+                    <p class="dtitle">
+                        Mahila Pratinidhi in Data
+                    </p>
+
+
+    </section>
+
+
+    <section class="dk">
+        <div class="container" id="react-container">
+        </div>
+    </section>
+
+    {% endblock %}
+
+    {% block scripts %}
+
+        <script type= "text/babel" src="{% static 'public/js/saveSvgAsPng.js' %} "></script>
+        <script type= "text/babel" src="{% static 'public/js/bar.js' %} "></script>
+        <script type= "text/babel" src="{% static 'public/js/kernel.js' %} "></script>
+        <script type= "text/babel" src="{% static 'public/js/hstacked.js' %} "></script>
+
+        <script type= "text/babel" src="{% static 'public/js/stacked.js' %} "></script>
+        <script type= "text/babel" src="{% static 'public/js/hbar.js' %} "></script>
+        <script type= "text/babel" src="{% static 'public/js/d3_app.js' %} "></script>
+
+        <script type= "text/babel">
+
+          var data_variable = {{data_variable|safe}};
+          var data_key = {{key}};
+
+          var variable =data_variable['one'];
+
+          switch (data_key){
+
+            case 0: var key_name="total"
+                    var data_key_name = "total";
+                    break;
+
+            case 1:
+
+            var key_name="provincial"
+            var data_key_name = "provincial"
+            break;
+
+            case 2: var key_name="vs"
+            var data_key_name = "nationalvsfederalvsprovincial"
+            break;
+
+            case 3: var key_name="party"
+            var data_key_name = "party"
+            break;
+
+
+          }
+
+
+          var content_variable= ""
+          var chart_type ={
+                            'age':['kernel','stacked','stacked','stacked'] ,
+                            'ethnicity':['bar','stacked','stacked','stacked'] ,
+                            'mother_tongue':['hbar','hstacked','hstacked','hstacked'] ,
+                            'education':['bar','stacked','stacked','stacked'] ,
+                            'election_type':['bar','stacked','stacked','stacked'] ,
+                            'party':['hbar','hstacked','hstacked','hstacked'] ,
+                            'political_engagement':['kernel','stacked','stacked','stacked'],
+                            'political_commitment':['hbar','hstacked','hstacked','hstacked'] ,
+                            'election_experience':['bar','stacked','stacked','stacked']
+
+          }
+
+
+          var base_url="https://mahilapratinidhi.naxa.com.np";
+          //var base_url="http://localhost:8000";
+
+
+          $.get(base_url+'/api/'+ variable +'/',function(data){
+
+              ReactDOM.render(
+                  <div>
+                    <ChartBox data_pass={[{'title':variable.replace("_"," "),
+                                          'content':content_variable,
+                                          'data-type':chart_type[variable][data_key],
+                                          'ind':'true',
+                                          'dataName':key_name,
+                                          'data': (chart_type[variable][data_key]=="kernel")?data['all'] : data[data_key_name]}]} />
+
+
+                    here goes the individual Visualization
+
+                  </div>,
+                  document.getElementById("react-container")
+                )
+});
+
+
+        </script>
+
+{% endblock %}
