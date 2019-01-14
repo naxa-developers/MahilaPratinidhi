@@ -6,14 +6,11 @@ var map_height = window.innerHeight - parseInt($("#find").css('height'));
 //map_height =map_height -126;
 $("#mapid").css("height",map_height+"px");
 
-
 var map =L.map('mapid',{minZoom: 7,maxZoom: 13,zoomSnap:0.1, zoomControl:false,scrollWheelZoom: false}).setView([28.5,84],7.2);
 
 map.on('click', function() {
   //map.scrollWheelZoom.enable();
-
   });
-
 
 var info = L.control();
 //info.options ={ positon: 'topleft'};
@@ -35,6 +32,10 @@ $(".button-action").on('click',function(){
   alert("x");
 })
 
+{
+type: "FeatureCollection",
+features:
+[
 
 var OSM = L.tileLayer('//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
   attribution: '&copy; <a href="https://openstreetmap.org">OpenStreetMap</a> contributors',
@@ -117,9 +118,6 @@ var baseMaps = {
     //"Empty" : L.tileLayer(''),
     //"gl":gl
 };
-
-
-
 
 L.control.layers(baseMaps).addTo(map);
 L.control.zoom({

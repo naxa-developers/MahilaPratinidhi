@@ -33,6 +33,7 @@ urlpatterns = [
 
 	path('visualize/', views.DataVisualize.as_view(), name="data_visualize"),
 	path('visualize/<variable>/<key>',views.VisualizeIndividual.as_view(),name="visualize_individual"),
+	path('map',views.MapVisualize.as_view(),name="map_visualize"),
 
 	path('news/<int:pk>/', views.NewsView.as_view(), name="news"),
 
