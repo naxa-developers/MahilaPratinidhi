@@ -132,24 +132,40 @@ text.simple-label {
   .showmap{
     width: 100vw;
     height:100vh;
+    position:relative;
+  }
+
+  .sideinfo_hide{
+    width: 0px;
+    position: absolute;
+    z-index: 600;
+    top: 85px;
+    right: 0;
+    background-color: #111;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 60px;
+    color:white;
+
   }
 
   .sideinfo{
 
-  height: 100%;
-  width: 0;
-  position: fixed;
-  z-index: 1;
-  top: 0;
-  left: 0;
+
+  width: 300px;
+  position: absolute;
+  z-index: 600;
+  top: 85px;
+  right: 0;
   background-color: #111;
   overflow-x: hidden;
   transition: 0.5s;
-  padding-top: 60px;
+  padding-top: 20px;
+  color:white;
   }
 
   .my-div-icon{
-    background:rgba(255,255,0,0.9);;
+    background:rgba(255,255,0,0.4);;
     color:#081142;
     text-align:center;
     border-radius:50%;
@@ -206,8 +222,6 @@ text.simple-label {
         </select>
   </div>
 
-
-
     <div class="col-md-6">
         <button id="filter-all" class="filter-buttons btn btn-link">All</button>
         <button id="filter-local" class="filter-buttons btn btn-link">Local</button>
@@ -221,18 +235,19 @@ text.simple-label {
   <div class="row">
 
     <div id="mapd" class="col-md-12 showmap"></div>
-    <div class="sidebar">
-      <div class="sideinfo">
-        <ul class="nav nav-stacked">
-          <li><a href="#sec0">Section 0</a></li>
-          <li><a href="#sec1">Section 1</a></li>
-          <li><a href="#sec2">Section 2</a></li>
-          <li><a href="#sec3">Section 3</a></li>
-          <li><a href="#sec4">Section 4</a></li>
-        </ul>
-      </div>
+
     </div>
 </div>
+  </div>
+
+  <div id="sideinfoid" class="sideinfo_hide">
+    <ul>
+      <!-- <li>Mahila 0</li>
+      <li>Mahila 1</li>
+      <li>Mahila 2</li>
+      <li>Mahila 3</li>
+      <li>Mahila 4</li> -->
+    </ul>
   </div>
 
   <div class="container-fluid">
@@ -242,8 +257,8 @@ text.simple-label {
     </div>
 </div>
 
-<!-- <div style="height:1000px;">
-</div> -->
+<div id="data-viz-map" class=" bg-secondary hidemap">
+</div>
 
 </div>
 

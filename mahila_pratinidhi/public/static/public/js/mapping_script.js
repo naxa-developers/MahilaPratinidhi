@@ -32,10 +32,7 @@ $(".button-action").on('click',function(){
   alert("x");
 })
 
-{
-type: "FeatureCollection",
-features:
-[
+
 
 var OSM = L.tileLayer('//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
   attribution: '&copy; <a href="https://openstreetmap.org">OpenStreetMap</a> contributors',
@@ -736,7 +733,7 @@ function Choropleth(feature,layer){
  var frequency = marker_content[xx];
  var percentage = (frequency*100)/total_instance;
   var color= getColor(percentage);
-  layer.setStyle({fillColor :color,fillOpacity:0.4});
+  layer.setStyle({fillColor :color,fillOpacity:1});
 
 
 
@@ -1005,9 +1002,6 @@ circular_marker(get_center(value.feature,value),get_number(value.feature),get_na
 
 
 });
-
-
-
 
 })
 
