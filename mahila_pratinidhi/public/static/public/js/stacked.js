@@ -71,8 +71,8 @@ class StackedChart extends React.Component{
 
     // Set x, y and colors
     var x = d3.scale.ordinal()
-      .domain(dataset[0].map(function(d) { return d.x; }))
-      .rangeRoundBands([10, width-10], 0.02);
+      .rangeRoundBands([10, width-10], 0.02)
+      .domain(dataset[0].map(function(d) { return d.x; }));
 
     var y = d3.scale.linear()
       .domain([0, d3.max(dataset, function(d) {  return d3.max(d, function(d) { return d.y0 + d.y; });  })])
@@ -95,7 +95,7 @@ class StackedChart extends React.Component{
     var xAxis = d3.svg.axis()
       .scale(x)
       .orient("bottom")
-      .tickPadding([0.4])
+      //.tickPadding([0.4])
       //.tickFormat(d3.time.format("%Y"));
 
     svg.append("g")

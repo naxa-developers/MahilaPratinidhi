@@ -42,7 +42,11 @@ if (!csv.match(/^data:text\/csv/i)) {
 }
 
 d3png.onclick = function(){
+  var s = new XMLSerializer().serializeToString($("svg")[0]);
+  var encodedData = window.btoa(s);
+  console.log(encodedData);
   saveSvgAsPng($(needed).closest(".row").find("svg")[0], "diagram.png",{backgroundColor:"hsl(50, 33%, 25%)",scale:1});
+
 }
 
 };
@@ -82,20 +86,23 @@ render (){
           }
 
 
-
-
-
+          var {content}=this.props.data_pass[0];
 
   return (
         <div>
     <div className="graphItem" > <div className="row">
 
     <div className="col-md-4">  <p className="gheader"> {this.props.data_pass[0].title}  </p> <p
-    className="gtext"> Lorem ipsum dolor sit amet, consectetur adipiscing
-    elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-    Consequat ac felis donec et odio. Natoque penatibus et magnis dis
-    parturient montes nascetur </p> <div className="icons"> <a href="#"> <i
-    className="fa fa-facebook-f"></i> </a> <a href="#"> <i className="fa
+    className="gtext"> {content} </p> <div className="icons">
+    <a target="_blank"
+    href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fmahilapratinidhi.naxa.com.np%2Fvisualize%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">
+    <div style={{display:'inline'}} className="fb-share-button"
+    data-href="http://mahilapratinidhi.naxa.com.np/visualize/"
+    data-layout="button_count" data-size="small"
+    data-mobile-iframe="true">
+    <i className="fa fa-facebook-f"></i>
+    </div></a>
+    <a href="#"> <i className="fa
     fa-twitter"></i> </a> <a href="#"> <i className="fa fa-linkedin-in"></i>
     </a> <span className="buttons" onClick={(e)=>this.handleClick(e)}> <i className="fa fa-download"></i> </span>
     <a href="#"> <i className="fa fa-share-alt"></i> </a> </div> </div>

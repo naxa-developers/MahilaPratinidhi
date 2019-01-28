@@ -1,9 +1,9 @@
 //alert("pasyo");
-var base_url="http://mahilapratinidhi.naxa.com.np";
-//  var base_url="http://localhost:8000";
+var base_url="https://mahilapratinidhi.naxa.com.np";
+//var base_url="http://localhost:8000";
 
-var map_height = screen.height - parseInt($("#find").css('height'));
-map_height =map_height -126;
+var map_height = window.innerHeight - parseInt($("#find").css('height'));
+//map_height =map_height -126;
 $("#mapid").css("height",map_height+"px");
 
 
@@ -12,10 +12,6 @@ map.on('click', function() {
   map.scrollWheelZoom.enable();
 
   });
-
-L.control.zoom({
-     position:'topright'
-}).addTo(map);
 
 
 var info = L.control();
@@ -39,17 +35,17 @@ $(".button-action").on('click',function(){
 })
 
 
-var OSM = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-  attribution: '&copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
+var OSM = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  attribution: '&copy; <a href="https://openstreetmap.org">OpenStreetMap</a> contributors'
 });
 
-var OpenStreetMap_BlackAndWhite = L.tileLayer('http://{s}.tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png', {
+var OpenStreetMap_BlackAndWhite = L.tileLayer('https://{s}.tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png', {
 	maxZoom: 18,
-	attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+	attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
 }).addTo(map);
 
 var Thunderforest_TransportDark = L.tileLayer('https://{s}.tile.thunderforest.com/transport-dark/{z}/{x}/{y}.png?apikey={apikey}', {
-	attribution: '&copy; <a href="http://www.thunderforest.com/">Thunderforest</a>, &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+	attribution: '&copy; <a href="https://www.thunderforest.com/">Thunderforest</a>, &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
 	apikey: 'ddb2f354bd68480ebfa4ce3a9726c511',
 	maxZoom: 22
 });
@@ -70,6 +66,10 @@ var baseMaps = {
     //"gl":gl
 };
 L.control.layers(baseMaps).addTo(map);
+L.control.zoom({
+     position:'topright'
+}).addTo(map);
+
 
 
 var ourCustomControl = L.Control.extend({
@@ -132,26 +132,17 @@ map.addControl(new ourCustomControl());
 
 
 console.log("baseurlcheck",base_url+'/api/maps/');
+//
+// var marker_content = {"Province 1": 46,
+//             "Province 2": 59,
+//             "Province 3": 74,
+//             "Province 4": 30,
+//             "Province 5": 49,
+//             "Province 6": 17,
+//             "Province 7": 25,
+// }
 
-var marker_content = {"Province 1": 46,
-            "Province 2": 59,
-            "Province 3": 74,
-            "Province 4": 30,
-            "Province 5": 49,
-            "Province 6": 17,
-            "Province 7": 25,
-}
 
-
-var country =L.geoJson.ajax(base_url+'/api/geojson/country',
-          {onEachFeature:onEachFeature,
-           style: { color: "white",
-                    weight:2,
-                    fillColor:"grey",
-                    fillOpacity:"0.6"
-
-                    }
-          }).addTo(map);
 
 
 function fetchapi(){
@@ -174,6 +165,15 @@ function handleData(data) {
 fetchapi();
 
 
+var country =L.geoJson.ajax(base_url+'/api/geojson/country',
+          {onEachFeature:onEachFeature,
+           style: { color: "white",
+                    weight:2,
+                    fillColor:"grey",
+                    fillOpacity:"0.6"
+
+                    }
+          }).addTo(map);
 
 
 
@@ -209,10 +209,10 @@ function resetHighlight(e){
 var last_layer =[];
 var marker_array=[];
 
-function get_total_instance(e){
+function get_total_instance(feature){
 
 
-  var properties_object = e.target.feature.properties;
+  var properties_object = feature.properties;
 
   if(Object.keys(properties_object).length=="1"){
     var xx = "Province "+ properties_object.Province;
@@ -231,10 +231,26 @@ return marker_content[xx];
 
 function zoomToFeature(e){
 
- var properties_object = e.target.feature.properties;
+  console.log("eventorfeature",e);
 
+
+  if(e.target){
+
+     var properties_object = e.target.feature.properties;
+     total_instance = get_total_instance(e.target.feature);
+     map.fitBounds(e.target.getBounds(),{padding:[25,25]});
+
+
+}
+else{
+  var properties_object = e.properties;
   total_instance = get_total_instance(e);
-  map.fitBounds(e.target.getBounds(),{padding:[25,25]});
+  console.log("egfit",e)
+  map.fitBounds(layer.getBounds(),{padding:[25,25]});
+
+
+}
+
 
 if(Object.keys(properties_object).length=="1"){
 
@@ -275,7 +291,7 @@ if(Object.keys(properties_object).length=="8"){
  if(Object.keys(properties_object).length=="1"){
    var division = "province";
    var prodric= properties_object.Province;
-   var layer_inside = L.geoJson.ajax(base_url+'/api/geojson/'+ division +'/'+ prodric,
+   let layer_inside = L.geoJson.ajax(base_url+'/api/geojson/'+ division +'/'+ prodric,
              {onEachFeature:onEachFeature,
                style: { color: "white",
                         weight:2,
@@ -293,12 +309,32 @@ if(Object.keys(properties_object).length=="8"){
  }
 
  else if (Object.keys(properties_object).length=="8"){
-   console.log("markers",marker_array)
+
    var division = "municipality";
    var dric= properties_object['FIRST_DIST'].toLowerCase();
-   var muni_layers = L.layerGroup().addTo(map);
+
+   let layer_inside = L.geoJson.ajax(base_url+'/api/geojson/'+ division +'/'+ dric,
+             {
+               onEachFeature:onEachFeature_second,
+               style: { color: "white",
+                        weight:2,
+                        fillColor:"grey",
+
+                        fillOpacity:1}}
+             );
 
 
+                layer_inside.addTo(map);
+                last_layer.push(layer_inside);
+
+
+
+
+
+
+
+   var muni_layers = L.layerGroup()
+   // .addTo(map);
    $.each(muni._layers,function(key,value){
 
 
@@ -323,15 +359,15 @@ if(Object.keys(properties_object).length=="8"){
 
          }
 
-                var muni_layer= L.geoJson(geo,{onEachFeature:onEachFeature_second,
-                  style: { color: "white",
-                           weight:2,
-                           fillColor:"grey",
-                           fillOpacity:"0.6"
-                           }
-                         }).bindPopup(popup_content);
-
-                muni_layers.addLayer(muni_layer);
+                // var muni_layer= L.geoJson(geo,{onEachFeature:onEachFeature_second,
+                //   style: { color: "white",
+                //            weight:2,
+                //            fillColor:"grey",
+                //            fillOpacity:"0.6"
+                //            }
+                //          }).bindPopup(popup_content);
+                //
+                // muni_layers.addLayer(muni_layer);
 
        });
 
@@ -378,9 +414,41 @@ function BindFunction(feature,layer){
 
 }
 
+function BindPopupFunction(feature,layer){
+
+
+    var hlcit = feature.properties['hlcit_code'];
+    var profile_link =base_url+"/detail/national/172/";
+    var popup_content ="<div style='overflow-y:scroll;height:150px;'><h7><strong>"+ feature.properties['FIRST_GaPa']+" "+ feature.properties['FIRST_Type'] + "</strong></h7><br><br>";
+
+
+         $.get(base_url+"/api/hlcit/"+ hlcit ,function(data){
+           var females = data;
+           for(let i =0;i<females.length;i++){
+             var model = (females[i]['model']=="province") ? females[i]['model'] +"/" + hlcit.slice(7,8)  : females[i]['model'];
+             var detail = (females[i]['model']=="province") ? "explore" : "detail";
+             popup_content += "<h6><a href='"+ base_url+ "/"+ detail + "/" + model + "/" + females[i]['id']  +  "'>"+ females[i]['name'] + "</a></h6>";
+             popup_content += "<div>"+ (females[i]['model'] != 'pratinidhi')? females[i]['model']:'federal'  +"</div><br>"
+
+             if(i==females.length-1){
+               popup_content +="</div>"
+             }
+
+           }
+
+           layer.bindPopup(popup_content)
+
+
+                });
+
+
+}
+
+
 function onEachFeature_second(feature,layer){
   BindFunction(feature,layer);
   circular_marker(get_center(feature,layer),get_number(feature),get_code(feature),feature);
+  BindPopupFunction(feature,layer);
   layer.on({
     mouseover: highlightFeature,
     mouseout: resetHighlight,
@@ -426,6 +494,8 @@ marker_array.push(marker_cluster);
 }
 
 function circular_marker(center,number,name,feature){
+
+
       if (number){  }
       else{
         number=0;
@@ -444,7 +514,6 @@ function circular_marker(center,number,name,feature){
       // you can set .my-div-icon styles in CSS
       if (Object.keys(feature.properties).length=="11"){
 
-
         $.get(base_url+'/api/hlcit/'+name.replace("_"," "), function(data){
                 var females =data;
                 ward_leader(number,center,females,name.replace("_"," "))
@@ -454,7 +523,9 @@ function circular_marker(center,number,name,feature){
       else{
 
 
-      let marker= L.marker(center, {icon: myIcon}).addTo(map);
+      let marker= L.marker(center, {icon: myIcon}).addTo(map).on('click',function(e){
+        zoomToFeature(feature)
+      });
       marker_array.push(marker);
 
     }
@@ -471,7 +542,7 @@ function get_center(feature,layer){
 function get_code(feature){
   var properties_object = feature.properties;
   if (Object.keys(properties_object).length=="11"){
-   var xx = feature.properties['HLCIT_CODE'];
+   var xx = feature.properties['hlcit_code'];
  }
 
 return xx;
@@ -492,11 +563,11 @@ function get_name(feature){
     var xx = feature.properties['FIRST_DIST'].charAt(0).toUpperCase()+feature.properties['FIRST_DIST'].slice(1).toLowerCase();
   }
 
-  else if (Object.keys(properties_object).length=="10"){
+  else if (Object.keys(properties_object).length=="11"){
     var xx = feature.properties['FIRST_GaPa'].charAt(0).toUpperCase()+feature.properties['FIRST_GaPa'].slice(1).toLowerCase();
   }
 
-    else if (Object.keys(properties_object).length=="11"){
+    else if (Object.keys(properties_object).length=="12"){
       var xx = feature.properties['LU_Name'].charAt(0).toUpperCase()+feature.properties['LU_Name'].slice(1).toLowerCase();
     }
 
@@ -507,11 +578,10 @@ function get_name(feature){
 function get_number(feature){
 
   var properties_object = feature.properties;
+
   if (Object.keys(properties_object).length=="11"){
     var xx = get_code(feature)
-    if(xx== "524 1 02 4 003"){
-      console.log(marker_content);
-    }
+
 
   }
 else{

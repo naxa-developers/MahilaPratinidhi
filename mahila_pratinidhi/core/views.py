@@ -524,6 +524,7 @@ class MahilaPratinidhiFormCreateView(LoginRequiredMixin, UserPassesTestMixin, Cr
 	form_class = MahilaPratinidhiFormForm
 	template_name = "core/mahila_pratinidhi_form.html"
 
+
 	def test_func(self):
 		return self.request.user.is_superuser
 
@@ -536,8 +537,10 @@ class MahilaPratinidhiFormCreateView(LoginRequiredMixin, UserPassesTestMixin, Cr
 		return success_url
 
 	def get_context_data(self, **kwargs):
+		print("Hello Create")
 		context = super(MahilaPratinidhiFormCreateView, self).get_context_data(**kwargs)
 		context['district'] = District.objects.get(id=self.kwargs['district_id'])
+		print(context)
 		return context
 
 
@@ -559,7 +562,7 @@ class MahilaPratinidhiFormUpdateView(LoginRequiredMixin, UserPassesTestMixin, Up
 
 	model = MahilaPratinidhiForm
 	form_class = MahilaPratinidhiFormForm
-	success_url = reverse_lazy('core:dashboard')
+	success_url = reverse_lazy('core:main_dashboard')
 	template_name = "core/mahila_pratinidhi_form.html"
 
 	def test_func(self):
@@ -574,7 +577,6 @@ class MahilaPratinidhiFormUpdateView(LoginRequiredMixin, UserPassesTestMixin, Up
 		context['district'] = MahilaPratinidhiForm.objects.get(id=self.kwargs['pk']).district
 		context['is_update_form'] = True
 		return context
-
 
 class MahilaPratinidhiFormDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 
@@ -714,8 +716,6 @@ def file_upload(request):
 			total = df['S.N'].count()
 
 			for row in range(0, total):
-				# import ipdb
-				# ipdb.set_trace()
 				MahilaPratinidhiForm.objects.get_or_create(
 					district=District.objects.get(name=df['District'][0]),
 					name=df['Name_EN'][row],
@@ -753,6 +753,8 @@ def file_upload(request):
 				mothers_name = df["Mother's.Name_EN"][row],
 				dob = df['Date.of.birth_EN'][row])
 				# dob_ne_NP = df['DOB_NE'][row],
+			# import ipdb
+			# ipdb.set_trace()
 
 		messages.success(request, 'Successfully loaded data from files')
 		return HttpResponseRedirect('/cms/upload')
