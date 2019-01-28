@@ -23,6 +23,7 @@ urlpatterns = [
 	path('explore/<explore_province>/', views.ProvinceView.as_view(), name="explore_province"),
 
 	path('explore/province/<province_id>/', views.ProvinceView.as_view(), name="explore_province"),
+	# path(r'^explore/province/<province_id>/(?P<party>\w+)/$', views.ProvinceView.as_view),
 	path('explore/province/<province_id>/<int:pk>/', views.ProvincialMahilaPratinidhiDetail.as_view(),
 	name="provincial_mahila_detail"),
 

@@ -4,6 +4,8 @@ from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes.fields import GenericRelation
 from PIL import Image, ImageOps
+from django.db.models.signals import post_init, post_save
+from django.dispatch import receiver
 
 
 BOOL_CHOICES = (
@@ -85,7 +87,7 @@ class CommonShavaFields(models.Model):
 	fathers_name = models.CharField(max_length=300, verbose_name="बाबुको नाम")
 	marital_status = models.CharField(max_length=300, verbose_name="बैवाहिक स्थिथि", blank=True, null=True)
 	updated_marital_status = models.CharField(choices=MARITAL_CHOICES, max_length=300, verbose_name="बैवाहिक स्थिथि", blank=True, null=True)
-	husbands_name = models.CharField(max_length=300, verbose_name="श्रीमानको नाम")
+	husbands_name = models.CharField(max_length=300, verbose_name="श्रीमानको नाम", blank=True)
 	caste = models.CharField(max_length=300, verbose_name="जातियता", blank=True, null=True)
 	updated_caste = models.CharField(choices=CASTE_CHOICES, blank=True, max_length=300, verbose_name="जातियता", null=True)
 	mother_tongue = models.CharField(max_length=300, verbose_name="मातृभाषा", blank=True, null=True)
@@ -124,8 +126,8 @@ class CommonShavaFields(models.Model):
 	samlagna_sang_sastha_samuha = models.CharField(max_length=300, verbose_name="सलग्न संघ, सस्था , समूह", blank=True)
 	status = models.BooleanField(choices=BOOL_CHOICES, default=False, verbose_name="स्थिति")
 	image = models.ImageField(blank=True, null=True, upload_to='provinceProfile/', verbose_name="फोटो")
-	featured = models.BooleanField(default=False)
-	hlcit_code = models.CharField(max_length=20, null=True)
+	featured = models.BooleanField(default=False, verbose_name="featured")
+	hlcit_code = models.CharField(max_length=20, verbose_name="hlcit_code", null=True)
 
 	class Meta:
 		abstract = True
@@ -190,7 +192,9 @@ class District(models.Model):
 class MahilaPratinidhiForm(models.Model):
 	district = models.ForeignKey(District, on_delete=models.CASCADE, related_name='district', verbose_name="जिल्ला")
 	name = models.CharField(max_length=300, verbose_name="नाम")
-	age = models.CharField(max_length=300, verbose_name="उमेर", blank=True)
+	age = models.CharField(max_length=300, verbose_name="Age", blank=True)
+	name_of_elected_region = models.CharField(max_length=300, verbose_name="Name.of.elected.region_NE", blank=True)
+	ward = models.CharField(max_length=300, verbose_name="Ward", blank=True)
 	marital_status = models.CharField(max_length=300, verbose_name="बैवाहिक स्थिथि", blank=True)
 	updated_marital_status = models.CharField(choices=MARITAL_CHOICES, blank=True, max_length=300, verbose_name="बैवाहिक स्थिथि")
 	educational_qualification = models.CharField(max_length=300, verbose_name="शैछिक योग्यता", blank=True)
@@ -206,6 +210,10 @@ class MahilaPratinidhiForm(models.Model):
 	party_joined_date = models.CharField(max_length=300, verbose_name="पार्टीमा संलग्न भएको मिति", blank=True)
 	samlagna_sang_sastha_samuha = models.CharField(max_length=300, verbose_name="संलग्न संग सस्था समूह", blank=True)
 	nirwachit_chetra_pratiko_pratibadhata = models.TextField(verbose_name="निर्वाचित क्षेत्र प्रतिको प्रतिबध्धता", blank=True)
+	fathers_name = models.CharField(max_length=300, verbose_name="Father's Name", blank=True)
+	mothers_name = models.CharField(max_length=300, verbose_name="Mother's Name", blank=True)
+	prapta_maat_sankhya = models.CharField(max_length=300, verbose_name="Votes", blank=True)
+	dob = models.CharField(max_length=300, verbose_name="Date of Birth", blank=True)
 	status = models.BooleanField(choices=BOOL_CHOICES, default=False, verbose_name="स्थिति")
 	image = models.ImageField(blank=True, upload_to='profile/', verbose_name="फोटो")
 	featured = models.BooleanField(default=False)
@@ -273,6 +281,16 @@ class BackgroundImage(models.Model):
 
 			image.save(self.image.path)
 
+# @receiver(post_init, sender= RastriyaShava)
+# def backup_image_path(sender, instance, **kwargs):
+#     instance._current_imagen_file = instance.image
+#
+#
+# @receiver(post_save, sender= RastriyaShava)
+# def delete_old_image(sender, instance, **kwargs):
+#     if hasattr(instance, '_current_imagen_file'):
+#         if instance._current_imagen_file != instance.imagen.path:
+#             instance._current_imagen_file.delete(save=False)
 
 class DataVizContent(models.Model):
 	variable_name = models.CharField(max_length= 50)

@@ -85,7 +85,7 @@ WSGI_APPLICATION = 'mahila_pratinidhi.wsgi.application'
 
 
 # Database
-# https://docs.djangoproject.com/en/2.0/ref/settings/#databases
+# https://docs.djangoproject.com/en/2.0/ref/settings/#databasedatabases
 
 DATABASES = {
     'default': {

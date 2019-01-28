@@ -17,7 +17,7 @@
                                 href="{% url 'core:mahila_pratinidhi_form_dashboard' district.id %}">{{ district }}</a>
                         </li>
                         <li class="breadcrumb-item active" aria-current="page"><span
-                                style="font-family: Preeti; font-size: 14px;">{{ form.name }}</span></li>
+                                style="font-size: 14px;">{{ form.name }}</span></li>
                     </ol>
                 </nav>
             </div>
@@ -43,17 +43,19 @@
                                     {% endif %}
                                 <p>
 
-                                    नाम: <span style="font-family: Preeti; font-size: 17px">{{ object.name }}</span><br>
-                                    उमेर: <span style="font-family: Preeti; font-size: 17px">{{ object.age_ne_NP }}</span><br>
+                                    नाम: <span style="font-size: 17px">{{ object.name }}</span><br>
+                                    उमेर: <span style="font-size: 17px">{{ object.age_ne_NP }}</span><br>
+                                    Name.of.elected.region:<span style="font-size: 17px">{{ object.name_of_elected_region }}</span><br>
                                     बैवाहिक स्थिति:
                                     {% if object.updated_marital_status_ne_NP %}
 
                                         <span
-                                            style="font-family: Preeti; font-size: 17px">{{ object.updated_marital_status }}</span><br>
+                                            style="font-size: 17px">{{ object.updated_marital_status }}</span><br>
                                         {% else %}
                                             <span
-                                            style="font-family: Preeti; font-size: 17px">{{ object.marital_status }}</span><br>
+                                            style="font-size: 17px">{{ object.marital_status }}</span><br>
                                     {% endif %}
+                                    Ward: <span style="font-size: 17px">{{ object.ward }}</span><br>
                                     शैछिक योग्यता:
                                     {% if object.updated_educational_qualification %}
 
@@ -90,7 +92,17 @@
                                     संलग्न संग सस्था समूह: <span
                                         style="font-family: Preeti; font-size: 17px">{{ object.samlagna_sang_sastha_samuha }}</span><br>
                                     निर्वाचित क्षेत्र प्रतिको प्रतिबध्धता: <span
-                                        style="font-family: Preeti; font-size: 17px">{{ object.nirwachit_chetra_pratiko_pratibadhata }}</span><br>
+                                        style="font-size: 17px">{{ object.nirwachit_chetra_pratiko_pratibadhata }}</span><br>
+                                     Father's Name : <span
+                                        style="font-size: 17px">{{ object.fathers_name }}</span><br>
+                                    Mother's Name: <span
+                                        style="font-size: 17px">{{ object.mothers_name }}</span><br>
+                                    Votes : <span
+                                        style="font-size: 17px">{{ object.prapta_maat_sankhya }}</span><br>
+                                    Date of Birth : <span
+                                        style="font-size: 17px">{{ object.dob }}</span><br>
+                                    HLCIT CODE : <span
+                                        style="font-size: 17px">{{ object.hlcit_code }}</span><br>
                                     </p>
                                     {#        <a href="{% url 'core:mahila_pratinidhi_update' object.pk%}">Edit</a>#}
                                     {#        <a href="{% url 'core:mahila_pratinidhi_delete' object.pk%}">Delete</a>#}

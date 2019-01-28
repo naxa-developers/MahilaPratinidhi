@@ -6,7 +6,8 @@ class MahilaPratinidhiFormTranslationOptions(TranslationOptions):
     fields = ('name', 'age', 'marital_status', 'updated_marital_status', 'educational_qualification',
     'updated_educational_qualification', 'caste', 'updated_caste', 'address', 'contact_number',
     'email', 'nirwachit_padh', 'nirwachit_vdc_or_municipality_name', 'party_name', 'party_joined_date',
-    'samlagna_sang_sastha_samuha', 'nirwachit_chetra_pratiko_pratibadhata', )
+    'samlagna_sang_sastha_samuha', 'nirwachit_chetra_pratiko_pratibadhata', 'fathers_name', 'mothers_name', 'name_of_elected_region',
+              'prapta_maat_sankhya')
 
 
 

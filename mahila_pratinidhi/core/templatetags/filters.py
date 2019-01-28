@@ -49,3 +49,8 @@ def content_type(obj):
     if not obj:
         return False
     return ContentType.objects.get_for_model(obj)
+
+
+@register.filter
+def space_to_underscore(obj):
+    return obj.replace(" ", "_")

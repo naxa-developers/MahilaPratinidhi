@@ -1,5 +1,11 @@
 {% extends '_base.html' %}
+
 {% block content %}
+<style>
+    .form-control {
+    font-family: none !important;
+}
+</style>
     <div id="main-container" class="minified">
 
         <!--[if lt IE 8]>
@@ -17,7 +23,7 @@
                         </li>
                         {% if is_update_form %}
                             <li class="breadcrumb-item active" aria-current="page"><span
-                                    style="font-family: Preeti; font-size: 14px">{{ object.name }}</span></li>
+                                    style="font-size: 14px">{{ object.name }}</span></li>
 
                         {% else %}
                             <li class="breadcrumb-item active" aria-current="page"><span style="font-family: Preeti">फारम भर्नुहोस्</span>
@@ -33,27 +39,28 @@
                         <div class="col-md-12">
                             <div class="widget-info margin-top-large">
                                 <form class="form-horizontal" action="" enctype="multipart/form-data"
-                                      method="post">{% csrf_token %}
+                                      method="post">
+                                    {% csrf_token %}
                                     <div class="form-group">
-
-
-                                     {{ form.name.label_tag }} {{ form.name }}
-                                     {{ form.age.label_tag }} {{ form.age }}
+                                     {{ form.name.label_tag }} {{ form.name }}<br>
+                                     {{ form.age.label_tag }} {{ form.age }}<br>
+                                     {{ form.name_of_elected_region.label_tag }} {{ form.name_of_elected_region }}<br>
+                                     {{ form.ward.label_tag }} {{ form.ward }}<br>
                                     {% if object %}
-                                     {{ form.marital_status.label_tag }} <span style="font-family: preeti; font-size: 18px; ">{{ form.marital_status }}</span>
+                                     {{ form.marital_status.label_tag }} <span style="<!--font-family: preeti;--> font-size: 18px; ">{{ form.marital_status }}</span>
                                         {{ form.updated_marital_status }}<br>
                                         {% else %}
                                        {{ form.updated_marital_status.label_tag }}  {{ form.updated_marital_status }}<br>
                                     {% endif %}
                                     {% if object %}
-                                     {{ form.educational_qualification.label_tag }} <span style="font-family: preeti; font-size: 18px">{{ form.educational_qualification }}</span>
+                                     {{ form.educational_qualification.label_tag }} <span style="font-size: 18px">{{ form.educational_qualification }}</span>
                                          {{ form.updated_educational_qualification }}<br>
                                         {% else %}
                                         {{ form.updated_educational_qualification.label_tag }} {{ form.updated_educational_qualification }}<br>
                                     {% endif %}
                                     {% if object %}
 
-                                        {{ form.caste.label_tag }}<span style="font-family: preeti; font-size: 18px"> {{ form.caste }}</span>
+                                        {{ form.caste.label_tag }}<span style=" font-size: 18px"> {{ form.caste }}</span>
                                         {{ form.updated_caste }}<br>
                                         {% else %}
                                        {{ form.updated_caste.label_tag }}  {{ form.updated_caste }}<br>
@@ -71,9 +78,11 @@
                                      {% if request.user.is_superuser %}
                                         {{ form.status.label_tag }} {{ form.status }}<br>
                                      {% endif %}
-                                     {{ form.image.label_tag }} {{ form.image }}
-
-
+                                     {{ form.image.label_tag }} {{ form.image }}<br>
+                                     {{ form.fathers_name.label_tag }} {{ form.fathers_name }}<br>
+                                     {{ form.mothers_name.label_tag }} {{ form.mothers_name }}<br>
+                                     {{ form.prapta_maat_sankhya.label_tag }} {{ form.prapta_maat_sankhya }}<br>
+                                     {{ form.dob.label_tag }} {{ form.dob }}<br>
                                     </div>
                                     <input type="submit">
                                 </form>
