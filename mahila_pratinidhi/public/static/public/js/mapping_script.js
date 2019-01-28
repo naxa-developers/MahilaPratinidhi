@@ -37,8 +37,6 @@ $(".button-action").on('click',function(){
 var OSM = L.tileLayer('//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
   attribution: '&copy; <a href="https://openstreetmap.org">OpenStreetMap</a> contributors',
 
-
-
 });
 
 var empty = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
