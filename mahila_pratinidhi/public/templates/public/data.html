@@ -8,6 +8,16 @@
 <!-- <scripteducation/1 src="https://d3js.org/d3.v5.min.js"></script>  -->
 
 <style>
+  #scroltab .tabheading li {
+          min-width: initial;
+          width: auto;
+          flex-shrink: 0;
+      }
+
+      #scroltab .tabheading li a {
+          display: block;
+          width: 100%
+      }
   .stacked-bar {
     height: 450px;
     width:100%;
@@ -50,7 +60,9 @@ text.simple-value {
   font-size: 12px;
 }
 
-text.simple-title {
+te, Balen Shah.
+
+About Call Kantipur :xt.simple-title {
   font-size: 22px;
   font-weight: 600;
 }
@@ -339,65 +351,134 @@ text.simple-label {
     {% block scripts %}
     <script>
 
-            $(document).ready(function () {
+            // $(document).ready(function () {});
+
+                //
+                // $(window).resize(function () {
+                //     scrolltabs();
+                // });
+                // scrolltabs();
+                // function scrolltabs() {
+                //   var counter = 0;
+                //   var elementNumber = $(".widthScrol").children().length;
+                //
+                //
+                //   var elementWidth = elementNumber * 150;
+                //
+                //   var calcWidth = $(".widthScrol").innerWidth();
+                //   console.log(calcWidth);
+                //   var totalSlider = elementWidth - calcWidth;
+                //
+                //
+                //   var intotal = totalSlider / 160;
+                //   var n = Math.ceil(intotal);
+                //
+                // }
 
 
-                $(window).resize(function () {
-                    scrolltabs();
-                });
+// scroll logic
 
-                scrolltabs();
-                function scrolltabs() {
-                    var counter = 0;
-                    var elementNumber = $(".widthScrol").children().length;
+$(document).ready(function () {
 
+           var totalWidth = 0;
+           var widthAray = [];
+           var totalList = 0;
+           var count = 0;
 
-                    var elementWidth = elementNumber * 150;
+           $('#scroltab li').each(function (index) {
+               totalList++;
+               var widthofItem = parseInt($(this).innerWidth(), 10) + 10;
+               totalWidth = totalWidth + widthofItem;
+               widthAray.push(widthofItem);
+               // if (totalWidth <= $('.widthScrol').innerWidth()) {
+               //     count++
+               //
+               // }
+           });
 
-                    var calcWidth = $(".widthScrol").innerWidth();
-                    console.log(calcWidth);
-                    var totalSlider = elementWidth - calcWidth;
+console.log("widtharr",widthAray)
 
-
-                    var intotal = totalSlider / 160;
-                    var n = Math.ceil(intotal);
-
-
-                    $(".scrolleft").click(function () {
-
-                        if (counter != (-1 * n - 1)) {
-                            $(".widthScrol li ").animate({ left: '-=160' });
-                            counter--;
-                        }
-                    });
-
-                    $(".scrollright").click(function () {
-                        console.log(counter);
-                        if (counter < 1) {
-                            $(".widthScrol li ").animate({ left: '+=160' });
-                            counter++;
-                        }
-                    });
+           $(".scrollicon").click(function () {
+               //console.log(leftClick, click);
+               if (count>=0 && count<= widthAray.length){
 
 
-                    $(".filterBtn").click(function () {
+                 if($(this).hasClass("scrollright")){
+                   if (count>0){
+                     var add_width = widthAray[count-1]+5;
 
-                        $(".selectHolder.list").addClass("activated")
+                     $(".widthScrol li").animate({
 
-                    });
+                        left: '+=' + add_width
 
-                    $(".closeBtn").click(function () {
+                     });
+                     count--;
 
-                        $(".selectHolder.list").removeClass("activated")
+                   }
 
-                    });
-                }
-            });
+                 }
+
+                 if($(this).hasClass("scrolleft")){
+
+                   if (count< widthAray.length){
+                     var add_width =widthAray[count]+5;
+
+                     $(".widthScrol li").animate({
+                         left: '-=' + add_width
+
+                     });
+                     count++;
+
+                      }
+                 }
+               }
+
+           });
+
+
+
+
+});
+
+
+
+
+// scroll logic
+
+
+
+
+
+
+                    // $(".filterBtn").click(function () {
+                    //
+                    //     $(".selectHolder.list").addClass("activated")
+                    //
+                    // });
+                    //
+                    // $(".closeBtn").click(function () {
+                    //
+                    //     $(".selectHolder.list").removeClass("activated")
+                    //
+                    // });
+
+
         </script>
         <script>
 
         data_content= {{content|safe}};
-        console.log("data_content",data_content);
+
+         // $(".filterBtn").click(function () {
+                    //
+                    //     $(".selectHolder.list").addClass("activated")
+                    //
+                    // });
+                    //
+                    // $(".closeBtn").click(function () {
+                    //
+                    //     $(".selectHolder.list").removeClass("activated")
+                    //
+                    // });ata_content);
 
         </script>
         <script type= "text/babel" src="{% static 'public/js/saveSvgAsPng.js' %} "></script>

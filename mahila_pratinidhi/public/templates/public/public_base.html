@@ -16,8 +16,6 @@
     <link rel="stylesheet" type="text/css" href="{% static 'public/css/slick.css' %}" />
     <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
 
-
-
 </head>
 <style>
     .tt-menu{
@@ -34,6 +32,8 @@ left: 18px;
 <body>
 
     {% block upper_content %} {% endblock %}
+
+{% block header %}
     <nav class="navbar navbar-expand-lg navbar-light navflex ">
         <a class="navbar-brand" href="{% url 'public:index' %}">
             <img src="{% static 'public/image/logo.png' %}" alt="logo">
@@ -180,7 +180,11 @@ left: 18px;
             </ul> -->
             </div class="">
 
+            {% endblock %}
+
             {% block lower_content %} {% endblock %}
+
+            {% block footer %}
 
             <footer class="footer sectionPadding">
                 <div class="container">
@@ -262,26 +266,29 @@ left: 18px;
 
 
                     </div>
+</footer>
 
 
-            </footer>
-            <section class="copyright">
-                <div class="container">
-                    <p>Copyright © 2018 Youth Innovation Lab</p>
-                </div>
-            </section>
-            <!--<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"-->
-            <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>-->
-            <!--<script src="https://github.com/twitter/typeahead.js/blob/master/src/typeahead/typeahead.js"></script>-->
-            <script src="{% static 'public/js/jquery.min.js' %}"></script>
-            <script src="{% static 'public/js/bootstrap.min.js' %}"></script>
-            <script type="text/javascript" src="{% static 'public/js/slick.min.js' %}"></script>
-            <script src="{% static 'public/js/newscript.js' %}"></script>
-            <!-- <script src="{% static 'public/js/all.js' %}"></script> -->
-            <!--<script src="{% static 'public/js/typeahead.js' %}"></script>-->
-            <script src="https://unpkg.com/scrollreveal/dist/scrollreveal.min.js"></script>
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/typeahead.js/0.9.0/typeahead.min.js"></script>
+<section class="copyright">
+    <div class="container">
+        <p>Copyright © 2018 Youth Innovation Lab</p>
+    </div>
+</section>
 
+{% endblock %}
+<!--<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"-->
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>-->
+<!--<script src="https://github.com/twitter/typeahead.js/blob/master/src/typeahead/typeahead.js"></script>-->
+<script src="{% static 'public/js/jquery.min.js' %}"></script>
+<script src="{% static 'public/js/bootstrap.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'public/js/slick.min.js' %}"></script>
+<script src="{% static 'public/js/newscript.js' %}"></script>
+<!-- <script src="{% static 'public/js/all.js' %}"></script> -->
+<!--<script src="{% static 'public/js/typeahead.js' %}"></script>-->
+<script src="https://unpkg.com/scrollreveal/dist/scrollreveal.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/typeahead.js/0.9.0/typeahead.min.js"></script>
+
+<script>
             <script>
                 $(document).ready(function () {
 
@@ -312,11 +319,8 @@ left: 18px;
                         viewFactor: 0.5,
                         reset: false
                     });
-
-
-
-                });
-            </script>
+        });
+    </script>
             {% block scripts %}
             {% endblock %}
 

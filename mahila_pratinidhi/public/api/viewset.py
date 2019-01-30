@@ -33,6 +33,21 @@ def country_geojson(request):
 
 
 @api_view(['GET'])
+def districts_geojson(request):
+
+    data = {}
+    try:
+        with open('jsons/district.geojson') as f:
+            data = json.load(f)
+    except:
+        pass
+
+    return Response(data)
+
+
+
+
+@api_view(['GET'])
 def province_geojson(request, province_id):
 
     data = {}

@@ -365,6 +365,15 @@ class VisualizeIndividual(TemplateView):
         print(data_var)
         return render(request, self.template_name, {'key':data_key, 'data_variable': json.dumps(data_var) })
 
+
+class MapVisualize(TemplateView):
+    template_name='public/map.html'
+
+    def get(self,request,*args,**kwargs):
+
+        return render(request, self.template_name)
+
+
 class NewsView(TemplateView):
     template_name = 'public/news-detail.html'
 

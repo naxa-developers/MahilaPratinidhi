@@ -1,0 +1,292 @@
+{% extends 'public/public_base.html' %}
+{% load staticfiles %}
+{% block header %} {% endblock %}
+{% block upper_content %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.24.0/babel.js"></script>
+<script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+<script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+<!-- <script src="https://d3js.org/d3.v5.min.js"></script>  -->
+
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.4/dist/leaflet.css"
+  integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
+  crossorigin=""/>
+
+  <script src="https://unpkg.com/leaflet@1.3.4/dist/leaflet.js"
+  integrity="sha512-nMMmRyTVoLYqjP9hrbed9S+FzjZHW5gY1TWCHA5ckwXZBadntCNs8kEqAWdrb9O7rxbCaA4lKTIWjDXZxflOcA=="
+  crossorigin=""></script>
+
+   <script src="https://cdn.klokantech.com/mapbox-gl-js/v0.43.0/mapbox-gl.js"></script>
+   <script src="https://cdn.klokantech.com/mapbox-gl-leaflet/latest/leaflet-mapbox-gl.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.0.3/leaflet.css" />
+  <link rel="stylesheet" href="https://cdn.klokantech.com/mapbox-gl-js/v0.43.0/mapbox-gl.css" />
+
+  <script src= "{% static 'public/js/leaflet.ajax.min.js' %}" ></script>
+  <script src= "https://unpkg.com/leaflet.markercluster@1.4.1/dist/" ></script>
+  <script src= "{% static 'public/js/leaflet.markercluster.js' %}" ></script>
+  <link rel="stylesheet" href="{% static 'public/css/MarkerCluster.css'%}" />
+  <link rel="stylesheet" href="{% static 'public/css/MarkerCluster.Default.css'%}" />
+
+
+<style>
+  .stacked-bar {
+    height: 450px;
+    width:100%;
+    font: 6px sans-serif;
+    text: white;
+    shape-rendering: crispEdges;
+  }
+
+.stacked-bar path{
+  display: none;
+}
+
+  .kernel{
+
+    height: 450px;
+    width:100%;
+
+  }
+
+  .buttons{
+    color:blue;
+  }
+
+
+
+  .simple-bar{
+    height: 450px;
+    width:100%;
+    fill:white;
+
+
+  }
+
+  text.simple-divergence {
+  font-size: 14px;
+  fill: #2F4A6D;
+}
+
+text.simple-value {
+  font-size: 12px;
+}
+
+text.simple-title {
+  font-size: 22px;
+  font-weight: 600;
+}
+
+text.simple-label {
+  font-size: 14px;
+  font-weight: 400;
+}
+
+
+  .simple-rect {
+  fill: #7cb5ec;
+}
+
+
+  .axis path,
+  .axis line {
+    fill: none;
+    stroke: red;
+
+  }
+
+  path.domain {
+    stroke: none;
+  }
+
+  .y .tick line {
+    stroke:grey;
+
+  }
+
+  .tick{
+    fill:white;
+    font-size:xx-small
+  }
+
+  .kernelLine{
+    color:red;
+    stroke:#b71c1c;
+    fill:#c95555;
+  }
+
+  .hbarrect{
+    fill:#7cb5ec;
+  }
+
+  .labeltop{
+    stroke: white;
+    font-size:9px;;
+  }
+
+  .hidemap{
+    width: 0px;
+    height:0px;
+  }
+
+  .showmap{
+    width: 100vw;
+    height:100vh;
+    position:relative;
+  }
+
+  .sideinfo_hide{
+    width: 0px;
+    position: absolute;
+    z-index: 600;
+    top: 85px;
+    right: 0;
+    background-color: #111;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 60px;
+    color:white;
+
+  }
+
+  .sideinfo{
+
+
+  width: 300px;
+  position: absolute;
+  z-index: 600;
+  top: 85px;
+  right: 0;
+  background-color: #111;
+  overflow-x: hidden;
+  transition: 0.5s;
+  padding-top: 20px;
+  color:white;
+  }
+
+  .my-div-icon{
+    background:rgba(255,255,0,0.4);;
+    color:#081142;
+    text-align:center;
+    border-radius:50%;
+    padding-top:2px;
+  }
+
+
+  .filter-banner{
+    /* position:fixed; */
+    z-index: 500;
+    background: rgba(24,25,23,.8);
+    color: #fff;
+    padding:10px;
+  }
+
+  .sticky {
+  position: fixed;
+  top: 0;
+  width: 100vw;
+}
+
+</style>
+<header>
+    <div class="navigation innerPage">
+        <div class="container-fluid">
+{% endblock %}
+
+{% block lower_content %}
+</div>
+</div>
+</header>
+
+
+<div>
+  <div class= "container-fluid">
+
+
+<div id="sticky-banner" class="row filter-banner affix">
+
+  <div class="col-md-1">
+      <a class="navbar-brand" href="{% url 'public:index' %}">
+          <img src="{% static 'public/image/logo.png' %}" alt="logo">
+      </a>
+  </div>
+
+
+      <div class="col-md-5">
+          <button id="discover-map" class="filter-buttons btn btn-primary">Discover</button>
+        <select class="btn btn-dark compare-area-select">
+          <option class="compare-area">COMPARE</option>
+          <option class="compare-area">Provinces</option>
+          <option class="compare-area">Districts</option>
+          <option class="compare-area">Municipalities</option>
+        </select>
+  </div>
+
+    <div class="col-md-6">
+        <button id="filter-all" class="filter-buttons btn btn-link">All</button>
+        <button id="filter-local" class="filter-buttons btn btn-link">Local</button>
+        <button id="filter-national" class="filter-buttons btn btn-link">National</button>
+        <button id="filter-federal" class="filter-buttons btn btn-link">Federal</button>
+        <button id="filter-provincial" class="filter-buttons btn btn-link">Provincial</button>
+    </div>
+</div>
+
+
+  <div class="row">
+
+    <div id="mapd" class="col-md-12 showmap"></div>
+
+    </div>
+</div>
+  </div>
+
+  <div id="sideinfoid" class="sideinfo_hide">
+    <ul>
+      <!-- <li>Mahila 0</li>
+      <li>Mahila 1</li>
+      <li>Mahila 2</li>
+      <li>Mahila 3</li>
+      <li>Mahila 4</li> -->
+    </ul>
+  </div>
+
+  <div class="container-fluid">
+    <div id="map-compare-div" class="row hidemap">
+        <div id="mapd1" class="col-md-6" ></div>
+        <div id="mapd2" class="col-md-6"></div>
+    </div>
+</div>
+
+<div id="data-viz-map" class=" bg-secondary hidemap">
+</div>
+
+</div>
+
+{% endblock %}
+
+    {% block scripts %}
+
+    <script type="text/javascript">
+
+        window.onscroll = function() {myFunction()};
+
+        var navbar = document.getElementById("sticky-banner");
+        var sticky = navbar.offsetTop;
+
+        function myFunction() {
+          if (window.pageYOffset >= sticky) {
+            navbar.classList.add("sticky")
+          } else {
+            navbar.classList.remove("sticky");
+          }
+        }
+    </script>
+    <script type="text/babel" src={% static 'public/js/mapping_script2.js'%}></script>
+
+
+
+    {% endblock %}
+
+
+
+{% block footer%} {% endblock%}
