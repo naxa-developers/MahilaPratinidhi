@@ -43,6 +43,7 @@ class StackedChart extends React.Component{
 
 
 
+
   var margin = {top: 20, right: 70, bottom: 20, left: 30};
 
 

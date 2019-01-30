@@ -1,6 +1,5 @@
 var base_url="https://mahilapratinidhi.naxa.com.np";
 //var base_url="http://localhost:8000";
-
 var map =L.map('mapd',{minZoom: 7,maxZoom: 13,zoomSnap:0.7, zoomControl:false,scrollWheelZoom: false}).setView([28.5,84],8);
 
 L.control.zoom({
@@ -48,8 +47,8 @@ var layers_array=[];
 var markers_array=[];
 var count1_visualize =0;
 var count2_visualize =0;
-var name1_visualize ="";
-var name2_visualize="";
+var name1_visualize ="524 5 54 4 003";
+var name2_visualize="524 1 04 3 007";
 
 
 function onEachFeature(feature,layer){
@@ -177,44 +176,109 @@ var hlcit_discover= e.target.feature.properties["HLCIT_CODE"]
 
 
   function zoomToFeature(e){
-  //
-  //   layers_array.map((f)=>
-  //   {
-  //
-  //     f.setStyle({"color":"white"})
-  //   }
-  // )
-  //   e.target.setStyle({"color":"blue"})
+  	
+	var properties_object = e.target.feature.properties;
+	
+	switch (Object.keys(properties_object).length){
+		case 1:
+			var properties_name = properties_object.Province;
+			break;
+									
+		case 11:
+			var properties_name = properties_object.HLCIT_CODE;
+			break;
 
-        if(e.target._map._container.id=='mapd1'){
+		case 147:
+		var properties_name = properties_object.DISTRICT;
+		break;
+
+		default:
+			break;
+	}
+
+				
+	
+	if(e.target._map._container.id=='mapd1'){
+
+					layers_array[0].setStyle({"color":"white"})
+					e.target.setStyle({"color":"blue"})
           count1_visualize =1;
-          map1.fitBounds(e.target.getBounds(),{padding:[25,25]});
+					map1.fitBounds(e.target.getBounds(),{padding:[25,25]});
+					name1_visualize= properties_name;
 
         }
 
-        else if(e.target._map._container.id=='mapd2'){
+  else if(e.target._map._container.id=='mapd2'){
+					layers_array[1].setStyle({"color":"white"})
+					e.target.setStyle({"color":"blue"})
+
           count2_visualize =1;
-          map2.fitBounds(e.target.getBounds(),{padding:[25,25]});
+					map2.fitBounds(e.target.getBounds(),{padding:[25,25]});
+					name2_visualize= properties_name;
         }
 
-    var properties_object = e.target.feature.properties;
-    if(Object.keys(properties_object).length=="1"){
-      var properties_name = properties_object.Province;
-
-    }
-    else if(Object.keys(properties_object).length=="11"){
-      var properties_name = properties_object.LU_Name;
-
-    }
-
-    else if(Object.keys(properties_object).length >11){
-      var properties_name = properties_object.DISTRICT;
-    }
+    
     if(count1_visualize && count2_visualize){
-      $("#data-viz-map").addClass("showmap");
+			$("#data-viz-map").addClass("showviz");
+			$("#data-viz-map").removeClass("hidemap");
+			let base_url="http://localhost:8000";
+			$("#c3chart-1").html("")
+			$("#c3chart-2").html("")
+			$("#c3chart-3").html("")
+			$("#c3chart-4").html("")
+			$("#c3chart-5").html("")
+
+
+			$.get(base_url+"/api/all/"+name1_visualize+"/"+name2_visualize, function(data){
+				stackedChart(data["education"],[name1_visualize,name2_visualize],"c3chart-1");
+				stackedChart(data["Ethnicity"],[name1_visualize,name2_visualize],"c3chart-2");
+				stackedChart(data["Party Name"],[name1_visualize,name2_visualize],"c3chart-3");
+				kernel(data["age"],[name1_visualize,name2_visualize],"c3chart-4");
+				kernel(data["Years in Politics"],[name1_visualize,name2_visualize],"c3chart-5");
+
+				
+
+				
+				 c3.generate({
+					bindto: '#c3chart-real',
+					size: {
+						height: 300,
+						width: 600
+						},
+						color: {
+							pattern: ['#aec7e8','#1f77b4']
+						},
+					data: {
+								columns: [
+										[name1_visualize, ...data['age'][0]['hlcit1']],
+										[name2_visualize, ...data['age'][0]['hlcit2']]
+								],
+								types: {
+										data1: 'area-spline',
+										data2: 'area-spline'
+										// 'line', 'spline', 'step', 'area', 'area-step' are also available to stack
+								},
+								groups: [['data1', 'data2']]
+						}
+				}); 
+
+
+
+
+
+			})
+			           
+	
       $('html, body').animate({
              scrollTop: $("#data-viz-map").offset().top
-         }, 4000);
+				 }, 2000); 
+
+				 count1_visualize= 0;
+				 count2_visualize=0;
+			
+			
+				 
+		
     }
 
 
@@ -292,6 +356,7 @@ $(".compare-area-select").on('change',function(){
 	$("#mapd").addClass("hidemap");
 	$("#mapd").removeClass("showmap");
 	$("#map-compare-div").addClass("showmap");
+	$("#map-compare-div").removeClass("hidemap");
 
 if($("#mapd1").children().length){
 
@@ -457,7 +522,7 @@ $("#discover-map").on('click',function(){
 	$("#map-compare-div").addClass("hidemap");
 	$("#map-compare-div").removeClass("showmap");
   $("#data-viz-map").addClass("hidemap");
-  $("#data-viz-map").removeClass("showmap");
+  $("#data-viz-map").removeClass("showviz");
   count1_visualize=0;
   count2_visualize=0;
 });

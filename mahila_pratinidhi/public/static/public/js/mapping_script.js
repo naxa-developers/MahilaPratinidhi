@@ -162,7 +162,7 @@ var ourCustomControl = L.Control.extend({
       console.log("country",country);
       marker_content = data_summary_all["all"][0]
 
-      country.setStyle({fillOpacity:"0.1"})
+      country.setStyle({fillOpacity:"1"})
 
  $.each(country._layers,function(key,value){
 
