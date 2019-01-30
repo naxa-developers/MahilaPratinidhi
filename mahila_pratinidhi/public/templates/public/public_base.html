@@ -11,16 +11,14 @@
     <link rel="stylesheet" href="{% static 'public/css/style.css' %}">
     <link rel="stylesheet" href="{% static 'public/css/responsive.css' %}">
     <link href="https://fonts.googleapis.com/css?family=Lato:300,300i,400,400i,700,700i,900,900i" rel="stylesheet">
-    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
-        crossorigin="anonymous">
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
+        integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="{% static 'public/css/slick.css' %}" />
-    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
-
-
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
 
 </head>
 <style>
-.tt-menu{
+    .tt-menu{
 left: 18px;
     background: #eaeaea;
     display: block;
@@ -30,6 +28,7 @@ left: 18px;
     border-color: red;
     }
 </style>
+
 <body>
 
     {% block upper_content %} {% endblock %}
@@ -41,9 +40,9 @@ left: 18px;
         </a>
         {% if request.user.is_authenticated %}
         <a href="{% url 'logout' %}" class="userIcon">
-        {% else %}
-        <a href="{% url 'public:signup' %}" class="userIcon">
-        {% endif %}
+            {% else %}
+            <a href="{% url 'public:signup' %}" class="userIcon">
+                {% endif %}
                 <span class="menuCircle">
                     <i class="fa fa-user-circle">
 
@@ -227,10 +226,11 @@ left: 18px;
                                 <a href="{% url 'public:explore' 'federal' %}" style="color:white;"> Federal Parliament</a>
                             </div>
                             <div class="flist">
-                                <a href="{% url 'public:explore' 'provincial' %}" style="color:white;"> Provincial Assembly</a>
+                                <a href="{% url 'public:explore' 'provincial' %}" style="color:white;"> Provincial
+                                    Assembly</a>
                             </div>
                             <!--<div class="flist">-->
-                                <!--<a href="{% url 'public:explore' 'local' %}" style="color:white;"> Local Level</a>-->
+                            <!--<a href="{% url 'public:explore' 'local' %}" style="color:white;"> Local Level</a>-->
                             <!--</div>-->
                             <div class="ftitle fbottom">
                                 MAP VISUALIZATION
@@ -259,15 +259,13 @@ left: 18px;
 
                         <div class="col-md-3 col-sm-6 textWhite">
                             <div class="ftitle mt177"><a href="{% url 'public:index'%}#news" style="color:white;">
-                                MAHILA PRATINIDHI ON MEDIA</a></div>
+                                    MAHILA PRATINIDHI ON MEDIA</a></div>
 
                         </div>
 
 
 
                     </div>
-
-
 </footer>
 
 
@@ -291,39 +289,36 @@ left: 18px;
 <script src="https://cdnjs.cloudflare.com/ajax/libs/typeahead.js/0.9.0/typeahead.min.js"></script>
 
 <script>
+            <script>
+                $(document).ready(function () {
 
-        $(document).ready(function () {
+                    $(".menuIcon").click(function () {
 
-            $(".menuIcon").click(function () {
+                        $(".menu").addClass("menuOn");
+                        $("body").addClass("overflowHidden");
 
-                $(".menu").addClass("menuOn");
-                $("body").addClass("overflowHidden");
+                    });
+                    $(".menuheader .fa.fa-times").click(function () {
 
-            });
-            $(".menuheader .fa.fa-times").click(function () {
+                        $(".menu").removeClass("menuOn");
+                        $("body").removeClass("overflowHidden");
+                    });
 
-                $(".menu").removeClass("menuOn");
-                $("body").removeClass("overflowHidden");
-            });
-
-            $('.slider').slick({
-                autoplay: true,
-                dots: true,
-                arrows: false
-
-
-            });
-            ScrollReveal().reveal('.reveal');
-
-            ScrollReveal().reveal('.reveal', {
-                delay: 50,
-                duration: 40,
-                viewFactor: 0.5,
-                reset: false
-            });
+                    $('.slider').slick({
+                        autoplay: true,
+                        dots: true,
+                        arrows: false
 
 
+                    });
+                    ScrollReveal().reveal('.reveal');
 
+                    ScrollReveal().reveal('.reveal', {
+                        delay: 50,
+                        duration: 40,
+                        viewFactor: 0.5,
+                        reset: false
+                    });
         });
     </script>
             {% block scripts %}

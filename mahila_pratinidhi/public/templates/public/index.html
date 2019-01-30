@@ -1,27 +1,25 @@
 {% extends "public/public_base.html" %} {% load staticfiles %} {% load filters %} {% block upper_content %}
 
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.4/dist/leaflet.css"
-  integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
-  crossorigin=""/>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.4/dist/leaflet.css" integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
+    crossorigin="" />
 
-  <script src="https://unpkg.com/leaflet@1.3.4/dist/leaflet.js"
-  integrity="sha512-nMMmRyTVoLYqjP9hrbed9S+FzjZHW5gY1TWCHA5ckwXZBadntCNs8kEqAWdrb9O7rxbCaA4lKTIWjDXZxflOcA=="
-  crossorigin=""></script>
+<script src="https://unpkg.com/leaflet@1.3.4/dist/leaflet.js" integrity="sha512-nMMmRyTVoLYqjP9hrbed9S+FzjZHW5gY1TWCHA5ckwXZBadntCNs8kEqAWdrb9O7rxbCaA4lKTIWjDXZxflOcA=="
+    crossorigin=""></script>
 
-   <script src="https://cdn.klokantech.com/mapbox-gl-js/v0.43.0/mapbox-gl.js"></script>
-   <script src="https://cdn.klokantech.com/mapbox-gl-leaflet/latest/leaflet-mapbox-gl.js"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.0.3/leaflet.css" />
-  <link rel="stylesheet" href="https://cdn.klokantech.com/mapbox-gl-js/v0.43.0/mapbox-gl.css" />
+<script src="https://cdn.klokantech.com/mapbox-gl-js/v0.43.0/mapbox-gl.js"></script>
+<script src="https://cdn.klokantech.com/mapbox-gl-leaflet/latest/leaflet-mapbox-gl.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.0.3/leaflet.css" />
+<link rel="stylesheet" href="https://cdn.klokantech.com/mapbox-gl-js/v0.43.0/mapbox-gl.css" />
 
-  <script src= "{% static 'public/js/leaflet.ajax.min.js' %}" ></script>
-  <script src= "https://unpkg.com/leaflet.markercluster@1.4.1/dist/" ></script>
-  <script src= "{% static 'public/js/leaflet.markercluster.js' %}" ></script>
-  <link rel="stylesheet" href="{% static 'public/css/MarkerCluster.css'%}" />
-  <link rel="stylesheet" href="{% static 'public/css/MarkerCluster.Default.css'%}" />
+<script src="{% static 'public/js/leaflet.ajax.min.js' %}"></script>
+<script src="https://unpkg.com/leaflet.markercluster@1.4.1/dist/"></script>
+<script src="{% static 'public/js/leaflet.markercluster.js' %}"></script>
+<link rel="stylesheet" href="{% static 'public/css/MarkerCluster.css'%}" />
+<link rel="stylesheet" href="{% static 'public/css/MarkerCluster.Default.css'%}" />
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.24.0/babel.js"></script>
-  <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
-  <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.24.0/babel.js"></script>
+<script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
 
 
 
@@ -182,12 +180,12 @@
                         <i class="close fa fa-times"></i>
                     </span>
 
-                    <div class="selectOverlay" >
+                    <div class="selectOverlay">
                         <div class="selectList">
                             <div class="">
                                 <label for="" class="st">State</label>
                                 <select class="sel1" name="" id="leader-province">
-                                  <option value="">Provinces</option>
+                                    <option value="">Provinces</option>
                                     <option value="1">Province 1</option>
                                     <option value="2">Province 2</option>
                                     <option value="3">Province 3</option>
@@ -309,79 +307,79 @@
     </section>
 
     <section class="pratinidhi sectionPadding">
-            <div class="container topC">
+        <div class="container topC">
 
                 <p class="sTitle header mb80 reveal">MAHILA PRATINIDHI IN THE SPOTLIGHT</p>
 
-                <div class="slider reveal">
-                    {% for datas in featured_data %} {% for data in datas %}
-                    <div>
+            <div class="slider reveal">
+                {% for datas in featured_data %} {% for data in datas %}
+                <div>
                     <div class="row align-items-md-center">
                         {% if data.image %}
                         <div class="col-md-4">
-                                <div class="imageHolder">
-                                    <img src="{{ MEDIA_URL }} {{ data.image.url }}" alt="">
-                                </div>
+                            <div class="imageHolder">
+                                <img src="{{ MEDIA_URL }} {{ data.image.url }}" alt="">
+                            </div>
                         </div>
                         {% else %}
                         <div class="col-md-4">
-                                <div class="imageHolder">
-                                    <img src = "{% static 'public/image/p1.jpg' %}" class="cropFeatured" alt="">
-                                </div>
+                            <div class="imageHolder">
+                                <img src="{% static 'public/image/p1.jpg' %}" alt="">
+                            </div>
                         </div>
                         {% endif %}
-                    <div class="col-md-4">
-                        <div class="info slidefont">
-                            <div class="Name">
-                                {% if data.english_name %}
+                        <div class="col-md-4">
+                            <div class="info slidefont">
+                                <div class="Name">
+                                    {% if data.english_name %}
                                     {{ data.english_name|title }}
-                                {% else %}
-                                    {{ data.name|title }}
-                                {% endif %}
-                            </div>
-                            <div class="position">
-                                {{data.nirwachit_padh}}
-                            </div>
-                            <div>
-                                <span class="first"> Education:</span>
-                                <span class="value"> {{data.educational_qualification}}</span>
-
-                            </div>
-                            <div>
-                                <span class="first"> Age:</span>
-                                <span class="value"> {{data.age|slice:":2"}} Years</span>
-
-                            </div>
-                            <div>
-                                <span class="first"> Political Party:</span>
-                                <span class="value"> {{ data.party_name }}</span>
-
-                            </div>
-                            <div>
-                                {% if data.party_joined_date %}
-                                <span class="first"> Political Involvement:</span>
-                                <span class="value"> Since {{ data.party_joined_date|slice:":4" }} Bs</span>
-                                {% endif %}
-                            </div>
-                            <div>
-                                <span class="first"> Address:</span>
-                                <span class="value">
-                                    {% if data.permanent_address %}
-                                        {{ data.permanent_address|title }}
                                     {% else %}
-                                        {{ data.address|title }}
+                                    {{ data.name|title }}
                                     {% endif %}
+                                </div>
+                                <div class="position">
+                                    {{data.nirwachit_padh}}
+                                </div>
+                                <div>
+                                    <span class="first"> Education:</span>
+                                    <span class="value"> {{data.educational_qualification}}</span>
+
+                                </div>
+                                <div>
+                                    <span class="first"> Age:</span>
+                                    <span class="value"> {{data.age|slice:":2"}} Years</span>
+
+                                </div>
+                                <div>
+                                    <span class="first"> Political Party:</span>
+                                    <span class="value"> {{ data.party_name }}</span>
+
+                                </div>
+                                <div>
+                                    {% if data.party_joined_date %}
+                                    <span class="first"> Political Involvement:</span>
+                                    <span class="value"> Since {{ data.party_joined_date|slice:":4" }} Bs</span>
+                                    {% endif %}
+                                </div>
+                                <div>
+                                    <span class="first"> Address:</span>
+                                    <span class="value">
+                                        {% if data.permanent_address %}
+                                        {{ data.permanent_address|title }}
+                                        {% else %}
+                                        {{ data.address|title }}
+                                        {% endif %}
                                     </span>
 
+                                </div>
+
+
+
                             </div>
-
-
-
                         </div>
-                    </div>
-                    <div class="col-md-4 flexHolder">
-                        <div class="buttons">
-                            <div class="socialIcons">
+                        <div class="col-md-4 flexHolder">
+                            <div class="buttons">
+                                <div class="socialIcons">
                                     {% if form.social_networking_medium is not empty %}
                                     <div class="shareInfo">
                                         <span class="ihs">
@@ -394,29 +392,30 @@
                                         </span>
 
                                         <span class="contactIfo">
-                                            <a href="https://www.facebook.com/{{form.social_networking_medium}}" target="_blank">Find on Social Media</a>
+                                            <a href="https://www.facebook.com/{{form.social_networking_medium}}" target="_blank">Find
+                                                on Social Media</a>
                                         </span>
                                     </div>
                                     {% endif %}
-                                <!--<i class="fa fa-twitter"></i>-->
-                                <i class="fa fa-phone"></i>
-                                <i class="fa fa-envelope"></i>
+                                    <!--<i class="fa fa-twitter"></i>-->
+                                    <i class="fa fa-phone"></i>
+                                    <i class="fa fa-envelope"></i>
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="fullBtn centeredvh">
+                            <div class="fullBtn centeredvh">
                                 <a href="{% url 'public:detail' data.pk %}">
-                            <button class="btn btn-round revbtn mtb50"> PROFILE DETAIL
-                                <i class="fa fa-arrow-right arow"></i>
-                            </button>
-                        </a>
-                        </div>
+                                    <button class="btn btn-round revbtn mtb50"> PROFILE DETAIL
+                                        <i class="fa fa-arrow-right arow"></i>
+                                    </button>
+                                </a>
+                            </div>
 
+                        </div>
                     </div>
                 </div>
+                {% endfor %} {% endfor %}
             </div>
-            {% endfor %} {% endfor %}
-        </div>
 
     </section>
 
@@ -450,80 +449,83 @@ Through data collected from the most recent elections of Nepal, relevant informa
 
 
     <section class="persons sectionPadding" id="news">
-            <div class="container ">
-                <p class="sTitle header mb80 reveal">MAHILA PRATINIDHI ON MEDIA</p>
-                <div class="row lists ">
-                    {% for data in news %}
-                    <div class="col-xl-3 col-lg-4 col-md-6 reveal">
-                        <a href="{% url 'public:news' data.pk %}">
+        <div class="container ">
+            <p class="sTitle header mb80 reveal">MAHILA PRATINIDHI ON MEDIA</p>
+            <div class="row lists ">
+                {% for data in news %}
+                <div class="col-xl-3 col-lg-4 col-md-6 reveal">
+                    <a href="{% url 'public:news' data.pk %}">
                         <div class="pImageholder prelative">
-                            <img src="{% static 'public/image/p1.jpg' %}" class="cropNews" alt="user">
+                            <img src="{% static 'public/image/p1.jpg' %}" class="" alt="user">
                             <div class="holderOverlay"></div>
                             <div class="content">
-                                    {% if data.object_id %} {% with data|content_type as mahila_data %}
-                                    <div class="tags"> {{ mahila_data.english_name }} in News</div>
-                                    {% endwith %} {% else %}
-                                    <div class="tags"> General News</div>
-                                    {% endif %}
-                                    <div class="pTitle">{{ data.title }}</div>
+                                {% if data.object_id %} {% with data|content_type as mahila_data %}
+                                <div class="tags"> {{ mahila_data.english_name }} in News</div>
+                                {% endwith %} {% else %}
+                                <div class="tags"> General News</div>
+                                {% endif %}
+                                <div class="pTitle">{{ data.title }}</div>
                             </div>
                         </div>
-                        </a>
-                    </div>
-                    {% endfor %}
-
-
+                    </a>
                 </div>
+                {% endfor %}
+
+
             </div>
+        </div>
 
 
-        </section>
+    </section>
 
 
 
     {% endblock %}
-     {% block scripts %}
+    {% block scripts %}
 
-    <script type="text/babel" >
-      var refresh_url = "{% static 'public/image/refresh.png' %}";
+    <script type="text/babel">
+        var refresh_url = "{% static 'public/image/refresh.png' %}";
 
     </script>
 
     <script>
-
-
         $(document).ready(function () {
+            heroimgheight();
 
-      $(".tabHolder").on('click','li',function(){
-        $(this).addClass('activeclass').siblings().removeClass('activeclass');
+            $(window).resize(function () {
+                heroimgheight();
 
-      });
+            });
 
+            function heroimgheight() {
+                var docHeight = $(window).height();
+                var searchpanelHeight = docHeight - $(".panelSearch").innerHeight();
+                $(".topHeroImg").height(searchpanelHeight);
+            }
 
-
-   $("#selectedValue").click(function () {
-    var ro = $("#selectedValue").offset();
+            $("#selectedValue").click(function () {
+                var ro = $("#selectedValue").offset();
 
                 $('html, body').animate({
-                    scrollTop: ro.top-100
+                    scrollTop: ro.top - 100
                 }, 800);
                 $(".selectOverlay").addClass("active");
-              $(".circlefilter ").addClass("circleActive");
+                $(".circlefilter ").addClass("circleActive");
                 return false;
-   });
-   $(".circlefilter").click(function () {
-    var ro = $(".circlefilter").offset();
+            });
+            $(".circlefilter").click(function () {
+                var ro = $(".circlefilter").offset();
 
 
                 $('html, body').animate({
-                    scrollTop: ro.top-100
+                    scrollTop: ro.top - 100
                 }, 800);
                 $(".selectOverlay").toggleClass("active");
 
 
-              $(".circlefilter ").toggleClass("circleActive");
+                $(".circlefilter ").toggleClass("circleActive");
                 return false;
-   });
+            });
 
 
 
@@ -546,6 +548,7 @@ Through data collected from the most recent elections of Nepal, relevant informa
                 third = $(this).find("option:selected").text();
                 conc()
             });
+
             function conc() {
 
                 var firstcon = first.concat(second);
@@ -569,6 +572,7 @@ Through data collected from the most recent elections of Nepal, relevant informa
                 third = "";
 
             }
+
             function close() {
                 $(".selectOverlay").removeClass("active");
                 $(".circlefilter").removeClass("circleActive");
@@ -627,9 +631,10 @@ Through data collected from the most recent elections of Nepal, relevant informa
         doSlideshow();
 
         function doSlideshow() {
-            if (nextimage >= images.length) { nextimage = 0; }
-            $('.topHeroImg').css('background', 'url("' + images[nextimage++] + '")')
-            {
+            if (nextimage >= images.length) {
+                nextimage = 0;
+            }
+            $('.topHeroImg').css('background', 'url("' + images[nextimage++] + '")') {
                 setTimeout(doSlideshow, 3000);
             };
         }
@@ -637,7 +642,7 @@ Through data collected from the most recent elections of Nepal, relevant informa
 
 
     <!-- for geolocation of user -->
-    <script type="text/babel" src={% static 'public/js/popup.js'%}></script>
-    <script type="text/babel" src={% static 'public/js/mapping_script.js'%}></script>
+    <script type="text/babel" src={% static 'public/js/popup.js' %}></script>
+    <script type="text/babel" src={% static 'public/js/mapping_script.js' %}></script>
 
-     {% endblock %}
+    {% endblock %}

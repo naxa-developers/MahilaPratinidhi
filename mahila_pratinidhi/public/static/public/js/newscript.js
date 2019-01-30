@@ -1,10 +1,10 @@
-
 $(document).ready(function () {
 
     scrollTab();
     $(window).resize(function () {
         scrollTab();
     });
+
     function scrollTab() {
         var devicewidth = $(window).width();
         if (devicewidth < 769) {
@@ -30,6 +30,7 @@ $(document).ready(function () {
     $(window).resize(function () {
         scrollProvience();
     });
+
     function scrollProvience() {
         var devicewidth = $(window).width();
 
@@ -46,4 +47,3 @@ $(document).ready(function () {
 
 
 });
-
