@@ -12,6 +12,14 @@ var CartoDB_DarkMatterNoLabels = L.tileLayer('https://{s}.basemaps.cartocdn.com/
 	maxZoom: 19
 }).addTo(map);
 
+map.on('zoomend', function() {
+	if (map.getZoom() <10 && markers_pie_array.length){
+					map.removeLayer(markers_pie_array[0]);
+	}
+	
+});
+
+
 function fetchapi(){
 
   $.ajax({
@@ -45,6 +53,7 @@ var muni =L.geoJson.ajax('https://dfid.naxa.com.np/core/geojson/municipalities/'
 
 var layers_array=[];
 var markers_array=[];
+var markers_pie_array=[];
 var count1_visualize =0;
 var count2_visualize =0;
 var name1_visualize ="524 5 54 4 003";
@@ -72,6 +81,7 @@ function onEachFeature_discover(feature,layer){
   BindFunction(feature,layer);
   circular_marker(get_center(feature,layer),get_number(feature),get_code(feature));
 	  //layer.bindPopup(customPopup,customOptions);
+		
 
 
   layer.on({
@@ -84,8 +94,9 @@ function onEachFeature_discover(feature,layer){
 
 function BindFunction(feature,layer){
 
-  layer.bindTooltip(get_name(feature),{sticky:true,permanent: false});
 
+  layer.bindTooltip(get_name(feature),{sticky:true,permanent: false});
+	
 }
 
 
@@ -97,16 +108,19 @@ function circular_marker(center,number,code){
 
       if (number){
 
+
+
 				var myIcon = L.divIcon({
 	          className:'my-div-icon',
 	          iconSize: new L.Point(number*2.5, number*2.5),
-	          html: `<div id=$(code)></div>`,
-
-	      });
+	          html: `<div id='${code}'></div>`,
+				});
+				
 
 	      // you can set .my-div-icon styles in CSS
 	      let marker= L.marker(center, {icon: myIcon}).addTo(map);
 				markers_array.push(marker);
+
 
 
 			  }
@@ -140,11 +154,26 @@ function circular_marker(center,number,code){
 
   function discoverOnClick(e){
 
-    map.fitBounds(e.target.getBounds(),{padding:[25,25]});
+		if(markers_pie_array.length){
+			map.removeLayer(markers_pie_array[0])
+			markers_pie_array=[]
+		}
+		map.fitBounds(e.target.getBounds(),{padding:[25,25]});
+		
+		var myIcon = L.divIcon({
+			className:'my-pie-icon',
+			iconSize: new L.Point(200, 200),
+			html: `<div id='my-pie-icon-chart'></div>`,
+	});
+	
+	let center = e.target.getBounds().getCenter()
+	// you can set .my-div-icon styles in CSS
+	let marker= L.marker(center, {icon: myIcon}).addTo(map);
+	markers_pie_array.push(marker);
+	piechart([2,2],"my-pie-icon-chart")
 
 
     $("#sideinfoid").addClass("sideinfo");
-    console.log("ee",e.target.feature.properties["HLCIT_CODE"])
 var hlcit_discover= e.target.feature.properties["HLCIT_CODE"]
 
 
@@ -152,7 +181,6 @@ var hlcit_discover= e.target.feature.properties["HLCIT_CODE"]
 
     $.get(base_url+"/api/hlcit/"+hlcit_discover,function(data){
 
-      console.log(data)
       $("#sideinfoid ul").html("")
 
 
@@ -239,28 +267,7 @@ var hlcit_discover= e.target.feature.properties["HLCIT_CODE"]
 				
 
 				
-				 c3.generate({
-					bindto: '#c3chart-real',
-					size: {
-						height: 300,
-						width: 600
-						},
-						color: {
-							pattern: ['#aec7e8','#1f77b4']
-						},
-					data: {
-								columns: [
-										[name1_visualize, ...data['age'][0]['hlcit1']],
-										[name2_visualize, ...data['age'][0]['hlcit2']]
-								],
-								types: {
-										data1: 'area-spline',
-										data2: 'area-spline'
-										// 'line', 'spline', 'step', 'area', 'area-step' are also available to stack
-								},
-								groups: [['data1', 'data2']]
-						}
-				}); 
+		
 
 
 
