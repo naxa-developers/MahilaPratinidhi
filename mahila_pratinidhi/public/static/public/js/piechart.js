@@ -1,71 +1,50 @@
-class PieChart extends React.Component{
-
-  constructor(props){
-    super(props)
-    this.piechart= this.piechart.bind(this);
-  }
-
-  componentDidMount(){
-
-    console.log("dataaa",this.props.data[0].data);
-
-    this.piechart(this.props.data[0].data);
-
-  }
-
-  piechart(data){
-
-    var margin = {top: 20, right: 170, bottom: 50, left: 30};
-var color =["#69131a","#e86c75","#faa2ad","#ac779d","#4b1b31" ,"#f441a6","#f44141"];
-    var width = 700 - margin.left - margin.right,
-        height = 350 - margin.top - margin.bottom;
+function piechart(data,elementid){
 
 
-    var pieGenerator = d3.layout.pie();
-  var arcs = pieGenerator([1,2,3]);
-
-  const svg = d3.selectAll(".pie-chart")
+  var w = 2;
+  var h = 2;
+  var r = h/2;
+  var aColor = [
+      'rgb(178, 55, 56)',
+      'rgb(213, 69, 70)',
+      'rgb(230, 125, 126)',
+      'rgb(239, 183, 182)'
+  ]
+  
+  var data = [
+      {"label":"Colorectale levermetastase (n=336)", "value":74}, 
+      {"label": "Primaire maligne levertumor (n=56)", "value":12},
+      {"label":"Levensmetatase van andere origine (n=32)", "value":7}, 
+      {"label":"Beningne levertumor (n=34)", "value":7}
+  ];
+  var vis = d3.select('svg').filter(function(d,i){
+      
+      return this.id === elementid;
+  })
+  .data([data]).attr("width", w).attr("height", h).attr("transform", "translate(" + r + "," + r + ")");
+  var pie = d3.layout.pie().value(function(d){return d.value;});
+  // Declare an arc generator function
+  var arc = d3.svg.arc().outerRadius(r);
+  
+  // Select paths, use arc generator to draw
+  var arcs = vis.selectAll("g.slice").data(pie).enter().append("svg:g").attr("class", "slice");
+  arcs.append("svg:path")
+      .attr("fill", function(d, i){return aColor[i];})
+      .attr("d", function (d) {return arc(d);})
+  ;
+  
+  // Add the text
+  arcs.append("svg:text")
+      .attr("transform", function(d){
+          d.innerRadius = 100; /* Distance of label to the center*/
+          d.outerRadius = r;
+          return "translate(" + arc.centroid(d) + ")";}
+      )
       .attr("text-anchor", "middle")
-      .style("font", "12px sans-serif");
-
-  const g = svg.append("g")
-      .attr("transform", `translate(${width / 2},${height / 2})`);
-
-  g.selectAll("path")
-    .data(arcs)
-    .enter().append("path")
-      .attr("fill", (d,k) => color[k])
-      .attr("stroke", "white")
-      .attr("d", arc)
-    .append("title")
-      .text(d => `${d.data.name}: ${d.data.value.toLocaleString()}`);
-
-  const text = g.selectAll("text")
-    .data(arcs)
-    .enter().append("text")
-      .attr("transform", d => `translate(${arcLabel.centroid(d)})`)
-      .attr("dy", "0.35em");
-
-  text.append("tspan")
-      .attr("x", 0)
-      .attr("y", "-0.7em")
-      .style("font-weight", "bold")
-      .text(d => d.data.name);
-
-  text.filter(d => (d.endAngle - d.startAngle) > 0.25).append("tspan")
-      .attr("x", 0)
-      .attr("y", "0.7em")
-      .attr("fill-opacity", 0.7)
-      .text(d => d.data.value.toLocaleString());
-
+      .text( function(d, i) {return data[i].value + '%';})
+  ;
 }
 
 
 
 
-  render(){
-
-    return(<svg className="pie-chart" />)
-  }
-
-}

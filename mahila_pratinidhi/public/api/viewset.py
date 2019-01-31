@@ -1669,7 +1669,7 @@ class CompareAllViewSet(views.APIView):
         province_year_1 = ProvinceMahilaPratinidhiForm.objects.filter(hlcit_code=self.kwargs['hlcit1']).values('party_joined_date')
         local_year_1 = MahilaPratinidhiForm.objects.filter(hlcit_code=self.kwargs['hlcit1']).values('party_joined_date')
 
-            hlcit1_year = chain(national_year_1, federal_year_1, province_year_1,local_year_1)  # dictionary of ages of hlcit1
+        hlcit1_year = chain(national_year_1, federal_year_1, province_year_1,local_year_1)  # dictionary of ages of hlcit1
 
             # import datetime
             # now = datetime.datetime.now()
