@@ -222,6 +222,13 @@ text.simple-label {
   width: 100vw;
 }
 
+.discover-search{
+  z-index:10000;
+  position: absolute;
+  left: 30px;
+  bottom: 50px;
+}
+
 </style>
 <header>
     <div class="navigation innerPage">
@@ -232,7 +239,6 @@ text.simple-label {
 </div>
 </div>
 </header>
-
 
 <div>
   <div class= "container-fluid">
@@ -268,10 +274,15 @@ text.simple-label {
 
 
   <div class="row">
-
-    <div id="mapd" class="col-md-12 showmap"></div>
-
+    <div class="col-md-12">
+      <div id="mapd" class="showmap"></div>
+      <div class="discover-search"> <input placeholder="Search municipalities" style="width:300px;background-color:whitesmoke"></input></div>
     </div>
+    </div>
+    
+
+      
+  
 </div>
   </div>
 
@@ -287,8 +298,14 @@ text.simple-label {
 
 <div class="container-fluid">
     <div id="map-compare-div" class="row hidemap">
-        <div id="mapd1" class="col-md-6" ></div>
-        <div id="mapd2" class="col-md-6"></div>
+        
+      <div class="col-md-6">
+        <div id="mapd1" style="height:100vh;"></div>
+        <div class="discover-search"> <input placeholder="Search municipalities" style="width:300px;background-color:whitesmoke"></input></div>
+      </div>
+      <div class="col-md-6">      
+      <div id="mapd2" style="height:100vh;" ></div>
+      <div class="discover-search"> <input placeholder="Search municipalities" style="width:300px;background-color:whitesmoke"></input></div>
     </div>
 </div>
 
