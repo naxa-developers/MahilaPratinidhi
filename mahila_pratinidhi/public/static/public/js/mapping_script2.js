@@ -113,14 +113,13 @@ function circular_marker(center,number,code){
 				var myIcon = L.divIcon({
 	          className:'my-div-icon',
 	          iconSize: new L.Point(number*2.5, number*2.5),
-	          html: `<div id='${code}'></div>`,
+	          html: `<div id='${code.replace(/\s/g,"_")}'></div>`,
 				});
 				
 
 	      // you can set .my-div-icon styles in CSS
 	      let marker= L.marker(center, {icon: myIcon}).addTo(map);
 				markers_array.push(marker);
-
 
 
 			  }
@@ -238,7 +237,7 @@ var hlcit_discover= e.target.feature.properties["HLCIT_CODE"]
 
   else if(e.target._map._container.id=='mapd2'){
 					layers_array[1].setStyle({"color":"white"})
-					e.target.setStyle({"color":"blue"})
+					e.target.setStyle({"color":"green"})
 
           count2_visualize =1;
 					map2.fitBounds(e.target.getBounds(),{padding:[25,25]});
@@ -258,9 +257,9 @@ var hlcit_discover= e.target.feature.properties["HLCIT_CODE"]
 
 
 			$.get(base_url+"/api/all/"+name1_visualize+"/"+name2_visualize, function(data){
-				stackedChart(data["education"],[name1_visualize,name2_visualize],"c3chart-1");
-				stackedChart(data["Ethnicity"],[name1_visualize,name2_visualize],"c3chart-2");
-				stackedChart(data["Party Name"],[name1_visualize,name2_visualize],"c3chart-3");
+				stackedChart(data["education"],[name1_visualize,name2_visualize],"c3chart-1",["blue","green"]);
+				stackedChart(data["Ethnicity"],[name1_visualize,name2_visualize],"c3chart-2",["blue","green"]);
+				stackedChart(data["Party Name"],[name1_visualize,name2_visualize],"c3chart-3",["blue","green"]);
 				kernel(data["age"],[name1_visualize,name2_visualize],"c3chart-4");
 				kernel(data["Years in Politics"],[name1_visualize,name2_visualize],"c3chart-5");
 

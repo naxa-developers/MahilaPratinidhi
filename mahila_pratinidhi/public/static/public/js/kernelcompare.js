@@ -85,11 +85,13 @@ function kernel(sample,compare_variable,elementid,variable_colors){
         svg.append("path")
             .datum(kde(faithfulData))
             .attr("class", "kernelLine")
+            .attr("stroke","blue")
             .attr("d", line);
 
         svg.append("path")
             .datum(kde(faithfulData2))
             .attr("class", "kernelLine")
+            .attr("stroke","green")
             .attr("d", line);
   
   
