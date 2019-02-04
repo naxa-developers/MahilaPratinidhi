@@ -2366,8 +2366,8 @@ class PieChartViewSet(views.APIView):
                 if item['hlcit_code']:
                     total_hlcit.append(item['hlcit_code'])
 
+        code_dict = {}
         for hlcit in total_hlcit:
-            code_dict = {}
             national_party_name_1 = RastriyaShava.objects.filter(hlcit_code=hlcit).values('party_name') \
                 .distinct().annotate(total=Count('party_name'))
             federal_party_name_1 = PratinidhiShava.objects.filter(hlcit_code=hlcit).values('party_name') \
@@ -2401,7 +2401,7 @@ class PieChartViewSet(views.APIView):
                 lbl_list_party_name.append(dictt)
 
             code_dict[hlcit] = lbl_list_party_name
-            all_list.append(code_dict)
+        all_list.append(code_dict)
 
         all_dict["all"] = all_list
 
