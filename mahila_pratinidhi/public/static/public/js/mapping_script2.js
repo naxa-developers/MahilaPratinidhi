@@ -13,9 +13,19 @@ var CartoDB_DarkMatterNoLabels = L.tileLayer('https://{s}.basemaps.cartocdn.com/
 }).addTo(map);
 
 map.on('zoomend', function() {
+	if(map.getZoom() <10.2 && !map.hasLayer(markers_pie_all_array[0])){
+		
+		markers_pie_all_array.map(marker => marker.addTo(map))
+		}
+
 	if (map.getZoom() <10 && markers_pie_array.length){
 					map.removeLayer(markers_pie_array[0]);
+					
 	}
+
+	if (map.getZoom() >10.2){
+/* 		markers_pie_all_array.map(marker => map.removeLayer(marker)) 
+ */}
 	
 });
 
@@ -54,6 +64,7 @@ var muni =L.geoJson.ajax('https://dfid.naxa.com.np/core/geojson/municipalities/'
 var layers_array=[];
 var markers_array=[];
 var markers_pie_array=[];
+var markers_pie_all_array=[];
 var count1_visualize =0;
 var count2_visualize =0;
 var name1_visualize ="524 5 54 4 003";
@@ -113,15 +124,16 @@ function circular_marker(center,number,code){
 				var myIcon = L.divIcon({
 	          className:'my-div-icon',
 	          iconSize: new L.Point(number*2.5, number*2.5),
-	          html: `<div id='${code}'></div>`,
+	          html: `<div id='mun${code.replace(/\s/g,"_")}'></div>`,
 				});
 				
 
 	      // you can set .my-div-icon styles in CSS
-	      let marker= L.marker(center, {icon: myIcon}).addTo(map);
-				markers_array.push(marker);
-
-
+	      let marker= L.marker(center, {icon: myIcon});
+				marker.addTo(map);
+				markers_pie_all_array.push(marker);
+ 				piechart([3,3],'mun'+code.replace(/\s/g,"_",10),10)
+ 
 
 			  }
       else{
@@ -238,7 +250,7 @@ var hlcit_discover= e.target.feature.properties["HLCIT_CODE"]
 
   else if(e.target._map._container.id=='mapd2'){
 					layers_array[1].setStyle({"color":"white"})
-					e.target.setStyle({"color":"blue"})
+					e.target.setStyle({"color":"green"})
 
           count2_visualize =1;
 					map2.fitBounds(e.target.getBounds(),{padding:[25,25]});
@@ -249,7 +261,7 @@ var hlcit_discover= e.target.feature.properties["HLCIT_CODE"]
     if(count1_visualize && count2_visualize){
 			$("#data-viz-map").addClass("showviz");
 			$("#data-viz-map").removeClass("hidemap");
-			let base_url="http://localhost:8000";
+/* 			let base_url="http://localhost:8000"; */
 			$("#c3chart-1").html("")
 			$("#c3chart-2").html("")
 			$("#c3chart-3").html("")
@@ -258,20 +270,11 @@ var hlcit_discover= e.target.feature.properties["HLCIT_CODE"]
 
 
 			$.get(base_url+"/api/all/"+name1_visualize+"/"+name2_visualize, function(data){
-				stackedChart(data["education"],[name1_visualize,name2_visualize],"c3chart-1");
-				stackedChart(data["Ethnicity"],[name1_visualize,name2_visualize],"c3chart-2");
-				stackedChart(data["Party Name"],[name1_visualize,name2_visualize],"c3chart-3");
+				stackedChart(data["education"],[name1_visualize,name2_visualize],"c3chart-1",["blue","green"]);
+				stackedChart(data["Ethnicity"],[name1_visualize,name2_visualize],"c3chart-2",["blue","green"]);
+				stackedChart(data["Party Name"],[name1_visualize,name2_visualize],"c3chart-3",["blue","green"]);
 				kernel(data["age"],[name1_visualize,name2_visualize],"c3chart-4");
 				kernel(data["Years in Politics"],[name1_visualize,name2_visualize],"c3chart-5");
-
-				
-
-				
-		
-
-
-
-
 
 			})
 			           

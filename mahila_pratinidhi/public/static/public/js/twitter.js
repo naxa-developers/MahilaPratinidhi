@@ -1137,9 +1137,9 @@
                 },
                 menu: {
                     position: "absolute",
-                    top: "100%",
+                    top: "-400%",
                     left: "0",
-                    zIndex: "100",
+                    zIndex: "1000000000",
                     display: "none"
                 },
                 ltr: {

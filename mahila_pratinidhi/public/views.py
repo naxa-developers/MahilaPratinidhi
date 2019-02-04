@@ -370,8 +370,29 @@ class MapVisualize(TemplateView):
     template_name='public/map.html'
 
     def get(self,request,*args,**kwargs):
+        names = {}
+        name_list = []
+        muni= Municipalities.objects.all()
+        
+        for lists in muni:
+            #import ipdb
+            #ipdb.set_trace()    
+            names['name']=lists.name
+            names['hlcit']=lists.hlcit_code
+            try:
+                
+                names['district']=lists.district.name
+                
+            except:
+                pass
+            name_list.append(dict(names))
+        # for lists in local_names:
+        #     names.append(lists.name)
+        json_list = json.dumps(name_list)
+        # print(json_list)
 
-        return render(request, self.template_name)
+        print(json_list)
+        return render(request, self.template_name,{'muni':json_list})
 
 
 class NewsView(TemplateView):

@@ -40,10 +40,26 @@
  
 <script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
 
+<link rel="stylesheet" href="{% static 'public/css/twitter.css' %}">
+
+    
 
 <style>
-
- 
+.tt-menu{  position: absolute;
+    top: 75%;
+    width: 100%;
+    z-index: 100;
+    border: 2px solid #6e6060;
+    border-radius: 10px;
+    }
+    typeahead tt-input{
+        left: -236px;
+    }
+    span.twitter-typeahead {
+      width: 234%;
+    background: #441515;
+    border-radius: 203px;
+}
   .stacked-bar {
     overflow: visible !important;
     height: 400px;
@@ -126,7 +142,6 @@ text.simple-label {
 
   .kernelLine{
     color:red;
-    stroke:#b71c1c;
     
   }
 
@@ -186,7 +201,7 @@ text.simple-label {
   }
 
   .my-div-icon{
-    background:rgba(255,255,0,0.4);;
+    /* background:rgba(255,255,0,0.4); */
     color:#081142;
     text-align:center;
     border-radius:50%;
@@ -240,10 +255,8 @@ text.simple-label {
 </div>
 </header>
 
-<div>
-  <div class= "container-fluid">
-
-
+    
+<div class= "container-fluid">
 <div id="sticky-banner" class="row filter-banner affix">
 
   <div class="col-md-1">
@@ -264,19 +277,34 @@ text.simple-label {
   </div>
 
     <div class="col-md-6">
-        <button id="filter-all" class="filter-buttons btn btn-link">All</button>
+        <!-- <button id="filter-all" class="filter-buttons btn btn-link">All</button>
         <button id="filter-local" class="filter-buttons btn btn-link">Local</button>
         <button id="filter-national" class="filter-buttons btn btn-link">National</button>
         <button id="filter-federal" class="filter-buttons btn btn-link">Federal</button>
-        <button id="filter-provincial" class="filter-buttons btn btn-link">Provincial</button>
+        <button id="filter-provincial" class="filter-buttons btn btn-link">Provincial</button> -->
     </div>
 </div>
 
 
   <div class="row">
-    <div class="col-md-12">
+    <div class="">
       <div id="mapd" class="showmap"></div>
-      <div class="discover-search"> <input placeholder="Search municipalities" style="width:300px;background-color:whitesmoke"></input></div>
+      <div class="discover-search"> 
+
+          <div class="selectHolder">
+              <div class="leader searchP">
+                  <div class="leaderWrp  ">
+
+                      <div id="the-basics">
+                          <input class="typeahead" type="text" placeholder="Search Municipalities">
+                      </div>
+                      <!--<div id="the-basics">-->
+                      <!--<input type="text" placeholder="CHECK YOUR LEADER AROUND" class="leaderSearch typeahead">-->
+                      <!--</div>-->
+                  </div>
+              </div>
+          </div>
+    </div>
     </div>
     </div>
     
@@ -284,8 +312,7 @@ text.simple-label {
       
   
 </div>
-  </div>
-
+  
   <div id="sideinfoid" class="sideinfo_hide">
     <ul>
       <!-- <li>Mahila 0</li>
@@ -301,13 +328,18 @@ text.simple-label {
         
       <div class="col-md-6">
         <div id="mapd1" style="height:100vh;"></div>
-        <div class="discover-search"> <input placeholder="Search municipalities" style="width:300px;background-color:whitesmoke"></input></div>
+        <!-- <div id="the-basics-compare1">
+            <input class="typeahead" type="text" placeholder="Search Municipalities">
+        </div> -->
       </div>
       <div class="col-md-6">      
-      <div id="mapd2" style="height:100vh;" ></div>
-      <div class="discover-search"> <input placeholder="Search municipalities" style="width:300px;background-color:whitesmoke"></input></div>
-    </div>
-</div>
+        <div id="mapd2" style="height:100vh;" ></div>
+        <!-- <div id="the-basics-compare2">
+            <input class="typeahead" type="text" placeholder="Search Municipalities">
+        </div> -->
+      </div>
+  </div>
+
 
 <div id="data-viz-map" class="hidemap">
     <div class="row" style="background-color: black">
@@ -348,8 +380,8 @@ text.simple-label {
     {% block scripts %}
 
     <script type="text/javascript">
-
-        window.onscroll = function() {myFunction()};
+    
+      window.onscroll = function() {myFunction()};
 
         var navbar = document.getElementById("sticky-banner");
         var sticky = navbar.offsetTop;
@@ -369,6 +401,109 @@ text.simple-label {
 
     <script type="text/javascript" src={% static 'public/js/mapping_script2.js'%}></script>
 
+    <script type="text/javascript" src="{% static 'public/js/twitter.js' %}"></script>
+
+    <script>
+
+$(document).ready(function () {
+          console.log("ddswse")
+            var substringMatcher = function (strs) {
+                return function findMatches(q, cb) {
+                    var matches, substringRegex;
+
+                    // an array that will be populated with substring matches
+                    matches = [];
+
+                    // regex used to determine if a string contains the substring `q`
+                    substrRegex = new RegExp(q, 'i');
+
+                    // iterate through the pool of strings and for any string that
+                    // contains the substring `q`, add it to the `matches` array
+                    $.each(strs, function (i, str) {
+                        if (substrRegex.test(str)) {
+                            matches.push(str);
+                        }
+                    });
+
+                    cb(matches);
+                };
+            };
+            var states = []
+            var test = {{muni | safe}};
+            console.log("test",test)
+            for (var i = 0; i < test.length; i++) {
+                states.push(test[i].district + "/"+ test[i].name)
+            }
+
+            $('#the-basics .typeahead').typeahead({
+                hint: true,
+                highlight: true,
+                minLength: 1
+            }, {
+                name: 'states',
+                source: substringMatcher(states),
+                open: function (event, ui) {
+                            var $input = $(event.target);
+                            console.log("input",$input);
+                            var $results = $input.autocomplete("widget");
+                            var scrollTop = $(window).scrollTop();
+                            var top = $results.position().top; 
+                            var height = $results.outerHeight();
+                            newTop = top - height - $input.outerHeight();
+                                if (newTop > scrollTop)
+                                    $results.css("top", newTop + "px");
+                            
+                        }
+
+            }).on('typeahead:selected', function (event, selection) {
+              var final = selection.substr(selection.lastIndexOf('/') + 1);
+                for(let i=0;i<test.length;i++){
+                  if(test[i]['name']== final){
+                    let hlcit = test[i]['hlcit']
+                    $.each(muni._layers,function(index,value){
+                      if(value.feature.properties['HLCIT_CODE'] == hlcit){
+                        map.fitBounds(value.getBounds());
+                        value.fireEvent('click');
+                      }
+
+                    })
+                    
+                  }
+                }
+
+             
+
+
+
+
+                // the second argument has the info you want
+
+                // for (var i = 0; i < test.length; i++) {
+                //     if (test[i].name == clicked && test[i].models == "ProvinceMahilaPratinidhiForm") {
+                //         // location.href = "http://localhost:8000/explore/province/" + test[i].province_id + "/" +test[i].id;
+                //         location.href = "https://mahilapratinidhi.naxa.com.np/explore/province/" + test[
+                //             i].province_id + "/" + test[i].id;
+                //     } else if (test[i].name == clicked && test[i].models == "RastriyaShava") {
+                //         // location.href = "http://localhost:8000/detail/national/"+test[i].id;
+                //         location.href = "https://mahilapratinidhi.naxa.com.np/detail/national/" + test[
+                //             i].id;
+                //         console.log("normal");
+                //     } else if (test[i].name == clicked && test[i].models == "PratinidhiShava") {
+                //         console.log(test[i]);
+                //         // location.href = "http://localhost:8000/detail/pratinidhi/"+test[i].id;
+                //         location.href = "https://mahilapratinidhi.naxa.com.np/detail/pratinidhi/" +
+                //             test[i].id;
+                //     } else if (test[i].name == clicked && test[i].models == "MahilaPratinidhiForm") {
+                //         location.href = "https://localhost:8000/explore/district/" + test[i].district_id +
+                //             "/" + test[i].id;
+                //         // location.href = "http://mahilapratinidhi.naxa.com.np/explore/district/" + test[i].district_id + "/" +test[i].id;
+                //     }
+                // }
+            });
+            
+    });
+    </script>
+   
 
 
     {% endblock %}
