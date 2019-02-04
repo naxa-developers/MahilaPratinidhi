@@ -33,6 +33,5 @@ urlpatterns = [
 	path('all/<hlcit1>/<hlcit2>', viewset.CompareAllViewSet.as_view()),
 	path('province/<province1>/<province2>', viewset.CompareProvinceViewSet.as_view()),
 	path('district/<province1>/<province2>', viewset.CompareDistrictViewSet.as_view()),
-	# path('hlcit_code/<hlcit1>/<hlcit2>', viewset.CompareAllViewSet.as_view()),
-
+	path('pie/', viewset.PieChartViewSet.as_view()),
 ]
