@@ -56,7 +56,7 @@
         left: -236px;
     }
     span.twitter-typeahead {
-      width: 234%;
+      width: 300%;
     background: #441515;
     border-radius: 203px;
 }
@@ -237,11 +237,21 @@ text.simple-label {
   width: 100vw;
 }
 
+.stacked-legend{
+ overflow: visible !important; 
+}
+
 .discover-search{
   z-index:10000;
   position: absolute;
   left: 30px;
   bottom: 50px;
+}
+.discover-legend{
+  z-index:10000;
+  position: absolute;
+  left: -55px;
+  bottom: 40px;
 }
 
 </style>
@@ -287,26 +297,26 @@ text.simple-label {
 
 
   <div class="row">
-    <div class="">
       <div id="mapd" class="showmap"></div>
-      <div class="discover-search"> 
+        <div id="discover-search-1" class="discover-search discover"> 
+            <div class="selectHolder">
+                <div class="leader searchP">
+                    <div class="leaderWrp">
 
-          <div class="selectHolder">
-              <div class="leader searchP">
-                  <div class="leaderWrp  ">
+                        <div id="the-basics">
+                            <input class="typeahead" type="text" placeholder="Search Municipalities">
+                        </div>
+                      
+                    </div>
+                </div>
+            </div>
+      </div>
+     
+    </div>
 
-                      <div id="the-basics">
-                          <input class="typeahead" type="text" placeholder="Search Municipalities">
-                      </div>
-                      <!--<div id="the-basics">-->
-                      <!--<input type="text" placeholder="CHECK YOUR LEADER AROUND" class="leaderSearch typeahead">-->
-                      <!--</div>-->
-                  </div>
-              </div>
-          </div>
-    </div>
-    </div>
-    </div>
+  <div class="row discover">
+      <div class="discover-legend"></div>
+  </div>
     
 
       
@@ -402,6 +412,8 @@ text.simple-label {
     <script type="text/javascript" src={% static 'public/js/mapping_script2.js'%}></script>
 
     <script type="text/javascript" src="{% static 'public/js/twitter.js' %}"></script>
+    <script type="text/javascript" src="{% static 'public/js/legend.js' %}"></script>
+
 
     <script>
 
