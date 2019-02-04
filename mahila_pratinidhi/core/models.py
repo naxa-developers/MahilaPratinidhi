@@ -305,7 +305,10 @@ class DataVizContent(models.Model):
 
 class Municipalities(models.Model):
 	name= models.CharField(max_length=50)
-	district = models.ForeignKey(District,related_name="municipalities",on_delete=models.CASCADE)
+	district = models.ForeignKey(District,related_name="municipalities",on_delete=models.CASCADE,null=True,blank=True)
 	hlcit_code = models.CharField(max_length=50,unique=True)
+
+	def __str__(self):
+		return self.name
 	
 
