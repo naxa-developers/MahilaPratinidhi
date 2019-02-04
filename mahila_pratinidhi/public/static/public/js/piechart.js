@@ -6,14 +6,15 @@ elementid = elementid || "my-pie-icon-chart";
 var w = size || 100;
   var h = size || 100;
   var r = h/2;
-  var aColor = [
-      'rgb(178, 55, 56)',
-      'blue',
-      'green',
-      'green'
-  ]
+  var aColor = {
+      'Communist Party of Nepal':'red',
+      'Nepali Congress':'green',
+      'Federal Socialist Forum':'blue',
+      'Rastriya Janata Party Nepal':'yellow',
+      'Bebeksheel Sajha Party':'brown'
+  }
   
-  var data = [
+  var data = data || [
       {"label":"Colorectale levermetastase", "value":74}, 
       {"label": "Primaire maligne levertumor", "value":12},
       {"label":"Levensmetatase van andere origine", "value":7}, 
@@ -31,7 +32,8 @@ var w = size || 100;
   // Select paths, use arc generator to draw
   var arcs = vis.selectAll("g.slice").data(pie).enter().append("svg:g").attr("class", "slice");
   arcs.append("svg:path")
-      .attr("fill", function(d, i){return aColor[i];})
+      .attr("fill", function(d, i){
+                                    return aColor[d.data.label]?aColor[d.data.label]:'purple';})
       .attr("d", function (d) {return arc(d);})
   ;
   

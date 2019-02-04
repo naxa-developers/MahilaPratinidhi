@@ -1,5 +1,5 @@
-//var base_url="https://mahilapratinidhi.naxa.com.np";
-var base_url="http://localhost:8000";
+var base_url="https://mahilapratinidhi.naxa.com.np";
+//var base_url="http://localhost:8000";
 var map =L.map('mapd',{minZoom: 7,maxZoom: 13,zoomSnap:0.7, zoomControl:false,scrollWheelZoom: false}).setView([28.5,84],8);
 
 L.control.zoom({
@@ -19,7 +19,7 @@ map.on('zoomend', function() {
 		}
 
 	if (map.getZoom() <10 && markers_pie_array.length){
-					map.removeLayer(markers_pie_array[0]);
+					map.removeLayer(markerdistricts_pie_array[0]);
 					
 	}
 
@@ -56,7 +56,7 @@ function handleData(data) {
 
 function handlePie(data) {
   window["data_pie_all"]= data;
-  window["pie_content"] = data["all"]
+  window["pie_content"] = data["all"][0]
 }
 
 fetchapi();
@@ -79,6 +79,7 @@ var markers_pie_array=[];
 var markers_pie_all_array=[];
 var count1_visualize =0;
 var count2_visualize =0;
+var compare_variable ="all";
 var name1_visualize ="524 5 54 4 003";
 var name2_visualize="524 1 04 3 007";
 
@@ -144,8 +145,9 @@ function circular_marker(center,number,code){
 	      let marker= L.marker(center, {icon: myIcon});
 				marker.addTo(map);
 				markers_pie_all_array.push(marker);
-
- 				piechart([3,3],'mun'+code.replace(/\s/g,"_",10),10)
+				let pie_data = pie_content[code]
+				console.log("pie_data",pie_data)
+ 				piechart(pie_data,'mun'+code.replace(/\s/g,"_",10),10)
  
 
 			  }
@@ -195,11 +197,12 @@ function circular_marker(center,number,code){
 	// you can set .my-div-icon styles in CSS
 	let marker= L.marker(center, {icon: myIcon}).addTo(map);
 	markers_pie_array.push(marker);
-	piechart([2,2],"my-pie-icon-chart")
+	var hlcit_discover= e.target.feature.properties["HLCIT_CODE"]
+	var pie_data= pie_content[hlcit_discover]
+	piechart(pie_data,"my-pie-icon-chart")
 
 
     $("#sideinfoid").addClass("sideinfo");
-var hlcit_discover= e.target.feature.properties["HLCIT_CODE"]
 
 
 
@@ -281,8 +284,9 @@ var hlcit_discover= e.target.feature.properties["HLCIT_CODE"]
 			$("#c3chart-4").html("")
 			$("#c3chart-5").html("")
 
+			if(!compare_variable){compare_variable = "all"}
 
-			$.get(base_url+"/api/all/"+name1_visualize+"/"+name2_visualize, function(data){
+			$.get(base_url+"/api/"+compare_variable +"/"+name1_visualize+"/"+name2_visualize, function(data){
 				stackedChart(data["education"],[name1_visualize,name2_visualize],"c3chart-1",["blue","green"]);
 				stackedChart(data["Ethnicity"],[name1_visualize,name2_visualize],"c3chart-2",["blue","green"]);
 				stackedChart(data["Party Name"],[name1_visualize,name2_visualize],"c3chart-3",["blue","green"]);
@@ -376,6 +380,8 @@ $(".compare-area-select").on('change',function(){
   $("#sideinfoid").removeClass("sideinfo");
 
 
+	$(".discover").addClass("hidemap")
+
 	$("#mapd").addClass("hidemap");
 	$("#mapd").removeClass("showmap");
 	$("#map-compare-div").addClass("showmap");
@@ -423,7 +429,7 @@ else{
 
 	switch($(this).find(":selected").text()){
 		case "Provinces":
-
+					compare_variable= "province";
 					layers_array.map((e)=> {map1.removeLayer(e);
 						map2.removeLayer(e);
 
@@ -453,6 +459,8 @@ else{
 
 		case "Districts":
 
+
+		compare_variable= "district";
 		layers_array.map((e)=> {map1.removeLayer(e);
 			map2.removeLayer(e);
 
@@ -484,7 +492,7 @@ else{
 
 		case "Municipalities":
 
-
+		compare_variable= "all";						
 		layers_array.map((e)=> {map1.removeLayer(e);
 			map2.removeLayer(e);
 

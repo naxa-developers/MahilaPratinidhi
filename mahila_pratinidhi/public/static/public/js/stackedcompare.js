@@ -1,6 +1,6 @@
 function stackedChart(data,compare_variable,elementid,variable_colors){
    
-     data =[
+     data = data || [
     {
         "label": "10+2 or equivalent",
         "hlcit1": 50,
