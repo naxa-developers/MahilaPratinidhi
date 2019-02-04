@@ -14,10 +14,10 @@ var w = size || 100;
   ]
   
   var data = [
-      {"label":"Colorectale levermetastase (n=336)", "value":74}, 
-      {"label": "Primaire maligne levertumor (n=56)", "value":12},
-      {"label":"Levensmetatase van andere origine (n=32)", "value":7}, 
-      {"label":"Beningne levertumor (n=34)", "value":7}
+      {"label":"Colorectale levermetastase", "value":74}, 
+      {"label": "Primaire maligne levertumor", "value":12},
+      {"label":"Levensmetatase van andere origine", "value":7}, 
+      {"label":"Beningne levertumor", "value":7}
   ];
 
   var vis = d3.select('#'+elementid)

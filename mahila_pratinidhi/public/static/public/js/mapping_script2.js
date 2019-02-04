@@ -1,5 +1,5 @@
-var base_url="https://mahilapratinidhi.naxa.com.np";
-//var base_url="http://localhost:8000";
+//var base_url="https://mahilapratinidhi.naxa.com.np";
+var base_url="http://localhost:8000";
 var map =L.map('mapd',{minZoom: 7,maxZoom: 13,zoomSnap:0.7, zoomControl:false,scrollWheelZoom: false}).setView([28.5,84],8);
 
 L.control.zoom({
@@ -38,13 +38,25 @@ function fetchapi(){
      dataType: 'json',
      async: false,
      success: handleData
-  });
+	});
+	$.ajax({
+		url: base_url+'/api/pie/',
+		type: 'get',
+		dataType: 'json',
+		async: false,
+		success: handlePie
+ });
 
 }
 
 function handleData(data) {
   window["data_summary_all"]= data;
   window["marker_content"] = data["all"][0]
+}
+
+function handlePie(data) {
+  window["data_pie_all"]= data;
+  window["pie_content"] = data["all"]
 }
 
 fetchapi();
@@ -132,6 +144,7 @@ function circular_marker(center,number,code){
 	      let marker= L.marker(center, {icon: myIcon});
 				marker.addTo(map);
 				markers_pie_all_array.push(marker);
+
  				piechart([3,3],'mun'+code.replace(/\s/g,"_",10),10)
  
 
