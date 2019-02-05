@@ -1,5 +1,5 @@
 function stackedChart(data,compare_variable,elementid,variable_colors){
-   
+   console.log(data)
      data = data || [
     {
         "label": "10+2 or equivalent",

@@ -1,5 +1,17 @@
 var base_url="https://mahilapratinidhi.naxa.com.np";
 //var base_url="http://localhost:8000";
+var layers_array=[];
+var markers_array=[];
+var markers_pie_array=[];
+var markers_pie_all_array=[];
+var count1_visualize =0;
+var count2_visualize =0;
+var compare_variable ="all";
+var name1_visualize ="524 5 54 4 003";
+var name2_visualize="524 1 04 3 007";
+
+
+
 var map =L.map('mapd',{minZoom: 7,maxZoom: 13,zoomSnap:0.7, zoomControl:false,scrollWheelZoom: false}).setView([28.5,84],8);
 
 L.control.zoom({
@@ -11,24 +23,25 @@ var CartoDB_DarkMatterNoLabels = L.tileLayer('https://{s}.basemaps.cartocdn.com/
 	subdomains: 'abcd',
 	maxZoom: 19
 }).addTo(map);
-
+ 
 map.on('zoomend', function() {
-	if(map.getZoom() <10.2 && !map.hasLayer(markers_pie_all_array[0])){
+/* 	if(map.getZoom() <10.2 && !map.hasLayer(markers_pie_all_array[0])){
 		
 		markers_pie_all_array.map(marker => marker.addTo(map))
 		}
-
-	if (map.getZoom() <10 && markers_pie_array.length){
-					map.removeLayer(markerdistricts_pie_array[0]);
+ */
+ 	if (map.getZoom() <10 && markers_pie_array.length){
+		 
+					map.removeLayer(markers_pie_array[0]);
 					
 	}
-
-	if (map.getZoom() >10.2){
-/* 		markers_pie_all_array.map(marker => map.removeLayer(marker)) 
- */}
-	
+ 
+/* 	if (map.getZoom() >10.2){
+ 		 markers_pie_all_array.map(marker => map.removeLayer(marker))  
+ }
+ */	
 });
-
+ 
 
 function fetchapi(){
 
@@ -73,22 +86,13 @@ var muni =L.geoJson.ajax('https://dfid.naxa.com.np/core/geojson/municipalities/'
                               }).addTo(map);
 
 
-var layers_array=[];
-var markers_array=[];
-var markers_pie_array=[];
-var markers_pie_all_array=[];
-var count1_visualize =0;
-var count2_visualize =0;
-var compare_variable ="all";
-var name1_visualize ="524 5 54 4 003";
-var name2_visualize="524 1 04 3 007";
 
 
 function onEachFeature(feature,layer){
 
   BindFunction(feature,layer);
 
-	  circular_marker(get_center(feature,layer),get_number(feature),get_code(feature));
+	  //circular_marker(get_center(feature,layer),get_number(feature),get_code(feature));
 	  //layer.bindPopup(customPopup,customOptions);
 
 
@@ -146,8 +150,7 @@ function circular_marker(center,number,code){
 				marker.addTo(map);
 				markers_pie_all_array.push(marker);
 				let pie_data = pie_content[code]
-				console.log("pie_data",pie_data)
- 				piechart(pie_data,'mun'+code.replace(/\s/g,"_",10),10)
+  			piechart(pie_data,'mun'+code.replace(/\s/g,"_",10),10) 
  
 
 			  }
@@ -186,7 +189,8 @@ function circular_marker(center,number,code){
 			markers_pie_array=[]
 		}
 		map.fitBounds(e.target.getBounds(),{padding:[25,25]});
-		
+ 		
+		/* map.setView(e.target.getBounds().getCenter(), 12); */
 		var myIcon = L.divIcon({
 			className:'my-pie-icon',
 			iconSize: new L.Point(200, 200),
@@ -199,7 +203,7 @@ function circular_marker(center,number,code){
 	markers_pie_array.push(marker);
 	var hlcit_discover= e.target.feature.properties["HLCIT_CODE"]
 	var pie_data= pie_content[hlcit_discover]
-	piechart(pie_data,"my-pie-icon-chart")
+	piechart(pie_data,"my-pie-icon-chart") 
 
 
     $("#sideinfoid").addClass("sideinfo");
@@ -209,7 +213,8 @@ function circular_marker(center,number,code){
 
     $.get(base_url+"/api/hlcit/"+hlcit_discover,function(data){
 
-      $("#sideinfoid ul").html("")
+			$("#sideinfoid ul").html("");
+			$("#sideinfoid ul").append(`<h5>${e.target.feature.properties["LU_Name"]} ${e.target.feature.properties["LU_Type"]}</h5>`)
 
 
       data.map((dict)=>{
@@ -285,7 +290,8 @@ function circular_marker(center,number,code){
 			$("#c3chart-5").html("")
 
 			if(!compare_variable){compare_variable = "all"}
-
+			alert(base_url+"/api/"+compare_variable +"/"+name1_visualize+"/"+name2_visualize)
+			
 			$.get(base_url+"/api/"+compare_variable +"/"+name1_visualize+"/"+name2_visualize, function(data){
 				stackedChart(data["education"],[name1_visualize,name2_visualize],"c3chart-1",["blue","green"]);
 				stackedChart(data["Ethnicity"],[name1_visualize,name2_visualize],"c3chart-2",["blue","green"]);
@@ -553,7 +559,8 @@ $("#discover-map").on('click',function(){
 	$("#map-compare-div").addClass("hidemap");
 	$("#map-compare-div").removeClass("showmap");
   $("#data-viz-map").addClass("hidemap");
-  $("#data-viz-map").removeClass("showviz");
+	$("#data-viz-map").removeClass("showviz");
+	$(".discover").removeClass("hidemap");
   count1_visualize=0;
   count2_visualize=0;
 });
