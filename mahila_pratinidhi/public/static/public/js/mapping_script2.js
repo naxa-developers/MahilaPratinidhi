@@ -207,10 +207,6 @@ function circular_marker(center,number,code){
 
 
     $("#sideinfoid").addClass("sideinfo");
-
-
-
-
     $.get(base_url+"/api/hlcit/"+hlcit_discover,function(data){
 
 			$("#sideinfoid ul").html("");
