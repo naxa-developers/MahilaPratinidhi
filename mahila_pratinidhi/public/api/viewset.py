@@ -31,6 +31,17 @@ def country_geojson(request):
 
     return Response(data)
 
+@api_view(['GET'])
+def municipality_geojson(request):
+
+    data = {}
+    try:
+        with open('jsons/municipality.geojson') as f:
+            data = json.load(f)
+    except:
+        pass
+
+    return Response(data)
 
 @api_view(['GET'])
 def districts_geojson(request):
@@ -2111,7 +2122,7 @@ class CompareDistrictViewSet(views.APIView):
         # national_age_2 = RastriyaShava.objects.filter(district__name=self.kwargs['province2']).values('age')
         # federal_age_2 = PratinidhiShava.objects.filter(district__name=self.kwargs['province2']).values('age')
         # province_age_2 = ProvinceMahilaPratinidhiForm.objects.filter(district__name=self.kwargs['province2']).values('age')
-        local_age_2 = MahilaPratinidhiForm.objects.filter(district__name=self.kwargs['province2']).values('age')
+        local_age_2 = MahilaPratinidhiForm.objects. filter(district__name=self.kwargs['province2']).values('age')
 
         # province2_age = chain(national_age_2, federal_age_2, province_age_2, local_age_2)
         for age in local_age_2:
