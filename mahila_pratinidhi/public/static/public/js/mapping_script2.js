@@ -55,7 +55,9 @@ function fetchapi(){
 	$.ajax({
 		url: base_url+'/api/pie/',
 		type: 'get',
-		dataType: 'json',
+		dataType: 'jsy:
+
+		on',
 		async: false,
 		success: handlePie
  });
@@ -75,8 +77,7 @@ function handlePie(data) {
 fetchapi();
 
 
-
-var muni =L.geoJson.ajax('https://dfid.naxa.com.np/core/geojson/municipalities/',
+var muni =L.geoJson.ajax(base_url+'/api/geojson/municipality/',
                               {onEachFeature:onEachFeature_discover,
                                style: { color: "white",
                                         weight:0.5,
@@ -90,7 +91,8 @@ var muni =L.geoJson.ajax('https://dfid.naxa.com.np/core/geojson/municipalities/'
 
 function onEachFeature(feature,layer){
 
-  BindFunction(feature,layer);
+
+	BindFunction(feature,layer);
 
 	  //circular_marker(get_center(feature,layer),get_number(feature),get_code(feature));
 	  //layer.bindPopup(customPopup,customOptions);
@@ -105,7 +107,6 @@ function onEachFeature(feature,layer){
 }
 
 function onEachFeature_discover(feature,layer){
-
   BindFunction(feature,layer);
   circular_marker(get_center(feature,layer),get_number(feature),get_code(feature));
 	  //layer.bindPopup(customPopup,customOptions);
@@ -146,7 +147,8 @@ function circular_marker(center,number,code){
 				
 
 	      // you can set .my-div-icon styles in CSS
-	      let marker= L.marker(center, {icon: myIcon});
+				console.log("center",center)
+				let marker= L.marker([center[1],center[0]], {icon: myIcon});
 				marker.addTo(map);
 				markers_pie_all_array.push(marker);
 				let pie_data = pie_content[code]
@@ -157,7 +159,6 @@ function circular_marker(center,number,code){
       else{
         number=0;
       }
-
 
 
 
@@ -241,7 +242,7 @@ function circular_marker(center,number,code){
 			var properties_name = properties_object.Province;
 			break;
 									
-		case 11:
+		case 13:
 			var properties_name = properties_object.HLCIT_CODE;
 			break;
 
@@ -321,7 +322,7 @@ function circular_marker(center,number,code){
 
     var properties_object = feature.properties;
 
-    if(Object.keys(properties_object).length=="11"){
+    if(Object.keys(properties_object).length=="13"){
       var xx = feature.properties.LU_Name;
 
     }
@@ -336,7 +337,15 @@ function circular_marker(center,number,code){
   }
 
 	function get_center(feature,layer){
-	  var center =(layer.getBounds().getCenter());
+		if (Object.keys(feature.properties).length=="13"){
+			
+			var center =[feature.properties.centroid_X,feature.properties.cenroid_Y];
+
+		}
+		else{
+			var center =(layer.getBounds().getCenter());
+		}
+	  
 	  return center;
 
 	}
@@ -344,9 +353,8 @@ function circular_marker(center,number,code){
 	function get_number(feature){
 
 	  var properties_object = feature.properties;
-
-	  if (Object.keys(properties_object).length=="11"){
-	    var xx = get_code(feature)
+	  if (Object.keys(properties_object).length=="13"){
+			var xx = get_code(feature)
 
 
 	  }
@@ -360,7 +368,7 @@ function circular_marker(center,number,code){
 
 	function get_code(feature){
 	  var properties_object = feature.properties;
-	  if (Object.keys(properties_object).length=="11"){
+	  if (Object.keys(properties_object).length=="13"){
 	   var xx = feature.properties['HLCIT_CODE'];
 	 }
 
@@ -502,7 +510,7 @@ else{
 
 		layers_array =[];
 				layers_array.push(
-				L.geoJson.ajax('https://dfid.naxa.com.np/core/geojson/municipalities/',
+				L.geoJson.ajax(base_url+'/api/geojson/municipality/',
 																	{onEachFeature:onEachFeature,
 																	 style: { color: "white",
 																						weight:0.5,
@@ -511,7 +519,7 @@ else{
 																						}
 																	}).addTo(map1),
 
-			L.geoJson.ajax('https://dfid.naxa.com.np/core/geojson/municipalities/',
+			L.geoJson.ajax(base_url+'/api/geojson/municipality/',
 																	                              {onEachFeature:onEachFeature,
 																	                               style: { color: "white",
 																	                                        weight:0.5,

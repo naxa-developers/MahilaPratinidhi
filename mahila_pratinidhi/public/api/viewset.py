@@ -12,8 +12,8 @@ from rest_framework.decorators import api_view
 from rest_framework.viewsets import ModelViewSet, ReadOnlyModelViewSet
 from rest_framework.views import APIView
 from .serializers import RastriyaShavaSerializer, ProvinceSerializer, LocalMahilaSerializer, \
-PratinidhiShavaSerializer, AgeSerializers, DistrictsSerializer, HlcitSerializer
-from core.models import RastriyaShava, PratinidhiShava, ProvinceMahilaPratinidhiForm, MahilaPratinidhiForm, Province, District
+PratinidhiShavaSerializer, AgeSerializers, DistrictsSerializer, HlcitSerializer,MunicipalitiesSerializer
+from core.models import RastriyaShava, PratinidhiShava, ProvinceMahilaPratinidhiForm, MahilaPratinidhiForm, Province, District,Municipalities
 from django.db.models import Avg, Count, Sum
 
 import numpy as np
@@ -1548,6 +1548,16 @@ class DistrictsViewSet(ReadOnlyModelViewSet):
         if province_query is not None:
             queryset = queryset.filter(province=province_query)
         return queryset
+
+class MunicipalityViewSet(ReadOnlyModelViewSet):
+    serializer_class = MunicipalitiesSerializer
+
+    def get_queryset(self):
+        queryset = Municipalities.objects.all().select_related('district')
+        district_query = self.request.query_params.get('district_id', None)
+        if district_query is not None:
+            queryset = queryset.filter(district=district_query)
+        return queryset 
 
 class HlcitViewSet(ReadOnlyModelViewSet):
     serializer_class = HlcitSerializer

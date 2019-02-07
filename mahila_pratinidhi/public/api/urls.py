@@ -30,7 +30,7 @@ urlpatterns = [
 	path('political_commitment/', viewset.CommitmentViewSet.as_view()),
 
 	path('districts/', viewset.DistrictsViewSet.as_view({'get': 'list'})),
-
+	path('municipalities/',viewset.MunicipalityViewSet.as_view({'get':'list'})),
 	path('all/<hlcit1>/<hlcit2>', viewset.CompareAllViewSet.as_view()),
 	path('province/<province1>/<province2>', viewset.CompareProvinceViewSet.as_view()),
 	path('district/<province1>/<province2>', viewset.CompareDistrictViewSet.as_view()),

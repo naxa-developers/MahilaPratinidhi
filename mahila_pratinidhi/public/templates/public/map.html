@@ -243,8 +243,8 @@ text.simple-label {
 .discover-search{
   z-index:10000;
   position: absolute;
-  left: 30px;
-  bottom: 50px;
+  left: 5px;
+  top: 120px;
 }
 .discover-legend{
   z-index:10000;
@@ -303,7 +303,7 @@ text.simple-label {
                     <div class="leaderWrp">
 
                         <div id="the-basics">
-                            <input class="typeahead" type="text" placeholder="Search Municipalities">
+                            <input id="twitter-input-id" class="typeahead" type="text" placeholder="Search Municipalities">
                         </div>
                       
                     </div>
@@ -467,6 +467,7 @@ $(document).ready(function () {
                         }
 
             }).on('typeahead:selected', function (event, selection) {
+              //$("#twitter-input-id").siblings("pre").text("seee")
               var final = selection.substr(selection.lastIndexOf('/') + 1);
                 for(let i=0;i<test.length;i++){
                   if(test[i]['name']== final){
