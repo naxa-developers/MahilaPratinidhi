@@ -55,9 +55,7 @@ function fetchapi(){
 	$.ajax({
 		url: base_url+'/api/pie/',
 		type: 'get',
-		dataType: 'jsy:
-
-		on',
+		dataType: 'json',
 		async: false,
 		success: handlePie
  });
