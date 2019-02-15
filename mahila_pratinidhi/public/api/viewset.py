@@ -738,10 +738,10 @@ class EducationViewSet(views.APIView):
         .distinct().annotate(total=Count('educational_qualification'))
         pratinidhi_education = PratinidhiShava.objects.values('province_id', 'party_name', 'educational_qualification')\
         .distinct().annotate(total=Count('educational_qualification'))
-        # local_education = ProvinceMahilaPratinidhiForm.objects.values('province_id', 'party_name', 'educational_qualification')\
-        # .distinct().annotate(total=Count('educational_qualification'))
+        local_education = MahilaPratinidhiForm.objects.values('province_id', 'party_name', 'educational_qualification')\
+        .distinct().annotate(total=Count('educational_qualification'))
         
-        province_educations = list(chain(province_education, national_education, pratinidhi_education))
+        province_educations = list(chain(province_education, national_education, pratinidhi_education,local_education))
 
         educations = []
 
@@ -1567,7 +1567,9 @@ class HlcitViewSet(ReadOnlyModelViewSet):
         queryset = chain(
             RastriyaShava.objects.filter(hlcit_code=self.kwargs['hlcit']),
             PratinidhiShava.objects.filter(hlcit_code=self.kwargs['hlcit']),
-            ProvinceMahilaPratinidhiForm.objects.filter(hlcit_code=self.kwargs['hlcit'])
+            ProvinceMahilaPratinidhiForm.objects.filter(hlcit_code=self.kwargs['hlcit']),
+            MahilaPratinidhiForm.objects.filter(hlcit_code=self.kwargs['hlcit'])
+            #added for local data
         )
         return queryset
 
@@ -1612,7 +1614,10 @@ class CompareAllViewSet(views.APIView):
 
         hlcit1_age = chain(national_age_1, federal_age_1, province_age_1, local_age_1) #dictionary of ages of hlcit1
         for age in hlcit1_age:
-            hlcit1_list.append(int(float(age['age'])))
+            try:
+                hlcit1_list.append(int(float(age['age'])))
+            except:
+                pass
 
         age_dict['hlcit1'] = hlcit1_list
 
@@ -1623,7 +1628,10 @@ class CompareAllViewSet(views.APIView):
 
         hlcit2_age = chain(national_age_2, federal_age_2, province_age_2, local_age_2)
         for age in hlcit2_age:
-            hlcit2_list.append(int(float(age['age'])))
+            try:
+                hlcit2_list.append(int(float(age['age'])))
+            except:
+                pass
 
         age_dict['hlcit2'] = hlcit2_list
 
@@ -2371,67 +2379,23 @@ class PieChartViewSet(views.APIView):
 
     def get(self, request, *args, **kwargs):
         all_dict = {}
-        all_list = []
-
+        
         total_hlcit = []
-        national_district = RastriyaShava.objects.values('hlcit_code').annotate(total=Count('hlcit_code'))
-        for item in national_district:
-            for i in range(item['total']):
-                if item['hlcit_code']:
-                    total_hlcit.append(item['hlcit_code'])
 
-        federal_district = PratinidhiShava.objects.values('hlcit_code').annotate(total=Count('hlcit_code'))
-        for item in federal_district:
-            for i in range(item['total']):
-                if item['hlcit_code']:
-                    total_hlcit.append(item['hlcit_code'])
-
-        province_district = ProvinceMahilaPratinidhiForm.objects.values('hlcit_code').annotate(total=Count('hlcit_code'))
-        for item in province_district:
-            for i in range(item['total']):
-                if item['hlcit_code']:
-                    total_hlcit.append(item['hlcit_code'])
-
-        code_dict = {}
-        for hlcit in total_hlcit:
-            national_party_name_1 = RastriyaShava.objects.filter(hlcit_code=hlcit).values('party_name') \
-                .distinct().annotate(total=Count('party_name'))
-            federal_party_name_1 = PratinidhiShava.objects.filter(hlcit_code=hlcit).values('party_name') \
-                .distinct().annotate(total=Count('party_name'))
-            province_party_name_1 = ProvinceMahilaPratinidhiForm.objects.filter(
-                hlcit_code=hlcit).values(
-                'party_name') \
-                .distinct().annotate(total=Count('party_name'))
-            local_party_name_1 = MahilaPratinidhiForm.objects.filter(hlcit_code=hlcit).values(
-                'party_name') \
-                .distinct().annotate(total=Count('party_name'))
-
-            hlcit_party_name = chain(national_party_name_1, federal_party_name_1, province_party_name_1, local_party_name_1)
-
-            totals_party_name = []  # total education labels in both hlcits' eg: [Literature, Literature, Post Graduate]
-
-            for name in hlcit_party_name:
-                if name['party_name']:
-                    totals_party_name.append(name['party_name'])
-
-            party_name_labels = np.unique(totals_party_name)  # unique lables of total labels eg: [Literature, Post Graduate]
-            lbl_list_party_name = []  # list to hold each dictionary with different education labels
-            for par in party_name_labels:
-                dictt = {}
-                coun1 = 0
-                dictt['label'] = par
-                for part in totals_party_name:
-                    if part == par:
-                        coun1 = coun1 + 1
-                dictt['value'] = coun1
-                lbl_list_party_name.append(dictt)
-
-            code_dict[hlcit] = lbl_list_party_name
-        all_list.append(code_dict)
-
-        all_dict["all"] = all_list
+        municipality = Municipalities.objects.values('hlcit_code')
+        for hlcit in municipality:
+            total_hlcit.append(hlcit['hlcit_code'])
+            
+        RastriyaShava_op = RastriyaShava.objects.values('hlcit_code').annotate(total= Count('hlcit_code')).values('party_name','hlcit_code','total')
+        PratinidhiShava_op= PratinidhiShava.objects.values('hlcit_code').annotate(total= Count('hlcit_code')).values('party_name','hlcit_code','total')
+        ProvinceMahilaPratinidhiForm_op = ProvinceMahilaPratinidhiForm.objects.values('hlcit_code').annotate(total= Count('hlcit_code')).values('party_name','hlcit_code','total')
+        MahilaPratinidhiForm_op =MahilaPratinidhiForm.objects.values('hlcit_code').annotate(total= Count('hlcit_code')).values('party_name','total','hlcit_code')
+        
+        queryset_all = chain(RastriyaShava_op,PratinidhiShava_op,ProvinceMahilaPratinidhiForm_op,MahilaPratinidhiForm_op)
+        all_dict['all']= queryset_all
 
         return Response(all_dict)
 
+ 
 
 

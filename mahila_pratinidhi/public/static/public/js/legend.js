@@ -1,5 +1,5 @@
 
-var colors=['red','green','blue','yellow']
+var colors=['red','green','pink','yellow']
 var legend_array =["Communist Party of Nepal","Nepali Congress","Federal Socialist Forum",
         "Rastriya Janata Party Nepal"];
 var legend = d3.select(".discover-legend")

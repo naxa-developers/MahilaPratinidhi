@@ -87,14 +87,15 @@ class HlcitSerializer(serializers.Serializer):
     model = serializers.SerializerMethodField()
     id = serializers.SerializerMethodField()
     name = serializers.SerializerMethodField()
+    district_id= serializers.SerializerMethodField()
 
     class Meta:
         fields = ('id', 'name', 'model')
 
     def get_name(self, obj):
-        return obj.english_name
+        return obj.name
 
-    def get_id(slef,obj):
+    def get_id(self,obj):
         return obj.id
 
     def get_model(self, obj):
@@ -107,6 +108,16 @@ class HlcitSerializer(serializers.Serializer):
         
         elif obj.__class__.__name__ == 'ProvinceMahilaPratinidhiForm':
             return 'province'
+
+        elif obj.__class__.__name__ == 'MahilaPratinidhiForm':
+            return 'district'
+    
+    def get_district_id(self,obj):
+        if obj.__class__.__name__ == 'MahilaPratinidhiForm':
+            return obj.district.id
+        else:
+            return "null"
+
 
 
 

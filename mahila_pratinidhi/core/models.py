@@ -190,13 +190,16 @@ class District(models.Model):
 		return self.name
 
 class MahilaPratinidhiForm(models.Model):
+	MARITAL_CHOICES_local = [("Married","Married"),("Unmarried","Unmarried"),("विवाहित","विवाहित"),("अविवाहित","अविवाहित")]
+
+
 	district = models.ForeignKey(District, on_delete=models.CASCADE, related_name='district', verbose_name="जिल्ला")
 	name = models.CharField(max_length=300, verbose_name="नाम")
 	age = models.CharField(max_length=300, verbose_name="Age", blank=True)
 	name_of_elected_region = models.CharField(max_length=300, verbose_name="Name.of.elected.region_NE", blank=True)
 	ward = models.CharField(max_length=300, verbose_name="Ward", blank=True)
 	marital_status = models.CharField(max_length=300, verbose_name="बैवाहिक स्थिथि", blank=True)
-	updated_marital_status = models.CharField(choices=MARITAL_CHOICES, blank=True, max_length=300, verbose_name="बैवाहिक स्थिथि")
+	updated_marital_status = models.CharField(choices=MARITAL_CHOICES_local, blank=True, max_length=300, verbose_name="बैवाहिक स्थिथि")
 	educational_qualification = models.CharField(max_length=300, verbose_name="शैछिक योग्यता", blank=True)
 	updated_educational_qualification = models.CharField(choices=EDUCATIONAL_QUALIFICATION_CHOICES, blank=True, max_length=300, verbose_name="शैछिक योग्यता")
 	caste = models.CharField(max_length=300, verbose_name="जातियता", blank=True)
@@ -223,7 +226,7 @@ class MahilaPratinidhiForm(models.Model):
 
 
 	def __str__(self):
-		return "{} फारम".format(self.district.name)
+		return "{0} {1} फारम".format(self.name, self.district.name)
 
 	def save(self, force_insert=False, force_update=False, *args, **kwargs):
 

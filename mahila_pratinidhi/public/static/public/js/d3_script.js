@@ -1,6 +1,6 @@
-//var base_url="http://localhost:8000";
+var base_url="http://localhost:8000";
 console.log("dataupdated",data_content)
-var base_url="https://mahilapratinidhi.naxa.com.np";
+//var base_url="https://mahilapratinidhi.naxa.com.np";
 
 var chart_type ={
                   'age':['kernel','stacked','stacked','stacked'] ,

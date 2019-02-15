@@ -10,9 +10,10 @@ var w = size || 100;
   var aColor = {
       'Communist Party of Nepal':'red',
       'Nepali Congress':'green',
-      'Federal Socialist Forum':'blue',
+      'Federal Socialist Forum':'pink',
       'Rastriya Janata Party Nepal':'yellow',
-      'Bebeksheel Sajha Party':'brown'
+      'Bebeksheel Sajha Party':'brown',
+      'not found': 'white'
   }
   
   var data = data || [
@@ -34,7 +35,7 @@ var w = size || 100;
   var arcs = vis.selectAll("g.slice").data(pie).enter().append("svg:g").attr("class", "slice");
   arcs.append("svg:path")
       .attr("fill", function(d, i){
-                                    return aColor[d.data.label]?aColor[d.data.label]:'purple';})
+                                    return aColor[d.data.label]?aColor[d.data.label]:'white';})
       .attr("d", function (d) {return arc(d);})
   ;
   

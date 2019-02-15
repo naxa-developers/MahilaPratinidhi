@@ -105,13 +105,13 @@ class ExploreView(TemplateView):
     def get(self, request, *args, **kwargs):
         names = {}
         name_list = []
-        # district = District.objects.all()
+        district = District.objects.all()
         rastriyas = RastriyaShava.objects.all().order_by('english_name')
         pratinidhis = PratinidhiShava.objects.all().order_by('english_name')
         provinces = Province.objects.all()
 
         province_names = ProvinceMahilaPratinidhiForm.objects.all()
-        # local_names = MahilaPratinidhiForm.objects.all()
+        local_names = MahilaPratinidhiForm.objects.all()
 
         object_list = list(chain(rastriyas, pratinidhis, province_names))
 
@@ -131,14 +131,14 @@ class ExploreView(TemplateView):
                 pass
             name_list.append(dict(names))
 
-        # for lists in local_names:
-        #     names.append(lists.name)
+        for lists in local_names:
+            name_list.append(lists.name)
         json_list = json.dumps(name_list)
-        # print(json_list)
+        print(json_list)
 
         clicked = self.kwargs.get('clicked')
         return render(request, self.template_name, {'rastriyas':rastriyas,
-        'pratinidhis':pratinidhis, 'provinces':provinces, 'clicked':clicked, 'names':json_list})
+        'pratinidhis':pratinidhis, 'provinces':provinces, 'clicked':clicked, 'names':json_list,'districts':district})
 
 
 class MahilaPratinidhiView(TemplateView):
@@ -153,9 +153,10 @@ class MahilaPratinidhiView(TemplateView):
 
         for lists in local_names:
             try:
-                names['name'] = lists.english_name
-            except:
                 names['name'] = lists.name
+            except Exception as e:
+                names['name'] = lists.name
+                
 
             names['id'] = lists.pk
             names['models'] = lists.__class__.__name__
@@ -168,7 +169,7 @@ class MahilaPratinidhiView(TemplateView):
 
         json_list = json.dumps(name_list)
 
-        forms = MahilaPratinidhiForm.objects.filter(district_id=self.kwargs.get('district_id')).order_by('english_name')
+        forms = MahilaPratinidhiForm.objects.filter(district_id=self.kwargs.get('district_id')).order_by('name')
         district_id = self.kwargs.get('district_id')
         return render(request, self.template_name, {'forms':forms, 'district_id':district_id, 'districts':district, 'names':json_list})
 

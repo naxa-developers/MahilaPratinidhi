@@ -1,5 +1,5 @@
-var base_url="https://mahilapratinidhi.naxa.com.np";
-//var base_url="http://localhost:8000";
+//var base_url="https://mahilapratinidhi.naxa.com.np";
+var base_url="http://localhost:8000";
 var layers_array=[];
 var markers_array=[];
 var markers_pie_array=[];
@@ -9,7 +9,6 @@ var count2_visualize =0;
 var compare_variable ="all";
 var name1_visualize ="524 5 54 4 003";
 var name2_visualize="524 1 04 3 007";
-
 
 
 var map =L.map('mapd',{minZoom: 7,maxZoom: 13,zoomSnap:0.7, zoomControl:false,scrollWheelZoom: false}).setView([28.5,84],8);
@@ -52,6 +51,7 @@ function fetchapi(){
      async: false,
      success: handleData
 	});
+
 	$.ajax({
 		url: base_url+'/api/pie/',
 		type: 'get',
@@ -69,7 +69,7 @@ function handleData(data) {
 
 function handlePie(data) {
   window["data_pie_all"]= data;
-  window["pie_content"] = data["all"][0]
+  window["pie_content"] = data["all"]
 }
 
 fetchapi();
@@ -129,7 +129,7 @@ function BindFunction(feature,layer){
 
 function circular_marker(center,number,code){
 
-  if(number){}
+  if(number){ }
   else{ number =1}
 
 
@@ -139,7 +139,7 @@ function circular_marker(center,number,code){
 
 				var myIcon = L.divIcon({
 	          className:'my-div-icon',
-	          iconSize: new L.Point(number*2.5, number*2.5),
+	          iconSize: new L.Point(2.5, 2.5),
 	          html: `<div id='mun${code.replace(/\s/g,"_")}'></div>`,
 				});
 				
@@ -149,8 +149,23 @@ function circular_marker(center,number,code){
 				let marker= L.marker([center[1],center[0]], {icon: myIcon});
 				marker.addTo(map);
 				markers_pie_all_array.push(marker);
-				let pie_data = pie_content[code]
-  			piechart(pie_data,'mun'+code.replace(/\s/g,"_",10),10) 
+				
+				var data_for_pie = [] 
+				
+				for(let i=0;i<pie_content.length;i++){
+					if(pie_content[i]['hlcit_code'] == code){
+						let temp_dict = {}
+						temp_dict["label"]=pie_content[i]['party_name'] || 'not found'
+						temp_dict["value"]=pie_content[i]['total'] || 2
+						data_for_pie.push(temp_dict)
+					
+					}
+						
+				}
+				
+				
+
+				piechart(data_for_pie,'mun'+code.replace(/\s/g,"_",10),10) 
  
 
 			  }
@@ -201,8 +216,17 @@ function circular_marker(center,number,code){
 	let marker= L.marker(center, {icon: myIcon}).addTo(map);
 	markers_pie_array.push(marker);
 	var hlcit_discover= e.target.feature.properties["HLCIT_CODE"]
-	var pie_data= pie_content[hlcit_discover]
-	piechart(pie_data,"my-pie-icon-chart") 
+
+	let data_for_pie = [] 
+	for(let i=0;i<pie_content.length;i++){
+					if(pie_content[i]['hlcit_code']== hlcit_discover){
+						data_for_pie.push({"label":pie_content[i]['party_name'],"value":pie_content[i]['total']})
+					}
+			}
+
+
+	//var pie_data= pie_content[hlcit_discover]
+	piechart(data_for_pie,"my-pie-icon-chart") 
 
 
     $("#sideinfoid").addClass("sideinfo");
@@ -213,10 +237,14 @@ function circular_marker(center,number,code){
 
 
       data.map((dict)=>{
+				console.log(dict['model'])
 
-
-        var model = (dict['model']=="province") ? dict['model'] +"/" + hlcit_discover.slice(7,8)  : dict['model'];
-        var detail = (dict['model']=="province") ? "explore" : "detail";
+				var model = (dict['model']=="province") ? dict['model'] +"/" + hlcit_discover.slice(7,8)  :
+										(dict['model']=='district') ? dict['model'] +"/" + dict['district_id']:  
+										dict['model'];
+				
+				var detail = (dict['model']=="pratinidhi") ? "detail" : 
+										 "explore";	
 
         // &nbsp &nbsp<div class="d-inline bg-secondary" style="font-size:x-small;">${dict['model']}</div>
 
@@ -357,7 +385,8 @@ function circular_marker(center,number,code){
 
 	  }
 
-	  var number = marker_content[xx];
+		//var number = marker_content[xx];
+		number = 10
 
 
 	  return number;
