@@ -1,5 +1,5 @@
-//var base_url="https://mahilapratinidhi.naxa.com.np";
-var base_url="http://localhost:8000";
+var base_url="https://mahilapratinidhi.naxa.com.np";
+//var base_url="http://localhost:8000";
 var layers_array=[];
 var markers_array=[];
 var markers_pie_array=[];
