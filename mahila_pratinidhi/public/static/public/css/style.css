@@ -27,6 +27,7 @@ nav {
     min-height: calc(100vh - 215px);
     width: 100%;
     position: relative;
+    background-size: cover;
     transition: background-position linear;
 }
 
@@ -2341,3 +2342,4 @@ button.cleader {
     background: #1b2144;
     margin-top: -1px;
 }
+.flag img{max-width: 50px;}
