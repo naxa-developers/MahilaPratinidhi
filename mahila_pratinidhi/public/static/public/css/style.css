@@ -56,6 +56,12 @@ nav {
     z-index: 2;
 }
 
+.imh {
+    position: relative;
+    z-index: 1;
+    background: #fff;
+}
+
 .navbar-expand-lg .navbar-toggler {
     display: block;
 }
@@ -211,18 +217,6 @@ p.searchHeader {
     outline: none;
 }
 
-.leader .leaderWrp::before {
-    content: "";
-    height: 26px;
-    width: 26px;
-    border-radius: 50%;
-    position: absolute;
-    top: 13px;
-    left: 12px;
-    z-index: 4;
-    border: 2px solid #F3C2FF;
-
-}
 
 .selectHolder input,
 .selectHolder select {
@@ -257,7 +251,7 @@ p.searchHeader {
 }
 
 .tabHolder li {
-    padding: 50px;
+    padding: 30px 50px;
     font-size: 28px;
     color: #000;
     display: flex;
@@ -411,6 +405,7 @@ button.revbtn.tbtn:hover {
     border-radius: 15px;
     color: rgba(255, 255, 255, 0.57);
     display: inline-block;
+    min-width: 80px
 }
 
 .pTitle {
@@ -573,16 +568,7 @@ button.revbtn.tbtn:hover {
     position: relative;
 }
 
-section.pratinidhi:after {
-    content: "";
-    height: 300px;
-    background: rgba(255, 255, 255, 0.05);
-    width: 100%;
-    top: 275px;
-    position: absolute;
-    z-index: 1;
 
-}
 
 .items {
     position: relative;
@@ -1271,7 +1257,8 @@ a.active .holder {
 }
 
 .tabHolder.centered {
-    padding: 60px 0;
+    padding: 30px 0;
+    background: #181c3a;
 }
 
 .dk {
@@ -1304,9 +1291,11 @@ a.l5 {
     color: rgba(171, 184, 255, 0.45)
 }
 
-.container .graphItem:not(:last-of-type) {
+#react-container>div>div:not(:last-of-type) .graphItem {
     border-bottom: 2px solid rgba(255, 255, 255, 0.1);
     padding-bottom: 30px;
+    margin-bottom: 30px;
+
 
 }
 
@@ -1829,6 +1818,7 @@ body.overflowHidden {
     cursor: pointer;
     color: #fff;
     outline: none !important;
+    box-shadow: none !important;
 }
 
 .popbtn:hover {
@@ -1885,6 +1875,7 @@ i.close {
     white-space: nowrap;
     overflow: hidden;
     height: 50px;
+    opacity: 0.9;
 }
 
 .selectHolder .selectList select {
@@ -1896,6 +1887,7 @@ i.close {
 
 
 /* for scrolling tab */
+
 #scroltab .nav.nav-pills {
     flex-wrap: nowrap;
 }
@@ -1934,6 +1926,19 @@ i.close {
     display: flex;
 }
 
+#scroltab .tabheading li {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.vVariables {
+    color: #fff;
+}
+
+a.dataVariable {
+    color: rgba(255, 255, 255, 0.9);
+    text-decoration: none;
+}
+
 .tabheading {
     display: flex;
     overflow: hidden;
@@ -1957,8 +1962,10 @@ i.close {
 
 .scrolleft,
 .scrollright {
-    width: 80px;
-    min-width: 80px;
+    width: 60px;
+    min-width: 60px;
+    background: rgba(255, 255, 255, 0.4);
+    color: #fff !important;
 }
 
 .menuOn .menuheader {
@@ -2030,7 +2037,7 @@ i.close {
 }
 
 i.fa.hm {
-    font-size: 104px;
+    font-size: 60px;
     color: #adadad;
 }
 
@@ -2286,4 +2293,51 @@ div.slikinside [data-slick-index="4"] {
     justify-content: center;
     width: 100%;
     left: 0;
+}
+
+button.cleader {
+    height: 51px;
+    border-radius: 25px;
+    top: 0px;
+    padding: 0 15px;
+    width: 100%;
+    outline: none;
+    box-shadow: none;
+    background: #be13e8;
+    transition: all 0.3s linear;
+    border: 2px solid #a80fce;
+    color: #fff;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.cleader span .cleader i {
+    opacity: 0.9;
+}
+
+
+
+.cleader i.fa-map-marker {
+    margin-right: 5px;
+    font-size: 24px;
+}
+
+.cleader i.fa-arrow-right {
+    margin-left: 10px;
+    font-size: 22px;
+}
+
+.cleader:hover {
+    background: #a80fce;
+}
+
+/* changed */
+.dcontent {
+    padding: 30px;
+    color: #fff;
+    background: #1b2144;
+    margin-top: -1px;
 }

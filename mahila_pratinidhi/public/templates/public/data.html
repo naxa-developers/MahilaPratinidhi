@@ -8,7 +8,8 @@
 <!-- <scripteducation/1 src="https://d3js.org/d3.v5.min.js"></script>  -->
 
 <style>
-  #scroltab .tabheading li {
+    .row.centered{flex-wrap: nowrap;}
+    #scroltab .tabheading li {
           min-width: initial;
           width: auto;
           flex-shrink: 0;
@@ -119,7 +120,7 @@ text.simple-label {
     position:fixed;
     z-index:1;
     padding-top:100px;
-    left:0
+    left:0;
     top:0;
     width:100%;
     height:100%;
@@ -148,9 +149,10 @@ text.simple-label {
 
 
 </style>
+
 <body>
-  <div id="fb-root"></div>
-<script>(function(d, s, id) {
+    <div id="fb-root"></div>
+    <script>(function(d, s, id) {
   var js, fjs = d.getElementsByTagName(s)[0];
   if (d.getElementById(id)) return;
   js = d.createElement(s); js.id = id;
@@ -162,23 +164,24 @@ text.simple-label {
 
 
 
-  <div id ="d3modal" class="d3modal">
-    <div class="d3modal-content">
-      <span class="d3close" onClick="(function(){
+    <div id="d3modal" class="d3modal">
+        <div class="d3modal-content">
+            <span class="d3close" onClick="(function(){
         $('#d3modal').hide();
 
     return false;
-})();"> &times;</span>
+})();">
+                &times;</span>
 
-      <h5> Save Data as :</h5>
-      <span><button class="btn" id="d3csv"> CSV/Excel</button> <button id="d3png" class="btn"> Image(.png)</button></span>
+            <h5> Save Data as :</h5>
+            <span><button class="btn" id="d3csv"> CSV/Excel</button> <button id="d3png" class="btn"> Image(.png)</button></span>
+        </div>
     </div>
-  </div>
     <header>
         <div class="navigation innerPage">
             <div class="container-fluid">
-{% endblock %}
-{% block lower_content %}
+                {% endblock %}
+                {% block lower_content %}
             </div>
         </div>
     </header>
@@ -239,7 +242,7 @@ text.simple-label {
 
                         </div>
                     </div>
-                    <img class="graph" src="{% static 'public/image/graph.png' %}" alt="">
+                    <!-- <img class="graph" src="{% static 'public/image/graph.png' %}" alt=""> -->
                 </div>
 
             </div>
@@ -248,82 +251,89 @@ text.simple-label {
         </div>
 
     </section>
-<section>
-  <div class="col dtitle1">
-      <!-- <div class="gtitle">
+    <section>
+        <div class="col dtitle1">
+            <!-- <div class="gtitle">
           <p id ="innervariable" class="innerp"> Education</p>
       </div> -->
-  </div>
-  <div class="col dcontent" id="main_content_id">
-    <!-- dcontent -->
-    <br>
-    <br>
-      Lorem ipsum, dolor sit amet consectetur adipisicing elit. Officiis nobis hic voluptatibus fugiat animi? Voluptates exercitationem
-      quam culpa nisi inventore laboriosam facere, unde, repudiandae consequuntur odio quas obcaecati nobis
-      animi ducimus nulla necessitatibus rem voluptatum ad expedita ut! Ratione officia consequatur cum ducimus
-      excepturi iste, veritatis, corrupti quas natus nostrum libero saepe neque omnis vero architecto nam delectus,
-      perspiciatis qui rem vitae labore! Officiis, tenetur nihil. Quae odio facere soluta quaerat nostrum velit
-      dicta nulla eius, tempore, quasi possimus quidem nemo. Ratione veniam laudantium illo pariatur placeat
-      veritatis, fuga est illum,
-  </div>
+        </div>
+        <div class="col dcontent" id="main_content_id">
+            <!-- dcontent -->
+            <br>
+            <br>
+            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Officiis nobis hic voluptatibus fugiat animi?
+            Voluptates exercitationem
+            quam culpa nisi inventore laboriosam facere, unde, repudiandae consequuntur odio quas obcaecati nobis
+            animi ducimus nulla necessitatibus rem voluptatum ad expedita ut! Ratione officia consequatur cum ducimus
+            excepturi iste, veritatis, corrupti quas natus nostrum libero saepe neque omnis vero architecto nam
+            delectus,
+            perspiciatis qui rem vitae labore! Officiis, tenetur nihil. Quae odio facere soluta quaerat nostrum velit
+            dicta nulla eius, tempore, quasi possimus quidem nemo. Ratione veniam laudantium illo pariatur placeat
+            veritatis, fuga est illum,
+        </div>
 
 
-</section>
+    </section>
 
     <section class="all">
 
         <div class="container-fluid">
 
             <div class="tabHolder row centered">
-                    <div id="scroltab" class="container-fluid">
-                            <div class="scrolltabs">
-                                <div class="vVariables">Visualization Variables</div>
-                                <div class="tabheading">
-                                    <div class="scrolleft scrollicon">
-                                        <i class="fa fa-angle-left"></i>
-                                    </div>
-                                    <ul class="nav nav-pills widthScrol">
-                                      <li class="active">
-                                          <a href="#" class="dataVariable" data-toggle="tab" data-value="Education">Education</a>
-                                      </li>
-
-                                        <li>
-                                            <a href="#" class="dataVariable" data-toggle="tab" data-value="ethnicity" >Ethnicity</a>
-                                        </li>
-
-                                        <li>
-                                            <a href="#" class="dataVariable" data-toggle="tab" data-value="election_type">Election Type</a>
-                                        </li>
-                                        <li>
-                                            <a href="#" class="dataVariable" data-toggle="tab" data-value="party">Party</a>
-                                        </li>
-                                        <li>
-                                            <a href="#" class="dataVariable" data-toggle="tab" data-value="election_experience">Have you ever stood in an election before? </a>
-                                        </li>
-
-                                        <li>
-                                            <a href="#" class="dataVariable" data-toggle="tab" data-value="age">Age</a>
-                                        </li>
-                                        <li>
-                                            <a href="#" class="dataVariable" data-toggle="tab" data-value="mother_tongue">Mother Tongue</a>
-                                        </li>
-
-                                        <li>
-                                            <a href="#" class="dataVariable" data-toggle="tab" data-value="political_commitment">Political Commitment</a>
-                                        </li>
-                                        <li>
-                                            <a href="#" class="dataVariable" data-toggle="tab" data-value="political_engagement">Years in Political Engagement</a>
-                                        </li>
-
-                                    </ul>
-                                    <div class="scrollright scrollicon">
-                                        <i class="fa fa-angle-right"></i>
-                                    </div>
-                                </div>
+                <div id="scroltab" class="container-fluid">
+                    <div class="scrolltabs">
+                        <div class="vVariables">Visualization Variables</div>
+                        <div class="tabheading">
+                            <div class="scrolleft scrollicon">
+                                <i class="fa fa-angle-left"></i>
                             </div>
+                            <ul class="nav nav-pills widthScrol">
+                                <li class="active">
+                                    <a href="#" class="dataVariable" data-toggle="tab" data-value="Education">Education</a>
+                                </li>
 
+                                <li>
+                                    <a href="#" class="dataVariable" data-toggle="tab" data-value="ethnicity">Ethnicity</a>
+                                </li>
 
+                                <li>
+                                    <a href="#" class="dataVariable" data-toggle="tab" data-value="election_type">Election
+                                        Type</a>
+                                </li>
+                                <li>
+                                    <a href="#" class="dataVariable" data-toggle="tab" data-value="party">Party</a>
+                                </li>
+                                <li>
+                                    <a href="#" class="dataVariable" data-toggle="tab" data-value="election_experience">Have
+                                        you ever stood in an election before? </a>
+                                </li>
+
+                                <li>
+                                    <a href="#" class="dataVariable" data-toggle="tab" data-value="age">Age</a>
+                                </li>
+                                <li>
+                                    <a href="#" class="dataVariable" data-toggle="tab" data-value="mother_tongue">Mother
+                                        Tongue</a>
+                                </li>
+
+                                <li>
+                                    <a href="#" class="dataVariable" data-toggle="tab" data-value="political_commitment">Political
+                                        Commitment</a>
+                                </li>
+                                <li>
+                                    <a href="#" class="dataVariable" data-toggle="tab" data-value="political_engagement">Years
+                                        in Political Engagement</a>
+                                </li>
+
+                            </ul>
+                            <div class="scrollright scrollicon">
+                                <i class="fa fa-angle-right"></i>
+                            </div>
                         </div>
+                    </div>
+
+
+                </div>
 
 
 
@@ -351,7 +361,7 @@ text.simple-label {
     {% block scripts %}
     <script>
 
-            // $(document).ready(function () {});
+        // $(document).ready(function () {});
 
                 //
                 // $(window).resize(function () {
@@ -464,7 +474,7 @@ console.log("widtharr",widthAray)
 
 
         </script>
-        <script>
+    <script>
 
         data_content= {{content|safe}};
 
@@ -481,14 +491,14 @@ console.log("widtharr",widthAray)
                     // });ata_content);
 
         </script>
-        <script type= "text/babel" src="{% static 'public/js/saveSvgAsPng.js' %} "></script>
-        <script type= "text/babel" src="{% static 'public/js/bar.js' %} "></script>
-        <script type= "text/babel" src="{% static 'public/js/kernel.js' %} "></script>
-        <script type= "text/babel" src="{% static 'public/js/hstacked.js' %} "></script>
+    <script type="text/babel" src="{% static 'public/js/saveSvgAsPng.js' %} "></script>
+    <script type="text/babel" src="{% static 'public/js/bar.js' %} "></script>
+    <script type="text/babel" src="{% static 'public/js/kernel.js' %} "></script>
+    <script type="text/babel" src="{% static 'public/js/hstacked.js' %} "></script>
 
-        <script type= "text/babel" src="{% static 'public/js/stacked.js' %} "></script>
-        <script type= "text/babel" src="{% static 'public/js/hbar.js' %} "></script>
-        <script type= "text/babel" src="{% static 'public/js/d3_app.js' %} "></script>
-        <script type= "text/babel" src ="{% static 'public/js/d3_script.js' %}" ></script>
+    <script type="text/babel" src="{% static 'public/js/stacked.js' %} "></script>
+    <script type="text/babel" src="{% static 'public/js/hbar.js' %} "></script>
+    <script type="text/babel" src="{% static 'public/js/d3_app.js' %} "></script>
+    <script type="text/babel" src="{% static 'public/js/d3_script.js' %}"></script>
 
-{% endblock %}
+    {% endblock %}
