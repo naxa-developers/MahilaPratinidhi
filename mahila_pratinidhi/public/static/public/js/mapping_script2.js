@@ -147,7 +147,6 @@ function circular_marker(center, number, code) {
 
 
 		// you can set .my-div-icon styles in CSS
-		console.log("center", center)
 		let marker = L.marker([center[1], center[0]], { icon: myIcon });
 		marker.addTo(map);
 		markers_pie_all_array.push(marker);

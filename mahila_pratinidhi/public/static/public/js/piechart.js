@@ -1,6 +1,5 @@
 function piechart(data,elementid,size){
 
-console.log("pasoyoo")
 elementid = elementid || "my-pie-icon-chart";
 
 

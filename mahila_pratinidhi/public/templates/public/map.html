@@ -54,14 +54,17 @@
     z-index: 100;
     border: 2px solid #6e6060;
     border-radius: 10px;
+    color:black
   }
 
+  
   typeahead tt-input {
-    left: -236px;
+    /* left: -236px; */
+    color: black
   }
 
   span.twitter-typeahead {
-    width: 300%;
+    width: 100%;
     background: #441515;
     border-radius: 203px;
   }
@@ -252,9 +255,10 @@
 
   .discover-search {
     z-index: 10000;
-    position: absolute;
+    width:100%
+    /* position: absolute;
     left: 5px;
-    top: 120px;
+    top: 120px; */
   }
 
   .discover-legend {
@@ -263,6 +267,7 @@
     left: -55px;
     bottom: 40px;
   }
+
 </style>
 <header>
   <div class="navigation innerPage">
@@ -296,6 +301,17 @@
     </div>
 
     <div class="col-md-6">
+        <div id="discover-search-1" class="discover-search discover">
+            <div class="selectHolder">
+              <div class="leader searchP">
+                <div class="leaderWrp">
+                  <div id="the-basics">
+                    <input id="twitter-input-id" class="typeahead" type="text" placeholder="Search Municipalities">
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
       <!-- <button id="filter-all" class="filter-buttons btn btn-link">All</button>
         <button id="filter-local" class="filter-buttons btn btn-link">Local</button>
         <button id="filter-national" class="filter-buttons btn btn-link">National</button>
@@ -307,19 +323,7 @@
 
   <div class="row">
     <div id="mapd" class="showmap"></div>
-    <div id="discover-search-1" class="discover-search discover">
-      <div class="selectHolder">
-        <div class="leader searchP">
-          <div class="leaderWrp">
-
-            <div id="the-basics">
-              <input id="twitter-input-id" class="typeahead" type="text" placeholder="Search Municipalities">
-            </div>
-
-          </div>
-        </div>
-      </div>
-    </div>
+    
 
   </div>
 
@@ -347,15 +351,10 @@
 
     <div class="col-md-6">
       <div id="mapd1" style="height:100vh;"></div>
-      <div id="the-basics-compare1">
-        <input class="typeahead" type="text" placeholder="Search Municipalities">
-      </div>
+    
     </div>
     <div class="col-md-6">
       <div id="mapd2" style="height:100vh;"></div>
-      <div id="the-basics-compare2">
-        <input class="typeahead" type="text" placeholder="Search Municipalities">
-      </div>
     </div>
   </div>
 
@@ -441,7 +440,6 @@
 <script>
 
   $(document).ready(function () {
-    console.log("ddswse")
     var substringMatcher = function (strs) {
       return function findMatches(q, cb) {
         var matches, substringRegex;
@@ -463,13 +461,14 @@
         cb(matches);
       };
     };
+    
     var states = []
-    var test = {{ muni | safe
-  }};
-  console.log("test", test)
-  for (var i = 0; i < test.length; i++) {
+    var test = {{ muni | safe }}
+  
+    for (var i = 0; i < test.length; i++) {
     states.push(test[i].district + "/" + test[i].name)
   }
+
 
   $('#the-basics .typeahead').typeahead({
     hint: true,
