@@ -314,14 +314,15 @@ function zoomToFeature(e) {
 		$("#c3chart-5").html("")
 
 		if (!compare_variable) { compare_variable = "all" }
-		alert(base_url + "/api/" + compare_variable + "/" + name1_visualize + "/" + name2_visualize)
+		//alert(base_url + "/api/" + compare_variable + "/" + name1_visualize + "/" + name2_visualize)
 
 		$.get(base_url + "/api/" + compare_variable + "/" + name1_visualize + "/" + name2_visualize, function (data) {
-			stackedChart(data["education"], [name1_visualize, name2_visualize], "c3chart-1", ["blue", "green"]);
-			stackedChart(data["Ethnicity"], [name1_visualize, name2_visualize], "c3chart-2", ["blue", "green"]);
-			stackedChart(data["Party Name"], [name1_visualize, name2_visualize], "c3chart-3", ["blue", "green"]);
-			kernel(data["age"], [name1_visualize, name2_visualize], "c3chart-4");
-			kernel(data["Years in Politics"], [name1_visualize, name2_visualize], "c3chart-5");
+
+			stackedChart(data["education"], [name1_visualize, name2_visualize], "c3chart-1", ["blue", "green"],compare_variable);
+			stackedChart(data["Ethnicity"], [name1_visualize, name2_visualize], "c3chart-2", ["blue", "green"],compare_variable);
+			stackedChart(data["Party Name"], [name1_visualize, name2_visualize], "c3chart-3", ["blue", "green"],compare_variable);
+			kernel(data["age"], [name1_visualize, name2_visualize], "c3chart-4",["blue", "green"],compare_variable);
+			kernel(data["Years in Politics"], [name1_visualize, name2_visualize], "c3chart-5",["blue", "green"],compare_variable);
 
 		})
 
