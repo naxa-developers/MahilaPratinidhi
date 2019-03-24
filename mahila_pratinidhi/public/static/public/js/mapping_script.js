@@ -5,6 +5,7 @@ var base_url="https://mahilapratinidhi.naxa.com.np";
 var map_height = window.innerHeight - parseInt($("#find").css('height'));
 //map_height =map_height -126;
 $("#mapid").css("height",map_height+"px");
+$("#tabs").css("height",map_height+"px");
 
 var map =L.map('mapid',{minZoom: 7,maxZoom: 13,zoomSnap:0.1, zoomControl:false,scrollWheelZoom: false}).setView([28.5,84],7.2);
 
@@ -29,7 +30,7 @@ info.onAdd = function (map) {
 //       };
 
 $(".button-action").on('click',function(){
-  alert("x");
+  //alert("x");
 })
 
 
@@ -390,6 +391,7 @@ if(Object.keys(properties_object).length=="8"){
              );
 
 layer_inside.on('data:loaded',function(){
+  //alert("load")
   $("#loading-id").find("h3").css("display","none");
 
 
