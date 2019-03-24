@@ -358,6 +358,10 @@ function get_name(feature) {
 		var xx = feature.properties['FIRST_DIST'].charAt(0).toUpperCase() + feature.properties['FIRST_DIST'].slice(1).toLowerCase();
 	}
 
+	else{
+		var xx ="province "+ feature.properties['Province']
+	}
+
 
 	return xx;
 
