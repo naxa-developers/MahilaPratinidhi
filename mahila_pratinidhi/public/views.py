@@ -22,8 +22,7 @@ from django.template import RequestContext
 
 from django.shortcuts import render
 from django.db.models import Q
-# from posts.models import Post
-
+from .models import UserProfile
 
 class Index(TemplateView):
 
@@ -56,9 +55,17 @@ def signup(request):
         if request.method == 'POST':
             signup_form = UserCreateForm(request.POST)
             if signup_form.is_valid():
-                user = signup_form.save(commit=False)
+                first_name = request.POST.get('first_name')
+                last_name = request.POST.get('last_name')
+                username = request.POST.get('username')
+                email = request.POST.get('email')
+                password = request.POST.get('password1')
+                user, created = User.objects.get_or_create(first_name=first_name, last_name=last_name, username=username, email=email)
+                user.set_password(password)
                 user.is_active = False
                 user.save()
+
+                UserProfile.objects.get_or_create(user=user, phone=request.POST.get('phone'))
                 current_site = get_current_site(request)
                 mail_subject = 'Activate your blog account.'
                 message = render_to_string('public/acc_active_email.html', {
@@ -451,7 +458,8 @@ def callRequestView(request, *args, **kwargs):
         return render(request, "login.html")
 
 
-
+class AboutUs(TemplateView):
+    template_name = 'public/about-us.html'
 
 # class NameAutocomplete(autocomplete.Select2QuerySetView):
 #     def get_queryset(self):

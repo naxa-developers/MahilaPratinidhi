@@ -37,6 +37,7 @@ urlpatterns = [
 	path('map',views.MapVisualize.as_view(),name="map_visualize"),
 
 	path('news/<int:pk>/', views.NewsView.as_view(), name="news"),
+	path('about-us/', views.AboutUs.as_view(), name='about_us'),
 
 	# path(r'^detail/name/(?P<name>\w+)/$', views.SearchDetail.as_view(), name='name_search'),
 

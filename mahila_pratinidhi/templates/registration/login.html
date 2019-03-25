@@ -93,6 +93,7 @@
 
                         <form action="{% url 'public:signup' %}" method="post"> {% csrf_token %}
                             <div class="form-group">
+
                                     <!-- <label for="id_signup_first_name"> <strong>First Name:</strong></label>&nbsp;<br> -->
                                     <input id="id_signup_first_name" maxlength="254" name="first_name" type="text" class="form-control" placeholder="first Name">
                             </div>
@@ -108,12 +109,17 @@
                                     
                                     <input id="id_signup_email" maxlength="254" name="email" type="text" class="form-control"  placeholder="email">
                             </div>
+                              <div class="form-group">
+                               
+                                    <input id="id_signup_phone" maxlength="254" name="phone" type="text" class="form-control" placeholder="Phone number">
+                            </div>
                             <div class="form-group">
-                                    <input id="id_signup_password" maxlength="254" name="password" type="text" class="form-control" placeholder="Password">
+                                    <input id="id_signup_password" maxlength="254" name="password1" type="text" class="form-control" placeholder="Password">
                             </div>
                             <div class="form-group">
                         
-                                    <input id="id_signup_repass" maxlength="254" name="re-password" type="text" class="form-control" placeholder="Password Confirmation:">
+                                    <input id="id_signup_repass" maxlength="254" name="re-password2" type="text" class="form-control" placeholder="Password Confirmation:">
+
                             </div>
                             <button type="submit" class="btn btn-secondary btn-primary btn-block bbtn"><i class="la la-key"></i> Sign Up</button>
                             <p class="mt-2"> Signing up signifies that you have read and agree to the <span><a href="#">Terms of Service </a></span> and <span><a href="#">Privacy policy</a></span></p>
