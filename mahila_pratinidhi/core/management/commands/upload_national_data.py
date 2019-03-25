@@ -19,7 +19,7 @@ class Command(BaseCommand):
         for row in range(0, df['S.N'].count()):
             RastriyaShava.objects.get_or_create(
                 province=Province.objects.get(name=df['Province'][row]),
-                name=df['English Name'][row],
+                english_name=df['English Name'][row],
                 age=df['Age'][row],
                 date_of_birth=df['Date of BIrth'][row],
                 mothers_name=df["Mother's Name"][row],
