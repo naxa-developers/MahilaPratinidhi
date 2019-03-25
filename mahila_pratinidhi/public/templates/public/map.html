@@ -54,10 +54,10 @@
     z-index: 100;
     border: 2px solid #6e6060;
     border-radius: 10px;
-    color:black
+    color: black
   }
 
-  
+
   typeahead tt-input {
     /* left: -236px; */
     color: black
@@ -65,8 +65,7 @@
 
   span.twitter-typeahead {
     width: 100%;
-    background: #441515;
-    border-radius: 203px;
+
   }
 
   .stacked-bar {
@@ -170,13 +169,13 @@
   }
 
   .showmap {
-    width: 100vw;
+    width: 100%;
     height: 100vh;
     position: relative;
   }
 
   .showviz {
-    width: 100vw;
+    width: 100%;
     position: relative;
   }
 
@@ -255,8 +254,8 @@
 
   .discover-search {
     z-index: 10000;
-    width:100%
-    /* position: absolute;
+    width: 100%
+      /* position: absolute;
     left: 5px;
     top: 120px; */
   }
@@ -267,7 +266,6 @@
     left: -55px;
     bottom: 40px;
   }
-
 </style>
 <header>
   <div class="navigation innerPage">
@@ -290,8 +288,8 @@
     </div>
 
 
-    <div class="col-md-5">
-      <button id="discover-map" class="filter-buttons btn btn-dark">Discover</button>
+    <div class="col-xl-2 col-lg-3 col-md-4">
+      <button id="discover-map" class="filter-buttons btn btn-dark">DISCOVER</button>
       <select class="btn btn-dark compare-area-select">
         <option class="compare-area">COMPARE</option>
         <option class="compare-area">Provinces</option>
@@ -301,17 +299,17 @@
     </div>
 
     <div class="col-md-6">
-        <div id="discover-search-1" class="discover-search discover">
-            <div class="selectHolder">
-              <div class="leader searchP">
-                <div class="leaderWrp">
-                  <div id="the-basics">
-                    <input id="twitter-input-id" class="typeahead" type="text" placeholder="Search Municipalities">
-                  </div>
-                </div>
+      <div id="discover-search-1" class="discover-search discover">
+        <div class="selectHolder">
+          <div class="leader searchP">
+            <div class="leaderWrp">
+              <div id="the-basics">
+                <input id="twitter-input-id" class="typeahead" type="text" placeholder="Search Municipalities">
               </div>
             </div>
+          </div>
         </div>
+      </div>
       <!-- <button id="filter-all" class="filter-buttons btn btn-link">All</button>
         <button id="filter-local" class="filter-buttons btn btn-link">Local</button>
         <button id="filter-national" class="filter-buttons btn btn-link">National</button>
@@ -323,7 +321,7 @@
 
   <div class="row">
     <div id="mapd" class="showmap"></div>
-    
+
 
   </div>
 
@@ -346,53 +344,62 @@
   </ul>
 </div>
 
-<div class="container-fluid">
-  <div id="map-compare-div" class="row hidemap">
+<div class="container-fluid no-padding">
+  <div id="map-compare-div" class="row hidemap no-gutters">
 
-    <div class="col-md-6">
+    <div class="col-md-6" style="border-right:4px solid #333" class="lb">
       <div id="mapd1" style="height:100vh;"></div>
-    
+
     </div>
-    <div class="col-md-6">
+    <div class="col-md-6" style="border-left:4px solid #333" class="rb">
       <div id="mapd2" style="height:100vh;"></div>
     </div>
   </div>
-
-
-  <div id="data-viz-map" class="hidemap">
-    <div class="row" style="background-color: black">
-      <div class="col-md-4">
-        <h3>Age </h3>
-      </div>
-      <div id="c3chart-4"></div>
-    </div>
-    <div class="row" style="background-color: black">
-      <div class="col-md-4">
-        <h3> Years in politics </h3>
-      </div>
-      <div id="c3chart-5"></div>
-    </div>
-    <div class="row" style="background-color: black">
-      <div class="col-md-4">
-        <h3>Education </h3>
-      </div>
-      <div id="c3chart-1"></div>
-    </div>
-    <div class="row" style="background-color: black">
-      <div class="col-md-4">
-        <h3>party </h3>
-      </div>
-      <div id="c3chart-2"></div>
-    </div>
-    <div class="row" style="background-color: black">
-      <div class="col-md-4">
-        <h3>Ethnicity </h3>
-      </div>
-      <div id="c3chart-3"></div>
-    </div>
-  </div>
-
 </div>
+<div class="blackbg">
+  <div class="container comparison">
+    <div id="data-viz-map" class="hidemap">
+      <div class="row" style="background-color: black">
+        <div class="col-md-6">
+          <p class="gheader"> Age </p>
+          <div id="c3chart-4"></div>
+
+        </div>
+        <div class="col-md-6">
+          <p class="gheader"> Years in politics </p>
+          <div id="c3chart-5"></div>
+        </div>
+
+      </div>
+
+      <div class="row" style="background-color: black">
+        <div class="col-md-6">
+          <p class="gheader">Education </p>
+          <div id="c3chart-1"></div>
+
+        </div>
+        <div class="col-md-6">
+          <p class="gheader">Party </p>
+          <div id="c3chart-2"></div>
+        </div>
+
+      </div>
+
+      <div class="row" style="background-color: black">
+        <div class="col-md-6">
+          <p class="gheader">Ethnicity </p>
+
+          <div id="c3chart-3"></div>
+        </div>
+
+      </div>
+    </div>
+
+
+  </div>
+</div>
+
+
 
 {% endblock %}
 
@@ -448,9 +455,10 @@
         cb(matches);
       };
     };
-    
+
     var states = []
-    var test = {{ muni | safe }}
+    var test = {{ muni | safe
+  }}
   
     for (var i = 0; i < test.length; i++) {
     states.push(test[i].district + "/" + test[i].name)
