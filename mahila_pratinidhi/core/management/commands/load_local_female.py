@@ -22,10 +22,10 @@ class Command(BaseCommand):
             for name in files:
                 df = pd.read_excel(root + "/"+  name).fillna(value='')
                 
-                column_name_array = ['Name_EN','Name_NE','Name.of.elected.region_EN','Name.of.elected.region_NE','Ward_EN','Maritial.Status_EN',
+                column_name_array = ['Name_EN','Name_NE','Age_EN','Name.of.elected.region_EN','Name.of.elected.region_NE','Ward_EN','Maritial.Status_EN',
                 'Maritial.Status_NE','Educational.Background_EN','Educational.Background_NE','Ethnicity_EN','Ethnicity_NE','Email_EN',
                 'Elected.Post_EN','Elected.Post_NE',"Name.of.party_EN","Name.of.party_NE","Political.Commitments_EN","Political.Commitments_NE","Father's.Name_EN",
-                "Father's.Name_NE","Mother's.Name_EN","Mother's.Name_NE","Number.of.Votes.Received_EN","Date.of.birth_EN",'HLCIT_CODE',"Affiliated.Institutions_NE","Date.of.Affiliation.with.Party_NE"]
+                "Father's.Name_NE","Mother's.Name_EN","Mother's.Name_NE","Number.of.Votes.Received_EN","Date.of.birth_EN",'HLCIT_CODE',"Affiliated.Institutions_NE","Date.of.Affiliation.with.Party_NE","Contact.Number_NE"]
 
                 for xy in column_name_array:
                     if xy not in df.columns:
@@ -95,6 +95,7 @@ class Command(BaseCommand):
                             prapta_maat_sankhya = df["Number.of.Votes.Received_EN"][row],
                             dob = df["Date.of.birth_EN"][row],
                             hlcit_code = df['HLCIT_CODE'][row],
+                            age= df['Age_EN'][row]
                         ))
                     except Exception as e:
                         print("error in {} {}".format(name,row))
