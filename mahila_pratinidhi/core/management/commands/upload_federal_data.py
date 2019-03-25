@@ -20,7 +20,7 @@ class Command(BaseCommand):
             province_name = 'Province ' + str(df['Province'][row])
             p, created = PratinidhiShava.objects.get_or_create(
                 province=Province.objects.get(name=province_name),
-                name=df['English Name'][row],
+                english_name=df['English Name'][row],
                 age=df['Age'][row],
                 date_of_birth=df['Date of BIrth'][row],
                 mothers_name=df["Mother's Name"][row],
