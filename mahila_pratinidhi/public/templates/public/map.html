@@ -5,118 +5,127 @@
 <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.24.0/babel.js"></script>
 <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
 <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
- --><!-- <script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
- --><!-- <script src="https://d3js.org/d3.v5.min.js"></script>  -->
+ -->
+<!-- <script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+ -->
+<!-- <script src="https://d3js.org/d3.v5.min.js"></script>  -->
 
 
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.4/dist/leaflet.css"
   integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
-  crossorigin=""/>
+  crossorigin="" />
 
-  <script src="https://unpkg.com/leaflet@1.3.4/dist/leaflet.js"
+<script src="https://unpkg.com/leaflet@1.3.4/dist/leaflet.js"
   integrity="sha512-nMMmRyTVoLYqjP9hrbed9S+FzjZHW5gY1TWCHA5ckwXZBadntCNs8kEqAWdrb9O7rxbCaA4lKTIWjDXZxflOcA=="
   crossorigin=""></script>
 
-   <script src="https://cdn.klokantech.com/mapbox-gl-js/v0.43.0/mapbox-gl.js"></script>
-   <script src="https://cdn.klokantech.com/mapbox-gl-leaflet/latest/leaflet-mapbox-gl.js"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.0.3/leaflet.css" />
-  <link rel="stylesheet" href="https://cdn.klokantech.com/mapbox-gl-js/v0.43.0/mapbox-gl.css" />
+<script src="https://cdn.klokantech.com/mapbox-gl-js/v0.43.0/mapbox-gl.js"></script>
+<script src="https://cdn.klokantech.com/mapbox-gl-leaflet/latest/leaflet-mapbox-gl.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.0.3/leaflet.css" />
+<link rel="stylesheet" href="https://cdn.klokantech.com/mapbox-gl-js/v0.43.0/mapbox-gl.css" />
 
-  <script src= "{% static 'public/js/leaflet.ajax.min.js' %}" ></script>
-  
-   <script src= "https://unpkg.com/leaflet.markercluster@1.4.1/dist/" ></script>
-  <script src= "{% static 'public/js/leaflet.markercluster.js' %}" ></script>
-  <link rel="stylesheet" href="{% static 'public/css/MarkerCluster.css'%}" />
-  <link rel="stylesheet" href="{% static 'public/css/MarkerCluster.Default.css'%}" />
- 
+<script src="{% static 'public/js/leaflet.ajax.min.js' %}"></script>
+
+<script src="https://unpkg.com/leaflet.markercluster@1.4.1/dist/"></script>
+<script src="{% static 'public/js/leaflet.markercluster.js' %}"></script>
+<link rel="stylesheet" href="{% static 'public/css/MarkerCluster.css'%}" />
+<link rel="stylesheet" href="{% static 'public/css/MarkerCluster.Default.css'%}" />
+
 
 <!--    <link href="{% static 'public/css/c3.css' %}" rel="stylesheet">
- --> 
+ -->
 <!-- Load d3.js and c3.js -->
 <!-- <script src="{% static 'public/js/d3.v5.min.js' %}" charset="utf-8"></script> -->
- 
+
 <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.12.2/d3.js" charset="utf-8"> </script> 
 <script src="{% static 'public/js/c3.min.js' %}"> </script> -->
- 
+
 <script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
 
 <link rel="stylesheet" href="{% static 'public/css/twitter.css' %}">
 
-    
+
 
 <style>
-.tt-menu{  position: absolute;
+  .tt-menu {
+    position: absolute;
     top: 75%;
     width: 100%;
     z-index: 100;
     border: 2px solid #6e6060;
     border-radius: 10px;
-    }
-    typeahead tt-input{
-        left: -236px;
-    }
-    span.twitter-typeahead {
-      width: 300%;
+    color:black
+  }
+
+  
+  typeahead tt-input {
+    /* left: -236px; */
+    color: black
+  }
+
+  span.twitter-typeahead {
+    width: 100%;
     background: #441515;
     border-radius: 203px;
-}
+  }
+
   .stacked-bar {
     overflow: visible !important;
     height: 400px;
-    width:100%;
+    width: 100%;
     font: 6px sans-serif;
     text: blue;
     shape-rendering: crispEdges;
   }
 
-.stacked-bar path{
-  display: none;
-}
+  .stacked-bar path {
+    display: none;
+  }
 
-  .kernel{
+  .kernel {
 
     height: 450px;
-    width:100%;
+    width: 100%;
 
   }
 
-  .buttons{
-    color:blue;
+  .buttons {
+    color: blue;
   }
 
 
 
-  .simple-bar{
+  .simple-bar {
     height: 450px;
-    width:100%;
-    fill:white;
+    width: 100%;
+    fill: white;
 
 
   }
 
   text.simple-divergence {
-  font-size: 14px;
-  fill: #2F4A6D;
-}
+    font-size: 14px;
+    fill: #2F4A6D;
+  }
 
-text.simple-value {
-  font-size: 12px;
-}
+  text.simple-value {
+    font-size: 12px;
+  }
 
-text.simple-title {
-  font-size: 22px;
-  font-weight: 600;
-}
+  text.simple-title {
+    font-size: 22px;
+    font-weight: 600;
+  }
 
-text.simple-label {
-  font-size: 14px;
-  font-weight: 400;
-}
+  text.simple-label {
+    font-size: 14px;
+    font-weight: 400;
+  }
 
 
   .simple-rect {
-  fill: #7cb5ec;
-}
+    fill: #7cb5ec;
+  }
 
 
   .axis path,
@@ -131,46 +140,47 @@ text.simple-label {
   }
 
   .y .tick line {
-    stroke:grey;
+    stroke: grey;
 
   }
 
-  .tick{
-    fill:white;
-    font-size:xx-small
+  .tick {
+    fill: white;
+    font-size: xx-small
   }
 
-  .kernelLine{
-    color:red;
-    
+  .kernelLine {
+    color: red;
+
   }
 
-  .hbarrect{
-    fill:#7cb5ec;
+  .hbarrect {
+    fill: #7cb5ec;
   }
 
-  .labeltop{
+  .labeltop {
     stroke: white;
-    font-size:9px;;
+    font-size: 9px;
+    ;
   }
 
-  .hidemap{
-    
-    display:none;
+  .hidemap {
+
+    display: none;
   }
 
-  .showmap{
+  .showmap {
     width: 100vw;
-    height:100vh;
-    position:relative;
+    height: 100vh;
+    position: relative;
   }
 
-  .showviz{
+  .showviz {
     width: 100vw;
-    position:relative;
+    position: relative;
   }
 
-  .sideinfo_hide{
+  .sideinfo_hide {
     width: 0px;
     position: absolute;
     z-index: 600;
@@ -180,347 +190,346 @@ text.simple-label {
     overflow-x: hidden;
     transition: 0.5s;
     padding-top: 60px;
-    color:white;
+    color: white;
 
   }
 
-  .sideinfo{
+  .sideinfo {
 
 
-  width: 300px;
-  height:500px;
-  overflow-y: scroll;
-  position: absolute;
-  z-index: 600;
-  top: 85px;
-  right: 0;
-  background-color: #111;
-  overflow-x: hidden;
-  transition: 0.5s;
-  padding-top: 20px;
-  color:white;
+    width: 300px;
+    height: 500px;
+    overflow-y: scroll;
+    position: absolute;
+    z-index: 600;
+    top: 85px;
+    right: 0;
+    background-color: #111;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 20px;
+    color: white;
   }
 
-  .my-div-icon{
+  .my-div-icon {
     /* background:rgba(255,255,0,0.4); */
-    color:#081142;
-    text-align:center;
-    border-radius:50%;
-    padding-top:2px;
+    color: #081142;
+    text-align: center;
+    border-radius: 50%;
+    padding-top: 2px;
   }
 
-  .my-pie-icon{
+  .my-pie-icon {
 
     /* background:red;
     color:#081142;
- */    text-align:center;
-    border-radius:50%;
-    padding-top:2px;
+ */
+    text-align: center;
+    border-radius: 50%;
+    padding-top: 2px;
 
   }
 
-  .pie-svg{
-    overflow:visible !important;
+  .pie-svg {
+    overflow: visible !important;
   }
 
 
-  .filter-banner{
+  .filter-banner {
     /* position:fixed; */
     z-index: 500;
-    background: rgba(24,25,23,.8);
+    background: rgba(24, 25, 23, .8);
     color: #fff;
-    padding:10px;
+    padding: 10px;
   }
 
   .sticky {
-  position: fixed;
-  top: 0;
-  width: 100vw;
-}
+    position: fixed;
+    top: 0;
+    width: 100vw;
+  }
 
-.stacked-legend{
- overflow: visible !important; 
-}
+  .stacked-legend {
+    overflow: visible !important;
+  }
 
-.discover-search{
-  z-index:10000;
-  position: absolute;
-  left: 5px;
-  top: 120px;
-}
-.discover-legend{
-  z-index:10000;
-  position: absolute;
-  left: -55px;
-  bottom: 40px;
-}
+  .discover-search {
+    z-index: 10000;
+    width:100%
+    /* position: absolute;
+    left: 5px;
+    top: 120px; */
+  }
+
+  .discover-legend {
+    z-index: 10000;
+    position: absolute;
+    left: -55px;
+    bottom: 40px;
+  }
 
 </style>
 <header>
-    <div class="navigation innerPage">
-        <div class="container-fluid">
-{% endblock %}
+  <div class="navigation innerPage">
+    <div class="container-fluid">
+      {% endblock %}
 
-{% block lower_content %}
-</div>
-</div>
+      {% block lower_content %}
+    </div>
+  </div>
 </header>
 
-    
-<div class= "container-fluid">
-<div id="sticky-banner" class="row filter-banner affix">
 
-  <div class="col-md-1">
+<div class="container-fluid">
+  <div id="sticky-banner" class="row filter-banner affix">
+
+    <div class="col-md-1">
       <a class="navbar-brand" href="{% url 'public:index' %}">
-          <img src="{% static 'public/image/logo.png' %}" alt="logo">
+        <img src="{% static 'public/image/logo.png' %}" alt="logo">
       </a>
-  </div>
+    </div>
 
 
-      <div class="col-md-5">
-          <button id="discover-map" class="filter-buttons btn btn-primary">Discover</button>
-        <select class="btn btn-dark compare-area-select">
-          <option class="compare-area">COMPARE</option>
-          <option class="compare-area">Provinces</option>
-          <option class="compare-area">Districts</option>
-          <option class="compare-area">Municipalities</option>
-        </select>
-  </div>
+    <div class="col-md-5">
+      <button id="discover-map" class="filter-buttons btn btn-dark">Discover</button>
+      <select class="btn btn-dark compare-area-select">
+        <option class="compare-area">COMPARE</option>
+        <option class="compare-area">Provinces</option>
+        <option class="compare-area">Districts</option>
+        <option class="compare-area">Municipalities</option>
+      </select>
+    </div>
 
     <div class="col-md-6">
-        <!-- <button id="filter-all" class="filter-buttons btn btn-link">All</button>
+        <div id="discover-search-1" class="discover-search discover">
+            <div class="selectHolder">
+              <div class="leader searchP">
+                <div class="leaderWrp">
+                  <div id="the-basics">
+                    <input id="twitter-input-id" class="typeahead" type="text" placeholder="Search Municipalities">
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+      <!-- <button id="filter-all" class="filter-buttons btn btn-link">All</button>
         <button id="filter-local" class="filter-buttons btn btn-link">Local</button>
         <button id="filter-national" class="filter-buttons btn btn-link">National</button>
         <button id="filter-federal" class="filter-buttons btn btn-link">Federal</button>
         <button id="filter-provincial" class="filter-buttons btn btn-link">Provincial</button> -->
     </div>
-</div>
+  </div>
 
 
   <div class="row">
-      <div id="mapd" class="showmap"></div>
-        <div id="discover-search-1" class="discover-search discover"> 
-            <div class="selectHolder">
-                <div class="leader searchP">
-                    <div class="leaderWrp">
-
-                        <div id="the-basics">
-                            <input id="twitter-input-id" class="typeahead" type="text" placeholder="Search Municipalities">
-                        </div>
-                      
-                    </div>
-                </div>
-            </div>
-      </div>
-     
-    </div>
-
-  <div class="row discover">
-      <div class="discover-legend"></div>
-  </div>
+    <div id="mapd" class="showmap"></div>
     
 
-      
-  
+  </div>
+
+  <div class="row discover">
+    <div class="discover-legend"></div>
+  </div>
+
+
+
+
 </div>
-  
-  <div id="sideinfoid" class="sideinfo_hide">
-    <ul>
-      <!-- <li>Mahila 0</li>
+
+<div id="sideinfoid" class="sideinfo_hide">
+  <ul>
+    <!-- <li>Mahila 0</li>
       <li>Mahila 1</li>
       <li>Mahila 2</li>
       <li>Mahila 3</li>
       <li>Mahila 4</li> -->
-    </ul>
-  </div>
+  </ul>
+</div>
 
 <div class="container-fluid">
-    <div id="map-compare-div" class="row hidemap">
-        
-      <div class="col-md-6">
-        <div id="mapd1" style="height:100vh;"></div>
-         <div id="the-basics-compare1">
-            <input class="typeahead" type="text" placeholder="Search Municipalities">
-        </div> 
-      </div>
-      <div class="col-md-6">      
-        <div id="mapd2" style="height:100vh;" ></div>
-         <div id="the-basics-compare2">
-            <input class="typeahead" type="text" placeholder="Search Municipalities">
-        </div> 
-      </div>
+  <div id="map-compare-div" class="row hidemap">
+
+    <div class="col-md-6">
+      <div id="mapd1" style="height:100vh;"></div>
+    
+    </div>
+    <div class="col-md-6">
+      <div id="mapd2" style="height:100vh;"></div>
+    </div>
   </div>
 
 
-<div id="data-viz-map" class="hidemap">
+  <div id="data-viz-map" class="hidemap">
     <div class="row" style="background-color: black">
-        <div class="col-md-4"> <h3>Age </h3> </div>
-        <div id="c3chart-4"></div>
+      <div class="col-md-4">
+        <h3>Age </h3>
+      </div>
+      <div id="c3chart-4"></div>
     </div>
     <div class="row" style="background-color: black">
-      <div class="col-md-4"> <h3> Years in politics </h3> </div>
+      <div class="col-md-4">
+        <h3> Years in politics </h3>
+      </div>
       <div id="c3chart-5"></div>
-  </div>
-  <div class="row" style="background-color: black">
-    <div class="col-md-4"> <h3>Education </h3> </div>
-    <div id="c3chart-1"></div>
-  </div>
-  <div class="row" style="background-color: black">
-      <div class="col-md-4"> <h3>party </h3> </div>
+    </div>
+    <div class="row" style="background-color: black">
+      <div class="col-md-4">
+        <h3>Education </h3>
+      </div>
+      <div id="c3chart-1"></div>
+    </div>
+    <div class="row" style="background-color: black">
+      <div class="col-md-4">
+        <h3>party </h3>
+      </div>
       <div id="c3chart-2"></div>
-  </div>
-  <div class="row" style="background-color: black">
-      <div class="col-md-4"> <h3>Ethnicity </h3> </div>
+    </div>
+    <div class="row" style="background-color: black">
+      <div class="col-md-4">
+        <h3>Ethnicity </h3>
+      </div>
       <div id="c3chart-3"></div>
+    </div>
   </div>
-  <div class="row" style="background-color: black">
-      <div class="col-md-4"> <h3>c3</h3> </div>
-      <div id="c3chart-real"></div>
-  </div>
-  <div class="row" style="background-color: black">
-    <div class="col-md-4"> <h3>c3</h3> </div>
-    <div id="justcheck"></div>
-</div>
-
-</div>
 
 </div>
 
 {% endblock %}
 
-    {% block scripts %}
+{% block scripts %}
 
-    <script type="text/javascript">
-    
-      window.onscroll = function() {myFunction()};
+<script type="text/javascript">
 
-        var navbar = document.getElementById("sticky-banner");
-        var sticky = navbar.offsetTop;
+  window.onscroll = function () { myFunction() };
 
-        function myFunction() {
-          if (window.pageYOffset >= sticky) {
-            navbar.classList.add("sticky")
-          } else {
-            navbar.classList.remove("sticky");
+  var navbar = document.getElementById("sticky-banner");
+  var sticky = navbar.offsetTop;
+
+  function myFunction() {
+    if (window.pageYOffset >= sticky) {
+      navbar.classList.add("sticky")
+    } else {
+      navbar.classList.remove("sticky");
+    }
+  }
+</script>
+
+<script type="text/javascript" src="{% static 'public/js/stackedcompare.js' %} "></script>
+<script type="text/javascript" src="{% static 'public/js/kernelcompare.js' %} "></script>
+<script type="text/javascript" src="{% static 'public/js/piechart.js' %} "></script>
+
+<script type="text/javascript" src={% static 'public/js/mapping_script2.js'%}></script>
+
+<script type="text/javascript" src="{% static 'public/js/twitter.js' %}"></script>
+<script type="text/javascript" src="{% static 'public/js/legend.js' %}"></script>
+
+
+<script>
+
+  $(document).ready(function () {
+    var substringMatcher = function (strs) {
+      return function findMatches(q, cb) {
+        var matches, substringRegex;
+
+        // an array that will be populated with substring matches
+        matches = [];
+
+        // regex used to determine if a string contains the substring `q`
+        substrRegex = new RegExp(q, 'i');
+
+        // iterate through the pool of strings and for any string that
+        // contains the substring `q`, add it to the `matches` array
+        $.each(strs, function (i, str) {
+          if (substrRegex.test(str)) {
+            matches.push(str);
           }
-        }
-    </script>
+        });
 
-    <script type= "text/javascript" src="{% static 'public/js/stackedcompare.js' %} "></script>
-    <script type= "text/javascript" src="{% static 'public/js/kernelcompare.js' %} "></script>
-    <script type= "text/javascript" src="{% static 'public/js/piechart.js' %} "></script>
+        cb(matches);
+      };
+    };
+    
+    var states = []
+    var test = {{ muni | safe }}
+  
+    for (var i = 0; i < test.length; i++) {
+    states.push(test[i].district + "/" + test[i].name)
+  }
 
-    <script type="text/javascript" src={% static 'public/js/mapping_script2.js'%}></script>
 
-    <script type="text/javascript" src="{% static 'public/js/twitter.js' %}"></script>
-    <script type="text/javascript" src="{% static 'public/js/legend.js' %}"></script>
+  $('#the-basics .typeahead').typeahead({
+    hint: true,
+    highlight: true,
+    minLength: 1
+  }, {
+      name: 'states',
+      source: substringMatcher(states),
+      open: function (event, ui) {
+        var $input = $(event.target);
+        console.log("input", $input);
+        var $results = $input.autocomplete("widget");
+        var scrollTop = $(window).scrollTop();
+        var top = $results.position().top;
+        var height = $results.outerHeight();
+        newTop = top - height - $input.outerHeight();
+        if (newTop > scrollTop)
+          $results.css("top", newTop + "px");
 
+      }
 
-    <script>
-
-$(document).ready(function () {
-          console.log("ddswse")
-            var substringMatcher = function (strs) {
-                return function findMatches(q, cb) {
-                    var matches, substringRegex;
-
-                    // an array that will be populated with substring matches
-                    matches = [];
-
-                    // regex used to determine if a string contains the substring `q`
-                    substrRegex = new RegExp(q, 'i');
-
-                    // iterate through the pool of strings and for any string that
-                    // contains the substring `q`, add it to the `matches` array
-                    $.each(strs, function (i, str) {
-                        if (substrRegex.test(str)) {
-                            matches.push(str);
-                        }
-                    });
-
-                    cb(matches);
-                };
-            };
-            var states = []
-            var test = {{muni | safe}};
-            console.log("test",test)
-            for (var i = 0; i < test.length; i++) {
-                states.push(test[i].district + "/"+ test[i].name)
+    }).on('typeahead:selected', function (event, selection) {
+      //$("#twitter-input-id").siblings("pre").text("seee")
+      var final = selection.substr(selection.lastIndexOf('/') + 1);
+      for (let i = 0; i < test.length; i++) {
+        if (test[i]['name'] == final) {
+          let hlcit = test[i]['hlcit']
+          $.each(muni._layers, function (index, value) {
+            if (value.feature.properties['HLCIT_CODE'] == hlcit) {
+              map.fitBounds(value.getBounds());
+              value.fireEvent('click');
             }
 
-            $('#the-basics .typeahead').typeahead({
-                hint: true,
-                highlight: true,
-                minLength: 1
-            }, {
-                name: 'states',
-                source: substringMatcher(states),
-                open: function (event, ui) {
-                            var $input = $(event.target);
-                            console.log("input",$input);
-                            var $results = $input.autocomplete("widget");
-                            var scrollTop = $(window).scrollTop();
-                            var top = $results.position().top; 
-                            var height = $results.outerHeight();
-                            newTop = top - height - $input.outerHeight();
-                                if (newTop > scrollTop)
-                                    $results.css("top", newTop + "px");
-                            
-                        }
+          })
 
-            }).on('typeahead:selected', function (event, selection) {
-              //$("#twitter-input-id").siblings("pre").text("seee")
-              var final = selection.substr(selection.lastIndexOf('/') + 1);
-                for(let i=0;i<test.length;i++){
-                  if(test[i]['name']== final){
-                    let hlcit = test[i]['hlcit']
-                    $.each(muni._layers,function(index,value){
-                      if(value.feature.properties['HLCIT_CODE'] == hlcit){
-                        map.fitBounds(value.getBounds());
-                        value.fireEvent('click');
-                      }
-
-                    })
-                    
-                  }
-                }
-
-             
+        }
+      }
 
 
 
 
-                // the second argument has the info you want
 
-                // for (var i = 0; i < test.length; i++) {
-                //     if (test[i].name == clicked && test[i].models == "ProvinceMahilaPratinidhiForm") {
-                //         // location.href = "http://localhost:8000/explore/province/" + test[i].province_id + "/" +test[i].id;
-                //         location.href = "https://mahilapratinidhi.naxa.com.np/explore/province/" + test[
-                //             i].province_id + "/" + test[i].id;
-                //     } else if (test[i].name == clicked && test[i].models == "RastriyaShava") {
-                //         // location.href = "http://localhost:8000/detail/national/"+test[i].id;
-                //         location.href = "https://mahilapratinidhi.naxa.com.np/detail/national/" + test[
-                //             i].id;
-                //         console.log("normal");
-                //     } else if (test[i].name == clicked && test[i].models == "PratinidhiShava") {
-                //         console.log(test[i]);
-                //         // location.href = "http://localhost:8000/detail/pratinidhi/"+test[i].id;
-                //         location.href = "https://mahilapratinidhi.naxa.com.np/detail/pratinidhi/" +
-                //             test[i].id;
-                //     } else if (test[i].name == clicked && test[i].models == "MahilaPratinidhiForm") {
-                //         location.href = "https://localhost:8000/explore/district/" + test[i].district_id +
-                //             "/" + test[i].id;
-                //         // location.href = "http://mahilapratinidhi.naxa.com.np/explore/district/" + test[i].district_id + "/" +test[i].id;
-                //     }
-                // }
-            });
+
+      // the second argument has the info you want
+
+      // for (var i = 0; i < test.length; i++) {
+      //     if (test[i].name == clicked && test[i].models == "ProvinceMahilaPratinidhiForm") {
+      //         // location.href = "http://localhost:8000/explore/province/" + test[i].province_id + "/" +test[i].id;
+      //         location.href = "https://mahilapratinidhi.naxa.com.np/explore/province/" + test[
+      //             i].province_id + "/" + test[i].id;
+      //     } else if (test[i].name == clicked && test[i].models == "RastriyaShava") {
+      //         // location.href = "http://localhost:8000/detail/national/"+test[i].id;
+      //         location.href = "https://mahilapratinidhi.naxa.com.np/detail/national/" + test[
+      //             i].id;
+      //         console.log("normal");
+      //     } else if (test[i].name == clicked && test[i].models == "PratinidhiShava") {
+      //         console.log(test[i]);
+      //         // location.href = "http://localhost:8000/detail/pratinidhi/"+test[i].id;
+      //         location.href = "https://mahilapratinidhi.naxa.com.np/detail/pratinidhi/" +
+      //             test[i].id;
+      //     } else if (test[i].name == clicked && test[i].models == "MahilaPratinidhiForm") {
+      //         location.href = "https://localhost:8000/explore/district/" + test[i].district_id +
+      //             "/" + test[i].id;
+      //         // location.href = "http://mahilapratinidhi.naxa.com.np/explore/district/" + test[i].district_id + "/" +test[i].id;
+      //     }
+      // }
+    });
             
     });
-    </script>
-   
+</script>
 
 
-    {% endblock %}
+
+{% endblock %}
 
 
 

@@ -608,6 +608,7 @@
 }
 
 @media screen and (max-width:768px) {
+    .mapTab #tabs,.tabs.icons{height: initial!important;}
     li.showhidelist.show {
         display: none;
     }

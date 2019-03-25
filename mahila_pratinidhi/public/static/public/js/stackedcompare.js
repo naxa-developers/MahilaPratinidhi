@@ -1,6 +1,5 @@
-function stackedChart(data,compare_variable,elementid,variable_colors){
-   console.log(data)
-     data = data || [
+function stackedChart(data,compare_variable_array,elementid,variable_colors,compare_variable){
+     data = data ||  [
     {
         "label": "10+2 or equivalent",
         "hlcit1": 50,
@@ -26,11 +25,19 @@ function stackedChart(data,compare_variable,elementid,variable_colors){
 }
 
 ] 
-  
-        var legend_array= ["hlcit1","hlcit2"];
+
+    if(compare_variable != "all"){
+      var legend_array= ["1","2"].map(function(x){
+        return compare_variable + x
+      });
+    }
+    else{
+      legend_array=["hlcit1","hlcit2"]
+    }
+      
 
         var margin = {top: 20, right: 70, bottom: 20, left: 30};
-        var width = 550 - margin.left - margin.right,
+        var width = 550 - margin.left - margin.right
         height = 350 - margin.top - margin.bottom;
         var svg = d3.selectAll('#'+elementid)
         .append('svg')
@@ -178,14 +185,14 @@ function stackedChart(data,compare_variable,elementid,variable_colors){
         .style("font-size","xx-small")
         .text(function(d, i) {
           switch (i) {
-            case 0: return legend_array[0];
-            case 1: return legend_array[1];
-            case 2: return legend_array[2];
-            case 3: return legend_array[3];
-            case 4: return legend_array[4];
-            case 5: return legend_array[5];
-            case 6: return legend_array[6];
-            case 7: return legend_array[7];
+            case 0: return compare_variable_array[0];
+            case 1: return compare_variable_array[1];
+            case 2: return compare_variable_array[2];
+            case 3: return compare_variable_array[3];
+            case 4: return compare_variable_array[4];
+            case 5: return compare_variable_array[5];
+            case 6: return compare_variable_array[6];
+            case 7: return compare_variable_array[7];
   
           }
         });

@@ -160,7 +160,6 @@ var ourCustomControl = L.Control.extend({
 
 
       map.setView([28.5,84],7.2);
-      console.log("country",country);
       marker_content = data_summary_all["all"][0]
 
       country.setStyle({fillOpacity:"1"})
@@ -199,16 +198,6 @@ $("#mapid").on("change","input.leaflet-control-layers-selector", function(){
 
 })
 
-console.log("baseurlcheck",base_url+'/api/maps/');
-//
-// var marker_content = {"Province 1": 46,
-//             "Province 2": 59,
-//             "Province 3": 74,
-//             "Province 4": 30,
-//             "Province 5": 49,
-//             "Province 6": 17,
-//             "Province 7": 25,
-// }
 
 
 
@@ -260,7 +249,6 @@ var total_instance = 300;
 
 
 function highlightFeature(e){
-  console.log("xtty");
   var layer= e.target;
   layer.setStyle({
     weight:3,
@@ -302,37 +290,22 @@ return marker_content[xx];
 
 function zoomToFeature(e){
 
-
-
-  console.log("eventorfeature",e);
-
-
   if(e.target){
 
      var properties_object = e.target.feature.properties;
      total_instance = get_total_instance(e.target.feature);
      map.fitBounds(e.target.getBounds(),{padding:[25,25]});
-
-
 }
 else{
   var properties_object = e.properties;
   total_instance = get_total_instance(e);
-  console.log("egfit",e)
   map.fitBounds(layer.getBounds(),{padding:[25,25]});
-
-
 }
-
 if(last_layer[0]){
   last_layer[0].setStyle({fillOpacity:"0.08"})
-
 }
-
 if(last_layer[1]){
   last_layer[1].setStyle({fillOpacity:"0.08"})
-
-
 }
 
 if(Object.keys(properties_object).length=="1"){
@@ -360,9 +333,6 @@ if(Object.keys(properties_object).length=="8"){
 
 
     if(last_layer[1]){
-      console.log("districts",last_layer[0])
-
-
         map.removeLayer(last_layer[1]);
         last_layer.pop();
 
@@ -427,16 +397,9 @@ layer_inside.on('data:loaded',function(){
                 layer_inside.addTo(map);
                 last_layer.push(layer_inside);
 
-
-
-
-
-
-
    var muni_layers = L.layerGroup()
    // .addTo(map);
    $.each(muni._layers,function(key,value){
-
 
      if(value.feature.properties.DISTRICT.toLowerCase()=== dric){
        var geo = value.feature;
@@ -472,13 +435,8 @@ layer_inside.on('data:loaded',function(){
        });
 
       }
-
-
-
    });
    last_layer.push(muni_layers);
-
-
 
  }
 
@@ -492,8 +450,6 @@ else if (Object.keys(properties_object).length=="11"){
   return false
 
 }
-
-
 
 }
 
@@ -597,14 +553,11 @@ marker_array.push(marker_cluster);
 
 function circular_marker(center,number,name,feature){
 
-
       if (number){  }
       else{
         number=0;
       }
-
       var name = name.replace(" ","_");
-
 
       var myIcon = L.divIcon({
           className:'my-div-icon'+ ' ' + name,
@@ -612,24 +565,20 @@ function circular_marker(center,number,name,feature){
           html: '<p id='+ name +'>'+ number + '<p>',
 
       });
-
       // you can set .my-div-icon styles in CSS
+      
       if (Object.keys(feature.properties).length=="11"){
 
-        $.get(base_url+'/api/hlcit/'+name.replace("_"," "), function(data){
-                var females =data;
-                ward_leader(number,center,females,name.replace("_"," "))
-
-    });
-}
+            $.get(base_url+'/api/hlcit/'+name.replace("_"," "), function(data){
+                    var females =data;
+                    ward_leader(number,center,females,name.replace("_"," "))
+            });
+      }
       else{
-
-
-      let marker= L.marker(center, {icon: myIcon}).addTo(map).on('click',function(e){
-        zoomToFeature(feature)
-      });
-      marker_array.push(marker);
-
+        let marker= L.marker(center, {icon: myIcon}).addTo(map).on('click',function(e){
+          zoomToFeature(feature)
+        });
+        marker_array.push(marker);
     }
 
   }
@@ -756,16 +705,6 @@ var muni =L.geoJson.ajax('https://dfid.naxa.com.np/core/geojson/municipalities/'
                               });
 
 
-console.log("muni",muni);
-  //
-  // var center_for_markers = [ [27.244862521497282,87.2314453125],
-  // [26.941659545381516,85.67138671875], [27.751607687549384,85.352783203125],
-  // [28.294707428421205,84.166259765625], [28,83], [29.,82.5],
-  // [29.49698759653577,80.980224609375] ]
-
-//api call_
-
-
 
 function percentage(array){
   var total = array.reduce(function(total,num){
@@ -788,7 +727,6 @@ function percentage(array){
 
 $("#national-all").on('click',function(){
 
-//console.log(marker_array);
 marker_content =data_summary_all['national'][0];
 for( var i=0; i< marker_array.length;i++){
   if(marker_array[i]._icon == null){
@@ -810,7 +748,6 @@ for( var i=0; i< marker_array.length;i++){
 });
 
 $("#federal-all").on('click',function(){
-//console.log(marker_array);
   marker_content =data_summary_all['federal'][0];
 
 for( var i=0; i< marker_array.length;i++){
@@ -832,13 +769,11 @@ else{
 });
 
 $("#provincial-all").on('click',function(){
-//console.log(marker_array);
 marker_content =data_summary_all['provincial'][0];
 for( var i=0; i< marker_array.length;i++){
   if(marker_array[i]._icon == null){
   }
   else{
-    //console.log(marker_array[i]._icon);
     var key = marker_array[i]._icon.firstChild.id;
     var marker_value = marker_content[key.replace("_"," ")]
     if(marker_value == null){
@@ -853,13 +788,11 @@ for( var i=0; i< marker_array.length;i++){
 });
 
 $("#local-all").on('click',function(){
-//console.log(marker_array);
 marker_content =data_summary_all['local'][0];
 for( var i=0; i< marker_array.length;i++){
   if(marker_array[i]._icon == null){
   }
   else {
-    //console.log(marker_array[i]._icon);
 
     var key = marker_array[i]._icon.firstChild.id;
     var marker_value = marker_content[key.replace("_"," ")];
@@ -876,7 +809,6 @@ for( var i=0; i< marker_array.length;i++){
 function getLocation(){
   navigator.geolocation.getCurrentPosition(function(location) {
   var latlng = new L.LatLng(location.coords.latitude, location.coords.longitude);
-  console.log("country",country);
   $.each(muni._layers, function(key,value){
       if(value._bounds.contains(latlng)== true){
         var geo = value.feature;
@@ -900,38 +832,6 @@ function getLocation(){
 
     }
 });
-
-
-//
-//   $.each(country._layers, function(key,value){
-//     if(value._bounds.contains(latlng)== true){
-//       alert("true");
-//       var state =(value.feature.properties.Province);
-//       alert(state);
-//       var districts = L.geoJson.ajax(base_url+'/api/geojson/province/'+ state);
-//       console.log("districts",districts)
-//       districts.on("data:loaded",function(){
-//         $.each(districts._layers, function(key,value){
-//
-//           if(value._bounds.contains(latlng)== true){
-//             alert("district vetayo");
-//             var district =value.feature.properties["FIRST_DIST"];
-//             console.log("muni",muni);
-//             $.each(muni._layers, function(key,value){
-//                     if(value.feature.properties["DISTRICT"]== district){
-//                       alert("vitrai pasyo")
-//                       alert(value.feature.properties["LU_Name"]);
-//                     }
-//                   });
-//         }
-//     });
-//
-//   });
-//
-//   }
-// });
-
-
 
 });
 }
@@ -985,7 +885,6 @@ $('#apply_id').on('click', function(){
       var geo = value.feature;
       var muni_layer =L.geoJson(geo,{}).addTo(map);
       last_layer.push(muni_layer);
-      console.log("hett",value.getBounds());
       map.fitBounds(value.getBounds());
       
       //map.setView([location.coords.latitude, location.coords.longitude], 13);
@@ -1025,7 +924,6 @@ $('#clear-filter').on('click', function(){
 
 
   map.setView([28.5,84],7.2);
-  console.log("country",country);
   marker_content = data_summary_all["all"][0]
 
 
