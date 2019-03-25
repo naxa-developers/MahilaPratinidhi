@@ -458,7 +458,8 @@ def callRequestView(request, *args, **kwargs):
         return render(request, "login.html")
 
 
-
+class AboutUs(TemplateView):
+    template_name = 'public/about-us.html'
 
 # class NameAutocomplete(autocomplete.Select2QuerySetView):
 #     def get_queryset(self):
