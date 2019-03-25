@@ -1,5 +1,6 @@
 body {
     font-family: 'Lato', sans-serif;
+    background:#fff;
 }
 
 p.header {
@@ -2374,3 +2375,26 @@ border-top-right-radius: 0;
     .comparison{padding-top: 50px;padding-bottom:50px;background:black;}
     .blackbg{background:black;}
 #data-viz-map .row{margin-bottom:30px;}
+.fa.ol{
+    position: absolute;
+    z-index: 1000;
+    top:12px;
+    left: 12px;
+}
+#the-basics{position: relative;}
+
+.login-wrap{background-image: linear-gradient(to bottom, #c471f5 0%, #9c44cb  100%);max-width: 700px;
+width:100%;
+padding:30px;
+}
+button.btn-block.bbtn{min-width: 100%;}
+.login-wrap input {    padding: 10px;
+    border-radius: 4px;}
+.login-wrap .tab-content{margin-top: 0;}
+.login-wrap .nav.nav-pills.nav-justified{margin:30px 0;    border-bottom: 1px solid rgba(0,0,0,0.05);}
+.login-wrap .nav-pills .nav-link.active, .nav-pills .show>.nav-link {
+    color: #fff;
+    background-color: #2460b90f;}
+   .login-wrap .nav-item a{color:#fff;}
+   .tab-content p a{font-weight: bold;color:#fff; font-style: italic;opacity: 1;color:#1f1f82;}
+   .tab-content p {opacity: 0.8;}

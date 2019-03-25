@@ -608,6 +608,9 @@
 }
 
 @media screen and (max-width:768px) {
+
+    #sticky-banner >div{margin-bottom:15px;}
+    .comparison{padding-top:25px;padding-bottom:25px;}
     .mapTab #tabs,.tabs.icons{height: initial!important;}
     li.showhidelist.show {
         display: none;

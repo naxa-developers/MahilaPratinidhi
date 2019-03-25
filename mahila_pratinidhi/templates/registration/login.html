@@ -12,6 +12,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <link rel="apple-touch-icon" href="{% static 'apple-touch-icon.png' %}">
 		<link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
+         <link rel="stylesheet" href="{% static 'public/css/style.css' %}">
         <script src="{% static 'assets/js/vendor/modernizr-2.8.3-respond-1.4.2.min.js' %}"></script>
 		<link href="https://fonts.googleapis.com/css?family=Mukta:200,300,400,500,600,700,800" rel="stylesheet">
     </head>
@@ -20,30 +21,39 @@
             <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
 
-        <div class="login-bg">
-            <img src="{% static 'assets/img/login-bg.jpg' %}">
-        </div>
+    
 
         <div class="container-fluid">
             <div class="login-wrap">
                 <div class="login-header">
-                    <img src="{% static 'assets/img/logo.png' %}" alt="" width="100">
-                    <h3>महिला प्रतिनिधि</h3>
+                    <img src="{% static '/public/image/logo.png' %}" alt="">
+                    <h3 class="white mt-2">महिला प्रतिनिधि</h3>
                 </div>
                 <ul class="nav nav-pills nav-justified">
-                        <li class="nav-item active"><a class="nav-link" href="#1a" data-toggle="tab" >Login</a></li><span>&nbsp;</span>
-                        <li class="nav-item"><a class="nav-link" href="#1b" data-toggle="tab" >Sign Up</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#1a" data-toggle="tab" >Login</a></li><span>&nbsp;</span>
+                        <li class="nav-item active"><a class="nav-link " href="#1b" data-toggle="tab"  >Sign Up</a></li>
                 </ul>
                 <div class="tab-content clearfix">
-                <div class="tab-pane active" id="1a" >
-                    {% include 'form_error.html' %}
+                <div class="tab-pane " id="1a" >
+
+                         <div class="row">
+                            <div class="col-md-6">
+                                <h4> Why Login?</h4>
+                                <p> Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, </p>
+                                  <h4> Why Login?</h4>
+                                <p> Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</p>
+                                  <h4> Why Login?</h4>
+                                <p> Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard .</p>
+                            </div>  
+                                <div class="col-md-6">
+                                     {% include 'form_error.html' %}
 
                     <form  action="{% url 'login' %}" method="post"> {% csrf_token %}
                         <div class="form-group">
-                        <label for="id_username"> <strong>Username :</strong></label>
-                            <input id="id_username" maxlength="254" name="username" type="text" class="form-control">                        </div>
+                        <!-- <label for="id_username"> <strong>Username :</strong></label> -->
+                            <input id="id_username" maxlength="254" name="username" type="text" class="form-control" placeholder="Username">                        </div>
                         <div class="form-group">
-                          <label for="id_password"><strong>Password :</strong></label> <input id="id_password" name="password" type="password" class="form-control">
+                        <!--   <label for="id_password"><strong>Password :</strong></label>  --><input id="id_password" name="password" type="password" class="form-control" placeholder="Password">
                         </div>
                         <div class="row">
                             <div class="col-sm-6">
@@ -56,40 +66,63 @@
                             </div>
 
                         </div>
-                        <button type="submit" class="btn btn-secondary" name="login"><i class="la la-key"></i> LogIn</button>
+                        <button type="submit" class="btn btn-secondary btn-primary btn-block bbtn" name="login"><i class="la la-key"></i> LogIn</button>
                     </form>
+                                      </div>
+
+                         </div>
+
+
+                   
                 </div>
                 
-                <div class="tab-pane" id="1b">
-                        {% include 'form_error.html' %}
+                <div class="tab-pane active" id="1b">
+                    <div class="row">
+                        <div class="col-md-6">
+                                <h4> Why Login?</h4>
+                                <p> Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, </p>
+                                  <h4> Why Login?</h4>
+                                <p> Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</p>
+                                  <h4> Why Login?</h4>
+                                <p> Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard .</p>
+                            </div>  
+
+                        
+                    <div class="col-md-6">
+                          {% include 'form_error.html' %}
 
                         <form action="{% url 'public:signup' %}" method="post"> {% csrf_token %}
                             <div class="form-group">
-                                    <label for="id_signup_first_name"> <strong>First Name:</strong></label>&nbsp;<br>
-                                    <input id="id_signup_first_name" maxlength="254" name="first_name" type="text" class="form-control">
+                                    <!-- <label for="id_signup_first_name"> <strong>First Name:</strong></label>&nbsp;<br> -->
+                                    <input id="id_signup_first_name" maxlength="254" name="first_name" type="text" class="form-control" placeholder="first Name">
                             </div>
                             <div class="form-group">
-                                    <label for="id_signup_last_name"> <strong>Last Name:</strong></label>&nbsp;<br>
-                                    <input id="id_signup_last_name" maxlength="254" name="last_name" type="text" class="form-control">
+                                
+                                    <input id="id_signup_last_name" maxlength="254" name="last_name" type="text" class="form-control"  placeholder="Last Name">
                             </div>
                             <div class="form-group">
-                                    <label for="id_signup_username"> <strong>Username:</strong></label>&nbsp;<br>
-                                    <input id="id_signup_username" maxlength="254" name="username" type="text" class="form-control">
+                          
+                                    <input id="id_signup_username" maxlength="254" name="username" type="text" class="form-control"  placeholder=" Username">
                             </div>
                             <div class="form-group">
-                                    <label for="id_signup_email"> <strong>Email:</strong></label>&nbsp;<br>
-                                    <input id="id_signup_email" maxlength="254" name="email" type="text" class="form-control">
+                                    
+                                    <input id="id_signup_email" maxlength="254" name="email" type="text" class="form-control"  placeholder="email">
                             </div>
                             <div class="form-group">
-                                    <label for="id_signup_password"> <strong>Password:</strong></label>&nbsp;<br>
-                                    <input id="id_signup_password" maxlength="254" name="password" type="text" class="form-control">
+                                    <input id="id_signup_password" maxlength="254" name="password" type="text" class="form-control" placeholder="Password">
                             </div>
                             <div class="form-group">
-                                    <label for="id_signup_repass"> <strong>Password Confirmation:</strong></label>&nbsp;<br>
-                                    <input id="id_signup_repass" maxlength="254" name="re-password" type="text" class="form-control">
+                        
+                                    <input id="id_signup_repass" maxlength="254" name="re-password" type="text" class="form-control" placeholder="Password Confirmation:">
                             </div>
-                            <button type="submit" class="btn btn-secondary"><i class="la la-key"></i> Sign Up</button>
+                            <button type="submit" class="btn btn-secondary btn-primary btn-block bbtn"><i class="la la-key"></i> Sign Up</button>
+                            <p class="mt-2"> Signing up signifies that you have read and agree to the <span><a href="#">Terms of Service </a></span> and <span><a href="#">Privacy policy</a></span></p>
+                           
                         </form>
+                    </div>
+
+                    </div>
+                      
                     </div>
                 </div>
             </div>
