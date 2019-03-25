@@ -2343,3 +2343,34 @@ button.cleader {
     margin-top: -1px;
 }
 .flag img{max-width: 50px;}
+.leaflet-bar.leaflet-control.leaflet-control-custom{
+    background-color: white;
+width: 34px!important;
+height: 34px!important;
+padding: 0px;
+background-size: 30px 30px;
+margin-top: -4px!important;
+display: flex;
+align-items: center;
+justify-content: center;
+border-top-left-radius: 0;
+border-top-right-radius: 0;
+}
+
+#twitter-input-id{background: #343a40;
+    border-radius: 4px;
+    border: none;
+    height: 36px;
+    color: #fff;
+    position: relative;
+   
+    margin-top: 1px;
+   
+    max-width: 400px;}
+    #sticky-banner{display:flex;align-items: center;}
+    .lb{border-left: 4px solid #333;}
+    .rb{border-right:1px solid #333;}
+    .container-fluid.no-padding{padding:0;}
+    .comparison{padding-top: 50px;padding-bottom:50px;background:black;}
+    .blackbg{background:black;}
+#data-viz-map .row{margin-bottom:30px;}
