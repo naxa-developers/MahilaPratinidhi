@@ -5,7 +5,7 @@ from django.core.management.base import BaseCommand
 
 import pandas as pd
 
-from core.models import ProvinceMahilaPratinidhiForm, Province, District
+from core.models import PratinidhiShava, Province, District
 
 
 class Command(BaseCommand):
@@ -17,8 +17,9 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         df = pd.read_excel(sys.argv[3]).fillna(value='')
         for row in range(0, df['S.N'].count()):
-            p, created = ProvinceMahilaPratinidhiForm.objects.get_or_create(
-                province=Province.objects.get(name=df['Province'][row]),
+            province_name = 'Province ' + str(df['Province'][row])
+            p, created = PratinidhiShava.objects.get_or_create(
+                province=Province.objects.get(name=province_name),
                 name=df['English Name'][row],
                 age=df['Age'][row],
                 date_of_birth=df['Date of BIrth'][row],
@@ -65,5 +66,5 @@ class Command(BaseCommand):
             if 'Is your area listed in Government of Nepal’s backward area?' in df:
                 p.pichidiyeko_chhetra_ho_hoina = df['Is your area listed in Government of Nepal’s backward area?'][row]
 
-        print(ProvinceMahilaPratinidhiForm.objects.all().count())
+        print(PratinidhiShava.objects.all().count())
         self.stdout.write('Successfully loaded mahila pratinidhi data..')
