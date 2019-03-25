@@ -93,7 +93,7 @@ class Command(BaseCommand):
                             mothers_name = df["Mother's.Name_EN"][row],
                             mothers_name_ne_NP= df["Mother's.Name_NE"][row],
                             prapta_maat_sankhya = df["Number.of.Votes.Received_EN"][row],
-                            dob = df["Date.of.birth_EN"][row],
+                            dob = df["Date.of.birth_EN"][row]MahilaPratinidhiForm,
                             hlcit_code = df['HLCIT_CODE'][row],
                             age= df['Age_EN'][row]
                         ))
