@@ -584,6 +584,11 @@
 }
 
 @media screen and (max-width:925px) {
+    .topsection {
+        flex-direction: column;
+    align-items: flex-start;
+    }
+    .detailTitles.det{margin:15px 0;}
     .slick-slide>div .col-md-4:nth-of-type(3) {
         min-width: 100%;
     }
@@ -608,6 +613,12 @@
 }
 
 @media screen and (max-width:768px) {
+    .det {
+ 
+    flex-direction: column;}
+    .detailtextin{max-width:100%;}
+    .personalInfoHeader.sm{margin-top:15px;}
+
 
     #sticky-banner >div{margin-bottom:15px;}
     .comparison{padding-top:25px;padding-bottom:25px;}

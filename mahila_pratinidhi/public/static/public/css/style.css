@@ -2383,7 +2383,8 @@ border-top-right-radius: 0;
 }
 #the-basics{position: relative;}
 
-.login-wrap{background-image: linear-gradient(to bottom, #c471f5 0%, #9c44cb  100%);max-width: 700px;
+.login-wrap{background-image:linear-gradient(to bottom, #5e277d 0%, #713292  100%);max-width: 700px;
+
 width:100%;
 padding:30px;
 }
@@ -2396,7 +2397,7 @@ button.btn-block.bbtn{min-width: 100%;}
     color: #fff;
     background-color: #2460b90f;}
    .login-wrap .nav-item a{color:#fff;}
-   .tab-content p a{font-weight: bold;color:#fff; font-style: italic;opacity: 1;color:#1d1d1d;}
+   .tab-content p a{font-weight: bold;color:#fff; font-style: italic;opacity: 1;color:#ffc107;}
    .tab-content p {opacity: 0.8;}
    .top.container-fluid{
         background: #32216f;
@@ -2425,3 +2426,24 @@ button.btn-block.bbtn{min-width: 100%;}
     -webkit-backface-visibility: hidden;
    }
   .about .items{margin-bottom:20px; cursor: pointer;}
+  .lstn li{list-style: none; }
+  .contents > div {margin-bottom:50px;}
+  .personalInfoHeader.sm{margin-top:0;}
+  .personalInfoHeader.tt{margin-top: 0;}
+  .det{display: flex;flex-direction: row;}
+  .det >div{margin-right: 30px;}
+     .detailtextin{padding: 15px;
+    color: rgba(255,255,255,0.5);
+    background: rgba(255,255,255,0.05);
+    border-radius: 4px;
+    margin-bottom: 30px;
+    max-width: 65%;
+    margin-top: 10px;} 
+    
+    .profiledImg{max-width:300px;overflow: hidden;margin-bottom:15px;}
+    .profiledImg img{width:100%;}
+
+    .topsection{    display: flex;
+    align-items: center;
+    justify-content: space-between;}
+    .bglogin{position: fixed;top:0;left: 0;bottom: 0;right: 0;background-image: linear-gradient(135deg, #b6bee4  0%, #764ba2 100%);}
