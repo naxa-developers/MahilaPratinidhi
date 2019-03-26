@@ -41,6 +41,9 @@
                                 <form class="form-horizontal" action="" enctype="multipart/form-data"
                                       method="post">
                                     {% csrf_token %}
+                                    {% for error in form.errors %}
+                                    {{ error }}
+                                    {% endfor %}
                                     <div class="form-group">
                                      {{ form.name.label_tag }} {{ form.name }}<br>
                                      {{ form.age.label_tag }} {{ form.age }}<br>
@@ -84,6 +87,7 @@
                                      {{ form.prapta_maat_sankhya.label_tag }} {{ form.prapta_maat_sankhya }}<br>
                                      {{ form.dob.label_tag }} {{ form.dob }}<br>
                                         {{ form.hlcit_code.label_tag }}{{ form.hlcit_code }}<br>
+                                        {{ form.province.label_tag }}{{ form.province }}<br>
                                     </div>
                                     <input type="submit">
                                 </form>
