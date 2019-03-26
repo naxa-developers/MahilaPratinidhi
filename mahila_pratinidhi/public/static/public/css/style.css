@@ -2397,7 +2397,7 @@ button.btn-block.bbtn{min-width: 100%;}
     color: #fff;
     background-color: #2460b90f;}
    .login-wrap .nav-item a{color:#fff;}
-   .tab-content p a{font-weight: bold;color:#fff; font-style: italic;opacity: 1;color:#1d1d1d;}
+   .tab-content p a{font-weight: bold;color:#fff; font-style: italic;opacity: 1;color:#ffc107;}
    .tab-content p {opacity: 0.8;}
    .top.container-fluid{
         background: #32216f;
@@ -2426,3 +2426,5 @@ button.btn-block.bbtn{min-width: 100%;}
     -webkit-backface-visibility: hidden;
    }
   .about .items{margin-bottom:20px; cursor: pointer;}
+  .lstn li{list-style: none; }
+  .contents > div {margin-bottom:50px;}
