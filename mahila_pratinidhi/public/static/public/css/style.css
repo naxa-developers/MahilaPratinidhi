@@ -2428,3 +2428,21 @@ button.btn-block.bbtn{min-width: 100%;}
   .about .items{margin-bottom:20px; cursor: pointer;}
   .lstn li{list-style: none; }
   .contents > div {margin-bottom:50px;}
+  .personalInfoHeader.sm{margin-top:0;}
+  .personalInfoHeader.tt{margin-top: 0;}
+  .det{display: flex;flex-direction: row;}
+  .det >div{margin-right: 30px;}
+     .detailtextin{padding: 15px;
+    color: rgba(255,255,255,0.5);
+    background: rgba(255,255,255,0.05);
+    border-radius: 4px;
+    margin-bottom: 30px;
+    max-width: 65%;
+    margin-top: 10px;} 
+    
+    .profiledImg{max-width:300px;overflow: hidden;margin-bottom:15px;}
+    .profiledImg img{width:100%;}
+
+    .topsection{    display: flex;
+    align-items: center;
+    justify-content: space-between;}
