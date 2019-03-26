@@ -2446,3 +2446,4 @@ button.btn-block.bbtn{min-width: 100%;}
     .topsection{    display: flex;
     align-items: center;
     justify-content: space-between;}
+    .bglogin{position: fixed;top:0;left: 0;bottom: 0;right: 0;background-image: linear-gradient(135deg, #b6bee4  0%, #764ba2 100%);}
