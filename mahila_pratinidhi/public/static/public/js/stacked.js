@@ -95,7 +95,7 @@ else {
       .range([height, 0]);
 
 
-      var default_colors = [ "#00CA64","#E238C2","#FAFF37",  "#00C1FF" ,"#5244B8" ,"#E9807B","#f44141" ];
+      var default_colors = [ "#f44141","#00CA64","#FAFF37",  "#00C1FF" ,"#5244B8" ,"#E9807B","#E238C2"];
 
     var colors0 = [	 "#69131a","#e86c75","#faa2ad","#ac779d","#4b1b31" ,"#f441a6","#f44141"];
     var default_colors0 =["#ff6367","#98b000","#00cc7a","#00a5f9","#fb00f6","#f441a6","#f44141"];

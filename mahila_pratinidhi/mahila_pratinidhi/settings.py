@@ -24,7 +24,7 @@ SECRET_KEY = 'zf0y+^3mo_8af*bveqjus32x)m#6kgs*ve1@-xu$24gmy2emnx'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['https://mahilapratinidhi.naxa.com.np', 'http://mahilapratinidhi.com']
 
 
 # Application definition
@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'modeltranslation',
     'core',
     'rest_framework',
+    'phonenumber_field',
     
 ]
 
@@ -169,6 +170,6 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
 #server mail credentials
-# EMAIL_HOST_USER = ''
-# EMAIL_HOST_PASSWORD = ''
+EMAIL_HOST_USER = ''
+EMAIL_HOST_PASSWORD = ''
 EMAIL_PORT = 587
