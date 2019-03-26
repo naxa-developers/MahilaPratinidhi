@@ -2383,7 +2383,8 @@ border-top-right-radius: 0;
 }
 #the-basics{position: relative;}
 
-.login-wrap{background-image: linear-gradient(to bottom, #c471f5 0%, #9c44cb  100%);max-width: 700px;
+.login-wrap{background-image:linear-gradient(to bottom, #5e277d 0%, #713292  100%);max-width: 700px;
+
 width:100%;
 padding:30px;
 }
