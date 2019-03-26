@@ -498,16 +498,18 @@ class NewsView(TemplateView):
 
 
 def read_view(request, ):
-    try:
-        with open('C:/gitnaxa/work/Mahila-Pratinidhi/CV_Akshya_Kumar_Shrestha.pdf', 'rb') as pdf:
-            response = HttpResponse(pdf.read(), content_type='application/pdf')
-            response['Content-Disposition'] = 'filename=some_file.pdf'
+    if request.user.is_authenticated:
+        try:
+            with open('C:/gitnaxa/work/Mahila-Pratinidhi/CV_Akshya_Kumar_Shrestha.pdf', 'rb') as pdf:
+                response = HttpResponse(pdf.read(), content_type='application/pdf')
+                response['Content-Disposition'] = 'filename=some_file.pdf'
 
-        return response
-    except:
-        msg = "There is no file"
-        return HttpResponse(msg)
-
+            return response
+        except:
+            msg = "There is no file"
+            return HttpResponse(msg)
+    else:
+        return HttpResponseRedirect('/signup/')
 
 class Detail(TemplateView):
     template_name = 'public/lists.html'
