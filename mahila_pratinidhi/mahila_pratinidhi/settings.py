@@ -24,7 +24,7 @@ SECRET_KEY = 'zf0y+^3mo_8af*bveqjus32x)m#6kgs*ve1@-xu$24gmy2emnx'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['https://mahilapratinidhi.naxa.com.np', 'http://mahilapratinidhi.com']
+ALLOWED_HOSTS = ['mahilapratinidhi.naxa.com.np', 'mahilapratinidhi.com']
 
 
 # Application definition
