@@ -23,6 +23,7 @@ from django.template import RequestContext
 from django.shortcuts import render
 from django.db.models import Q
 from .models import UserProfile
+import re
 
 class Index(TemplateView):
 
@@ -186,7 +187,9 @@ class LocalMahilaPratinidhiDetail(DetailView):
 
     def get(self, request, *args, **kwargs):
         form = MahilaPratinidhiForm.objects.get(id=self.kwargs.get('pk'))
-        return render(request, self.template_name, {'form':form})
+        pramukh_jimmewari = form.pramukh_jimmewari
+        pramukh_jimmewari = pramukh_jimmewari.split(",")
+        return render(request, self.template_name, {'form':form, 'pramukh_jimmewari':pramukh_jimmewari})
 
 
 class ProvinceView(ListView):
@@ -242,26 +245,85 @@ class ProvincialMahilaPratinidhiDetail(DetailView):
 
     def get(self, request, *args, **kwargs):
         form = ProvinceMahilaPratinidhiForm.objects.get(id=self.kwargs.get('pk'))
-        return render(request, self.template_name, {'form':form})
+        pramukh_jimmewari_dict = {}
+        pramukh_jimmewari_list = []
+        pramukh_jimmewari = form.pramukh_jimmewari
+        pramukh_jimmewari = pramukh_jimmewari.replace(";", ",")
+        pramukh_jimmewari = pramukh_jimmewari.replace("year", "")
+        pramukh_jimmewari = pramukh_jimmewari.split(",")
+        for jimmewari in pramukh_jimmewari:
+            pramukh_jimmewari_dict['pramukh_jimmewari'] = jimmewari
+            pattern = re.compile(r'\d+')
+            m = re.search(pattern, jimmewari)
+            if m:
+                pramukh_jimmewari_dict['year'] = m.group(1)
+            pramukh_jimmewari_list.append(dict(pramukh_jimmewari_dict))
+        return render(request, self.template_name, {'form':form, 'pramukh_jimmewari_list':pramukh_jimmewari_list})
 
 
 class MahilaDetail(DetailView):
     template_name = 'public/detail.html'
 
     def get(self, request, *args, **kwargs):
+        pramukh_jimmewari_dict = {}
+        pramukh_jimmewari_list = []
         if RastriyaShava.objects.filter(id=self.kwargs.get('pk')):
             form = RastriyaShava.objects.get(id=self.kwargs.get('pk'))
+            pramukh_jimmewari = form.pramukh_jimmewari
+            pramukh_jimmewari = pramukh_jimmewari.replace(";", ",")
+            pramukh_jimmewari = pramukh_jimmewari.replace("year", "")
+            pramukh_jimmewari = pramukh_jimmewari.split(",")
+            for jimmewari in pramukh_jimmewari:
+                pramukh_jimmewari_dict['pramukh_jimmewari'] = jimmewari
+                pattern = re.compile(r'\d+')
+                m = re.search(pattern, jimmewari)
+                if m:
+                    pramukh_jimmewari_dict['year'] = m.group(1)
+                pramukh_jimmewari_list.append(dict(pramukh_jimmewari_dict))
 
         elif PratinidhiShava.objects.filter(id=self.kwargs.get('pk')):
             form = PratinidhiShava.objects.get(id=self.kwargs.get('pk'))
+            pramukh_jimmewari = form.pramukh_jimmewari
+            pramukh_jimmewari = pramukh_jimmewari.replace(";", ",")
+            pramukh_jimmewari = pramukh_jimmewari.replace("year", "")
+            pramukh_jimmewari = pramukh_jimmewari.split(",")
+            for jimmewari in pramukh_jimmewari:
+                pramukh_jimmewari_dict['pramukh_jimmewari'] = jimmewari
+                pattern = re.compile(r'\d+')
+                m = re.search(pattern, jimmewari)
+                if m:
+                    pramukh_jimmewari_dict['year'] = m.group(1)
+                pramukh_jimmewari_list.append(dict(pramukh_jimmewari_dict))
 
         elif ProvinceMahilaPratinidhiForm.objects.filter(id=self.kwargs.get('pk')):
             form = ProvinceMahilaPratinidhiForm.objects.get(id=self.kwargs.get('pk'))
+            pramukh_jimmewari = form.pramukh_jimmewari
+            pramukh_jimmewari = pramukh_jimmewari.replace(";", ",")
+            pramukh_jimmewari = pramukh_jimmewari.replace("year", "")
+            pramukh_jimmewari = pramukh_jimmewari.split(",")
+            for jimmewari in pramukh_jimmewari:
+                pramukh_jimmewari_dict['pramukh_jimmewari'] = jimmewari
+                pattern = re.compile(r'\d+')
+                m = re.search(pattern, jimmewari)
+                if m:
+                    pramukh_jimmewari_dict['year'] = m.group(1)
+                pramukh_jimmewari_list.append(dict(pramukh_jimmewari_dict))
 
         else:
             form = MahilaPratinidhiForm.objects.get(id=self.kwargs.get('pk'))
+            pramukh_jimmewari = form.pramukh_jimmewari
+            pramukh_jimmewari = pramukh_jimmewari.replace(";", ",")
+            pramukh_jimmewari = pramukh_jimmewari.replace("year", "")
+            pramukh_jimmewari = pramukh_jimmewari.split(",")
+            for jimmewari in pramukh_jimmewari:
+                pramukh_jimmewari_dict['pramukh_jimmewari'] = jimmewari
+                pattern = re.compile(r'\d+')
+                m = re.search(pattern, jimmewari)
+                if m:
+                    pramukh_jimmewari_dict['year'] = m.group(1)
+                pramukh_jimmewari_list.append(dict(pramukh_jimmewari_dict))
 
-        return render(request, self.template_name, {'form':form})
+        return render(request, self.template_name, {'form': form, 'pramukh_jimmewari_list': pramukh_jimmewari_list})
 
 
 class RastriyaMahilaDetail(TemplateView):
@@ -269,8 +331,26 @@ class RastriyaMahilaDetail(TemplateView):
 
     def get(self, request, *args, **kwargs):
         form = RastriyaShava.objects.get(id=self.kwargs.get('pk'))
-        votes = form
-        return render(request, self.template_name, {'form':form})
+        pramukh_jimmewari_dict = {}
+        pramukh_jimmewari_list = []
+        pramukh_jimmewari = form.pramukh_jimmewari
+        pramukh_jimmewari = pramukh_jimmewari.replace(";", ",")
+        pramukh_jimmewari = pramukh_jimmewari.replace("year", "")
+        pramukh_jimmewari = pramukh_jimmewari.split(",")
+        for jimmewari in pramukh_jimmewari:
+            pattern = re.compile(r'\d+')
+            m = re.findall(pattern, jimmewari)
+            if m:
+                try:
+                    if m[1]:
+                        pramukh_jimmewari_dict['year'] = str(m[0] + '-' + m[1])
+                        jimmewari = jimmewari.replace(str(m[0] + '-' + m[1]), "")
+                except:
+                    pramukh_jimmewari_dict['year'] = m[0]
+                    jimmewari = jimmewari.replace(m[0], "")
+            pramukh_jimmewari_dict['pramukh_jimmewari'] = jimmewari
+            pramukh_jimmewari_list.append(dict(pramukh_jimmewari_dict))
+        return render(request, self.template_name, {'form':form, 'pramukh_jimmewari_list':pramukh_jimmewari_list})
 
 
 class PratinidhiMahilaDetail(DetailView):
@@ -278,7 +358,20 @@ class PratinidhiMahilaDetail(DetailView):
 
     def get(self, request, *args, **kwargs):
         form = PratinidhiShava.objects.get(id=self.kwargs.get('pk'))
-        return render(request, self.template_name, {'form':form})
+        pramukh_jimmewari_dict = {}
+        pramukh_jimmewari_list = []
+        pramukh_jimmewari = form.pramukh_jimmewari
+        pramukh_jimmewari = pramukh_jimmewari.replace(";", ",")
+        pramukh_jimmewari = pramukh_jimmewari.replace("year", "")
+        pramukh_jimmewari = pramukh_jimmewari.split(",")
+        for jimmewari in pramukh_jimmewari:
+            pramukh_jimmewari_dict['pramukh_jimmewari'] = jimmewari
+            pattern = re.compile(r'\d+')
+            m = re.search(pattern, jimmewari)
+            if m:
+                pramukh_jimmewari_dict['year'] = m.group(1)
+            pramukh_jimmewari_list.append(dict(pramukh_jimmewari_dict))
+        return render(request, self.template_name, {'form': form, 'pramukh_jimmewari_list': pramukh_jimmewari_list})
 
 
 class DataVisualize(TemplateView):
@@ -350,16 +443,7 @@ class DataVisualize(TemplateView):
             content_dict['content_province_vs_federal_vs_national']= item.content_province_vs_federal_vs_national
             content_dict['content_party']= item.content_party
             content_list.append(dict(content_dict))
-
-
-
         json_list = json.dumps(content_list)
-
-
-
-
-
-
 
         return render(request, self.template_name, {'total':total, 'married':married, 'graduate':graduate, 'direct':direct,'content':json_list})
 

@@ -206,31 +206,18 @@
                     <div class="coverHeight"></div>
 
 
-
+                    {% if form.pramukh_jimmewari %}
                     <div class="infographic">
 
                         <img src="{% static 'public/image/detailimg5.png' %}" alt="">
+                        {% for jimmewari in pramukh_jimmewari_list %}
                         <div class=" abs dettext1">
-                            <span class="hang dates"> 2058</span>
-                            <span>Engaged in Naya Shakti Nepal from its inception</span>
+                            {% if jimmewari.year %}
+                            <span class="hang dates">{{ jimmewari.year }}</span>
+                            {% endif %}
+                            <span>{{ jimmewari.pramukh_jimmewari }}</span>
                         </div>
-                        <div class="abs dettext2">
-                            <span class="hang dates"> 2058</span>
-                            <span>Joined People’s Liberation Army</span>
-                        </div>
-                        <div class="abs dettext3">
-                            <span class="hang dates"> 2058</span>
-                            <span>All Nepal National Independent Students’ Union (Revolutionary)</span>
-
-                        </div>
-                        <div class="abs dettext4">
-                            <span class="hang dates"> 2058</span>
-                            <span> Joined Young Communist League, Nepal</span>
-                        </div>
-                        <div class=" abs dettext5">
-                            <span class="hang dates"> 2058</span>
-                            <span>Currently, Gandaki Province Member at Naya Shakti Nepal</span>
-                        </div>
+                        {% endfor %}
 
 
 
@@ -240,25 +227,16 @@
                     <div class="sliderHolderlist inlist">
                         <p class="sTitle header ">Responsibilities </p>
                         <div class="slikinside">
+                            {% for jimmewari in pramukh_jimmewari_list %}
                             <div>
-                                Engaged in Naya Shakti Nepal from its inception
+                                {{ jimmewari.pramukh_jimmewari }}
                             </div>
-                            <div>
-                                Joined People’s Liberation Army
-                            </div>
-                            <div>
-                                All Nepal National Independent Students’ Union (Revolutionary)
-                            </div>
-                            <div>
-                                Joined Young Communist League, Nepal
-                            </div>
-                            <div>
-                                Currently, Gandaki Province Member at Naya Shakti Nepal
-                            </div>
+                            {% endfor %}
 
                         </div>
 
                     </div>
+                    {% endif %}
 
                 </div>
 
