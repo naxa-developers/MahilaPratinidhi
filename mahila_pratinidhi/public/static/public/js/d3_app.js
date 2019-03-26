@@ -120,11 +120,13 @@ render (){
 
           var {content}=this.props.data_pass[0];
 
+          console.log("datdatitle",this.props.data_pass[0]['data-title'])
+
   return (
         <div>
     <div className="graphItem" > <div className="row">
 
-    <div className="col-md-4">  <p className="gheader"> {this.props.data_pass[0].title} - {this.props.data_pass[0]['dataName']} </p> <p
+    <div className="col-md-4">  <p className="gtext"> <h3> {this.props.data_pass[0]['data-title']} </h3>  </p> <p
     className="gtext"> {content} </p> <div className="icons">
 
 <div style={{display:'inline'}} class="fb-share-button"

@@ -15,6 +15,22 @@ var chart_type = {
 
 }
 
+var data_title = {
+  'age': ['age', 'Age across Provincial Level', 'Age across Parliament', 'Age across Political Parties'],
+  'ethnicity': ['Ethnicity', 'Ethnicity across Provincial Level ', 'Ethnicity across Parliament ', 'Ethnicity across Political parties'],
+  'mother_tongue': ['Mother Tongue', 'Mother Tongue across Provincial Level ', 'Mother Tongue across Parliament', 'Mother Tongue in Political Party'],
+  'education': ['Education', 'Education across Provincial Level ', 'Education across Parliament ', 'Education across Political Parties'],
+  'election_type': ['Election Type', 'Election Type Across Provincial Level ', 'Election Type in Province-Federal-National Level ', 'Election Type in Political Party'],
+  'party': ['Representation of Political Parties', 'Representation of Political Parties Province-Federal-National Level', 'Representation of Political Parties across Province','Representation of Political Parties Province-Federal-National Level'],
+  'political_engagement': ['Political Commitment ', 'Political Party Across Provincial Level ', '	Political Party in Province-Federal-National Level', 'Political Party in Political Party'],
+  'political_commitment': ['Political Engagement', 'Political Engagement Across Provincial Level', 'Political Engagement in Province-Federal-National Level', 'Political Engagement in Political Party'],
+
+  'election_experience': ['Election Candidacy Experience', 'Election Candidacy Experience across Provincial level', 'Election Candidacy Experience across Parliament',
+  'Election Candidacy Experience across Political parties']
+
+
+}
+
 for (let i = 0; i < data_content.length; i++) {
   if (data_content[i]["variable_name"] == "education") {
     // $("#main_content_id")[0].innerText=data_content[i]["main_content"];
@@ -40,6 +56,7 @@ $.get(base_url + '/api/education/', function (data) {
         'title': 'education',
         'content': content_variable,
         'data-type': chart_type['education'][0],
+        'data-title':data_title['education'][0],
         'ind': 'false',
         'dataName': 'total',
         'data': (chart_type['education'][0] == "kernel") ? data['all'] : data['total']
@@ -51,6 +68,7 @@ $.get(base_url + '/api/education/', function (data) {
         'title': 'education',
         'content': content_province,
         'data-type': chart_type['education'][2],
+        'data-title':data_title['education'][2],
         'ind': 'false',
         'dataName': 'provincial',
         'data': data['provincial']
@@ -62,6 +80,7 @@ $.get(base_url + '/api/education/', function (data) {
         'title': 'education',
         'content': content_province_vs_federal_vs_national,
         'data-type': chart_type['education'][3],
+        'data-title':data_title['education'][3],
         'ind': 'false',
         'dataName': 'vs',
         'data': data['nationalvsfederalvsprovincial']
@@ -73,6 +92,7 @@ $.get(base_url + '/api/education/', function (data) {
         'title': 'education',
         'content': content_party,
         'data-type': chart_type['education'][1],
+        'data-title':data_title['education'][1],
         'ind': 'false',
         'dataName': 'party',
         'data': data['party']
@@ -117,6 +137,7 @@ $(".dataVariable").on("click", function () {
           'title': variable.replace("_", " "),
           'content': content_party,
           'data-type': chart_type[variable][1],
+          'data-title':data_title[variable][1],
           'dataName': 'party',
           'data': data['party']
         }]
@@ -137,6 +158,7 @@ $(".dataVariable").on("click", function () {
           'title': variable.replace("_", " "),
           'content': content_variable,
           'data-type': chart_type[variable][0],
+          'data-title':data_title[variable][0],
           'dataName': 'total',
           'data': (chart_type[variable][0] == "kernel") ? data['all'] : data['total']
         }]
@@ -147,6 +169,8 @@ $(".dataVariable").on("click", function () {
           'title': variable.replace("_", " "),
           'content': content_province,
           'data-type': chart_type[variable][2],
+          'data-title':data_title[variable][2],
+
           'dataName': 'provincial',
           'data': data['provincial']
         }]
@@ -157,6 +181,8 @@ $(".dataVariable").on("click", function () {
           'title': variable.replace("_", " "),
           'content': content_province_vs_federal_vs_national,
           'data-type': chart_type[variable][3],
+          'data-title':data_title[variable][3],
+
           'dataName': 'vs',
           'data': data['nationalvsfederalvsprovincial']
         }]
