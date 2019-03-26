@@ -93,7 +93,10 @@ class HlcitSerializer(serializers.Serializer):
         fields = ('id', 'name', 'model')
 
     def get_name(self, obj):
-        return obj.name
+        if obj.name is not "":
+            return obj.name
+        else:
+            return obj.english_name
 
     def get_id(self,obj):
         return obj.id
