@@ -87,7 +87,7 @@ left: 18px;
                     <a href="{% url 'public:explore' 'general' %}" class="linkitems"> FIND YOUR LEADER</a>
                     <a href="{% url 'public:data_visualize' %}" class="linkitems">MAHILA PRATINIDHI IN DATA</a>
                     <a href="{% url 'public:index' %}#featured" class="linkitems" id="featured_link"> FEATURED MAHILA</a>
-                    <a href="{% url 'public:index' %}#find" class="linkitems" id="maps_link"> FEATURED MAP</a>
+                    <a href="{% url 'public:map_visualize' %}" class="linkitems" id="maps_link"> FEATURED MAP</a>
                     <a href="{% url 'public:index' %}#news" class="linkitems" id="news_link"> NEWS</a>
                     <a href="{% url 'public:index' %}" class="linkitems"> Media</a>
 
@@ -252,7 +252,7 @@ left: 18px;
                             <div class="flist"> Political Engagement</div>
                             <div class="flist"> Political Commitment</div>
                             <div class="ftitle fbottom">
-                                PRIVACY POLICY
+                                <a href="{% url 'public:privacy_policy' %}" style="color:white">PRIVACY POLICY</a>
                             </div>
 
                         </div>
@@ -299,6 +299,16 @@ left: 18px;
                     });
                     $(".menuheader .fa.fa-times").click(function () {
 
+                        $(".menu").removeClass("menuOn");
+                        $("body").removeClass("overflowHidden");
+                    });
+
+                    $('#featured_link').click(function() {
+                        $(".menu").removeClass("menuOn");
+                        $("body").removeClass("overflowHidden");
+                    });
+
+                    $('#news_link').click(function() {
                         $(".menu").removeClass("menuOn");
                         $("body").removeClass("overflowHidden");
                     });
