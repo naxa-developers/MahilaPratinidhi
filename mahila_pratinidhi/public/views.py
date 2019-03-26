@@ -23,6 +23,10 @@ from django.template import RequestContext
 from django.shortcuts import render
 from django.db.models import Q
 from .models import UserProfile
+import re
+from django.db import transaction
+
+
 
 class Index(TemplateView):
 
@@ -48,6 +52,7 @@ class Index(TemplateView):
         'image_list':json_list})
 
 
+@transaction.atomic
 def signup(request):
     if request.GET.get('login'):
         return HttpResponseRedirect('/accounts/login/')
@@ -55,31 +60,38 @@ def signup(request):
         if request.method == 'POST':
             signup_form = UserCreateForm(request.POST)
             if signup_form.is_valid():
-                first_name = request.POST.get('first_name')
-                last_name = request.POST.get('last_name')
-                username = request.POST.get('username')
-                email = request.POST.get('email')
-                password = request.POST.get('password1')
-                user, created = User.objects.get_or_create(first_name=first_name, last_name=last_name, username=username, email=email)
-                user.set_password(password)
-                user.is_active = False
-                user.save()
+                if UserProfile.objects.filter(phone=request.POST.get('phone')).exists():
+                    message = 'This phone number is already used.'
+                    return render(request, 'login.html', {'form': signup_form, 'message': message})
 
-                UserProfile.objects.get_or_create(user=user, phone=request.POST.get('phone'))
-                current_site = get_current_site(request)
-                mail_subject = 'Activate your blog account.'
-                message = render_to_string('public/acc_active_email.html', {
-                'user': user,
-                'domain': current_site.domain,
-                'uid': urlsafe_base64_encode(force_bytes(user.pk)).decode('utf8'),
-                'token': account_activation_token.make_token(user),
-                })
-                to_email = signup_form.cleaned_data.get('email')
-                email = EmailMessage(
-                            mail_subject, message, to=[to_email]
-                )
-                email.send()
-                return HttpResponse('Please confirm your email address to complete the registration')
+                else:
+                    first_name = request.POST.get('first_name')
+                    last_name = request.POST.get('last_name')
+                    username = request.POST.get('username')
+                    email = request.POST.get('email')
+                    password = request.POST.get('password1')
+                    user, created = User.objects.get_or_create(first_name=first_name, last_name=last_name,
+                                                               username=username, email=email)
+                    user.set_password(password)
+                    user.is_active = False
+                    user.save()
+
+                    UserProfile.objects.get_or_create(user=user, phone=request.POST.get('phone'))
+                    current_site = get_current_site(request)
+                    mail_subject = 'Activate your blog account.'
+                    message = render_to_string('public/acc_active_email.html', {
+                        'user': user,
+                        'domain': current_site.domain,
+                        'uid': urlsafe_base64_encode(force_bytes(user.pk)).decode('utf8'),
+                        'token': account_activation_token.make_token(user),
+                    })
+                    to_email = signup_form.cleaned_data.get('email')
+                    email = EmailMessage(
+                        mail_subject, message, to=[to_email]
+                    )
+                    email.send()
+                    return HttpResponse('Please confirm your email address to complete the registration')
+
         else:
             signup_form = UserCreateForm()
         return render(request, 'login.html', {'form':signup_form})
@@ -141,7 +153,6 @@ class ExploreView(TemplateView):
         for lists in local_names:
             name_list.append(lists.name)
         json_list = json.dumps(name_list)
-        print(json_list)
 
         clicked = self.kwargs.get('clicked')
         return render(request, self.template_name, {'rastriyas':rastriyas,
@@ -182,7 +193,7 @@ class MahilaPratinidhiView(TemplateView):
 
 
 class LocalMahilaPratinidhiDetail(DetailView):
-    template_name = 'public/detail.html'
+    template_name = 'public/local-detail.html'
 
     def get(self, request, *args, **kwargs):
         form = MahilaPratinidhiForm.objects.get(id=self.kwargs.get('pk'))
@@ -242,26 +253,75 @@ class ProvincialMahilaPratinidhiDetail(DetailView):
 
     def get(self, request, *args, **kwargs):
         form = ProvinceMahilaPratinidhiForm.objects.get(id=self.kwargs.get('pk'))
-        return render(request, self.template_name, {'form':form})
+        pramukh_jimmewari_dict = {}
+        pramukh_jimmewari_list = []
+        pramukh_jimmewari = form.pramukh_jimmewari
+        pramukh_jimmewari = pramukh_jimmewari.replace(";", ",")
+        pramukh_jimmewari = pramukh_jimmewari.replace("year", "")
+        pramukh_jimmewari = pramukh_jimmewari.split(",")
+        for jimmewari in pramukh_jimmewari:
+            pramukh_jimmewari_dict['pramukh_jimmewari'] = jimmewari
+            pattern = re.compile(r'\d+')
+            m = re.search(pattern, jimmewari)
+            if m:
+                pramukh_jimmewari_dict['year'] = m.group(1)
+            pramukh_jimmewari_list.append(dict(pramukh_jimmewari_dict))
+        return render(request, self.template_name, {'form':form, 'pramukh_jimmewari_list':pramukh_jimmewari_list})
 
 
 class MahilaDetail(DetailView):
     template_name = 'public/detail.html'
 
     def get(self, request, *args, **kwargs):
+        pramukh_jimmewari_dict = {}
+        pramukh_jimmewari_list = []
         if RastriyaShava.objects.filter(id=self.kwargs.get('pk')):
             form = RastriyaShava.objects.get(id=self.kwargs.get('pk'))
+            pramukh_jimmewari = form.pramukh_jimmewari
+            pramukh_jimmewari = pramukh_jimmewari.replace(";", ",")
+            pramukh_jimmewari = pramukh_jimmewari.replace("year", "")
+            pramukh_jimmewari = pramukh_jimmewari.split(",")
+            for jimmewari in pramukh_jimmewari:
+                pramukh_jimmewari_dict['pramukh_jimmewari'] = jimmewari
+                pattern = re.compile(r'\d+')
+                m = re.search(pattern, jimmewari)
+                if m:
+                    pramukh_jimmewari_dict['year'] = m.group(1)
+                pramukh_jimmewari_list.append(dict(pramukh_jimmewari_dict))
 
         elif PratinidhiShava.objects.filter(id=self.kwargs.get('pk')):
             form = PratinidhiShava.objects.get(id=self.kwargs.get('pk'))
+            pramukh_jimmewari = form.pramukh_jimmewari
+            pramukh_jimmewari = pramukh_jimmewari.replace(";", ",")
+            pramukh_jimmewari = pramukh_jimmewari.replace("year", "")
+            pramukh_jimmewari = pramukh_jimmewari.split(",")
+            for jimmewari in pramukh_jimmewari:
+                pramukh_jimmewari_dict['pramukh_jimmewari'] = jimmewari
+                pattern = re.compile(r'\d+')
+                m = re.search(pattern, jimmewari)
+                if m:
+                    pramukh_jimmewari_dict['year'] = m.group(1)
+                pramukh_jimmewari_list.append(dict(pramukh_jimmewari_dict))
 
         elif ProvinceMahilaPratinidhiForm.objects.filter(id=self.kwargs.get('pk')):
             form = ProvinceMahilaPratinidhiForm.objects.get(id=self.kwargs.get('pk'))
+            pramukh_jimmewari = form.pramukh_jimmewari
+            pramukh_jimmewari = pramukh_jimmewari.replace(";", ",")
+            pramukh_jimmewari = pramukh_jimmewari.replace("year", "")
+            pramukh_jimmewari = pramukh_jimmewari.split(",")
+            for jimmewari in pramukh_jimmewari:
+                pramukh_jimmewari_dict['pramukh_jimmewari'] = jimmewari
+                pattern = re.compile(r'\d+')
+                m = re.search(pattern, jimmewari)
+                if m:
+                    pramukh_jimmewari_dict['year'] = m.group(1)
+                pramukh_jimmewari_list.append(dict(pramukh_jimmewari_dict))
 
         else:
             form = MahilaPratinidhiForm.objects.get(id=self.kwargs.get('pk'))
+            return render(request, 'public/local-detail.html', {'form':form})
 
-        return render(request, self.template_name, {'form':form})
+        return render(request, self.template_name, {'form': form, 'pramukh_jimmewari_list': pramukh_jimmewari_list})
 
 
 class RastriyaMahilaDetail(TemplateView):
@@ -269,8 +329,26 @@ class RastriyaMahilaDetail(TemplateView):
 
     def get(self, request, *args, **kwargs):
         form = RastriyaShava.objects.get(id=self.kwargs.get('pk'))
-        votes = form
-        return render(request, self.template_name, {'form':form})
+        pramukh_jimmewari_dict = {}
+        pramukh_jimmewari_list = []
+        pramukh_jimmewari = form.pramukh_jimmewari
+        pramukh_jimmewari = pramukh_jimmewari.replace(";", ",")
+        pramukh_jimmewari = pramukh_jimmewari.replace("year", "")
+        pramukh_jimmewari = pramukh_jimmewari.split(",")
+        for jimmewari in pramukh_jimmewari:
+            pattern = re.compile(r'\d+')
+            m = re.findall(pattern, jimmewari)
+            if m:
+                try:
+                    if m[1]:
+                        pramukh_jimmewari_dict['year'] = str(m[0] + '-' + m[1])
+                        jimmewari = jimmewari.replace(str(m[0] + '-' + m[1]), "")
+                except:
+                    pramukh_jimmewari_dict['year'] = m[0]
+                    jimmewari = jimmewari.replace(m[0], "")
+            pramukh_jimmewari_dict['pramukh_jimmewari'] = jimmewari
+            pramukh_jimmewari_list.append(dict(pramukh_jimmewari_dict))
+        return render(request, self.template_name, {'form':form, 'pramukh_jimmewari_list':pramukh_jimmewari_list})
 
 
 class PratinidhiMahilaDetail(DetailView):
@@ -278,7 +356,20 @@ class PratinidhiMahilaDetail(DetailView):
 
     def get(self, request, *args, **kwargs):
         form = PratinidhiShava.objects.get(id=self.kwargs.get('pk'))
-        return render(request, self.template_name, {'form':form})
+        pramukh_jimmewari_dict = {}
+        pramukh_jimmewari_list = []
+        pramukh_jimmewari = form.pramukh_jimmewari
+        pramukh_jimmewari = pramukh_jimmewari.replace(";", ",")
+        pramukh_jimmewari = pramukh_jimmewari.replace("year", "")
+        pramukh_jimmewari = pramukh_jimmewari.split(",")
+        for jimmewari in pramukh_jimmewari:
+            pramukh_jimmewari_dict['pramukh_jimmewari'] = jimmewari
+            pattern = re.compile(r'\d+')
+            m = re.search(pattern, jimmewari)
+            if m:
+                pramukh_jimmewari_dict['year'] = m.group(1)
+            pramukh_jimmewari_list.append(dict(pramukh_jimmewari_dict))
+        return render(request, self.template_name, {'form': form, 'pramukh_jimmewari_list': pramukh_jimmewari_list})
 
 
 class DataVisualize(TemplateView):
@@ -336,7 +427,6 @@ class DataVisualize(TemplateView):
                 direct = direct + 1
 
         content = DataVizContent.objects.all()
-        print('content_all',content)
 
         content_dict={}
         content_list=[]
@@ -350,16 +440,7 @@ class DataVisualize(TemplateView):
             content_dict['content_province_vs_federal_vs_national']= item.content_province_vs_federal_vs_national
             content_dict['content_party']= item.content_party
             content_list.append(dict(content_dict))
-
-
-
         json_list = json.dumps(content_list)
-
-
-
-
-
-
 
         return render(request, self.template_name, {'total':total, 'married':married, 'graduate':graduate, 'direct':direct,'content':json_list})
 
@@ -370,7 +451,6 @@ class VisualizeIndividual(TemplateView):
         data_var={}
         data_var['one'] =self.kwargs.get('variable')
         data_key=self.kwargs.get('key')
-        print(data_var)
         return render(request, self.template_name, {'key':data_key, 'data_variable': json.dumps(data_var) })
 
 
@@ -399,7 +479,6 @@ class MapVisualize(TemplateView):
         json_list = json.dumps(name_list)
         # print(json_list)
 
-        print(json_list)
         return render(request, self.template_name,{'muni':json_list})
 
 
@@ -460,6 +539,11 @@ def callRequestView(request, *args, **kwargs):
 
 class AboutUs(TemplateView):
     template_name = 'public/about-us.html'
+
+
+class PrivacyPolicyView(TemplateView):
+    template_name = 'public/privacy-policy.html'
+
 
 # class NameAutocomplete(autocomplete.Select2QuerySetView):
 #     def get_queryset(self):

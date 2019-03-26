@@ -571,6 +571,7 @@ function circular_marker(center,number,name,feature){
 
             $.get(base_url+'/api/hlcit/'+name.replace("_"," "), function(data){
                     var females =data;
+                    console.log(number)
                     ward_leader(number,center,females,name.replace("_"," "))
             });
       }
