@@ -5,7 +5,7 @@ from django.core.management.base import BaseCommand
 
 import pandas as pd
 
-from core.models import PratinidhiShava
+from core.models import RastriyaShava
 
 class Command(BaseCommand):
     help = 'load mahila pratinidhi data from munis.csv file'
@@ -17,7 +17,7 @@ class Command(BaseCommand):
         df = pd.read_excel(sys.argv[3]).fillna(value='')
         try:
             for row in range(0, df['S.N'].count()):
-                national = PratinidhiShava.objects.filter(
+                national = RastriyaShava.objects.filter(
                     name=df['English Name'][row],
                     age=df['Age'][row],
                     date_of_birth=str(df['Date of BIrth'][row])).update(hlcit_code=df['HLCIT_CODE'][row])
@@ -25,4 +25,3 @@ class Command(BaseCommand):
 
         except Exception as e:
             print('error occured', e)
-
