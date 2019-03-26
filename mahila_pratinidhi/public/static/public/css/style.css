@@ -2396,5 +2396,32 @@ button.btn-block.bbtn{min-width: 100%;}
     color: #fff;
     background-color: #2460b90f;}
    .login-wrap .nav-item a{color:#fff;}
-   .tab-content p a{font-weight: bold;color:#fff; font-style: italic;opacity: 1;color:#1f1f82;}
+   .tab-content p a{font-weight: bold;color:#fff; font-style: italic;opacity: 1;color:#1d1d1d;}
    .tab-content p {opacity: 0.8;}
+   .top.container-fluid{
+        background: #32216f;
+    height: 250px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    color: #fff;
+   }
+   .top{position: relative;}
+   .top:after{
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -20px;
+    width: 100%;
+    height: 60px;
+    background: #32216f;
+    -webkit-transform: skewY(1.3deg);
+    -moz-transform: skewY(1.3deg);
+    -ms-transform: skewY(1.3deg);
+    -o-transform: skewY(1.3deg);
+    transform: skewY(1.3deg);
+    -webkit-backface-visibility: hidden;
+   }
+  .about .items{margin-bottom:20px; cursor: pointer;}
