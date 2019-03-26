@@ -23,7 +23,7 @@ class Command(BaseCommand):
                 hlcit_code=df['HLCIT_CODE'][row]
 
 
-        ) for row in range(0, 775)
+        )for row in range(0, 775)
         ]
         muni = Municipalities.objects.bulk_create(muni)
         if muni:

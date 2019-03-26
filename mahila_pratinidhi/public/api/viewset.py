@@ -2389,9 +2389,9 @@ class PieChartViewSet(views.APIView):
         RastriyaShava_op = RastriyaShava.objects.values('hlcit_code').annotate(total= Count('hlcit_code')).values('party_name','hlcit_code','total')
         PratinidhiShava_op= PratinidhiShava.objects.values('hlcit_code').annotate(total= Count('hlcit_code')).values('party_name','hlcit_code','total')
         ProvinceMahilaPratinidhiForm_op = ProvinceMahilaPratinidhiForm.objects.values('hlcit_code').annotate(total= Count('hlcit_code')).values('party_name','hlcit_code','total')
-        # MahilaPratinidhiForm_op =MahilaPratinidhiForm.objects.values('hlcit_code').annotate(total= Count('hlcit_code')).values('party_name','total','hlcit_code')
+        MahilaPratinidhiForm_op =MahilaPratinidhiForm.objects.values('hlcit_code').annotate(total= Count('hlcit_code')).values('party_name','total','hlcit_code')
         
-        queryset_all = chain(RastriyaShava_op,PratinidhiShava_op,ProvinceMahilaPratinidhiForm_op)
+        queryset_all = chain(RastriyaShava_op,PratinidhiShava_op,ProvinceMahilaPratinidhiForm_op,MahilaPratinidhiForm_op)
         all_dict['all']= queryset_all
 
         return Response(all_dict)
