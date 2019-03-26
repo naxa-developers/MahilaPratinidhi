@@ -226,7 +226,7 @@ class MahilaPratinidhiForm(models.Model):
 
 
 	def __str__(self):
-		return "{0} {1} फारम".format(self.name, self.district.name)
+		return "{0} {1} फारम".format(self.english_name, self.district.name)
 
 	def save(self, force_insert=False, force_update=False, *args, **kwargs):
 
@@ -254,7 +254,7 @@ class RastriyaShava(CommonShavaFields):
 	news = GenericRelation(News)
 
 	def __str__(self):
-		return "{}-{} फारम".format(self.name, self.name)
+		return "{}-{} फारम".format(self.english_name, self.name)
 
 class PratinidhiShava(CommonShavaFields):
 	province = models.ForeignKey(Province, on_delete=models.CASCADE, verbose_name="प्रदेश", default=1)
@@ -263,7 +263,7 @@ class PratinidhiShava(CommonShavaFields):
 	news = GenericRelation(News)
 
 	def __str__(self):
-		return "{}-{} फारम".format(self.name, self.name)
+		return "{}-{} फारम".format(self.english_name, self.name)
 
 
 class BackgroundImage(models.Model):
