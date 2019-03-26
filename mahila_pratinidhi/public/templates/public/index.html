@@ -466,7 +466,11 @@ Through data collected  on key social, demographic and  political variables from
                 <div class="col-xl-3 col-lg-4 col-md-6 reveal">
                     <a href="{% url 'public:news' data.pk %}">
                         <div class="pImageholder prelative">
+                            {% if data.image %}
+                            <img src="{{ MEDIA_URL }}{{ data.image.url }}" class="" alt="user" style="height:260px; width:300px;">
+                            {% else %}
                             <img src="{% static 'public/image/p1.jpg' %}" class="" alt="user">
+                            {% endif %}
                             <div class="holderOverlay"></div>
                             <div class="content">
                                 {% if data.object_id %} {% with data|content_type as mahila_data %}

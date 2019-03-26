@@ -200,7 +200,7 @@
 
                             {% for province in provinces %}
                             <a href="{% url 'public:explore_province' province.pk %}">
-                                <div class="item1 col" style="background:url(/static/public/image/maskimg.jpg) no-repeat;">
+                                <div class="item1 col" style="background: #322179;">
                                     <p class="provienceHeading">
                                         {{ province.name }}
                                     </p>
@@ -215,7 +215,7 @@
                         <div class="linkItem row">
                             {% for district in districts %}
                             <a href="{% url 'public:explore_district' district.pk %}">
-                                <div class="item1 col" style="background:url(/static/public/image/maskimg.jpg) no-repeat;">
+                                <div class="item1 col" style="background: #322179;">
                                     <p class="provienceHeading">
                                         {{ district.name|upper }}
                                     </p>
