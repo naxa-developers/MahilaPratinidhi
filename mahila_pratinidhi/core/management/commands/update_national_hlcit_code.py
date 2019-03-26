@@ -18,8 +18,9 @@ class Command(BaseCommand):
         try:
             for row in range(0, df['S.N'].count()):
                 national = RastriyaShava.objects.filter(
-                    name=df['English Name'][row],
+                    english_name=df['English Name'][row],
                     age=df['Age'][row],
+                    mothers_name=df["Mother's Name"][row],
                     date_of_birth=str(df['Date of BIrth'][row])).update(hlcit_code=df['HLCIT_CODE'][row])
             print("successfully updated hlcit code")
 
