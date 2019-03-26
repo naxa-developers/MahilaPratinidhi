@@ -24,7 +24,7 @@ nav {
 
 .topHeroImg {
     background-size: cover;
-    background: url(../image/heroimg.png);
+    background: url(../image/0001.jpg);
     min-height: calc(100vh - 215px);
     width: 100%;
     position: relative;
@@ -54,7 +54,7 @@ nav {
     left: 0;
     bottom: 0;
     right: 0;
-    background: rgba(190, 19, 232, 0.53);
+    background: rgba(141, 58, 338, 0.53);
     z-index: 2;
 }
 
@@ -1871,7 +1871,7 @@ i.close {
     padding-top: 10px;
     display: block;
     padding-right: 35px;
-    color: #fff;
+    color: #FEA;
     width: 100%;
     text-overflow: ellipsis;
     white-space: nowrap;
