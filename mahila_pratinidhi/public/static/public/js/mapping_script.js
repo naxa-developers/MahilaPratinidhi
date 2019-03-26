@@ -1,5 +1,7 @@
 //alert("pasyo");
-var base_url="https://mahilapratinidhi.naxa.com.np";
+//var base_url="https://mahilapratinidhi.naxa.com.np";
+var base_url="http://mahilapratinidhi.com"
+
 //var base_url="http://localhost:8000";
 
 var map_height = window.innerHeight - parseInt($("#find").css('height'));
@@ -641,7 +643,8 @@ else{
 }
 
   var number = marker_content[xx];
-
+  console.log(marker_content)
+    console.log(xx)
   return number;
 }
 

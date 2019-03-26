@@ -1,4 +1,5 @@
-var base_url = "https://mahilapratinidhi.naxa.com.np";
+//var base_url = "https://mahilapratinidhi.naxa.com.np";
+var base_url="http://mahilapratinidhi.com"
 //var base_url="http://localhost:8000";
 var layers_array = [];
 var markers_array = [];
@@ -274,7 +275,7 @@ function zoomToFeature(e) {
 			break;
 
 		case 147:
-			var properties_name = properties_object.DISTRICT;
+			var properties_name = properties_object.DISTRICT.charAt(0) + properties_object.DISTRICT.slice(1,).toLowerCase();
 			break;
 
 		default:
@@ -314,7 +315,7 @@ function zoomToFeature(e) {
 		$("#c3chart-5").html("")
 
 		if (!compare_variable) { compare_variable = "all" }
-		//alert(base_url + "/api/" + compare_variable + "/" + name1_visualize + "/" + name2_visualize)
+
 
 		$.get(base_url + "/api/" + compare_variable + "/" + name1_visualize + "/" + name2_visualize, function (data) {
 
