@@ -38,6 +38,7 @@ urlpatterns = [
 
 	path('news/<int:pk>/', views.NewsView.as_view(), name="news"),
 	path('about-us/', views.AboutUs.as_view(), name='about_us'),
+	path('privacy-policy/', views.PrivacyPolicyView.as_view(), name='privacy_policy'),
 
 	# path(r'^detail/name/(?P<name>\w+)/$', views.SearchDetail.as_view(), name='name_search'),
 

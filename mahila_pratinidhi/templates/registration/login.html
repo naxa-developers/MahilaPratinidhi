@@ -26,7 +26,7 @@
         <div class="container-fluid">
             <div class="login-wrap">
                 <div class="login-header">
-                    <img src="{% static '/public/image/logo.png' %}" alt="">
+                    <a href="{% url 'public:index' %}"><img src="{% static '/public/image/logo.png' %}" alt=""></a>
                     <h3 class="white mt-2">महिला प्रतिनिधि</h3>
                 </div>
                 <ul class="nav nav-pills nav-justified">
@@ -38,12 +38,16 @@
 
                          <div class="row">
                             <div class="col-md-6">
-                                <h4> Why Login?</h4>
-                                <p> Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, </p>
-                                  <h4> Why Login?</h4>
-                                <p> Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</p>
-                                  <h4> Why Login?</h4>
-                                <p> Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard .</p>
+                                <h4>Get Inspired.</h4>
+                                <p> Let us celebrate the leadership of Nepali women in politics! Once you log in to the website, you will have full access to the information of inspiring women leaders who won the election of 2017, which took place after the restructuring of the country into federal system. </p>
+
+
+
+                                  <h4>Get Connected.</h4>
+                                <p>Only the logged in user will have access to the contact details, phone numbers and email addresses of the elected women leaders. By logging in, you can get connected to your leader directly and get your queries resolved.</p>
+                                  <h4>Give Feedback.</h4>
+                                <p> Your suggestions and feedbacks are at the heart of our service. Logging in will allow you to share your feedbacks to us directly and we can incorporate to the earliest.
+</p>
                             </div>  
                                 <div class="col-md-6">
                                      {% include 'form_error.html' %}
@@ -79,14 +83,14 @@
                 <div class="tab-pane active" id="1b">
                     <div class="row">
                         <div class="col-md-6">
-                                <h4>Get Inspired</h4>
+                                <h4>Get Inspired.</h4>
                                 <p> Let us celebrate the leadership of Nepali women in politics! Once you log in to the website, you will have full access to the information of inspiring women leaders who won the election of 2017, which took place after the restructuring of the country into federal system. </p>
 
 
 
-                                  <h4>Get Connected</h4>
+                                  <h4>Get Connected.</h4>
                                 <p>Only the logged in user will have access to the contact details, phone numbers and email addresses of the elected women leaders. By logging in, you can get connected to your leader directly and get your queries resolved.</p>
-                                  <h4>Give Feedback</h4>
+                                  <h4>Give Feedback.</h4>
                                 <p> Your suggestions and feedbacks are at the heart of our service. Logging in will allow you to share your feedbacks to us directly and we can incorporate to the earliest.
 </p>
                             </div>  
@@ -94,12 +98,15 @@
                         
                     <div class="col-md-6">
                           {% include 'form_error.html' %}
+                        {% if message %}
+                            <div>{{ message }}</div>
+                        {% endif %}
 
                         <form action="{% url 'public:signup' %}" method="post"> {% csrf_token %}
                             <div class="form-group">
 
                                     <!-- <label for="id_signup_first_name"> <strong>First Name:</strong></label>&nbsp;<br> -->
-                                    <input id="id_signup_first_name" maxlength="254" name="first_name" type="text" class="form-control" placeholder="first Name">
+                                    <input id="id_signup_first_name" maxlength="254" name="first_name" type="text" class="form-control" placeholder="First Name">
                             </div>
                             <div class="form-group">
                                 
@@ -122,11 +129,11 @@
                             </div>
                             <div class="form-group">
                         
-                                    <input id="id_signup_repass" maxlength="254" name="re-password2" type="text" class="form-control" placeholder="Password Confirmation">
+                                    <input id="id_signup_repass" maxlength="254" name="password2" type="text" class="form-control" placeholder="Password Confirmation">
 
                             </div>
                             <button type="submit" class="btn btn-secondary btn-primary btn-block bbtn"><i class="la la-key"></i> Sign Up</button>
-                            <p class="mt-2"> Signing up signifies that you have read and agree to the <span><a href="#">Terms of Service </a></span> and <span><a href="#">Privacy policy</a></span></p>
+                            <p class="mt-2"> Signing up signifies that you have read and agreed to our <span><a href="{% url 'public:privacy_policy' %}">Privacy policy</a></span></p>
                            
                         </form>
                     </div>
