@@ -359,6 +359,7 @@ class PratinidhiMahilaDetail(DetailView):
         pramukh_jimmewari_dict = {}
         pramukh_jimmewari_list = []
         pramukh_jimmewari = form.pramukh_jimmewari
+        print(pramukh_jimmewari)
         pramukh_jimmewari = pramukh_jimmewari.replace(";", ",")
         pramukh_jimmewari = pramukh_jimmewari.replace("year", "")
         pramukh_jimmewari = pramukh_jimmewari.split(",")
@@ -369,6 +370,7 @@ class PratinidhiMahilaDetail(DetailView):
             if m:
                 pramukh_jimmewari_dict['year'] = m.group(1)
             pramukh_jimmewari_list.append(dict(pramukh_jimmewari_dict))
+            print(pramukh_jimmewari_list)
         return render(request, self.template_name, {'form': form, 'pramukh_jimmewari_list': pramukh_jimmewari_list})
 
 

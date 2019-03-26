@@ -49,22 +49,12 @@ class Command(BaseCommand):
                 party_joined_date=df['Date of affiliation with Party'][row],
                 samlagna_sang_sastha_samuha=df['Details of the recent union, organization, group you are engaged with?'][row],
                 nirwachit_chetra_pratiko_pratibadhata=df['Keywords'][row],
-                aaja_vanda_agadi_chunab_ladnu_vayeko_chha=df['Have you participated in an election before?'][row])
-
-            if 'Major responsibility done for the party' in df:
-                p.pramukh_jimmewari = df['Major responsibility done for the party'][row]
-
-            if 'Is the elected constituency different than the address of the representative (Yes/No)?' in df:
-                p.nirwachit_vayeko_chhetra_aafno_thegana=df['Is the elected constituency different than the address of the representative (Yes/No)?'][row]
-
-            if 'Number of Votes received' in df:
-                p.prapta_maat_sankhya = df['Number of Votes received'][row]
-
-            if 'Degree Name' in df:
-                p.subject = df['Degree Name'][row]
-
-            if 'Is your area listed in Government of Nepal’s backward area?' in df:
-                p.pichidiyeko_chhetra_ho_hoina = df['Is your area listed in Government of Nepal’s backward area?'][row]
+                aaja_vanda_agadi_chunab_ladnu_vayeko_chha=df['Have you participated in an election before?'][row],
+                pramukh_jimmewari=df['Major responsibility done for the party'][row],
+                nirwachit_vayeko_chhetra_aafno_thegana=df['Is the elected constituency different than the address of the representative (Yes/No)?'][row],
+                subject=df['Degree Name'][row],
+                pichidiyeko_chhetra_ho_hoina=df['Is your area listed in Government of Nepal’s backward area?'][row]
+            )
 
         print(PratinidhiShava.objects.all().count())
         self.stdout.write('Successfully loaded mahila pratinidhi data..')

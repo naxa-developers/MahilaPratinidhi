@@ -33,6 +33,6 @@ urlpatterns = [
 	path('municipalities/',viewset.MunicipalityViewSet.as_view({'get':'list'})),
 	path('all/<hlcit1>/<hlcit2>', viewset.CompareAllViewSet.as_view()),
 	path('province/<province1>/<province2>', viewset.CompareProvinceViewSet.as_view()),
-	path('district/<province1>/<province2>', viewset.CompareDistrictViewSet.as_view()),
+	path('district/<district1>/<district2>', viewset.CompareDistrictViewSet.as_view()),
 	path('pie/', viewset.PieChartViewSet.as_view()),
 ]

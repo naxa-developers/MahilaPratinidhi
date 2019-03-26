@@ -56,16 +56,16 @@
                         Position
                     </div>
                     <div class="detailContent bold">
-                        Ministry
+                        {{ form.nirwachit_padh }}
                     </div>
 
                 </div>
                  <div class="workSHolder">
                     <div class="detailTitle">
-                       dhulikhel
+                       {{ form.nirwachit_vdc_or_municipality_name }}
                     </div>
                     <div class="detailContent bold">
-                        ward 7
+                        ward {{ form.ward|slice:":1" }}
                     </div>
 
                 </div>
@@ -74,7 +74,7 @@
                         Vote
                     </div>
                     <div class="detailContent bold">
-                       15,000
+                       {{ form.prapta_maat_sankhya }}
                     </div>
 
                 </div>
@@ -187,18 +187,33 @@
 
                 <div class="detailTitles ">
 
-                    <p class="personalInfoHeader sm">
+                    <p class="personalInfoHeader tt">
                         POLITICAL INFORMATION
                     </p>
-                </div>  
+                     <div class="infocontainer">
+                        <div class="info">
+                            <div>
+                                {% if form.party_name %}
+                                <span class="dtitle">Party Name:</span>
+                                <span class="dvalue">{{ form.party_name|title }}</span>
+                                {% endif %}
+                            </div>
+                            <div>
+                                {% if form.party_joined_date %}
+                                <span class="dtitle">Party Joined:</span>
+                                <span class="dvalue">{{ form.party_joined_date|title }}</span>
+                                {% endif %}
+                            </div>
+                        </div>
+                     </div>
+                </div>
 
                 <div class="detailTitles">
                     <div class="detailTitle">
                        Political commitment
                     </div>
                     <div class="detailtextin">
-                       Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-
+                        {{ form.nirwachit_chetra_pratiko_pratibadhata }}
                     </div>
                     
                 </div>
