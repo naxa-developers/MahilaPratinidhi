@@ -16,14 +16,14 @@ var chart_type = {
 }
 
 var data_title = {
-  'age': ['age', 'Age across Provincial Level', 'Age across Parliament', 'Age across Political Parties'],
+  'age': ['Age', 'Age across Provincial Level', 'Age across Parliament', 'Age across Political Parties'],
   'ethnicity': ['Ethnicity', 'Ethnicity across Provincial Level ', 'Ethnicity across Parliament ', 'Ethnicity across Political parties'],
   'mother_tongue': ['Mother Tongue', 'Mother Tongue across Provincial Level ', 'Mother Tongue across Parliament', 'Mother Tongue in Political Party'],
   'education': ['Education', 'Education across Provincial Level ', 'Education across Parliament ', 'Education across Political Parties'],
   'election_type': ['Election Type', 'Election Type Across Provincial Level ', 'Election Type in Province-Federal-National Level ', 'Election Type in Political Party'],
   'party': ['Representation of Political Parties', 'Representation of Political Parties Province-Federal-National Level', 'Representation of Political Parties across Province','Representation of Political Parties Province-Federal-National Level'],
-  'political_engagement': ['Political Commitment ', 'Political Party Across Provincial Level ', '	Political Party in Province-Federal-National Level', 'Political Party in Political Party'],
-  'political_commitment': ['Political Engagement', 'Political Engagement Across Provincial Level', 'Political Engagement in Province-Federal-National Level', 'Political Engagement in Political Party'],
+  'political_engagement': ['Political Engagement', 'Political Engagement Across Provincial Level', 'Political Engagement in Province-Federal-National Level', 'Political Engagement in Political Party'],
+  'political_commitment': ['Political Commitment ', 'Political Commitment Across Provincial Level ', '	Political Commitment in Province-Federal-National Level', 'Political Commitment in Political Party'],
 
   'election_experience': ['Election Candidacy Experience', 'Election Candidacy Experience across Provincial level', 'Election Candidacy Experience across Parliament',
   'Election Candidacy Experience across Political parties']
