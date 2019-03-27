@@ -43,23 +43,36 @@
                             <span class="pdates">Photo Credit: {{ news.image_credit }}</span>
                             {% endif %}
                     </div>
-                    <div class="listHolder">
-                        <div class="recentList">
-                            <p class="recentPost boarderd">
-                                RECENT POSTS
-                            </p>
-                            
-                            <div class="listItem">
-                                    {% for lnews in latest_news %}
-                                <a href="{% url 'public:news' lnews.pk %}">
-                                    
-                               <p class="lnews"> {{ lnews.title }}
-                                </a>
-                                {% endfor %}
+                    <!--<div class="listHolder">-->
+                        <!--<div class="recentList">-->
+                            <!--<p class="recentPost boarderd">-->
+                                <!--RECENT POSTS-->
+                            <!--</p>-->
+                            <!---->
+                            <!--<div class="listItem">-->
+                                    <!--{% for lnews in latest_news %}-->
+                                <!--<a href="{% url 'public:news' lnews.pk %}">-->
+                                    <!---->
+                               <!--<p class="lnews"> {{ lnews.title }}-->
+                                <!--</a>-->
+                                <!--{% endfor %}-->
 
-                            </p>
-                            </div>
-                            
+                            <!--</p>-->
+                            <!--</div>-->
+                            <!---->
+                            <!--&lt;!&ndash;<div class="listItem">&ndash;&gt;-->
+                                <!--&lt;!&ndash;Lorem ipsum dolor, sit amet consectetur adipisicing elit. Reiciendis&ndash;&gt;-->
+
+                            <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                            <!--&lt;!&ndash;<div class="listItem">&ndash;&gt;-->
+                                <!--&lt;!&ndash;Lorem ipsum dolor, sit amet consectetur adipisicing elit. Reiciendis&ndash;&gt;-->
+
+                            <!--&lt;!&ndash;</div>&ndash;&gt;-->
+
+                        <!--</div>-->
+                        <!--<div class="recentList">-->
+                            <!--<p class="recentPost boarderd">-->
+                                <!--ARCHIVE </p>-->
                             <!--<div class="listItem">-->
                                 <!--Lorem ipsum dolor, sit amet consectetur adipisicing elit. Reiciendis-->
 
@@ -68,26 +81,13 @@
                                 <!--Lorem ipsum dolor, sit amet consectetur adipisicing elit. Reiciendis-->
 
                             <!--</div>-->
+                            <!--<div class="listItem">-->
+                                <!--Lorem ipsum dolor, sit amet consectetur adipisicing elit. Reiciendis-->
 
-                        </div>
-                        <div class="recentList">
-                            <p class="recentPost boarderd">
-                                ARCHIVE </p>
-                            <div class="listItem">
-                                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Reiciendis
+                            <!--</div>-->
 
-                            </div>
-                            <div class="listItem">
-                                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Reiciendis
-
-                            </div>
-                            <div class="listItem">
-                                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Reiciendis
-
-                            </div>
-
-                        </div>
-                    </div>
+                        <!--</div>-->
+                    <!--</div>-->
 
                 </div>
 

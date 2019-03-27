@@ -330,7 +330,7 @@
                         {% if data.image %}
                         <div class="col-md-4">
                             <div class="imageHolder">
-                                <img src="{{ MEDIA_URL }}{{ data.image.url }}" alt="" style="height:300px; width:276px;">
+                                <img src="{{ MEDIA_URL }}{{ data.image.url|space_to_underscore }}" alt="" style="height:300px; width:276px;">
                             </div>
                         </div>
                         {% else %}

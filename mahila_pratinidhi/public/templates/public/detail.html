@@ -20,7 +20,7 @@
 
                 <div class="profileImg">
                     {% if form.image %}
-                    <img src="{{MEDIA_URL}} {{form.image.url}}" alt="profileImage">
+                    <img src="{{MEDIA_URL}} {{form.image.url|space_to_underscore}}" alt="profileImage">
                     {% else %}
                     <img src="{% static 'public/image/mahilalogo.png' %}" alt="profileImage">
                     {% endif %}

@@ -1,5 +1,7 @@
 {% extends 'public/public_base.html' %}
 {% load staticfiles %}
+{% load filters %}
+
 {% block upper_content %}
 <link rel="stylesheet" href="{% static 'public/css/twitter.css' %}">
 <style>
@@ -161,7 +163,7 @@
 
                                         <div class="pimageHolder">
                                             {% if item.image %}
-                                            <img src="{{ MEDIA_URL }} {{ item.image.url }}" alt="">
+                                            <img src="{{ MEDIA_URL }} {{ item.image.url|space_to_underscore }}" alt="">
                                             {% else %}
                                             <img src="{% static 'public/image/mahilalogo.png' %}" alt="">
                                             {% endif %}

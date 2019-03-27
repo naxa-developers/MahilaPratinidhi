@@ -1446,10 +1446,11 @@ class CommitmentViewSet(views.APIView):
 
 
         for commitment in commitment_lists:
-            for item in commitment['nirwachit_chetra_pratiko_pratibadhata'].split(","):
-                if item:
-                    item = item.strip(" ")
-                    commitments_list.append(item.title())
+            if commitment['nirwachit_chetra_pratiko_pratibadhata'] is not None:
+                for item in commitment['nirwachit_chetra_pratiko_pratibadhata'].split(","):
+                    if item:
+                        item = item.strip(" ")
+                        commitments_list.append(item.title())
 
         commitment_set = set(commitments_list)
 
@@ -1476,12 +1477,13 @@ class CommitmentViewSet(views.APIView):
             province_dict = {}
             province_dict['label'] = commitment
             for item in commitment_lists:
-                for i in item['nirwachit_chetra_pratiko_pratibadhata'].split(","):
-                    if i.title().strip(" ") in commitment:
-                        if item['province_id'] in province_dict:
-                            province_dict[item['province_id']] = province_dict[item['province_id']] + 1
-                        else:
-                            province_dict[item['province_id']] = 1
+                if item['nirwachit_chetra_pratiko_pratibadhata'] is not None:
+                    for i in item['nirwachit_chetra_pratiko_pratibadhata'].split(","):
+                        if i.title().strip(" ") in commitment:
+                            if item['province_id'] in province_dict:
+                                province_dict[item['province_id']] = province_dict[item['province_id']] + 1
+                            else:
+                                province_dict[item['province_id']] = 1
 
             province_political_commitment_list.append(dict(province_dict))
 
@@ -1494,13 +1496,14 @@ class CommitmentViewSet(views.APIView):
             party_dict = {}
             party_dict['label'] = commitment
             for item in commitment_lists:
-                for i in item['nirwachit_chetra_pratiko_pratibadhata'].split(","):
-                    if i.title().strip(" ") in commitment:
-                        if item['party_name']:
-                            if item['party_name'] in party_dict:
-                                party_dict[item['party_name']] = party_dict[item['party_name']] + 1
-                            else:
-                                party_dict[item['party_name']] = 1
+                if item['nirwachit_chetra_pratiko_pratibadhata'] is not None:
+                    for i in item['nirwachit_chetra_pratiko_pratibadhata'].split(","):
+                        if i.title().strip(" ") in commitment:
+                            if item['party_name']:
+                                if item['party_name'] in party_dict:
+                                    party_dict[item['party_name']] = party_dict[item['party_name']] + 1
+                                else:
+                                    party_dict[item['party_name']] = 1
 
             party_political_commitment_list.append(dict(party_dict))
 
