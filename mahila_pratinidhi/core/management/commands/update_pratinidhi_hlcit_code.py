@@ -17,11 +17,19 @@ class Command(BaseCommand):
         df = pd.read_excel(sys.argv[3]).fillna(value='')
         try:
             for row in range(0, df['S.N'].count()):
-                national = PratinidhiShava.objects.filter(
+                PratinidhiShava.objects.filter(
                     english_name=df['English Name'][row],
-                    age=df['Age'][row],
-                    mothers_name=df["Mother's Name"][row],
-                    date_of_birth=str(df['Date of BIrth'][row])).update(hlcit_code=df['HLCIT_CODE'][row])
+                    age=df['Age'][row]).update(party_name=df['Name of Party'][row])
+
+                PratinidhiShava.objects.filter(
+                    english_name=df['English Name'][row],
+                    age=df['Age'][row]).update(
+                    nirwachit_chetra_pratiko_pratibadhata=df['Keywords'][row])
+
+                PratinidhiShava.objects.filter(
+                    english_name=df['English Name'][row],
+                    age=df['Age'][row]).update(
+                    hlcit_code=df['HLCIT_CODE'][row])
             print("successfully updated hlcit code")
 
         except Exception as e:

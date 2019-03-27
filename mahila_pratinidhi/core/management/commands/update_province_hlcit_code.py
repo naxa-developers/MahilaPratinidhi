@@ -8,7 +8,7 @@ import pandas as pd
 from core.models import ProvinceMahilaPratinidhiForm
 
 class Command(BaseCommand):
-    help = 'load mahila pratinidhi data from munis.csv file'
+    help = 'update any fields of provincialmahilapratinidhiform using this command'
 
     def add_arguments(self, parser):
         parser.add_argument("-f", type=argparse.FileType(), required=True)
@@ -17,10 +17,17 @@ class Command(BaseCommand):
         df = pd.read_excel(sys.argv[3]).fillna(value='')
         try:
             for row in range(0, df['S.N'].count()):
-                national = ProvinceMahilaPratinidhiForm.objects.filter(
+                ProvinceMahilaPratinidhiForm.objects.filter(
                     name=df['English Name'][row],
-                    age=df['Age'][row],
-                    date_of_birth=str(df['Date of BIrth'][row])).update(hlcit_code=df['HLCIT_CODE'][row])
+                    age=df['Age'][row]).update(party_name=df['Name of Party'][row])
+
+                ProvinceMahilaPratinidhiForm.objects.filter(
+                    name=df['English Name'][row],
+                    age=df['Age'][row]).update(nirwachit_chetra_pratiko_pratibadhata=df['Keywords'][row])
+
+                ProvinceMahilaPratinidhiForm.objects.filter(
+                    name=df['English Name'][row],
+                    age=df['Age'][row]).update(hlcit_code=df['HLCIT_CODE'][row])
             print("successfully updated hlcit code")
 
         except Exception as e:
