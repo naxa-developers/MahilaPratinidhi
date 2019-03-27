@@ -330,13 +330,13 @@
                         {% if data.image %}
                         <div class="col-md-4">
                             <div class="imageHolder">
-                                <img src="{{ MEDIA_URL }}{{ data.image.url }}" alt="">
+                                <img src="{{ MEDIA_URL }}{{ data.image.url }}" alt="" style="height:300px; width:276px;">
                             </div>
                         </div>
                         {% else %}
                         <div class="col-md-4">
                             <div class="imageHolder">
-                                <img src="{% static 'public/image/p1.jpg' %}" alt="">
+                                <img src="{% static 'public/image/mahilalogo.png' %}" alt="" style="height:300px; width:276px;">
                             </div>
                         </div>
                         {% endif %}
@@ -469,7 +469,7 @@ Through data collected  on key social, demographic and  political variables from
                             {% if data.image %}
                             <img src="{{ MEDIA_URL }}{{ data.image.url }}" class="" alt="user" style="height:260px; width:300px;">
                             {% else %}
-                            <img src="{% static 'public/image/p1.jpg' %}" class="" alt="user">
+                            <img src="{% static 'public/image/mahilalogo.png' %}" class="" alt="user" style="height:260px; width:300px;">
                             {% endif %}
                             <div class="holderOverlay"></div>
                             <div class="content">
