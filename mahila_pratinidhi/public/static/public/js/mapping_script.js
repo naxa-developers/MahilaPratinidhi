@@ -1,4 +1,3 @@
-//alert("pasyo");
 //var base_url="https://mahilapratinidhi.naxa.com.np";
 var base_url="http://mahilapratinidhi.com"
 
