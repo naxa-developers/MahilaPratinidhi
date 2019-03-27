@@ -24,7 +24,7 @@ nav {
 
 .topHeroImg {
     background-size: cover;
-    background: url(../image/0001.jpg);
+    background: url(../image/banner.PNG);
     min-height: calc(100vh - 215px);
     width: 100%;
     position: relative;
