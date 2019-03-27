@@ -33,7 +33,7 @@ class Index(TemplateView):
     def get(self, request, *args, **kwargs):
         # local_featured = MahilaPratinidhiForm.objects.filter(featured='True')[:1]
         national_featured = RastriyaShava.objects.filter(featured='True')[:1]
-        pratinidhi_featured = PratinidhiShava.objects.filter(featured='True')[:1]
+        pratinidhi_featured = PratinidhiShava.objects.filter(featured='True')[:2]
         provincial_featured = ProvinceMahilaPratinidhiForm.objects.filter(featured='True')[:1]
         # featured_data = [local_featured, national_featured, pratinidhi_featured, provincial_featured]
         featured_data = [national_featured, pratinidhi_featured, provincial_featured]
