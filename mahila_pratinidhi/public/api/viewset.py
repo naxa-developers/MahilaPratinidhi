@@ -1446,7 +1446,7 @@ class CommitmentViewSet(views.APIView):
 
 
         for commitment in commitment_lists:
-            if commitment['nirwachit_chetra_pratiko_pratibadhata'] is not None:
+            if commitment['nirwachit_chetra_pratiko_pratibadhata']:
                 for item in commitment['nirwachit_chetra_pratiko_pratibadhata'].split(","):
                     if item:
                         item = item.strip(" ")
@@ -1477,7 +1477,7 @@ class CommitmentViewSet(views.APIView):
             province_dict = {}
             province_dict['label'] = commitment
             for item in commitment_lists:
-                if item['nirwachit_chetra_pratiko_pratibadhata'] is not None:
+                if item['nirwachit_chetra_pratiko_pratibadhata']:
                     for i in item['nirwachit_chetra_pratiko_pratibadhata'].split(","):
                         if i.title().strip(" ") in commitment:
                             if item['province_id'] in province_dict:
@@ -1496,7 +1496,7 @@ class CommitmentViewSet(views.APIView):
             party_dict = {}
             party_dict['label'] = commitment
             for item in commitment_lists:
-                if item['nirwachit_chetra_pratiko_pratibadhata'] is not None:
+                if item['nirwachit_chetra_pratiko_pratibadhata']:
                     for i in item['nirwachit_chetra_pratiko_pratibadhata'].split(","):
                         if i.title().strip(" ") in commitment:
                             if item['party_name']:
@@ -1517,19 +1517,22 @@ class CommitmentViewSet(views.APIView):
             vs_list = []
 
             for item in national_political_commitment:
-                for i in item['nirwachit_chetra_pratiko_pratibadhata'].split(","):
-                    if i.title().strip(" ") in commitment:
-                        vs_list.append('national')
+                if item['nirwachit_chetra_pratiko_pratibadhata']:
+                    for i in item['nirwachit_chetra_pratiko_pratibadhata'].split(","):
+                        if i.title().strip(" ") in commitment:
+                            vs_list.append('national')
 
             for item in federal_political_commitment:
-                for i in item['nirwachit_chetra_pratiko_pratibadhata'].split(","):
-                    if i.title().strip(" ") in commitment:
-                        vs_list.append('federal')
+                if item['nirwachit_chetra_pratiko_pratibadhata']:
+                    for i in item['nirwachit_chetra_pratiko_pratibadhata'].split(","):
+                        if i.title().strip(" ") in commitment:
+                            vs_list.append('federal')
 
             for item in province_political_commitment:
-                for i in item['nirwachit_chetra_pratiko_pratibadhata'].split(","):
-                    if i.title().strip(" ") in commitment:
-                        vs_list.append('province')
+                if item['nirwachit_chetra_pratiko_pratibadhata']:
+                    for i in item['nirwachit_chetra_pratiko_pratibadhata'].split(","):
+                        if i.title().strip(" ") in commitment:
+                            vs_list.append('province')
 
             total_arrays = np.array(np.unique(vs_list, return_counts=True)).T
 
