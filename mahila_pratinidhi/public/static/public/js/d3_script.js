@@ -1,7 +1,7 @@
-//var base_url="http://localhost:8000";
+var base_url="http://localhost:8000";
 console.log("dataupdated", data_content)
 //var base_url = "https://mahilapratinidhi.naxa.com.np";
-var base_url = "http://mahilapratinidhi.com"
+//var base_url = "http://mahilapratinidhi.com"
 
 var chart_type = {
   'age': ['kernel', 'stacked', 'stacked', 'stacked'],
@@ -17,17 +17,19 @@ var chart_type = {
 }
 
 var data_title = {
-  'age': ['Age', 'Age across Provincial Level', 'Age across Parliament', 'Age across Political Parties'],
-  'ethnicity': ['Ethnicity', 'Ethnicity across Provincial Level ', 'Ethnicity across Parliament ', 'Ethnicity across Political parties'],
-  'mother_tongue': ['Mother Tongue', 'Mother Tongue across Provincial Level ', 'Mother Tongue across Parliament', 'Mother Tongue in Political Party'],
-  'education': ['Education', 'Education across Provincial Level ', 'Education across Parliament ', 'Education across Political Parties'],
-  'election_type': ['Election Type', 'Election Type Across Provincial Level ', 'Election Type in Province-Federal-National Level ', 'Election Type in Political Party'],
-  'party': ['Representation of Political Parties', 'Representation of Political Parties Province-Federal-National Level', 'Representation of Political Parties across Province','Representation of Political Parties Province-Federal-National Level'],
-  'political_engagement': ['Political Engagement', 'Political Engagement Across Provincial Level', 'Political Engagement in Province-Federal-National Level', 'Political Engagement in Political Party'],
-  'political_commitment': ['Political Commitment ', 'Political Commitment Across Provincial Level ', '	Political Commitment in Province-Federal-National Level', 'Political Commitment in Political Party'],
+  'age': ['Age', 'Age across Political Parties','Age across Provincial Level ', 'Age across Province vs Federal vs National ' ],
+  'ethnicity': ['Ethnicity', 'Ethnicity across Political Parties','Ethnicity across Provincial Level ', 'Ethnicity across Province vs Federal vs National ' ],
+  'mother_tongue': ['Mother Tongue', 'Mother Tongue across Political Parties','Mother Tongue across Provincial Level ',
+  'Mother Tongue across Province vs Federal vs National ' ],
+  'education': ['Education', 'Education across Political Parties','Education across Provincial Level ', 'Education across Province vs Federal vs National ' ],
+  'election_type': ['Election Type', 'Election Type across Political Parties','Election Type across Provincial Level ',
+  'Election Type across Province vs Federal vs National ' ],
+  'party': ['Representation of Political Parties', 'Representation of Political Parties across Political Parties','Representation of Political Parties across Provincial Level ', 'Representation of Political Parties across Province vs Federal vs National ' ],
+  'political_engagement': ['Political Engagement', 'Political Engagement across Political Parties','Political Engagement across Provincial Level ', 'Political Engagement across Province vs Federal vs National ' ],
+  'political_commitment': ['Political Commitment ', 'Political Commitment in Political Parties',
+  'Political Commitment in Provincial Level ', 'Political Commitment in Province vs Federal vs National ' ],
 
-  'election_experience': ['Election Candidacy Experience', 'Election Candidacy Experience across Provincial level', 'Election Candidacy Experience across Parliament',
-  'Election Candidacy Experience across Political parties']
+  'election_experience': ['Election Candidacy Experience', 'Election Candidacy across Political Parties','Election Candidacy across Provincial Level ', 'Election Candidacy across Province vs Federal vs National ' ],
 
 
 }
