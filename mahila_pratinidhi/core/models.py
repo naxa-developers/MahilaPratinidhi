@@ -79,12 +79,12 @@ CHUNAB_LADNU_VAYEKO_CHOICES = [
 							]
 
 class CommonShavaFields(models.Model):
-	name = models.CharField(max_length=300, verbose_name="नाम")
-	english_name = models.CharField(max_length=300, verbose_name="English Name")
-	date_of_birth = models.CharField(max_length=300, verbose_name="जन्ममिती")
+	name = models.CharField(max_length=300, verbose_name="नाम", null=True, blank=True)
+	english_name = models.CharField(max_length=300, verbose_name="English Name", null=True, blank=True)
+	date_of_birth = models.CharField(max_length=300, verbose_name="जन्ममिती", null=True, blank=True)
 	age = models.CharField(max_length=300, verbose_name="उमेर", blank=True)
-	mothers_name = models.CharField(max_length=300, verbose_name="आमाको नाम")
-	fathers_name = models.CharField(max_length=300, verbose_name="बाबुको नाम")
+	mothers_name = models.CharField(max_length=300, verbose_name="आमाको नाम", null=True, blank=True)
+	fathers_name = models.CharField(max_length=300, verbose_name="बाबुको नाम", null=True, blank=True)
 	marital_status = models.CharField(max_length=300, verbose_name="बैवाहिक स्थिथि", blank=True, null=True)
 	updated_marital_status = models.CharField(choices=MARITAL_CHOICES, max_length=300, verbose_name="बैवाहिक स्थिथि", blank=True, null=True)
 	husbands_name = models.CharField(max_length=300, verbose_name="श्रीमानको नाम", blank=True)
@@ -194,7 +194,7 @@ class MahilaPratinidhiForm(models.Model):
 
 
 	district = models.ForeignKey(District, on_delete=models.CASCADE, related_name='district', verbose_name="जिल्ला")
-	name = models.CharField(max_length=300, verbose_name="नाम")
+	name = models.CharField(max_length=300, verbose_name="नाम", null=True, blank=True)
 	age = models.CharField(max_length=300, verbose_name="Age", blank=True)
 	name_of_elected_region = models.CharField(max_length=300, verbose_name="Name.of.elected.region_NE", blank=True)
 	ward = models.CharField(max_length=300, verbose_name="Ward", blank=True)
