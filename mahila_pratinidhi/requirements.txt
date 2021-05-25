@@ -6,7 +6,7 @@ django-debug-toolbar==1.10.1
 #for model translation
 #pip install https://github.com/abdolhosein/django-modeltranslation/archive/patch-the-issue-with-django2.zip
 
-djangorestframework==3.9.0
+djangorestframework==3.11.2
 ipdb==0.11
 ipython==7.1.1
 ipython-genutils==0.2.0
